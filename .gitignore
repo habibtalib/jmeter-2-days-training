@@ -1,0 +1,23 @@
+# JMeter — hasil larian & log (jangan commit output ujian)
+*.jtl
+*.log
+jmeter.log
+hari-2/run/hasil/
+**/hasil/
+**/laporan/
+**/report/
+
+# JMeter GUI backup
+*.jmx.bak
+
+# Node (SUT tiruan) — jika ada
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/

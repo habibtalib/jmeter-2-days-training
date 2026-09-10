@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="ms">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kursus Apache JMeter 2 Hari — Ujian Prestasi Portal eJPJ</title>
+  <link rel="stylesheet" href="vendor/reveal/dist/reset.css">
+  <link rel="stylesheet" href="vendor/reveal/dist/reveal.css">
+  <link rel="stylesheet" href="vendor/reveal/dist/theme/white.css" id="theme">
+  <link rel="stylesheet" href="vendor/reveal/dist/plugin/highlight/monokai.css">
+  <style>
+    :root {
+      --ink: #17212b; --muted: #566371; --line: #d9ddd5; --panel: #ffffff;
+      --paper: #f7f7f4; --accent: #0f766e; --red: #b42318; --blue: #2563eb;
+      --purple: #7c3aed; --amber: #b45309; --code: #111827;
+    }
+    .reveal { color: var(--ink); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 30px; letter-spacing: 0; }
+    .reveal .slides { text-align: left; }
+    .reveal section { box-sizing: border-box; height: 100%; padding: 34px 52px; }
+    .reveal h1, .reveal h2, .reveal h3, .reveal p { margin: 0; letter-spacing: 0; text-transform: none; }
+    .reveal h1 { max-width: 1060px; color: var(--ink); font-size: 72px; line-height: 0.98; font-weight: 850; }
+    .reveal h2 { max-width: 1060px; color: var(--ink); font-size: 48px; line-height: 1.05; font-weight: 820; }
+    .reveal h3 { color: var(--ink); font-size: 25px; line-height: 1.15; font-weight: 820; }
+    .reveal p, .reveal li, .reveal td, .reveal th { color: var(--muted); font-size: 22px; line-height: 1.38; }
+    .reveal ul { margin: 0; padding-left: 1.1em; }
+    .reveal li + li { margin-top: 8px; }
+    .reveal table { margin: 0; width: 100%; border-collapse: collapse; border: 1px solid var(--line); background: #fff; font-size: 20px; }
+    .reveal th, .reveal td { padding: 11px 13px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .reveal th { background: #edf3f2; color: var(--ink); font-weight: 850; }
+    .reveal td { color: var(--muted); }
+    .reveal tr:last-child td { border-bottom: 0; }
+    .reveal pre { width: 100%; margin: 0; box-shadow: none; font-size: 16px; }
+    .reveal pre code { max-height: none; padding: 16px 18px; border-radius: 8px; background: var(--code); font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; line-height: 1.45; }
+    .reveal code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace; }
+    .chapter, .title-slide { background: var(--ink); color: #fff; }
+    .chapter h1, .chapter h2, .chapter h3, .chapter p, .title-slide h1, .title-slide h2, .title-slide h3, .title-slide p { color: #fff; }
+    .chapter .subtitle, .chapter .footer, .title-slide .subtitle, .title-slide .footer { color: #bfccd7; }
+    .slide-frame { display: grid; height: 100%; grid-template-rows: auto 1fr auto; gap: 22px; }
+    .center-stack { display: grid; gap: 20px; align-content: center; }
+    .eyebrow { color: var(--accent); font-size: 14px; font-weight: 850; line-height: 1; text-transform: uppercase; }
+    .chapter .eyebrow, .title-slide .eyebrow { color: #99f6e4; }
+    .subtitle { max-width: 920px; color: var(--muted); font-size: 27px; line-height: 1.34; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .pill { display: inline-flex; min-height: 34px; align-items: center; border: 1px solid var(--line); border-radius: 999px; padding: 5px 11px; background: #fff; color: var(--ink); font-size: 14px; font-weight: 820; white-space: nowrap; }
+    .chapter .pill, .title-slide .pill { border-color: rgba(255,255,255,0.22); background: rgba(255,255,255,0.08); color: #fff; }
+    .footer { display: flex; justify-content: space-between; gap: 18px; color: var(--muted); font-size: 13px; font-weight: 740; }
+    .grid { display: grid; gap: 16px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid.five { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .panel { border: 1px solid var(--line); border-radius: 8px; padding: 18px; background: var(--panel); box-shadow: 0 8px 24px rgba(23, 33, 43, 0.06); }
+    .panel h3 { margin-bottom: 8px; }
+    .panel p, .panel li { font-size: 18px; }
+    .metric { display: grid; min-height: 118px; align-content: center; gap: 8px; }
+    .metric strong { display: block; color: var(--accent); font-size: 50px; line-height: 1; }
+    .day { min-height: 250px; border-top: 6px solid var(--accent); display: grid; grid-template-rows: auto auto 1fr; gap: 9px; }
+    .day:nth-child(2) { border-top-color: var(--blue); }
+    .day-label { color: var(--muted); font-size: 12px; font-weight: 850; text-transform: uppercase; }
+    .flow { display: flex; flex-wrap: wrap; gap: 9px; align-items: center; }
+    .node { min-height: 47px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); border-radius: 8px; padding: 10px 13px; background: #fff; color: var(--ink); font-size: 16px; font-weight: 820; text-align: center; }
+    .node.accent { background: #e6f4f1; border-color: #9bd2c9; color: #0d5d56; }
+    .node.warn { background: #fff1f0; border-color: #f2aba5; color: #9f1e16; }
+    .node.blue { background: #eaf1ff; border-color: #adc7ff; color: #1d4fb8; }
+    .node.purple { background: #f1e9ff; border-color: #cfb7ff; color: #5b21b6; }
+    .arrow { color: var(--muted); font-size: 20px; font-weight: 900; }
+    .callout { border-left: 6px solid var(--accent); border-radius: 8px; padding: 17px 19px; background: #fff; color: var(--muted); font-size: 22px; line-height: 1.38; }
+    .tight p, .tight li, .tight td, .tight th { font-size: 18px; }
+    .small { font-size: 17px; }
+    .reveal .progress { color: var(--accent); height: 5px; }
+    .reveal .controls { color: var(--accent); }
+    .reveal .slide-number { border-radius: 999px; padding: 5px 9px; background: rgba(255,255,255,0.85); color: var(--ink); font-size: 12px; }
+    @media print { .panel { box-shadow: none; } }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+      <!-- 1. Title -->
+      <section class="title-slide" data-background-color="#17212b">
+        <div class="slide-frame">
+          <div></div>
+          <div class="center-stack">
+            <div class="eyebrow">Kursus Apache JMeter 2 Hari</div>
+            <h1>Ujian Prestasi dengan Apache JMeter</h1>
+            <p class="subtitle">Program latihan amali 2 hari untuk pemula. Bina, jalankan, dan analisis satu ujian beban sebenar terhadap Portal eJPJ (tiruan) — daripada Test Plan pertama hingga laporan HTML non-GUI. Nota dalam Bahasa Melayu, istilah teknikal dalam Bahasa Inggeris.</p>
+            <div class="meta">
+              <span class="pill">Test Plan</span>
+              <span class="pill">Thread Group</span>
+              <span class="pill">Correlation</span>
+              <span class="pill">Non-GUI</span>
+              <span class="pill">Percentile</span>
+              <span class="pill">CI/CD</span>
+            </div>
+          </div>
+          <div class="footer"><span>Portal eJPJ (tiruan) · System Under Test tempatan</span><span>Guna anak panah, Space, atau Esc untuk gambaran keseluruhan</span></div>
+        </div>
+        <aside class="notes">Tekankan: kita TIDAK menguji laman JPJ sebenar. Semua ujian dijalankan pada mock app tempatan di http://localhost:3000.</aside>
+      </section>
+
+      <!-- 2. Outcome -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Hasil pembelajaran</div>
+          <div class="center-stack">
+            <h2>Peserta tamat dengan satu ujian beban lengkap + laporan prestasi yang boleh dibaca.</h2>
+            <div class="grid three">
+              <div class="panel metric fragment"><strong>2</strong><p>Hari latihan</p></div>
+              <div class="panel metric fragment"><strong>~12j</strong><p>Masa kelas + lab</p></div>
+              <div class="panel metric fragment"><strong>1</strong><p>Test Plan sebenar (eJPJ tiruan)</p></div>
+            </div>
+          </div>
+          <div class="footer"><span>Sasaran akhir</span><span>Bina Test Plan, correlation token/csrf, jalankan non-GUI, baca percentile &amp; error %</span></div>
+        </div>
+      </section>
+
+      <!-- 3. Class rhythm -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Rentak kelas</div>
+          <div class="center-stack tight">
+            <h2>Setiap hari ~6 jam — daripada konsep kepada ujian berfungsi.</h2>
+            <table>
+              <thead><tr><th>Blok masa</th><th>Fokus pengajar</th><th>Hasil peserta</th></tr></thead>
+              <tbody>
+                <tr><td>45 min</td><td>Konsep + gambaran aliran kerja JMeter</td><td>Faham objektif hari</td></tr>
+                <tr><td>120 min</td><td>Demo berpandu dalam JMeter GUI</td><td>Test Plan yang berjalan</td></tr>
+                <tr><td>60 min</td><td>Semak hasil &amp; betulkan ralat biasa</td><td>Ujian disahkan (assertion hijau)</td></tr>
+                <tr><td>90 min</td><td>Lab variasi + soal jawab</td><td>Perubahan sendiri + ulang kaji</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="footer"><span>Panduan masa</span><span>Laraskan ikut kelajuan kelas &amp; isu pemasangan Java/JMeter</span></div>
+        </div>
+      </section>
+
+      <!-- 4. Roadmap -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Peta jalan</div>
+          <div class="center-stack">
+            <h2>Satu ujian beban, dibina secara berperingkat.</h2>
+            <div class="grid two">
+              <div class="panel day fragment"><div class="day-label">Hari 1</div><h3>Asas JMeter &amp; Ujian Beban</h3><p>Pasang JMeter (perlu Java/JDK), fahami mod GUI vs non-GUI, anatomi Test Plan (Thread Group, Sampler, Config, Timer, Assertion, Listener), CSV Data Set Config, dan jalankan ujian beban pertama.</p></div>
+              <div class="panel day fragment"><div class="day-label">Hari 2</div><h3>JMeter Lanjutan, Analisis &amp; CI</h3><p>Correlation (token/csrf), Logic Controllers, JSR223 Groovy, larian non-GUI + laporan HTML, membaca percentile/throughput/error %, ujian teragih, dan integrasi CI/CD + monitoring.</p></div>
+            </div>
+          </div>
+          <div class="footer"><span>Struktur kursus</span><span>Hari 2 menyambung Test Plan yang dibina Hari 1</span></div>
+        </div>
+      </section>
+
+      <!-- 5. What is performance testing -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Konsep asas</div>
+          <div class="center-stack">
+            <h2>Apa itu performance testing?</h2>
+            <div class="flow">
+              <div class="node">Beban pengguna maya</div><div class="arrow">→</div>
+              <div class="node accent">Sistem (SUT) di bawah tekanan</div><div class="arrow">→</div>
+              <div class="node purple">Ukur masa tindak balas &amp; kestabilan</div>
+            </div>
+            <div class="grid two tight">
+              <div class="panel"><p><strong>Performance testing</strong> mengukur sejauh mana sistem <strong>laju</strong>, <strong>stabil</strong>, dan <strong>boleh berskala</strong> apabila banyak pengguna mengaksesnya serentak.</p></div>
+              <div class="panel"><p>Ia bukan mencari <em>bug fungsi</em>, tetapi <strong>bottleneck</strong>: response time perlahan, throughput menurun, error % naik, memori/CPU tepu.</p></div>
+            </div>
+            <div class="callout">Contoh eJPJ: 500 pengguna log masuk &amp; bayar cukai serentak — adakah portal kekal &lt; 2 saat dan 0% ralat?</div>
+          </div>
+          <div class="footer"><span>Performance testing</span><span>Laju · stabil · berskala</span></div>
+        </div>
+      </section>
+
+      <!-- 6. Jenis ujian -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Konsep asas</div>
+          <div class="center-stack tight">
+            <h2>Jenis ujian prestasi.</h2>
+            <div class="grid five">
+              <div class="panel"><h3>Load</h3><p>Beban dijangka (normal/puncak). <em>Sahkan SLA dipenuhi.</em></p></div>
+              <div class="panel"><h3>Stress</h3><p>Tolak melebihi had sehingga patah. <em>Cari titik pecah.</em></p></div>
+              <div class="panel"><h3>Spike</h3><p>Lonjakan mendadak pengguna. <em>Pulih semula?</em></p></div>
+              <div class="panel"><h3>Soak / Endurance</h3><p>Beban sederhana masa panjang. <em>Cari memory leak.</em></p></div>
+              <div class="panel"><h3>Scalability</h3><p>Tambah beban/nod berperingkat. <em>Ukur skala.</em></p></div>
+            </div>
+            <div class="callout">Bengkel ini fokus <strong>Load</strong> &amp; <strong>Stress</strong> pada eJPJ tiruan, dengan sentuhan Spike &amp; Soak dalam lab.</div>
+          </div>
+          <div class="footer"><span>Jenis ujian</span><span>Load · Stress · Spike · Soak · Scalability</span></div>
+        </div>
+      </section>
+
+      <!-- 7. SUT + ethics -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Etika &amp; System Under Test</div>
+          <div class="center-stack tight">
+            <h2>Kita NEVER load-test laman JPJ sebenar.</h2>
+            <div class="grid two">
+              <div class="panel"><h3>Mock tempatan sahaja</h3><p>System Under Test (SUT) ialah aplikasi tiruan <strong>Portal eJPJ</strong> yang berjalan di mesin sendiri:</p>
+                <pre><code data-trim data-noescape>cd sut/
+node server.js
+# http://localhost:3000</code></pre>
+              </div>
+              <div class="panel"><h3>Kenapa penting</h3><ul>
+                <li>Menguji beban sistem awam sebenar tanpa kebenaran = <strong>menyalahi undang-undang</strong> (menyerupai serangan DoS).</li>
+                <li>Mock memberi persekitaran selamat, boleh ulang, &amp; percuma untuk belajar.</li>
+                <li>Prinsip emas: <strong>jangan uji prod</strong> — uji salinan/mock.</li>
+              </ul></div>
+            </div>
+            <div class="callout"><strong>Portal eJPJ (tiruan)</strong> meniru perkhidmatan JPJ dalam talian: log masuk, semak kenderaan, bayar cukai, dan saman — semua data rekaan.</div>
+          </div>
+          <div class="footer"><span>Etika ujian</span><span>SUT = mock tempatan · localhost:3000 · bukan JPJ produksi</span></div>
+        </div>
+      </section>
+
+      <!-- 8. Mock endpoints -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">System Under Test</div>
+          <div class="center-stack tight">
+            <h2>Endpoint Portal eJPJ (tiruan).</h2>
+            <table>
+              <thead><tr><th>Method</th><th>Path</th><th>Fungsi</th></tr></thead>
+              <tbody>
+                <tr><td>POST</td><td><code>/api/log-masuk</code></td><td>Log masuk → pulang <strong>token</strong> + <strong>csrf</strong></td></tr>
+                <tr><td>GET</td><td><code>/api/kenderaan?no_kp=</code></td><td>Senarai kenderaan ikut No. KP</td></tr>
+                <tr><td>GET</td><td><code>/api/kenderaan/:no/cukai</code></td><td>Semak status cukai kenderaan</td></tr>
+                <tr><td>POST</td><td><code>/api/kenderaan/:no/bayar-cukai</code></td><td>Bayar cukai (perlu <strong>csrf</strong>)</td></tr>
+                <tr><td>GET</td><td><code>/api/saman?no_kp=</code></td><td>Senarai saman ikut No. KP</td></tr>
+                <tr><td>POST</td><td><code>/api/saman/:id/bayar</code></td><td>Bayar saman</td></tr>
+              </tbody>
+            </table>
+            <p class="small">Perhatikan: <code>token</code> &amp; <code>csrf</code> adalah nilai <strong>dinamik</strong> daripada log masuk — kunci kepada pelajaran <em>correlation</em> di Hari 2.</p>
+          </div>
+          <div class="footer"><span>Endpoint mock</span><span>Log masuk → semak → bayar cukai/saman</span></div>
+        </div>
+      </section>
+
+      <!-- ===== HARI 1 ===== -->
+      <section class="chapter" data-background-color="#17212b">
+        <div class="slide-frame">
+          <div class="eyebrow">Hari 1</div>
+          <div class="center-stack">
+            <h1>Asas JMeter &amp; Ujian Beban</h1>
+            <p class="subtitle">Pasang JMeter, fahami anatomi Test Plan, konfigur Thread Group &amp; HTTP Request, parameterize dengan CSV, dan jalankan ujian beban pertama terhadap eJPJ tiruan.</p>
+          </div>
+          <div class="footer"><span>Hari 1</span><span>Pasang → Test Plan → Thread Group → CSV → Larian pertama</span></div>
+        </div>
+      </section>
+
+      <!-- H1a. Install -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Persediaan</div>
+          <div class="center-stack">
+            <h2>Pasang JMeter (perlu Java).</h2>
+            <div class="grid three">
+              <div class="panel fragment"><h3>1 · Java/JDK</h3><p>JMeter berjalan atas JVM. Pasang <strong>JDK 8+</strong> (disyorkan 11/17). Sahkan: <code>java -version</code>.</p></div>
+              <div class="panel fragment"><h3>2 · Muat turun JMeter</h3><p>Ambil <code>apache-jmeter-x.y.zip</code> dari jmeter.apache.org, nyahzip ke folder pilihan.</p></div>
+              <div class="panel fragment"><h3>3 · Lancar GUI</h3><p><code>bin/jmeter</code> (mac/Linux) atau <code>bin/jmeter.bat</code> (Windows).</p></div>
+            </div>
+            <div class="callout">JMeter ialah alat <strong>open-source</strong> Apache untuk ujian beban — percuma, merentas platform, sokong HTTP, JDBC, FTP, JMS, dan banyak lagi.</div>
+          </div>
+          <div class="footer"><span>Pemasangan</span><span>Set JAVA_HOME jika perlu · guna versi JMeter terkini</span></div>
+        </div>
+      </section>
+
+      <!-- H1b. GUI vs non-GUI -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Mod operasi</div>
+          <div class="center-stack tight">
+            <h2>GUI vs non-GUI: guna yang betul.</h2>
+            <div class="grid two">
+              <div class="panel"><h3>Mod GUI</h3><p>Untuk <strong>membina &amp; nyahpepijat</strong> Test Plan — tambah elemen, lihat View Results Tree, sahkan logik. <strong>Berat</strong> — jangan guna untuk beban sebenar.</p></div>
+              <div class="panel"><h3>Mod non-GUI (CLI)</h3><p>Untuk <strong>beban sebenar</strong>. Guna sumber jauh lebih rendah, boleh hasilkan lebih ramai thread, sesuai untuk CI/CD &amp; pelayan.</p></div>
+            </div>
+            <pre><code data-trim data-noescape>jmeter -n -t plan.jmx -l results.jtl</code></pre>
+            <div class="callout">Peraturan: <strong>bina dalam GUI</strong>, <strong>jalankan beban dalam non-GUI</strong>. GUI menjejaskan hasil kerana overhead rendering.</div>
+          </div>
+          <div class="footer"><span>GUI vs non-GUI</span><span>-n = non-GUI · -t = test plan · -l = log hasil</span></div>
+        </div>
+      </section>
+
+      <!-- H1c. Test Plan anatomy -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Anatomi Test Plan</div>
+          <div class="center-stack tight">
+            <h2>Struktur pokok Test Plan.</h2>
+            <pre><code data-trim data-noescape>Test Plan
+└─ Thread Group  (bilangan users, ramp-up, loop)
+   ├─ HTTP Request Defaults      (Config Element)
+   ├─ HTTP Header Manager        (Config Element)
+   ├─ CSV Data Set Config        (Config Element)
+   ├─ HTTP Request  (Sampler)  — POST /api/log-masuk
+   ├─ Constant Timer            (Timer · think time)
+   ├─ Response Assertion        (Assertion)
+   ├─ Regular Expression Extractor  (Post-Processor)
+   └─ View Results Tree         (Listener · debug)</code></pre>
+            <div class="callout">Susunan penting: elemen dinilai <strong>atas → bawah</strong>; Config &amp; Timer memberi kesan kepada semua Sampler dalam skopnya.</div>
+          </div>
+          <div class="footer"><span>Anatomi</span><span>Thread Group · Sampler · Config · Timer · Assertion · Listener · Pre/Post-Processor</span></div>
+        </div>
+      </section>
+
+      <!-- H1c2. Element roles -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Peranan elemen</div>
+          <div class="center-stack tight">
+            <h2>Tujuh keluarga elemen teras.</h2>
+            <div class="grid four">
+              <div class="panel"><h3>Thread Group</h3><p>Kolam pengguna maya — punca semua beban.</p></div>
+              <div class="panel"><h3>Sampler</h3><p>Permintaan sebenar — cth <strong>HTTP Request</strong>.</p></div>
+              <div class="panel"><h3>Config Element</h3><p>Nilai lalai &amp; data — Defaults, Header, CSV.</p></div>
+              <div class="panel"><h3>Timer</h3><p>Jeda antara permintaan (think time).</p></div>
+              <div class="panel"><h3>Assertion</h3><p>Sahkan respons betul (lulus/gagal).</p></div>
+              <div class="panel"><h3>Listener</h3><p>Kumpul &amp; papar hasil.</p></div>
+              <div class="panel"><h3>Pre-Processor</h3><p>Ubah permintaan sebelum hantar.</p></div>
+              <div class="panel"><h3>Post-Processor</h3><p>Ekstrak nilai dari respons (correlation).</p></div>
+            </div>
+          </div>
+          <div class="footer"><span>Peranan elemen</span><span>Setiap elemen ada skop &amp; urutan tersendiri</span></div>
+        </div>
+      </section>
+
+      <!-- H1d. Thread Group params -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Langkah 1</div>
+          <div class="center-stack">
+            <h2>Thread Group: model beban anda.</h2>
+            <div class="grid three">
+              <div class="panel fragment"><h3>Number of Threads</h3><p>Bilangan <strong>pengguna maya</strong> serentak. Cth 100 = 100 pengguna.</p></div>
+              <div class="panel fragment"><h3>Ramp-Up Period</h3><p>Masa (saat) untuk <strong>lancar semua thread</strong>. 100 thread / 50s = 2 thread/saat.</p></div>
+              <div class="panel fragment"><h3>Loop Count</h3><p>Berapa kali setiap thread <strong>ulang</strong> Sampler. Boleh set <em>Infinite</em> + jangka masa.</p></div>
+            </div>
+            <div class="callout">Ramp-up beransur elak "thundering herd" — beri sistem masa memanas (warm-up) dan lebih realistik.</div>
+          </div>
+          <div class="footer"><span>Thread Group</span><span>Users × Ramp-Up × Loop = corak beban</span></div>
+        </div>
+      </section>
+
+      <!-- H1e. HTTP Request sampler -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Langkah 2</div>
+          <div class="center-stack tight">
+            <h2>HTTP Request Sampler.</h2>
+            <div class="grid two">
+              <div class="panel"><h3>Medan utama</h3><ul>
+                <li><strong>Protocol</strong>: http / https</li>
+                <li><strong>Server Name / IP</strong>: localhost</li>
+                <li><strong>Port</strong>: 3000</li>
+                <li><strong>Method</strong>: GET / POST</li>
+                <li><strong>Path</strong>: /api/log-masuk</li>
+                <li><strong>Body Data</strong>: JSON payload</li>
+              </ul></div>
+              <div class="panel"><h3>HTTP Request Defaults</h3><p>Letak Protocol/Server/Port <strong>sekali</strong> dalam Config Element ini — semua Sampler mewarisinya. Tukar server (staging↔local) di satu tempat sahaja.</p>
+                <pre><code data-trim data-noescape>{ "no_kp": "${no_kp}",
+  "kata_laluan": "rahsia123" }</code></pre>
+              </div>
+            </div>
+          </div>
+          <div class="footer"><span>HTTP Request</span><span>Path relatif · Defaults tanggung host/port</span></div>
+        </div>
+      </section>
+
+      <!-- H1f. Config elements -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Config Elements</div>
+          <div class="center-stack tight">
+            <h2>Config Element yang wajib tahu.</h2>
+            <div class="grid two">
+              <div class="panel"><h3>HTTP Header Manager</h3><p>Tetapkan header semua permintaan — cth <code>Content-Type: application/json</code>, <code>Authorization: Bearer ${token}</code>.</p></div>
+              <div class="panel"><h3>HTTP Cookie Manager</h3><p>Simpan &amp; hantar cookie sesi automatik antara permintaan — perlu untuk aliran log masuk berasaskan sesi.</p></div>
+              <div class="panel"><h3>HTTP Cache Manager</h3><p>Tiru gelagat cache pelayar (304 Not Modified) supaya beban lebih realistik.</p></div>
+              <div class="panel"><h3>HTTP Request Defaults</h3><p>Nilai lalai host/port/protocol untuk semua Sampler — elak ulang.</p></div>
+            </div>
+            <div class="callout">eJPJ: Header Manager bawa <code>Content-Type: application/json</code> + <code>X-CSRF-Token: ${csrf}</code>; Cookie Manager kekalkan sesi log masuk.</div>
+          </div>
+          <div class="footer"><span>Config Elements</span><span>Header · Cookie · Cache · Defaults</span></div>
+        </div>
+      </section>
+
+      <!-- H1g. Listeners -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Langkah 3</div>
+          <div class="center-stack tight">
+            <h2>Listeners: lihat hasil (berhati-hati).</h2>
+            <div class="grid three">
+              <div class="panel"><h3>View Results Tree</h3><p>Setiap permintaan/respons penuh. <strong>Debug sahaja</strong> — sangat berat, matikan semasa beban.</p></div>
+              <div class="panel"><h3>Summary Report</h3><p>Ringkasan agregat: sampel, purata, min/max, throughput, error %.</p></div>
+              <div class="panel"><h3>Aggregate Report</h3><p>Tambah <strong>percentile</strong> (90/95/99) &amp; median — lebih berguna untuk SLA.</p></div>
+            </div>
+            <div class="callout"><strong>Amaran:</strong> semua GUI listener menggunakan memori besar. Untuk beban sebenar, matikan listener &amp; guna fail <code>.jtl</code> + laporan HTML non-GUI.</div>
+          </div>
+          <div class="footer"><span>Listeners</span><span>GUI listener = debug · beban sebenar = .jtl</span></div>
+        </div>
+      </section>
+
+      <!-- H1h. CSV Data Set -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Langkah 4</div>
+          <div class="center-stack">
+            <h2>Parameterize dengan CSV Data Set Config.</h2>
+            <pre><code data-trim data-noescape># pengguna.csv
+no_pendaftaran,no_kp
+WXY1234,880101015500
+WABC88,900202025511
+JKL4567,910303035522</code></pre>
+            <div class="grid two tight">
+              <div class="panel"><p>Set <strong>Filename</strong> = pengguna.csv, <strong>Variable Names</strong> = <code>no_pendaftaran,no_kp</code>. Setiap thread ambil baris berlainan.</p></div>
+              <div class="panel"><p>Rujuk dalam Sampler: <code>/api/kenderaan?no_kp=${no_kp}</code>. Set <strong>Recycle on EOF</strong> &amp; <strong>Sharing mode</strong> ikut keperluan.</p></div>
+            </div>
+            <div class="callout">Elak semua pengguna maya hantar data <em>sama</em> — data realistik = ujian realistik.</div>
+          </div>
+          <div class="footer"><span>CSV Data Set Config</span><span>Data unik per thread · no_pendaftaran / no_kp</span></div>
+        </div>
+      </section>
+
+      <!-- H1i. Assertions -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Langkah 5</div>
+          <div class="center-stack tight">
+            <h2>Assertions: sahkan respons betul.</h2>
+            <div class="grid two">
+              <div class="panel"><h3>Response Assertion</h3><p>Sahkan kandungan/kod respons. Cth: Response Code = <code>200</code>, atau Text Response mengandungi <code>"token"</code>. Gagal → sampel ditanda ralat.</p></div>
+              <div class="panel"><h3>Duration Assertion</h3><p>Sahkan respons tiba dalam masa maksimum (cth &lt; 2000 ms). Melebihi → ditanda gagal walaupun kod 200.</p></div>
+            </div>
+            <div class="callout">Tanpa assertion, JMeter kira HTTP 500 sebagai "berjaya" (permintaan dihantar). Assertion menjadikan kejayaan bermakna — sahkan <strong>kandungan</strong>, bukan hanya penghantaran.</div>
+          </div>
+          <div class="footer"><span>Assertions</span><span>Response Assertion · Duration Assertion</span></div>
+        </div>
+      </section>
+
+      <!-- H1j. Timers -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Langkah 6</div>
+          <div class="center-stack tight">
+            <h2>Timers: tambah think time.</h2>
+            <div class="grid three">
+              <div class="panel"><h3>Constant Timer</h3><p>Jeda tetap (cth 1000 ms) antara setiap permintaan.</p></div>
+              <div class="panel"><h3>Uniform Random Timer</h3><p>Jeda rawak seragam dalam julat — lebih semula jadi.</p></div>
+              <div class="panel"><h3>Gaussian Random Timer</h3><p>Jeda rawak taburan normal sekitar nilai purata.</p></div>
+            </div>
+            <div class="callout">Pengguna sebenar tidak klik tanpa henti. <strong>Think time</strong> mengelak beban tak realistik &amp; melindungi SUT daripada dibanjiri secara buatan. Pasangan penting: think time + pacing.</div>
+          </div>
+          <div class="footer"><span>Timers</span><span>Constant · Uniform Random · Gaussian Random</span></div>
+        </div>
+      </section>
+
+      <!-- ===== HARI 2 ===== -->
+      <section class="chapter" data-background-color="#17212b">
+        <div class="slide-frame">
+          <div class="eyebrow">Hari 2</div>
+          <div class="center-stack">
+            <h1>JMeter Lanjutan, Analisis &amp; CI</h1>
+            <p class="subtitle">Correlation nilai dinamik, Logic Controllers, JSR223 Groovy, larian non-GUI + laporan HTML, membaca percentile &amp; error %, ujian teragih, dan integrasi CI/CD + monitoring.</p>
+          </div>
+          <div class="footer"><span>Hari 2</span><span>Correlation → Controllers → Non-GUI → Analisis → CI/CD</span></div>
+        </div>
+      </section>
+
+      <!-- H2a. Correlation why -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Konsep penting</div>
+          <div class="center-stack tight">
+            <h2>Correlation: kenapa main balik gagal.</h2>
+            <div class="flow">
+              <div class="node">POST /api/log-masuk</div><div class="arrow">→</div>
+              <div class="node accent">Respons: token + csrf (dinamik)</div><div class="arrow">→</div>
+              <div class="node warn">Rakam &amp; guna semula = GAGAL</div>
+            </div>
+            <div class="grid two tight">
+              <div class="panel"><p>Nilai seperti <strong>token</strong> &amp; <strong>csrf</strong> dijana <strong>baharu setiap sesi</strong>. Jika kita "hardcode" nilai lama, pelayan menolak (401/403).</p></div>
+              <div class="panel"><p><strong>Correlation</strong> = ekstrak nilai dinamik daripada satu respons, simpan ke pemboleh ubah, dan guna semula dalam permintaan berikutnya.</p></div>
+            </div>
+            <div class="callout">Aliran eJPJ: log masuk → ekstrak <code>token</code> &amp; <code>csrf</code> → guna dalam <code>POST /api/kenderaan/:no/bayar-cukai</code>.</div>
+          </div>
+          <div class="footer"><span>Correlation</span><span>Nilai dinamik mesti diekstrak, bukan hardcode</span></div>
+        </div>
+      </section>
+
+      <!-- H2b. Extractors -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Post-Processors</div>
+          <div class="center-stack tight">
+            <h2>Tiga cara ekstrak nilai.</h2>
+            <div class="grid three">
+              <div class="panel"><h3>JSON Extractor</h3><p>Untuk respons JSON. Guna JSONPath, cth <code>$.token</code> → simpan ke <code>token</code>.</p></div>
+              <div class="panel"><h3>Regular Expression Extractor</h3><p>Corak regex atas teks mentah, cth <code>"csrf":"(.+?)"</code> → group 1.</p></div>
+              <div class="panel"><h3>Boundary Extractor</h3><p>Tetapkan teks <em>kiri</em> &amp; <em>kanan</em> nilai — mudah, tanpa regex rumit.</p></div>
+            </div>
+            <pre><code data-trim data-noescape>// JSON Extractor
+JSON Path expressions:  $.token      → token
+                        $.csrf       → csrf
+// Guna semula:  Header  X-CSRF-Token: ${csrf}
+//               Header  Authorization: Bearer ${token}</code></pre>
+          </div>
+          <div class="footer"><span>Extractors</span><span>JSON ($.token) · Regex · Boundary</span></div>
+        </div>
+      </section>
+
+      <!-- H2c. Logic Controllers -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Struktur ujian</div>
+          <div class="center-stack tight">
+            <h2>Logic Controllers.</h2>
+            <div class="grid four">
+              <div class="panel"><h3>Transaction Controller</h3><p>Kumpul beberapa Sampler jadi <strong>satu transaksi</strong> — ukur masa hujung-ke-hujung (cth "Bayar Cukai").</p></div>
+              <div class="panel"><h3>If Controller</h3><p>Jalankan anak elemen hanya jika syarat benar — cth ada saman belum bayar.</p></div>
+              <div class="panel"><h3>Loop Controller</h3><p>Ulang blok bilangan kali tetap dalam satu iterasi thread.</p></div>
+              <div class="panel"><h3>Throughput Controller</h3><p>Kawal <strong>peratus</strong> pelaksanaan — cth 30% pengguna bayar saman.</p></div>
+            </div>
+            <div class="callout">Transaction Controller amat berguna: satu baris hasil "Log Masuk → Semak → Bayar" dan bukan tiga baris berasingan.</div>
+          </div>
+          <div class="footer"><span>Logic Controllers</span><span>Transaction · If · Loop · Throughput</span></div>
+        </div>
+      </section>
+
+      <!-- H2d. JSR223 + functions -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Scripting &amp; fungsi</div>
+          <div class="center-stack tight">
+            <h2>JSR223 (Groovy) &amp; JMeter functions.</h2>
+            <div class="grid two">
+              <div class="panel"><h3>JSR223 Sampler / Post-Processor</h3><p>Tulis logik tersuai dalam <strong>Groovy</strong> — jana data, ubah pemboleh ubah, kira tandatangan. Groovy paling laju &amp; disyorkan.</p>
+                <pre><code data-trim data-noescape>// JSR223 PostProcessor (Groovy)
+def body = prev.getResponseDataAsString()
+def json = new groovy.json.JsonSlurper().parseText(body)
+vars.put("token", json.token)</code></pre>
+              </div>
+              <div class="panel"><h3>Fungsi terbina</h3><ul>
+                <li><code>${__Random(1,1000)}</code> — nombor rawak</li>
+                <li><code>${__UUID}</code> — ID unik</li>
+                <li><code>${__time(yyyy-MM-dd)}</code> — cap masa</li>
+                <li><code>${__P(threads,50)}</code> — baca property CLI</li>
+              </ul></div>
+            </div>
+          </div>
+          <div class="footer"><span>JSR223 / functions</span><span>Groovy · __Random · __UUID · __time · __P</span></div>
+        </div>
+      </section>
+
+      <!-- H2e. Non-GUI run + report -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Larian beban sebenar</div>
+          <div class="center-stack">
+            <h2>Non-GUI run + laporan HTML.</h2>
+            <pre><code data-trim data-noescape># Jalankan beban & jana laporan dashboard HTML
+jmeter -n -t plan.jmx -l results.jtl -e -o report/
+
+#  -n  mod non-GUI
+#  -t  fail Test Plan (.jmx)
+#  -l  fail hasil mentah (.jtl)
+#  -e  jana laporan selepas ujian
+#  -o  folder output laporan HTML</code></pre>
+            <div class="callout">Buka <code>report/index.html</code> — dashboard interaktif: graf throughput, response time over time, percentile, dan taburan ralat. Guna property CLI: <code>-Jthreads=200</code>.</div>
+          </div>
+          <div class="footer"><span>Non-GUI</span><span>-n -t -l -e -o · dashboard HTML</span></div>
+        </div>
+      </section>
+
+      <!-- H2f. Reading results -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Analisis hasil</div>
+          <div class="center-stack tight">
+            <h2>Membaca metrik prestasi.</h2>
+            <table>
+              <thead><tr><th>Metrik</th><th>Maksud</th><th>Kenapa penting</th></tr></thead>
+              <tbody>
+                <tr><td>Throughput</td><td>Permintaan disempurnakan / saat</td><td>Kapasiti sistem</td></tr>
+                <tr><td>Average / Median</td><td>Purata vs nilai tengah masa tindak balas</td><td>Median tahan outlier</td></tr>
+                <tr><td>90 / 95 / 99 %ile</td><td>90% permintaan ≤ nilai ini</td><td>Pengalaman pengguna sebenar</td></tr>
+                <tr><td>Error %</td><td>Peratus sampel gagal</td><td>Kestabilan</td></tr>
+                <tr><td>Latency vs Response time</td><td>Masa ke byte pertama vs jumlah masa</td><td>Asingkan rangkaian vs proses</td></tr>
+              </tbody>
+            </table>
+            <div class="callout">Utamakan <strong>percentile</strong>, bukan purata — purata menyembunyikan ekor perlahan. Tetapkan <strong>SLA/NFR</strong>: cth 95%ile &lt; 2s, error &lt; 1%.</div>
+          </div>
+          <div class="footer"><span>Analisis</span><span>Throughput · percentile · error % · latency · SLA/NFR</span></div>
+        </div>
+      </section>
+
+      <!-- H2g. Distributed testing -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Skala beban</div>
+          <div class="center-stack">
+            <h2>Ujian teragih (master–slave).</h2>
+            <div class="flow">
+              <div class="node accent">Master (controller)</div><div class="arrow">→</div>
+              <div class="node blue">Slave 1</div>
+              <div class="node blue">Slave 2</div>
+              <div class="node blue">Slave 3</div><div class="arrow">→</div>
+              <div class="node purple">SUT</div>
+            </div>
+            <div class="grid two tight">
+              <div class="panel"><p>Satu mesin sukar hasilkan beban sangat tinggi. <strong>Distributed testing</strong> agih thread ke beberapa nod <em>slave</em>, dikawal satu <em>master</em>.</p></div>
+              <div class="panel"><p>Master kumpul hasil semua slave. Guna bila perlu ribuan pengguna maya melebihi had CPU/rangkaian satu mesin.</p></div>
+            </div>
+            <div class="callout">Ringkas untuk bengkel — konsep sahaja. Alternatif moden: jalankan JMeter dalam kontena/awan.</div>
+          </div>
+          <div class="footer"><span>Distributed</span><span>Master mengawal · Slave menjana beban</span></div>
+        </div>
+      </section>
+
+      <!-- H2h. CI/CD + monitoring -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Automasi &amp; pemantauan</div>
+          <div class="center-stack tight">
+            <h2>CI/CD + live monitoring.</h2>
+            <div class="grid two">
+              <div class="panel"><h3>CI/CD integration</h3><p>Jalankan JMeter non-GUI dalam <strong>Jenkins</strong> atau <strong>GitHub Actions</strong> pada setiap rilis. Gagalkan pipeline jika SLA dilanggar (error % / percentile ambang).</p>
+                <pre><code data-trim data-noescape>- run: jmeter -n -t plan.jmx \
+    -l out.jtl -e -o report/</code></pre>
+              </div>
+              <div class="panel"><h3>Live monitoring</h3><p><strong>Backend Listener</strong> hantar metrik ke <strong>InfluxDB</strong>, dipapar langsung dalam <strong>Grafana</strong> semasa ujian berjalan — nampak throughput &amp; ralat secara masa nyata.</p></div>
+            </div>
+            <div class="callout">Ringkas untuk bengkel. Matlamat: ujian prestasi jadi sebahagian <em>pipeline</em>, bukan aktiviti sekali sahaja.</div>
+          </div>
+          <div class="footer"><span>CI/CD &amp; monitoring</span><span>Jenkins / GitHub Actions · Backend Listener → InfluxDB → Grafana</span></div>
+        </div>
+      </section>
+
+      <!-- H2i. Best practices -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Amalan terbaik</div>
+          <div class="center-stack tight">
+            <h2>Amalan terbaik &amp; jerangkap biasa.</h2>
+            <div class="grid two">
+              <div class="panel"><h3>Buat</h3><ul>
+                <li>Jalankan beban dalam <strong>non-GUI</strong>, matikan GUI listeners.</li>
+                <li>Tambah <strong>think time</strong> &amp; pacing yang realistik.</li>
+                <li><strong>Ramp-up beransur</strong> + warm-up sistem.</li>
+                <li><strong>Parameterize</strong> data (CSV) — elak nilai sama.</li>
+                <li>Simpan Test Plan dalam <strong>version control</strong>.</li>
+              </ul></div>
+              <div class="panel"><h3>Elak</h3><ul>
+                <li><strong>Jangan uji produksi</strong> — guna mock/staging.</li>
+                <li>Jangan biar GUI listener aktif semasa beban.</li>
+                <li>Jangan hardcode token/csrf — gunakan correlation.</li>
+                <li>Jangan hantar semua thread serentak tanpa ramp-up.</li>
+                <li>Jangan percaya purata sahaja — semak percentile.</li>
+              </ul></div>
+            </div>
+          </div>
+          <div class="footer"><span>Best practices</span><span>Non-GUI · think time · ramp-up · parameterize · version control</span></div>
+        </div>
+      </section>
+
+      <!-- Recap -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Ringkasan konsep</div>
+          <div class="center-stack tight">
+            <h2>Aliran lengkap yang anda kuasai.</h2>
+            <table>
+              <thead><tr><th>Peringkat</th><th>Alat / elemen</th><th>Hasil</th></tr></thead>
+              <tbody>
+                <tr><td>Persediaan</td><td>Java + JMeter GUI</td><td>Persekitaran ujian sedia</td></tr>
+                <tr><td>Bina Test Plan</td><td>Thread Group + HTTP Request + Config</td><td>Ujian log masuk berfungsi</td></tr>
+                <tr><td>Data &amp; sahihkan</td><td>CSV Data Set + Assertion + Timer</td><td>Ujian realistik &amp; disahkan</td></tr>
+                <tr><td>Correlation</td><td>JSON/Regex/Boundary Extractor</td><td>token &amp; csrf digunakan semula</td></tr>
+                <tr><td>Larian beban</td><td>Non-GUI (-n -e -o)</td><td>Laporan HTML dashboard</td></tr>
+                <tr><td>Analisis</td><td>Throughput · percentile · error %</td><td>Keputusan SLA/NFR</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="footer"><span>Peta kursus</span><span>Pasang → Bina → Correlation → Non-GUI → Analisis</span></div>
+        </div>
+      </section>
+
+      <!-- Close -->
+      <section class="title-slide" data-background-color="#17212b">
+        <div class="slide-frame">
+          <div></div>
+          <div class="center-stack">
+            <div class="eyebrow">Penutup</div>
+            <h1>Anda kini boleh reka &amp; jalankan ujian prestasi dengan JMeter.</h1>
+            <p class="subtitle">Daripada Test Plan pertama kepada laporan non-GUI yang boleh dibaca. Langkah seterusnya: integrasi penuh CI/CD, monitoring InfluxDB + Grafana, ujian teragih berskala, dan menetapkan SLA/NFR untuk setiap perkhidmatan.</p>
+            <div class="meta">
+              <span class="pill">Test Plan</span><span class="pill">Correlation</span><span class="pill">Non-GUI</span><span class="pill">Percentile</span><span class="pill">CI/CD</span>
+            </div>
+          </div>
+          <div class="footer"><span>Habib · bespokesb.com</span><span>Tamat — terima kasih!</span></div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="vendor/reveal/dist/reveal.js"></script>
+  <script src="vendor/reveal/dist/plugin/highlight.js"></script>
+  <script src="vendor/reveal/dist/plugin/notes.js"></script>
+  <script src="vendor/reveal/dist/plugin/search.js"></script>
+  <script src="vendor/reveal/dist/plugin/zoom.js"></script>
+  <script>
+    const legacyHash = window.location.hash.match(/^#(\d+)$/);
+    if (legacyHash) { window.history.replaceState(null, '', '#/' + legacyHash[1]); }
+    Reveal.initialize({
+      hash: true, hashOneBasedIndex: true, controls: true, progress: true,
+      slideNumber: 'c/t', width: 1280, height: 720, margin: 0.04, center: false,
+      transition: 'slide', backgroundTransition: 'fade',
+      plugins: [RevealHighlight, RevealNotes, RevealSearch, RevealZoom]
+    });
+  </script>
+</body>
+</html>
