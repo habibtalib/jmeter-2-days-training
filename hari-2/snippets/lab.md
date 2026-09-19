@@ -80,8 +80,29 @@ Fail rujukan ada dalam `hari-2/test-plans/`. Cuba bina sendiri dahulu.
 
 ---
 
+## Latihan 6 — Senario puncak use case JPJ (Hari Kenaikan Harga Cukai)
+
+Gabungkan korelasi + Transaction/If + sebut harga + SLA dalam satu senario beban puncak.
+
+1. Bina aliran penuh: log masuk → `GET /api/kenderaan` (ekstrak `no_pendaftaran`) →
+   `GET /api/kenderaan/${no_pendaftaran}/cukai` (ekstrak `amaun` + `tempoh_bulan` dari **sebut harga**) →
+   `POST .../bayar-cukai` dengan `{ "csrf": "${csrf}", "tempoh_bulan": ${tempoh_bulan}, "amaun": ${amaun} }`.
+2. Tambah **Duration Assertion** pada langkah bayar dengan ambang `${__P(sla_ms,2000)}` — SLA per-transaksi.
+3. Jadikan beban property-driven (`${__P(pengguna,300)}`, `rampup`, `tempoh`) dan jalankan non-GUI:
+   ```bash
+   jmeter -n -t ../test-plans/07-beban-puncak-cukai.jmx \
+     -Jpengguna=300 -Jrampup=30 -Jtempoh=300 -Jsla_ms=2000 \
+     -l hasil/r7.jtl -e -o hasil/laporan7
+   ```
+4. Turunkan `-Jsla_ms=150` dan jalankan semula. Perhatikan Error % naik — sampel yang
+   langgar SLA kini ditanda **gagal** oleh Duration Assertion.
+
+> Bandingkan dengan `test-plans/07-beban-puncak-cukai.jmx` (rujukan lengkap).
+
+---
+
 ## Cabaran — tetapkan SLA & luluskan/gagalkan
 
 Takrifkan NFR: **95th percentile < 1500 ms** dan **Error % < 1%**. Tambah
-**Duration Assertion** dan semak laporan. Bincang: bagaimana anda akan
+**Duration Assertion** (lihat plan `07`) dan semak laporan. Bincang: bagaimana anda akan
 **automasikan** semakan ini dalam **CI/CD** (cth. gagalkan *build* jika ambang dilanggar)?

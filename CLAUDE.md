@@ -46,9 +46,23 @@ All `.jmx` are valid JMeter 5.6 XML and have been run non-GUI against the live m
 node sut/server.js &                      # start SUT
 jmeter -n -t hari-1/test-plans/03-csv-berparameter.jmx -l /tmp/r.jtl
 jmeter -n -t hari-2/test-plans/05-transaksi-penuh.jmx -l /tmp/r5.jtl
+jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx -Jpengguna=10 -Jrampup=2 -Jtempoh=8 -l /tmp/r7.jtl
 ```
 
+`07-beban-puncak-cukai.jmx` is the "price-hike-day" peak-load renew scenario: it pays road tax using the amount from the quote endpoint (`GET /cukai`) and gates each transaction with a **Duration Assertion** (SLA), tunable via `-Jsla_ms` (default 2000). Lower `-Jsla_ms` to demonstrate SLA breaches surfacing as Error %.
+
 CSV `filename` paths in the `.jmx` are **relative to the `.jmx` file** (`../data/...`), so run from any cwd but keep the folder layout intact.
+
+For a full load run with the HTML dashboard, use the wrapper (it points at `06-ujian-beban-nogui.jmx`):
+
+```bash
+cd hari-2/run
+./run-nogui.sh                        # default: 50 users, ramp 30s, 120s
+PENGGUNA=200 RAMPUP=60 TEMPOH=300 ./run-nogui.sh
+# report: hari-2/run/hasil/<timestamp>/laporan/index.html
+```
+
+Plan `06` reads its load model from JMeter properties, so it's tunable without editing the `.jmx`: `-Jpengguna` / `-Jrampup` / `-Jtempoh` / `-Jhost` / `-Jport` (defaults via `__P(...,<default>)`). The wrapper maps the `PENGGUNA`/`RAMPUP`/`TEMPOH`/`HOST`/`PORT` env vars onto those `-J` flags. Plan `07` adds `-Jsla_ms` on top of these.
 
 ⚠️ **`hari-1/test-plans/04-rakaman-mentah.jmx` is intentionally broken — do not "fix" it.** It's the raw output of the HTTP(S) Test Script Recorder with a hardcoded/expired `token` + `csrf`. On replay, login returns 200 but `/api/kenderaan` and `bayar-cukai` return **401**, and the `BERJAYA` assertion fails — that failure is the teaching point (it motivates Day 2 correlation; the corrected version is `hari-2/test-plans/04-korelasi-log-masuk.jmx`). Its embedded `ProxyControl` (HTTP(S) Test Script Recorder) is a GUI-only, non-test element and stays `enabled="false"` so non-GUI runs ignore it.
 

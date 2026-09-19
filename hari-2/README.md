@@ -187,6 +187,21 @@ Laporan HTML dashboard mengandungi bahagian penting:
 
 > **Konsep — mencari titik pecah (breaking point):** Naikkan beban berperingkat (`-Jpengguna=50`, `150`, `400`). Titik di mana percentile melonjak atau Error % naik mendadak ialah **had kapasiti** — output paling berharga sesuatu stress test.
 
+### Senario puncak: Hari Kenaikan Harga Cukai (`07-beban-puncak-cukai.jmx`)
+
+Ini menggabungkan semua yang di atas ke dalam satu **use case JPJ realistik** — lonjakan pembaharuan cukai jalan pada hari harga naik. Aliran transaksinya menggunakan **sebut harga sebagai sumber amaun** (bukan mengeras-kod): log masuk → senarai kenderaan → `GET /cukai` (ekstrak `amaun` + `tempoh_bulan`) → `bayar-cukai`. Ia juga **menguatkuasakan SLA per-transaksi** dengan **Duration Assertion** — sampel yang melebihi ambang ditanda **gagal**, jadi pelanggaran SLA muncul sebagai Error % dalam laporan, bukan hanya angka percentile.
+
+```bash
+cd hari-2/run
+PENGGUNA=300 RAMPUP=30 TEMPOH=300 ./run-nogui.sh    # tukar test-plans/06 → 07 di dalam skrip, atau:
+
+jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx \
+  -Jpengguna=300 -Jrampup=30 -Jtempoh=300 -Jsla_ms=2000 \
+  -l hasil/results.jtl -e -o hasil/laporan
+```
+
+Semua beban dikawal melalui property: `-Jpengguna` `-Jrampup` `-Jtempoh` `-Jhost` `-Jport`, dan **ambang SLA** melalui `-Jsla_ms` (lalai `2000`). Turunkan `-Jsla_ms` (cth. `-Jsla_ms=150`) untuk melihat Duration Assertion mula menandakan sampel gagal — cara padat menunjukkan hubungan **ambang SLA ↔ Error %**.
+
 ---
 
 ## Langkah 6: Distributed / Remote Testing (Sekilas)
