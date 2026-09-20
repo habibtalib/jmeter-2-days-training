@@ -25,14 +25,16 @@ Ini membolehkan deck berfungsi terus dari `file://` tanpa CDN atau pelayan pemba
 - Ctrl/Cmd + F: carian
 - Alt + klik: zum
 
-## Kandungan Deck (32 slaid)
+## Kandungan Deck (36 slaid)
 
 | Bahagian | Tajuk |
 |----------|-------|
-| Pembuka | Gambaran kursus, hasil pembelajaran, rentak kelas, peta jalan, apa itu performance testing, jenis ujian (Load/Stress/Spike/Soak/Scalability), SUT mock eJPJ + etika, endpoint mock |
+| Pembuka | Gambaran kursus, hasil pembelajaran, rentak kelas, peta jalan, apa itu performance testing, jenis ujian (Load/Stress/Spike/Soak/Scalability), **apa itu load testing, alat load testing (JMeter/WebLOAD/LoadUI/LoadRunner/NeoLoad/LoadNinja), apa itu JMeter, kenapa JMeter**, SUT mock eJPJ + etika, endpoint mock |
 | Hari 1 | Pasang JMeter (Java), GUI vs non-GUI, anatomi Test Plan, peranan elemen, Thread Group, HTTP Request Sampler, Config Elements, Listeners, CSV Data Set Config, Assertions, Timers |
 | Hari 2 | Correlation (token/csrf), Extractors (JSON/Regex/Boundary), Logic Controllers, JSR223 Groovy + functions, larian non-GUI + laporan HTML, membaca metrik (throughput/percentile/error %), ujian teragih, CI/CD + monitoring, amalan terbaik |
 | Penutup | Ringkasan aliran kerja + langkah seterusnya |
+
+> **Sumber intro:** empat slaid pembuka (apa itu load testing → alat → apa itu JMeter → kenapa JMeter) diadaptasi daripada video pengenalan Simplilearn, *“JMeter Load Testing — Tutorial For Beginners”* ([YouTube](https://www.youtube.com/watch?v=NTyY8wKSvik)).
 
 ## Etika Ujian
 
