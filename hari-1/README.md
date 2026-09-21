@@ -268,6 +268,8 @@ Selain membina sampler satu-satu, JMeter boleh **merakam** trafik sebenar melalu
    ```
 6. Klik **Stop**. Sampler yang dirakam kini berada dalam Recording Controller.
 
+> **Pintasan — templat perakam siap sedia:** Daripada membina perakam dari awal, buka [`test-plans/rakam-template.jmx`](./test-plans/rakam-template.jmx) — **HTTP(S) Test Script Recorder** (port 8888) + **Recording Controller** sudah dipasang dan disasarkan ke `localhost`. Terus klik **Start**, layari melalui pelayar yang dikonfigur ke proxy, dan rakam. (Untuk sasaran **HTTPS**, pasang sijil `ApacheJMeterTemporaryRootCA.crt` dalam pelayar dahulu.)
+
 > **⚠️ Konsep terpenting — rakaman TIDAK korelasi secara automatik:** Perakam mengeras-kod nilai yang dilihat pada masa rakaman, termasuk **token** & **csrf** sesi tersebut. Bila anda main balik, sesi itu sudah luput → permintaan berkumpul jadi **401/403**. Membaiki ini = **korelasi** (Hari 2).
 
 **Cuba main balik (bukti):** buka [`test-plans/04-rakaman-mentah.jmx`](./test-plans/04-rakaman-mentah.jmx) — hasil rakaman "mentah" dengan token dikeras-kod:
