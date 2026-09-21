@@ -127,6 +127,35 @@ Keputusan yang dijangka (disahkan):
 
 ---
 
+## Langkah 6 — Jana laporan HTML dari rakaman
+
+Tambah `-e -o <folder>` pada larian untuk menjana **laporan dashboard HTML** terus dari main balik:
+
+```bash
+# folder output MESTI kosong / belum wujud
+jmeter -n -t hari-1/test-plans/04-rakaman-mentah.jmx \
+  -l /tmp/rec.jtl -e -o /tmp/laporan-rakaman/
+open /tmp/laporan-rakaman/index.html          # Windows: start /tmp\laporan-rakaman\index.html
+```
+
+Atau jana **kemudian** dari `.jtl` sedia ada:
+```bash
+jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/
+```
+
+**Apa yang laporan tunjuk:**
+
+| Rakaman | Error % | Sebab |
+|---------|---------|-------|
+| **Mentah** (`04-rakaman-mentah.jmx`) | **~67%** | Token/csrf dikeras-kod → 401 semasa main balik |
+| **Dikorelasi** (`hari-2/…/05-transaksi-penuh.jmx`) | **0%** | JSON Extractor tangkap token/csrf pada masa larian |
+
+> Inilah nilai laporan: ia **menunjukkan dengan jelas** kesan korelasi — Error % jatuh dari ~67% ke 0% selepas rakaman dibersihkan. (Laporan penuh: APDEX, percentile 90/95/99, throughput, error %.)
+
+> **Nota:** rakaman biasa berjalan 1 pengguna × 1 gelung → sedikit sampel → laporan nipis. Untuk laporan bermakna, naikkan threads/loops atau guna [`hari-2/run/run-nogui.sh`](../../hari-2/run/run-nogui.sh).
+
+---
+
 ## Kesimpulan
 
 Anda telah menyiapkan **satu kitaran penuh**: **rakam → jana sampler → main balik → gagal**.
