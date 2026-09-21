@@ -60,6 +60,29 @@ Fail rujukan (jawapan) ada dalam `hari-1/test-plans/`. Cuba bina sendiri dahulu 
 
 > **Soalan reflektif:** Mengapa throughput jatuh apabila latensi naik walaupun bilangan pengguna sama? (Petunjuk: setiap thread menunggu lebih lama sebelum boleh menghantar permintaan seterusnya.)
 
+## Latihan 6 — Rakam Test Plan & lihat ia gagal main balik
+
+1. **Klik kanan Test Plan → Add → Non-Test Elements → HTTP(S) Test Script Recorder.**
+   Tambah **Recording Controller** di bawah Thread Group dan set sebagai **Target Controller** perakam.
+2. Pada perakam: **Requests Filtering → Excludes** → tambah regex aset statik
+   `(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|eot|otf|ttf|mp4|woff|woff2)([?;].*)?`.
+3. Klik **Start**. Hantar satu permintaan melalui proxy JMeter (port 8888):
+   ```bash
+   curl -s -x http://localhost:8888 -H 'Content-Type: application/json' \
+     -d '{"no_kp":"800101015500","kata_laluan":"rahsia123"}' \
+     http://localhost:3000/api/log-masuk
+   curl -s -x http://localhost:8888 -H 'Authorization: Bearer TOKEN_PALSU' \
+     'http://localhost:3000/api/kenderaan?no_kp=800101015500'
+   ```
+4. Klik **Stop**. Lihat sampler yang dirakam dalam Recording Controller.
+5. **Main balik** (Run). Perhatikan permintaan berkumpul → **401** kerana token dirakam
+   sudah luput / palsu.
+
+> **Soalan analisis:** Nilai manakah yang **berubah setiap sesi** dan perlu **dikorelasi**
+> (bukan dikeras-kod)? Bandingkan dengan rujukan siap
+> [`test-plans/04-rakaman-mentah.jmx`](../test-plans/04-rakaman-mentah.jmx) — pembetulannya
+> ada di Hari 2 (korelasi `token` + `csrf`).
+
 ---
 
 ## Cabaran

@@ -19,7 +19,7 @@ Panduan langkah demi langkah untuk membina ujian prestasi (**performance test**)
 JMeter berjalan atas **Java**. Pasang **JDK 11 atau lebih baru** (disyorkan JDK 17/21 LTS).
 
 ```bash
-java -version      # sahkan Java wujud
+java --version      # sahkan Java wujud
 ```
 
 - **macOS:** `brew install openjdk@21` (atau muat turun dari Adoptium/Temurin).
@@ -248,6 +248,42 @@ Menghantar `WXY1234` seribu kali tidak realistik — ia mengenakan cache dan tid
 
 ---
 
+## Langkah 8: Rakam Test Plan (HTTP(S) Test Script Recorder)
+
+Selain membina sampler satu-satu, JMeter boleh **merakam** trafik sebenar melalui **proxy** dan menjananya menjadi sampler secara automatik. Berguna untuk aliran panjang (banyak permintaan) supaya anda tidak menaip setiap satu.
+
+**Cara ia berfungsi:** JMeter memasang satu **proxy** (lalai port `8888`). Anda tetapkan pelayar/aplikasi untuk melalui proxy itu; setiap permintaan yang dibuat **dirakam** ke dalam **Recording Controller**.
+
+**Sediakan (di GUI):**
+
+1. **Klik kanan Test Plan → Add → Non-Test Elements → HTTP(S) Test Script Recorder.**
+2. **Klik kanan Thread Group → Add → Logic Controller → Recording Controller** (destinasi rakaman). Set **Target Controller** perakam kepada Recording Controller itu.
+3. Pada perakam, **Requests Filtering → Excludes:** tambah regex aset statik `(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|eot|otf|ttf|mp4|woff|woff2)([?;].*)?` supaya imej/CSS/JS tidak dirakam.
+4. Klik **Start**. Untuk **HTTPS**, pasang sijil JMeter (`ApacheJMeterTemporaryRootCA.crt` dari folder `bin/`) dalam pelayar — SUT kita `http://` jadi ini **tidak** perlu.
+5. Hantar trafik melalui proxy. Contoh cepat tanpa pelayar (guna `curl` dengan proxy JMeter):
+   ```bash
+   curl -s -x http://localhost:8888 -H 'Content-Type: application/json' \
+     -d '{"no_kp":"800101015500","kata_laluan":"rahsia123"}' \
+     http://localhost:3000/api/log-masuk
+   ```
+6. Klik **Stop**. Sampler yang dirakam kini berada dalam Recording Controller.
+
+> **⚠️ Konsep terpenting — rakaman TIDAK korelasi secara automatik:** Perakam mengeras-kod nilai yang dilihat pada masa rakaman, termasuk **token** & **csrf** sesi tersebut. Bila anda main balik, sesi itu sudah luput → permintaan berkumpul jadi **401/403**. Membaiki ini = **korelasi** (Hari 2).
+
+**Cuba main balik (bukti):** buka [`test-plans/04-rakaman-mentah.jmx`](./test-plans/04-rakaman-mentah.jmx) — hasil rakaman "mentah" dengan token dikeras-kod:
+
+```bash
+node sut/server.js &     # pastikan SUT berjalan
+jmeter -n -t hari-1/test-plans/04-rakaman-mentah.jmx -l /tmp/r04.jtl
+# /api/log-masuk → 200 ; /api/kenderaan → 401 ; bayar-cukai → 401 (Assertion BERJAYA gagal)
+```
+
+Log masuk berjaya, tetapi dua permintaan seterusnya **401** kerana token rakaman sudah luput. Plan ini sengaja **rosak** untuk menunjukkan sebab korelasi diperlukan — dibaiki di [`hari-2/test-plans/04-korelasi-log-masuk.jmx`](../hari-2/test-plans/04-korelasi-log-masuk.jmx).
+
+> **Petua bersih-selepas-rakam:** Buang permintaan aset/analitik yang tak berkaitan, namakan semula sampler dengan bermakna, tambah **Header Manager**, **think time**, dan **CSV** — kemudian **korelasikan** nilai dinamik. Rakaman ialah titik mula, bukan produk siap.
+
+---
+
 ## Latihan — Senario Sebenar JPJ (Use Cases)
 
 Kaitkan kemahiran Hari 1 dengan soalan operasi sebenar. Semua guna alat Hari 1 sahaja.
@@ -284,6 +320,7 @@ Tahniah! Anda telah:
 - [x] Menambah **Response & Duration Assertion**
 - [x] Menambah **Timer** (think time) dan memahami kesannya pada throughput
 - [x] Memparameter data dengan **CSV Data Set Config** dan pembolehubah `${...}`
+- [x] **Merakam** Test Plan dengan **HTTP(S) Test Script Recorder** dan memahami mengapa rakaman perlu **dikorelasi**
 
 > **Lab:** Selesaikan [`snippets/lab.md`](./snippets/lab.md) sebelum Hari 2.
 

@@ -23,7 +23,7 @@ This layout mirrors the sibling `nodejs-2-days-training` and `powerbi-2-days-tra
 
 ## Course Progression
 
-1. **Hari 1** — Install Java/JMeter, run the SUT, Test Plan anatomy & scope-by-position, Thread Group (threads/ramp-up/loop), HTTP Request Defaults + Header Manager, Listeners (View Results Tree / Summary / Aggregate), Response + Duration Assertions, Timers (think time), CSV Data Set parameterization.
+1. **Hari 1** — Install Java/JMeter, run the SUT, Test Plan anatomy & scope-by-position, Thread Group (threads/ramp-up/loop), HTTP Request Defaults + Header Manager, Listeners (View Results Tree / Summary / Aggregate), Response + Duration Assertions, Timers (think time), CSV Data Set parameterization, recording with the HTTP(S) Test Script Recorder (motivates Day 2 correlation).
 2. **Hari 2** — Correlation (JSON/Regex/Boundary Extractor for `token` + `csrf`), Logic Controllers (Transaction, If), JSR223 Groovy + JMeter functions (`__Random`/`__UUID`/`__P`), non-GUI runs + HTML dashboard, reading throughput/percentile/error%/APDEX + SLA/NFR, brief distributed testing / CI-CD / Grafana.
 
 ## SUT Contract (keep test plans in sync with this)
@@ -49,6 +49,8 @@ jmeter -n -t hari-2/test-plans/05-transaksi-penuh.jmx -l /tmp/r5.jtl
 ```
 
 CSV `filename` paths in the `.jmx` are **relative to the `.jmx` file** (`../data/...`), so run from any cwd but keep the folder layout intact.
+
+⚠️ **`hari-1/test-plans/04-rakaman-mentah.jmx` is intentionally broken — do not "fix" it.** It's the raw output of the HTTP(S) Test Script Recorder with a hardcoded/expired `token` + `csrf`. On replay, login returns 200 but `/api/kenderaan` and `bayar-cukai` return **401**, and the `BERJAYA` assertion fails — that failure is the teaching point (it motivates Day 2 correlation; the corrected version is `hari-2/test-plans/04-korelasi-log-masuk.jmx`). Its embedded `ProxyControl` (HTTP(S) Test Script Recorder) is a GUI-only, non-test element and stays `enabled="false"` so non-GUI runs ignore it.
 
 ## Language & Conventions
 

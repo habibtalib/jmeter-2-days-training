@@ -64,7 +64,7 @@ jmeter-2-days-training/
 │   └── README.md                   # Endpoint + cara jalankan
 ├── hari-1/                         # Hari 1 — Asas JMeter & Ujian Beban
 │   ├── README.md                   # Nota lengkap langkah demi langkah
-│   ├── test-plans/                 # 01-hello, 02-cukai-beban, 03-csv-berparameter (.jmx)
+│   ├── test-plans/                 # 01-hello, 02-cukai-beban, 03-csv-berparameter, 04-rakaman-mentah (.jmx)
 │   ├── data/                       # kenderaan.csv + kamus data
 │   └── snippets/                   # lab.md
 ├── hari-2/                         # Hari 2 — Lanjutan, Analisis & CI
