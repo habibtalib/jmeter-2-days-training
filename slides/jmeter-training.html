@@ -76,6 +76,9 @@
     .shot .frame { min-height: 0; display: flex; align-items: center; justify-content: center; }
     .shot img { max-width: 100%; max-height: 100%; object-fit: contain; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 30px rgba(23,33,43,0.16); background: #23272e; }
     .shot .cap { color: var(--muted); font-size: 17px; }
+    .agenda { list-style: none; margin: 0; padding: 0; display: grid; gap: 13px; counter-reset: a; max-width: 1020px; }
+    .agenda li { display: flex; align-items: center; gap: 18px; border: 1px solid var(--line); border-radius: 8px; padding: 13px 18px; background: var(--panel); color: var(--ink); font-size: 25px; font-weight: 820; box-shadow: 0 6px 18px rgba(23,33,43,0.05); }
+    .agenda li::before { counter-increment: a; content: counter(a); flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 20px; }
   </style>
 </head>
 <body>
@@ -102,6 +105,24 @@
           <div class="footer"><span>Portal eJPJ (tiruan) · System Under Test tempatan</span><span>Guna anak panah, Space, atau Esc untuk gambaran keseluruhan</span></div>
         </div>
         <aside class="notes">Tekankan: kita TIDAK menguji laman JPJ sebenar. Semua ujian dijalankan pada mock app tempatan di http://localhost:3000.</aside>
+      </section>
+
+      <!-- 1b. Agenda — What's in it for you -->
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">What's in it for you</div>
+          <div class="center-stack">
+            <h2>Apa untuk anda?</h2>
+            <ol class="agenda">
+              <li>Apa itu Load Testing?</li>
+              <li>Alat untuk Load Testing?</li>
+              <li>Apa itu JMeter?</li>
+              <li>Kenapa guna JMeter untuk Load Testing?</li>
+              <li>Demo: Ujian Beban JMeter</li>
+            </ol>
+          </div>
+          <div class="footer"><span>Agenda kursus</span><span>Asas: Simplilearn — “JMeter Load Testing”</span></div>
+        </div>
       </section>
 
       <!-- 2. Outcome -->
