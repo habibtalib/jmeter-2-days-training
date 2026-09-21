@@ -69,7 +69,7 @@ jmeter-2-days-training/
 │   └── snippets/                   # lab.md
 ├── hari-2/                         # Hari 2 — Lanjutan, Analisis & CI
 │   ├── README.md                   # Nota lengkap langkah demi langkah
-│   ├── test-plans/                 # 04-korelasi, 05-transaksi-penuh, 06-ujian-beban-nogui (.jmx)
+│   ├── test-plans/                 # 04-korelasi, 05-transaksi-penuh, 06-ujian-beban-nogui, 07-beban-puncak-cukai (.jmx)
 │   ├── data/                       # pengguna.csv, kenderaan.csv + kamus data
 │   ├── snippets/                   # jsr223-groovy.groovy, lab.md
 │   └── run/                        # run-nogui.sh / .bat (larian non-GUI + laporan HTML)
