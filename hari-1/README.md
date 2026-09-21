@@ -36,6 +36,33 @@ java --version      # sahkan Java wujud
 jmeter --version   # sahkan JMeter wujud
 ```
 
+#### Windows: jalankan `jmeter` dari mana-mana (tambah ke PATH)
+
+Secara lalai, Windows hanya kenal `jmeter` jika anda berada dalam folder `bin`. Untuk taip `jmeter` dari **mana-mana** folder, tambah folder `bin` JMeter ke **PATH**:
+
+1. **Nyahzip** JMeter ke lokasi tetap, cth. `C:\apache-jmeter-5.6.3`.
+2. Buka **Start → taip "environment variables" → "Edit the system environment variables" → Environment Variables…**
+3. Bawah **User variables** (tiada admin diperlukan), pilih **Path → Edit → New**, tampal:
+   ```
+   C:\apache-jmeter-5.6.3\bin
+   ```
+   Klik **OK** pada semua tetingkap.
+4. **Tutup dan buka semula** Command Prompt/PowerShell (perubahan PATH hanya berkuat kuasa dalam terminal baharu).
+5. Sahkan:
+   ```powershell
+   jmeter -v
+   ```
+
+**Cara PowerShell (tiada admin — PATH pengguna):**
+```powershell
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\apache-jmeter-5.6.3\bin", "User")
+# tutup & buka semula terminal, kemudian:  jmeter -v
+```
+
+> **JMeter perlu Java.** Jika `jmeter -v` mengadu Java tak dijumpai: pasang **JDK 11+**, dan set **`JAVA_HOME`** ke folder JDK (cth. `C:\Program Files\Eclipse Adoptium\jdk-21…`) serta tambah `%JAVA_HOME%\bin` ke PATH dengan cara yang sama. Sahkan: `java -version`.
+
+> **Nota:** Pada Windows, `jmeter` sebenarnya menjalankan `jmeter.bat` dalam folder `bin`. Semua arahan dalam nota ini (`jmeter -n -t … -l … -e -o …`) berfungsi sama, cuma guna backslash untuk laluan Windows (cth. `hari-2\test-plans\06-ujian-beban-nogui.jmx`).
+
 > **Konsep — GUI vs non-GUI:** JMeter GUI hanya untuk **membina & menyahpepijat** plan. Untuk **beban sebenar**, sentiasa jalankan mod **non-GUI** (`jmeter -n -t plan.jmx ...`) kerana GUI menggunakan banyak memori dan **memperlahankan** penjana beban. Kita bina di GUI hari ini; kita larikan beban sebenar secara non-GUI pada Hari 2.
 
 ### 3. Jalankan Sistem Under Test (SUT)
