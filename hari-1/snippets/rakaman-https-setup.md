@@ -38,13 +38,25 @@ sudo security add-trusted-cert -d -r trustRoot \
   -k /Library/Keychains/System.keychain \
   "/opt/homebrew/Cellar/jmeter/$(jmeter --version 2>/dev/null | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)/libexec/bin/ApacheJMeterTemporaryRootCA.crt"
 ```
-> **Alternatif pantas (Chrome sekali-guna):** jalankan satu profil Chrome sekali guna yang abai sijil — **jangan** guna profil utama anda:
+Sahkan ia dipercayai:
+```bash
+security dump-trust-settings -d 2>/dev/null | grep -i jmeter   # patut nampak CA JMeter
+```
+> **Selepas import ke System keychain, `--ignore-certificate-errors` TIDAK diperlukan lagi.** Chrome/Safari/Edge kini percaya CA JMeter secara sistem — anda boleh rakam HTTPS dalam Chrome **biasa** (cuma tetapkan proxy, Langkah 4).
+>
+> **Buang bila selesai** (trust MITM seluruh mesin — jangan biar kekal):
+> ```bash
+> sudo security delete-certificate -c "_ JMeter Root CA for recording (INSTALL ONLY IF IT S YOURS)" /Library/Keychains/System.keychain
+> ```
+
+> **Alternatif tanpa pasang sijil langsung (Chrome sekali-guna):** jika anda **tidak** mahu import CA ke keychain, jalankan satu profil Chrome sekali guna yang abai ralat sijil — **jangan** guna profil utama anda:
 > ```bash
 > "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
 >   --user-data-dir="/tmp/chrome-rakam" \
 >   --proxy-server=127.0.0.1:8888 --proxy-bypass-list="<-loopback>" \
 >   --ignore-certificate-errors --test-type --no-first-run about:blank
 > ```
+> (Jika CA sudah dipercayai dalam System keychain, tinggalkan `--ignore-certificate-errors` — proxy sahaja sudah memadai.)
 
 ## Langkah 4 — Tetapkan proxy pelayar
 
