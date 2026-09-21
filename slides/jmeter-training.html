@@ -71,6 +71,11 @@
     .reveal .controls { color: var(--accent); }
     .reveal .slide-number { border-radius: 999px; padding: 5px 9px; background: rgba(255,255,255,0.85); color: var(--ink); font-size: 12px; }
     @media print { .panel { box-shadow: none; } }
+    .shot { display: grid; grid-template-rows: auto minmax(0,1fr); gap: 10px; min-height: 0; }
+    .shot h3 { color: var(--ink); }
+    .shot .frame { min-height: 0; display: flex; align-items: center; justify-content: center; }
+    .shot img { max-width: 100%; max-height: 100%; object-fit: contain; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 10px 30px rgba(23,33,43,0.16); background: #23272e; }
+    .shot .cap { color: var(--muted); font-size: 17px; }
   </style>
 </head>
 <body>
@@ -760,6 +765,84 @@ jmeter -n -t plan.jmx -l results.jtl -e -o report/
             </table>
           </div>
           <div class="footer"><span>Peta kursus</span><span>Pasang → Bina → Correlation → Non-GUI → Analisis</span></div>
+        </div>
+      </section>
+
+      <!-- ===== DEMO (tangkapan skrin sebenar) ===== -->
+      <section class="chapter" data-background-color="#17212b">
+        <div class="slide-frame">
+          <div class="eyebrow">Demo</div>
+          <div class="center-stack">
+            <h1>Demo: Bina &amp; Jalankan di Portal eJPJ.</h1>
+            <p class="subtitle">Tangkapan skrin sebenar Apache JMeter 5.6 — daripada Test Plan hingga keputusan, menyasarkan mock <strong>Portal eJPJ</strong> di <code>localhost:3000</code>.</p>
+          </div>
+          <div class="footer"><span>Demo</span><span>Bina → Parameter → Correlation → Jalankan → Keputusan</span></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Demo · Langkah 1</div>
+          <div class="shot">
+            <h3>Test Plan dimuat — HTTP Request Defaults</h3>
+            <div class="frame"><img src="img/01-jmeter-open.png" alt="JMeter dengan Test Plan 05 dimuat, panel HTTP Request Defaults menunjuk localhost:3000"></div>
+          </div>
+          <div class="footer"><span>Server/port lalai sekali sahaja</span><span>localhost : 3000</span></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Demo · Langkah 2</div>
+          <div class="shot">
+            <h3>Parameterize dengan CSV Data Set Config</h3>
+            <div class="frame"><img src="img/02-csv-dataset.png" alt="CSV Data Set Config membaca pengguna.csv dengan pembolehubah no_kp,kata_laluan"></div>
+          </div>
+          <div class="footer"><span>Setiap thread data berlainan</span><span>no_kp · kata_laluan</span></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Demo · Langkah 3</div>
+          <div class="shot">
+            <h3>Thread Group — model beban</h3>
+            <div class="frame"><img src="img/03-thread-group.png" alt="Thread Group: 10 pengguna, ramp-up 10 saat, loop 2"></div>
+          </div>
+          <div class="footer"><span>10 pengguna · ramp-up 10s · 2 gelung</span><span>Number of Threads / Ramp-Up / Loop</span></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Demo · Langkah 4</div>
+          <div class="shot">
+            <h3>HTTP Request + Body Data berparameter</h3>
+            <div class="frame"><img src="img/04-sampler-login.png" alt="Sampler POST /api/log-masuk dengan Body Data JSON menggunakan ${no_kp} dan ${kata_laluan}"></div>
+          </div>
+          <div class="footer"><span>POST /api/log-masuk</span><span>Body: ${no_kp} · ${kata_laluan}</span></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Demo · Langkah 5</div>
+          <div class="shot">
+            <h3>Correlation — JSON Extractor (token &amp; csrf)</h3>
+            <div class="frame"><img src="img/05-json-extractor.png" alt="JSON Extractor mengekstrak token dan csrf dengan JSON Path $.token;$.csrf"></div>
+          </div>
+          <div class="footer"><span>Nilai dinamik ditangkap masa larian</span><span>$.token ; $.csrf</span></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="slide-frame">
+          <div class="eyebrow">Demo · Keputusan</div>
+          <div class="shot">
+            <h3>Summary Report — 100 sampel, 0% ralat</h3>
+            <div class="frame"><img src="img/06-summary-report.png" alt="Summary Report selepas larian: 100 sampel, 0.00% ralat, throughput dan purata masa per permintaan serta transaksi Pembaharuan Cukai Jalan"></div>
+          </div>
+          <div class="footer"><span>Throughput · Average · Error % · transaksi</span><span>GUI untuk debug — beban sebenar guna non-GUI</span></div>
         </div>
       </section>
 
