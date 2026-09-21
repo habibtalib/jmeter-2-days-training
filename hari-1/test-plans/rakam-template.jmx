@@ -65,9 +65,7 @@
         <collectionProp name="ProxyControlGui.exclude_list">
           <stringProp name="2036745628">(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|eot|otf|ttf|mp4|woff|woff2)([?;].*)?</stringProp>
         </collectionProp>
-        <collectionProp name="ProxyControlGui.include_list">
-          <stringProp name="2013762703">localhost.*</stringProp>
-        </collectionProp>
+        <collectionProp name="ProxyControlGui.include_list"/>
         <boolProp name="ProxyControlGui.capture_http_headers">true</boolProp>
         <intProp name="ProxyControlGui.grouping_mode">1</intProp>
         <boolProp name="ProxyControlGui.add_assertion">false</boolProp>

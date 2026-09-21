@@ -305,6 +305,8 @@ jmeter -n -t hari-1/test-plans/04-rakaman-mentah.jmx -l /tmp/r04.jtl
 
 Log masuk berjaya, tetapi dua permintaan seterusnya **401** kerana token rakaman sudah luput. Plan ini sengaja **rosak** untuk menunjukkan sebab korelasi diperlukan — dibaiki di [`hari-2/test-plans/04-korelasi-log-masuk.jmx`](../hari-2/test-plans/04-korelasi-log-masuk.jmx).
 
+> **Latihan penuh:** Untuk satu aliran lengkap **rakam → jana sampler → main balik → gagal**, ikut [`snippets/rakaman-e2e.md`](./snippets/rakaman-e2e.md).
+
 > **Petua bersih-selepas-rakam:** Buang permintaan aset/analitik yang tak berkaitan, namakan semula sampler dengan bermakna, tambah **Header Manager**, **think time**, dan **CSV** — kemudian **korelasikan** nilai dinamik. Rakaman ialah titik mula, bukan produk siap.
 
 ---

@@ -82,6 +82,8 @@ Fail rujukan (jawapan) ada dalam `hari-1/test-plans/`. Cuba bina sendiri dahulu 
 > (bukan dikeras-kod)? Bandingkan dengan rujukan siap
 > [`test-plans/04-rakaman-mentah.jmx`](../test-plans/04-rakaman-mentah.jmx) — pembetulannya
 > ada di Hari 2 (korelasi `token` + `csrf`).
+>
+> **Panduan hujung-ke-hujung langkah demi langkah:** [`rakaman-e2e.md`](./rakaman-e2e.md).
 
 ---
 
