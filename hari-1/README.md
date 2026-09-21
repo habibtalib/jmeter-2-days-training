@@ -252,23 +252,38 @@ Menghantar `WXY1234` seribu kali tidak realistik — ia mengenakan cache dan tid
 
 Selain membina sampler satu-satu, JMeter boleh **merakam** trafik sebenar melalui **proxy** dan menjananya menjadi sampler secara automatik. Berguna untuk aliran panjang (banyak permintaan) supaya anda tidak menaip setiap satu.
 
-**Cara ia berfungsi:** JMeter memasang satu **proxy** (lalai port `8888`). Anda tetapkan pelayar/aplikasi untuk melalui proxy itu; setiap permintaan yang dibuat **dirakam** ke dalam **Recording Controller**.
+**Cara ia berfungsi:** JMeter memasang satu **proxy** (lalai port `8888`). Anda tetapkan **Firefox** untuk melalui proxy itu; setiap permintaan **dirakam** ke dalam **Recording Controller**.
 
-**Sediakan (di GUI):**
+> **Mengapa Firefox?** Firefox ada **tetapan proxy tersendiri** — anda tak perlu ubah proxy seluruh OS (yang menjejaskan semua aplikasi lain). Ini menjadikannya pelayar paling bersih & selamat untuk merakam.
+
+**A. Sediakan perakam (di JMeter GUI):**
 
 1. **Klik kanan Test Plan → Add → Non-Test Elements → HTTP(S) Test Script Recorder.**
-2. **Klik kanan Thread Group → Add → Logic Controller → Recording Controller** (destinasi rakaman). Set **Target Controller** perakam kepada Recording Controller itu.
-3. Pada perakam, **Requests Filtering → Excludes:** tambah regex aset statik `(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|eot|otf|ttf|mp4|woff|woff2)([?;].*)?` supaya imej/CSS/JS tidak dirakam.
-4. Klik **Start**. Untuk **HTTPS**, pasang sijil JMeter (`ApacheJMeterTemporaryRootCA.crt` dari folder `bin/`) dalam pelayar — SUT kita `http://` jadi ini **tidak** perlu.
-5. Hantar trafik melalui proxy. Contoh cepat tanpa pelayar (guna `curl` dengan proxy JMeter):
-   ```bash
-   curl -s -x http://localhost:8888 -H 'Content-Type: application/json' \
-     -d '{"no_kp":"800101015500","kata_laluan":"rahsia123"}' \
-     http://localhost:3000/api/log-masuk
-   ```
-6. Klik **Stop**. Sampler yang dirakam kini berada dalam Recording Controller.
+2. **Klik kanan Thread Group → Add → Logic Controller → Recording Controller** (destinasi rakaman). Pada perakam, set **Target Controller → Test Plan > Thread Group > Recording Controller**.
+3. **Requests Filtering → Excludes:** tambah regex aset statik `(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|eot|otf|ttf|mp4|woff|woff2)([?;].*)?` supaya imej/CSS/JS tidak dirakam.
 
-> **Pintasan — templat perakam siap sedia:** Daripada membina perakam dari awal, buka [`test-plans/rakam-template.jmx`](./test-plans/rakam-template.jmx) — **HTTP(S) Test Script Recorder** (port 8888) + **Recording Controller** sudah dipasang dan disasarkan ke `localhost`. Terus klik **Start**, layari melalui pelayar yang dikonfigur ke proxy, dan rakam. (Untuk sasaran **HTTPS**, pasang sijil `ApacheJMeterTemporaryRootCA.crt` dalam pelayar dahulu.)
+> Atau langkau A1–A3: buka [`test-plans/rakam-template.jmx`](./test-plans/rakam-template.jmx) — semuanya sudah dipasang.
+
+**B. Konfigur Firefox untuk proxy:**
+
+4. Firefox → **Settings** → taip "proxy" dalam kotak carian → **Network Settings → Settings…**
+5. Pilih **Manual proxy configuration**: **HTTP Proxy** `localhost`, **Port** `8888`; tandakan **Also use this proxy for HTTPS**.
+6. **⚠️ Penting:** **kosongkan** `localhost, 127.0.0.1` dari kotak **No proxy for** — jika tidak, trafik localhost akan **memintas** proxy dan **tiada apa dirakam**. Klik **OK**.
+7. **Untuk sasaran HTTPS sahaja:** klik **Start** (langkah C8) sekali dahulu supaya JMeter menjana `ApacheJMeterTemporaryRootCA.crt` dalam folder `bin/`, kemudian di Firefox: **Settings → Privacy & Security → Certificates → View Certificates → Authorities → Import…** → pilih fail itu → tandakan **Trust this CA to identify websites**. *(SUT kita `http://`, jadi langkah sijil ini **tidak** perlu.)*
+
+**C. Rakam:**
+
+8. Di JMeter, pilih **HTTP(S) Test Script Recorder** → klik hijau **Start** ▶.
+9. Dalam **Firefox**, layari `http://localhost:3000` dan lakukan aliran (log masuk → semak kenderaan → bayar). Setiap permintaan muncul sebagai sampler dalam **Recording Controller**.
+   > Alternatif tanpa pelayar (guna `curl` melalui proxy JMeter — berguna untuk `POST`):
+   > ```bash
+   > curl -s -x http://localhost:8888 -H 'Content-Type: application/json' \
+   >   -d '{"no_kp":"800101015500","kata_laluan":"rahsia123"}' \
+   >   http://localhost:3000/api/log-masuk
+   > ```
+10. Klik **Stop** ⏹. **Pulihkan Firefox:** Network Settings → **Use system proxy settings** (atau *No proxy*) supaya pelayaran biasa berfungsi semula.
+
+> **Pintasan — templat perakam siap sedia:** Daripada membina perakam dari awal, buka [`test-plans/rakam-template.jmx`](./test-plans/rakam-template.jmx) — **HTTP(S) Test Script Recorder** (port 8888) + **Recording Controller** sudah dipasang dan disasarkan ke `localhost`. Terus klik **Start**, layari dalam **Firefox** yang dikonfigur ke proxy (bahagian B), dan rakam. (Untuk sasaran **HTTPS**, import sijil `ApacheJMeterTemporaryRootCA.crt` ke Firefox dahulu — langkah B7.)
 
 > **⚠️ Konsep terpenting — rakaman TIDAK korelasi secara automatik:** Perakam mengeras-kod nilai yang dilihat pada masa rakaman, termasuk **token** & **csrf** sesi tersebut. Bila anda main balik, sesi itu sudah luput → permintaan berkumpul jadi **401/403**. Membaiki ini = **korelasi** (Hari 2).
 
