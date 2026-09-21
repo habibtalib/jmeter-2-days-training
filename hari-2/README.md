@@ -104,6 +104,21 @@ Untuk API JSON kita, **JSON Extractor** paling bersih.
 
 > Rujuk: [`test-plans/05-transaksi-penuh.jmx`](./test-plans/05-transaksi-penuh.jmx).
 
+### Lanjutan: pengekstrakan pelbagai-nilai + ForEach Controller
+
+Senario sebenar: satu pengguna boleh ada **beberapa** kenderaan — bukan hanya `[0]`. Ekstrak **semua** kemudian gelung ke atasnya.
+
+1. **JSON Extractor** dengan **Match No. = `-1`** (semua padanan): `$.kenderaan[*].no_pendaftaran`, nama `no_pendaftaran`. Ini mencipta pemboleh ubah berindeks `no_pendaftaran_1`, `no_pendaftaran_2`, … dan `no_pendaftaran_matchNr`.
+2. **ForEach Controller** untuk gelung:
+   - **Input variable prefix:** `no_pendaftaran`
+   - **Output variable name:** `no_semasa`
+   - **Add "_" before number?** → **dicentang** (ia baca `no_pendaftaran_1`, dsb.)
+3. Dalam ForEach: `GET …/${no_semasa}/cukai` (ekstrak amaun) → `POST …/${no_semasa}/bayar-cukai`. Kini setiap kenderaan pengguna dibayar.
+
+> **Gotcha — "Add _ before number?":** JSON/Regex Extractor cipta `nama_1` (**ada** garis bawah). Jika kotak ini tidak dicentang, ForEach cari `nama1` (tiada garis bawah) → **0 lelaran**. Biarkan medan **Start/End index kosong** di GUI (jangan letak rentetan kosong secara manual dalam XML).
+
+> Rujuk: [`test-plans/08-foreach-kenderaan.jmx`](./test-plans/08-foreach-kenderaan.jmx) — bayar cukai bagi **semua** kenderaan setiap pengguna (disahkan: 3 pengguna → 5 kenderaan dibayar, 0 ralat).
+
 ---
 
 ## Langkah 3: JSR223 (Groovy) & Fungsi JMeter
