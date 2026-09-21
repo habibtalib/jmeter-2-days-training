@@ -37,6 +37,8 @@ Ujian ini menjawab soalan pengurusan seperti:
 | Apache JMeter | Alat ujian prestasi | [jmeter.apache.org](https://jmeter.apache.org/download_jmeter.cgi) |
 | Node.js | Menjalankan SUT tiruan | [nodejs.org](https://nodejs.org/) |
 
+> 🪟 **Pengguna Windows:** ikut panduan pemasangan langkah demi langkah dalam **[SETUP-WINDOWS.md](./SETUP-WINDOWS.md)** (Java, JMeter, Node.js, SUT, GUI, dan larian non-GUI `run-nogui.bat`).
+
 ## Konsep Utama yang Dipelajari
 
 | Lapisan | Kemahiran |
