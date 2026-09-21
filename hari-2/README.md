@@ -66,6 +66,10 @@ Untuk API JSON kita, **JSON Extractor** paling bersih.
 
 > **Eksperimen:** Ganti `${csrf}` dengan teks tetap salah → perhatikan **403 "Token CSRF tidak sah"**. Inilah sebab korelasi wajib.
 
+![HTTP Request `POST /api/log-masuk` — Body Data JSON dengan `${no_kp}` / `${kata_laluan}`](../slides/img/04-sampler-login.png)
+
+![JSON Extractor — Names `token;csrf`, JSON Path `$.token;$.csrf`, Default `TOKEN_TAK_JUMPA;CSRF_TAK_JUMPA`](../slides/img/05-json-extractor.png)
+
 > Rujuk: [`test-plans/04-korelasi-log-masuk.jmx`](./test-plans/04-korelasi-log-masuk.jmx).
 
 ---

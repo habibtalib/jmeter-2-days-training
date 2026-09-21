@@ -60,6 +60,8 @@ Anda sepatutnya nampak `Portal eJPJ (TIRUAN) berjalan di  http://localhost:3000`
 
 Setiap Test Plan disimpan sebagai satu fail **`.jmx`** (format XML).
 
+![Antara muka JMeter — pokok elemen di kiri, panel konfigurasi di kanan (di sini: HTTP Request Defaults ke `localhost:3000`)](../slides/img/01-jmeter-open.png)
+
 ---
 
 ## Pengenalan Ujian Prestasi (Performance Testing)
@@ -150,6 +152,8 @@ Dalam View Results Tree, klik sampel — anda sepatutnya nampak ikon **hijau**, 
 
 Ubah Thread Group anda kepada **20 / 10 / 5** untuk langkah seterusnya.
 
+![Panel Thread Group — Number of Threads, Ramp-up period, dan Loop Count](../slides/img/03-thread-group.png)
+
 ---
 
 ## Langkah 3: HTTP Header Manager
@@ -186,6 +190,8 @@ Tambah ketiga-tiga di bawah Thread Group. Jalankan ujian (20/10/5) dan perhatika
 > **Konsep penting — JANGAN guna GUI listener semasa beban sebenar.** View Results Tree menyimpan **setiap** respons dalam memori → penjana beban kehabisan RAM dan angka menjadi tidak tepat. Untuk beban sebenar (Hari 2), buang GUI listener dan tulis ke fail **`.jtl`** melalui `-l` dalam mod non-GUI.
 
 > **Konsep — Average boleh menipu:** Purata menyembunyikan puncak. Sentiasa lihat **percentile** — "95th percentile = 800 ms" bermakna 95% permintaan siap ≤ 800 ms (dan 5% lebih teruk). SLA biasanya ditulis dalam percentile, bukan purata.
+
+![Summary Report — # Samples, Average, Min/Max, Error %, Throughput bagi setiap label](../slides/img/06-summary-report.png)
 
 ---
 
@@ -243,6 +249,8 @@ Menghantar `WXY1234` seribu kali tidak realistik — ia mengenakan cache dan tid
 > **Konsep — `${nama}` ialah pembolehubah JMeter:** Sintaks `${no_pendaftaran}` menggantikan nilai dari CSV pada masa larian. Nilai ini boleh datang dari CSV, User Defined Variables, Extractor (Hari 2), atau fungsi terbina seperti `${__Random(1,100)}`.
 
 > **Konsep — Sharing mode:** *All threads* = satu barisan CSV dikongsi (baris seterusnya diberi kepada thread seterusnya). *Current thread group* / *Current thread* mengasingkan barisan. Untuk data unik-setiap-pengguna, gunakan dengan berhati-hati + `Recycle=False` + `Stop thread=True`.
+
+![CSV Data Set Config — Filename `../data/pengguna.csv`, Variable Names `no_kp,kata_laluan`, Sharing mode All threads](../slides/img/02-csv-dataset.png)
 
 > Rujuk fail siap: [`test-plans/03-csv-berparameter.jmx`](./test-plans/03-csv-berparameter.jmx).
 
