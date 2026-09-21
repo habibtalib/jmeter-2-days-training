@@ -23,6 +23,10 @@ Pada pemasangan Homebrew (macOS):
 ```
 /opt/homebrew/Cellar/jmeter/<versi>/libexec/bin/ApacheJMeterTemporaryRootCA.crt
 ```
+Pada Windows (biasanya):
+```
+C:\apache-jmeter-<versi>\bin\ApacheJMeterTemporaryRootCA.crt
+```
 > Sijil ini **sah 7 hari** sahaja — jana semula bila luput. Boleh **Stop** dahulu selepas ia dijana.
 
 ## Langkah 3 — Import sijil ke pelayar
@@ -31,7 +35,22 @@ Pada pemasangan Homebrew (macOS):
 1. **Settings → Privacy & Security → Certificates → View Certificates… → Authorities → Import…**
 2. Pilih `ApacheJMeterTemporaryRootCA.crt` → tandakan **Trust this CA to identify websites** → **OK**.
 
-**Chrome / Edge** (guna keychain sistem — macOS):
+**Chrome / Edge di Windows** (guna Windows Certificate Store):
+
+> ⚠️ Ralat **"cert not owner" / access denied** = anda cuba pasang ke store **Local Machine** tanpa hak **Administrator**. Pasang ke store **Current User** sahaja — tiada admin diperlukan.
+
+1. Klik dua kali `ApacheJMeterTemporaryRootCA.crt` → **Install Certificate**.
+2. **Store Location: Current User** (*bukan* Local Machine) → **Next**.
+3. Pilih **Place all certificates in the following store** → **Browse** → **Trusted Root Certification Authorities** → **OK** → **Next** → **Finish**.
+4. Terima amaran keselamatan → mulakan semula Chrome/Edge.
+
+PowerShell (tiada admin — store Current User):
+```powershell
+Import-Certificate -FilePath "$env:USERPROFILE\Desktop\ApacheJMeterTemporaryRootCA.crt" -CertStoreLocation Cert:\CurrentUser\Root
+```
+> **Buang bila selesai:** `certmgr.msc` → *Current User → Trusted Root Certification Authorities → Certificates* → padam **_ JMeter Root CA for recording**.
+
+**Chrome / Edge / Safari di macOS** (guna keychain sistem):
 ```bash
 # import sebagai CA dipercayai (akan minta kata laluan)
 sudo security add-trusted-cert -d -r trustRoot \
