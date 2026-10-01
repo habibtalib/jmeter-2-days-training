@@ -30,6 +30,12 @@ Fail rujukan ada dalam `hari-2/test-plans/`. Cuba bina sendiri dahulu.
 > **Eksperimen:** Padamkan `${csrf}` (guna nilai tetap salah). Perhatikan **403** — inilah sebab korelasi diperlukan.
 > Bandingkan dengan `test-plans/04-korelasi-log-masuk.jmx`.
 
+### ✅ Checkpoint
+
+- [ ] JSON Extractor mengekstrak `token` dan `csrf` dari respons log masuk
+- [ ] Permintaan `bayar-cukai` berjaya dan assertion `BERJAYA` lulus
+- [ ] Eksperimen `csrf` salah menunjukkan **403**
+
 ## Latihan 2 — Transaction Controller + If Controller
 
 1. Bungkus 4 sampler (log masuk → senarai → sebut harga → bayar) dalam satu
@@ -45,12 +51,23 @@ Fail rujukan ada dalam `hari-2/test-plans/`. Cuba bina sendiri dahulu.
 
 > Bandingkan dengan `test-plans/05-transaksi-penuh.jmx`.
 
+### ✅ Checkpoint
+
+- [ ] Empat sampler dibungkus dalam Transaction Controller `Pembaharuan Cukai Jalan`
+- [ ] If Controller membungkus sebut harga + bayar dengan syarat `no_pendaftaran != "NONE"`
+- [ ] Larian 10 pengguna × 2 gelung menunjukkan masa transaksi dalam Summary Report
+
 ## Latihan 3 — JSR223 (Groovy)
 
 1. Tambah **JSR223 PostProcessor** (Language: `groovy`) di bawah sampler log masuk.
 2. Salin blok "PostProcessor" dari `jsr223-groovy.groovy` — sahkan token wujud,
    tandakan sampel gagal jika tiada.
 3. Jalankan; cuba matikan pelayan seketika untuk lihat sampel ditandakan gagal.
+
+### ✅ Checkpoint
+
+- [ ] JSR223 PostProcessor (Groovy) ditambah di bawah sampler log masuk
+- [ ] Sampel ditandakan gagal apabila token tiada (pelayan dimatikan seketika)
 
 ## Latihan 4 — Larian non-GUI + laporan HTML
 
@@ -69,6 +86,12 @@ Fail rujukan ada dalam `hari-2/test-plans/`. Cuba bina sendiri dahulu.
 3. Buka `hasil/<cap-masa>/laporan/index.html`. Terokai:
    **APDEX**, **Response Times Percentiles**, **Throughput**, **Errors**.
 
+### ✅ Checkpoint
+
+- [ ] Test Plan dijalankan dalam mod non-GUI (`run-nogui.sh` atau `jmeter -n`) tanpa ralat
+- [ ] Laporan HTML dijana dan `index.html` dibuka
+- [ ] APDEX, Response Times Percentiles, Throughput dan Errors diterokai dalam laporan
+
 ## Latihan 5 — Cari titik pecah (breaking point)
 
 1. Mulakan pelayan "perlahan": `LATENCY_MIN=200 LATENCY_MAX=800 ERROR_RATE=0.05 node server.js`.
@@ -77,6 +100,12 @@ Fail rujukan ada dalam `hari-2/test-plans/`. Cuba bina sendiri dahulu.
 
 > **Soalan analisis:** Pada bilangan pengguna berapa 95th percentile melebihi 2000 ms
 > atau Error % melebihi 1%? Itulah anggaran **kapasiti** sistem di bawah keadaan ini.
+
+### ✅ Checkpoint
+
+- [ ] Larian non-GUI dijalankan pada 50, 150 dan 400 pengguna dengan pelayan "perlahan"
+- [ ] 95th percentile dan Error % dicatat bagi setiap larian
+- [ ] Anggaran kapasiti (titik pecah) sistem dikenal pasti
 
 ---
 
@@ -99,6 +128,13 @@ Gabungkan korelasi + Transaction/If + sebut harga + SLA dalam satu senario beban
 
 > Bandingkan dengan `test-plans/07-beban-puncak-cukai.jmx` (rujukan lengkap).
 
+### ✅ Checkpoint
+
+- [ ] Aliran penuh log masuk → senarai → sebut harga → bayar cukai berjalan dengan nilai dikorelasi
+- [ ] Duration Assertion menggunakan ambang `${__P(sla_ms,2000)}`
+- [ ] Larian non-GUI 300 pengguna menjana laporan HTML
+- [ ] Dengan `-Jsla_ms=150`, Error % naik kerana sampel yang melanggar SLA ditanda gagal
+
 ---
 
 ## Cabaran — tetapkan SLA & luluskan/gagalkan
@@ -106,3 +142,10 @@ Gabungkan korelasi + Transaction/If + sebut harga + SLA dalam satu senario beban
 Takrifkan NFR: **95th percentile < 1500 ms** dan **Error % < 1%**. Tambah
 **Duration Assertion** (lihat plan `07`) dan semak laporan. Bincang: bagaimana anda akan
 **automasikan** semakan ini dalam **CI/CD** (cth. gagalkan *build* jika ambang dilanggar)?
+
+## Semakan kendiri
+
+- [ ] Saya boleh mengkorelasi `token` dan `csrf` dengan JSON Extractor
+- [ ] Saya boleh menggunakan Transaction Controller dan If Controller
+- [ ] Saya boleh menjalankan ujian non-GUI dan menjana laporan HTML
+- [ ] Saya boleh mentafsir 95th percentile, Error % dan APDEX untuk menetapkan SLA

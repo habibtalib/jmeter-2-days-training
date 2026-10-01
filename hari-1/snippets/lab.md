@@ -20,6 +20,11 @@ Fail rujukan (jawapan) ada dalam `hari-1/test-plans/`. Cuba bina sendiri dahulu 
 
 > Bandingkan dengan `test-plans/01-hello-jpj.jmx`.
 
+### ✅ Checkpoint
+
+- [ ] Test Plan berjalan dan View Results Tree menunjukkan kod **200** dengan respons `{"status":"ok"}`
+- [ ] Struktur plan sepadan dengan `test-plans/01-hello-jpj.jmx` (Thread Group → HTTP Request Defaults → HTTP Request → Listener)
+
 ## Latihan 2 — Ujian beban + assertion + timer
 
 1. Tukar Thread Group kepada **20 pengguna**, **ramp-up 10s**, **5 gelung**.
@@ -33,6 +38,13 @@ Fail rujukan (jawapan) ada dalam `hari-1/test-plans/`. Cuba bina sendiri dahulu 
 > **Soalan:** Berapa jumlah permintaan dijangka? (20 × 5 = 100). Sahkan.
 > Bandingkan dengan `test-plans/02-cukai-beban.jmx`.
 
+### ✅ Checkpoint
+
+- [ ] Thread Group ditetapkan 20 pengguna, ramp-up 10s, 5 gelung
+- [ ] Response Assertion (`amaun`) dan Duration Assertion (2000 ms) ditambah, serta Constant Timer 300 ms
+- [ ] Summary Report menunjukkan **100** permintaan dengan Error % 0%
+- [ ] Nilai **Throughput**, **Average** dan **Error %** dicatat
+
 ## Latihan 3 — Parameterisasi dengan CSV
 
 1. Tambah **CSV Data Set Config** membaca `../data/kenderaan.csv`
@@ -43,12 +55,24 @@ Fail rujukan (jawapan) ada dalam `hari-1/test-plans/`. Cuba bina sendiri dahulu 
 
 > Bandingkan dengan `test-plans/03-csv-berparameter.jmx`.
 
+### ✅ Checkpoint
+
+- [ ] CSV Data Set Config membaca `../data/kenderaan.csv` dengan pembolehubah `no_pendaftaran,model`
+- [ ] Path sampler menggunakan `${no_pendaftaran}`
+- [ ] View Results Tree menunjukkan nombor pendaftaran berlainan bagi setiap permintaan
+
 ## Latihan 4 — Buat assertion GAGAL (belajar dari kegagalan)
 
 1. Tambah satu baris palsu pada `hari-1/data/kenderaan.csv`, cth: `ABC0000,Kereta Hantu`.
 2. Jalankan semula Latihan 3. Perhatikan permintaan `ABC0000` **gagal**
    assertion (`amaun` tiada — endpoint pulangkan **404**).
 3. Lihat **Error %** meningkat dalam Summary Report. Buang baris palsu selepas selesai.
+
+### ✅ Checkpoint
+
+- [ ] Permintaan `ABC0000` gagal assertion (endpoint pulangkan **404**)
+- [ ] Error % dalam Summary Report meningkat
+- [ ] Baris palsu dibuang dari `kenderaan.csv` selepas selesai
 
 ## Latihan 5 — Kesan latensi terhadap prestasi
 
@@ -59,6 +83,12 @@ Fail rujukan (jawapan) ada dalam `hari-1/test-plans/`. Cuba bina sendiri dahulu 
 2. Jalankan semula Latihan 2. Bandingkan **Average** dan **Throughput** dengan larian asal.
 
 > **Soalan reflektif:** Mengapa throughput jatuh apabila latensi naik walaupun bilangan pengguna sama? (Petunjuk: setiap thread menunggu lebih lama sebelum boleh menghantar permintaan seterusnya.)
+
+### ✅ Checkpoint
+
+- [ ] Pelayan dimulakan semula dengan `LATENCY_MIN=300 LATENCY_MAX=900`
+- [ ] Average dan Throughput dibandingkan dengan larian asal Latihan 2
+- [ ] Boleh menerangkan mengapa throughput jatuh apabila latensi naik
 
 ## Latihan 6 — Rakam Test Plan & lihat ia gagal main balik
 
@@ -85,8 +115,23 @@ Fail rujukan (jawapan) ada dalam `hari-1/test-plans/`. Cuba bina sendiri dahulu 
 >
 > **Panduan hujung-ke-hujung langkah demi langkah:** [`rakaman-e2e.md`](./rakaman-e2e.md).
 
+### ✅ Checkpoint
+
+- [ ] HTTP(S) Test Script Recorder dan Recording Controller (Target Controller) disediakan, dengan regex aset statik dalam Excludes
+- [ ] Sampler `/api/log-masuk` dan `/api/kenderaan` dirakam dalam Recording Controller
+- [ ] Main balik menunjukkan **401** kerana token dirakam sudah luput / palsu
+- [ ] Boleh menerangkan nilai yang berubah setiap sesi dan perlu dikorelasi (`token`, `csrf`)
+
 ---
 
 ## Cabaran
 
 Bina **satu Test Plan** dengan **dua sampler** (`/api/health` dan `/api/saman?no_kp=900202025600`) di bawah Thread Group yang sama, setiap satu dengan Response Assertion tersendiri. Susun elemen dengan betul (Config → Sampler → Assertion → Listener) dan terangkan **skop** setiap elemen kepada rakan sebelah anda.
+
+## Semakan kendiri
+
+- [ ] Saya boleh membina Test Plan dengan Thread Group, HTTP Request Defaults, sampler dan listener
+- [ ] Saya boleh menambah Response Assertion, Duration Assertion dan Timer
+- [ ] Saya boleh memparameter permintaan dengan CSV Data Set Config
+- [ ] Saya boleh membaca Throughput, Average, Error % dan percentile dalam Summary / Aggregate Report
+- [ ] Saya boleh merakam Test Plan dengan HTTP(S) Test Script Recorder
