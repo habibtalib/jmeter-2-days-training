@@ -279,7 +279,7 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
 .divider .sessions div small{display:block;font-family:var(--mono);font-size:11.5px;color:#9FB2D3}
 .divider .sessions i{font-style:normal;font-family:var(--mono);font-size:12px;font-weight:700;color:var(--glow);border:1px solid rgba(255,210,77,.4);border-radius:7px;text-align:center;padding:2px 0;height:22px}
 .sesi ul.list{max-width:640px;margin-top:22px}
-.sesi ul.list li{font-size:17px;margin-bottom:8px}
+.sesi ul.list li{font-size:17px;margin-bottom:8px;color:#C9D5E8}
 .labline{display:inline-flex;gap:10px;align-items:center;margin-top:14px;font-family:var(--mono);font-size:13px;color:#DCE6F7;
   border:1px solid rgba(74,222,128,.4);background:rgba(74,222,128,.08);border-radius:10px;padding:7px 12px}
 .labline b{color:var(--signal)}
@@ -446,7 +446,7 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
   </div>
   <div class="tiles">
     <div class="tile m-h1"><div class="sq">H1</div><div><b>Asas JMeter &amp; ujian beban</b><span>Isnin 21 Sep · 01 → 04 .jmx</span></div></div>
-    <div class="tile m-violet"><div class="sq">H2</div><div><b>Lanjutan &amp; analisis SLA</b><span>Isnin 5 Okt · 04 → 08 .jmx</span></div></div>
+    <div class="tile m-violet"><div class="sq">H2</div><div><b>Rakam, laporan &amp; perancangan</b><span>Isnin 5 Okt · rakam → laporan → pelan</span></div></div>
     <div class="tile m-jpj"><div class="sq">SUT</div><div><b>Portal eJPJ (tiruan)</b><span>http://localhost:3000</span></div></div>
     <div class="tile m-pass"><div class="sq">SLA</div><div><b>Senario puncak</b><span>07-beban-puncak-cukai.jmx</span></div></div>
   </div>
@@ -461,9 +461,9 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
     <div class="card top m-h1 sm"><span class="ico">🎯</span><h3>Faham ujian prestasi</h3><p>Load, Stress, Spike, Soak, Scalability — dan syarat etika sebelum menjana beban.</p></div>
     <div class="card top m-h1 sm"><span class="ico">🧱</span><h3>Bina Test Plan</h3><p>Thread Group, HTTP Request, Assertion, Timer dan CSV Data Set di GUI.</p></div>
     <div class="card top m-jpj sm"><span class="ico">🎬</span><h3>Rakam &amp; korelasi</h3><p>HTTP(S) Test Script Recorder, kemudian JSON Extractor untuk <code>token</code> + <code>csrf</code>.</p></div>
-    <div class="card top m-violet sm"><span class="ico">⚙️</span><h3>Logik &amp; skrip</h3><p>Transaction / If / ForEach Controller, JSR223 Groovy, fungsi <code>__P</code>.</p></div>
-    <div class="card top m-sky sm"><span class="ico">📊</span><h3>Larian &amp; analisis</h3><p>Non-GUI, HTML dashboard, percentile, APDEX dan titik pecah.</p></div>
-    <div class="card top m-pass sm"><span class="ico">🚦</span><h3>SLA &amp; automasi</h3><p>Duration Assertion <code>-Jsla_ms</code>, gerbang SLA untuk CI, Grafana.</p></div>
+    <div class="card top m-violet sm"><span class="ico">🔁</span><h3>Main balik yang betul</h3><p>Korelasi, parameterisasi CSV, Transaction Controller — rakaman jadi ujian yang boleh diulang.</p></div>
+    <div class="card top m-sky sm"><span class="ico">📊</span><h3>Laporan &amp; istilah</h3><p>Setiap bahagian HTML dashboard: APDEX, percentile, throughput, latency — dan cara menulis dapatan.</p></div>
+    <div class="card top m-pass sm"><span class="ico">🗺️</span><h3>Rancang ujian prestasi</h3><p>NFR boleh diukur, model beban (Little's Law), jenis ujian, kriteria masuk/keluar &amp; SLA <code>-Jsla_ms</code>.</p></div>
   </div>
   <div class="grid c4 mt16" style="gap:14px">
     <div class="kpi m-h1"><i>Hari</i><b>2</b><span>21 Sep &amp; 5 Okt 2026</span></div>
@@ -487,18 +487,18 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
     <div class="blk r"><i>3.30</i><b>Rehat</b></div>
     <div class="blk s"><i>3.45 – 5.00</i><div><b>S4</b><span>Rakaman: HTTP(S) Recorder</span></div></div>
   </div>
-  <p class="rlabel mt16">Hari 2 · Isnin 5 Okt · Lanjutan &amp; analisis</p>
+  <p class="rlabel mt16">Hari 2 · Isnin 5 Okt · Rakam, laporan &amp; perancangan</p>
   <div class="rhythm" style="grid-template-columns:3fr 1fr 4.5fr 2fr 3fr 1fr 2.5fr">
-    <div class="blk s h2"><i>9.00 – 10.30</i><div><b>S1</b><span>Imbas kembali &amp; korelasi</span></div></div>
+    <div class="blk s h2"><i>9.00 – 10.30</i><div><b>S1</b><span>Rakam &amp; main balik</span></div></div>
     <div class="blk r"><i>10.30</i><b>Rehat</b></div>
-    <div class="blk s h2"><i>10.45 – 1.00</i><div><b>S2</b><span>Logic Controllers, ForEach &amp; JSR223 Groovy</span></div></div>
+    <div class="blk s h2"><i>10.45 – 1.00</i><div><b>S2</b><span>Jadikan rakaman boleh dimain balik</span></div></div>
     <div class="blk r"><i>1.00 – 2.00</i><b>Makan tengah hari</b></div>
-    <div class="blk s h2"><i>2.00 – 3.30</i><div><b>S3</b><span>Non-GUI, HTML dashboard &amp; SLA</span></div></div>
+    <div class="blk s h2"><i>2.00 – 3.30</i><div><b>S3</b><span>Laporan &amp; istilah</span></div></div>
     <div class="blk r"><i>3.30</i><b>Rehat</b></div>
-    <div class="blk s h2"><i>3.45 – 5.00</i><div><b>S4</b><span>Distributed, CI/CD, Grafana &amp; penutup</span></div></div>
+    <div class="blk s h2"><i>3.45 – 5.00</i><div><b>S4</b><span>Merancang ujian prestasi</span></div></div>
   </div>
   <div class="callout info sm mt16"><span class="i">📝</span><div><b>Borang penilaian kursus</b> dalam pelatih.my dibuka <b>2.00 ptg Hari 2</b>. Setiap sesi berakhir dengan <b>kuiz sesi</b> — itulah bukti kemajuan anda.</div></div>
-  <aside class="notes"><p>Hari 1 dan Hari 2 dipisahkan dua minggu — sebab itu Hari 2 bermula dengan imbas kembali 15 minit. Masa ikut jadual dalam <code>hari-1/README.md</code> dan <code>hari-2/README.md</code>.</p><p>Setiap sesi: ±30% konsep &amp; demo, ±70% lab. Ingatkan tentang borang penilaian pada 2.00 ptg Hari 2.</p></aside>
+  <aside class="notes"><p>Hari 1 dan Hari 2 dipisahkan dua minggu — sebab itu Hari 2 bermula dengan imbas kembali 10 minit. Masa ikut jadual dalam <code>hari-1/README.md</code> dan <code>hari-2/README.md</code>.</p><p>Setiap sesi: ±30% konsep &amp; demo, ±70% lab. Ingatkan tentang borang penilaian pada 2.00 ptg Hari 2.</p></aside>
 </section>
 
 <section class="slide">
@@ -1330,7 +1330,7 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
       <li><span>Skop ikut kedudukan · threads × loop · percentile &gt; purata</span></li>
     </ul>
     <div class="stack">
-      <div class="card top m-violet sm"><span class="k">HARI 2 · ISNIN 5 OKT</span><h3>Korelasi, logik &amp; beban sebenar</h3><p>JSON Extractor untuk <code>token</code> + <code>csrf</code>, Transaction / If / ForEach, JSR223, non-GUI + dashboard, SLA, CI.</p></div>
+      <div class="card top m-violet sm"><span class="k">HARI 2 · ISNIN 5 OKT</span><h3>Rakam, laporan &amp; perancangan</h3><p>Rakam → main balik (korelasi <code>token</code> + <code>csrf</code>), jana &amp; baca HTML dashboard, istilah laporan, dan rancang ujian prestasi.</p></div>
       <div class="callout warn sm"><span class="i">🎒</span><div><b>Persediaan:</b> <code>jmeter -v</code> &amp; <code>node --version</code> (18+) berfungsi. Ingat dua 401 itu. Bawa catatan Throughput / Average / 95% Line Latihan 2 &amp; 5.</div></div>
       <div class="callout info sm"><span class="i">🎓</span><div>Hantar <b>Kuiz S4</b> dan <b>Kuiz hari — penilaian kendiri Hari 1</b>.</div></div>
     </div>
@@ -1341,189 +1341,306 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
 
 <!-- ============================ HARI 2 ============================ -->
 
-<section class="slide dark divider" data-label="Hari 2 · Lanjutan &amp; Analisis">
+<section class="slide dark divider" data-label="Hari 2 · Rakam, Laporan &amp; Perancangan">
   <div class="eyebrow">Hari 2 · Isnin 5 Okt 2026</div>
-  <h1>Korelasi, Logic Controllers, Non-GUI &amp; Analisis SLA</h1>
-  <div class="threads"><span class="chip">token + csrf · Transaction · ForEach</span><span class="chip">Hari Kenaikan Harga Cukai</span></div>
+  <h1>Rakam &amp; Main Balik, Laporan Prestasi &amp; Merancang Ujian</h1>
+  <div class="threads"><span class="chip">rakam → main balik → laporan → pelan</span><span class="chip">Hari Kenaikan Harga Cukai</span></div>
   <div class="sessions">
-    <div><i>S1</i><span>Imbas Kembali Hari 1 &amp; Korelasi<small>9.00 – 10.30</small></span></div>
-    <div><i>S2</i><span>Logic Controllers, ForEach &amp; JSR223 Groovy<small>10.45 – 1.00</small></span></div>
-    <div><i>S3</i><span>Non-GUI, HTML Dashboard &amp; SLA<small>2.00 – 3.30</small></span></div>
-    <div><i>S4</i><span>Distributed, CI/CD, Grafana &amp; Penutup<small>3.45 – 5.00</small></span></div>
+    <div><i>S1</i><span>Rakam &amp; Main Balik<small>9.00 – 10.30</small></span></div>
+    <div><i>S2</i><span>Jadikan Rakaman Boleh Dimain Balik<small>10.45 – 1.00</small></span></div>
+    <div><i>S3</i><span>Laporan &amp; Istilah<small>2.00 – 3.30</small></span></div>
+    <div><i>S4</i><span>Merancang Ujian Prestasi<small>3.45 – 5.00</small></span></div>
   </div>
-  <div class="dayrail"><span class="on"></span><span class="now"></span><em>hasil: 07-beban-puncak-cukai.jmx + gerbang SLA</em></div>
+  <div class="dayrail"><span class="on"></span><span class="now"></span><em>hasil: plan boleh dimain balik · laporan + 3 dapatan · pelan ujian</em></div>
   <div class="daynum"><small>HARI</small>02</div>
-  <aside class="notes"><p>Hari 2 naik taraf daripada "memukul satu endpoint" kepada senario pengguna penuh yang tahan beban: log masuk → semak kenderaan → sebut harga → bayar cukai.</p><p>Hasil hari ini: plan <code>07-beban-puncak-cukai.jmx</code> yang boleh dijalankan, dibaca dan dipertahankan di hadapan pengurusan. Borang penilaian kursus dibuka 2.00 ptg.</p></aside>
+  <aside class="notes"><p>Hari ini kita mengikut kitaran kerja seorang jurutera ujian prestasi dari awal hingga akhir: rancang perjalanan pengguna → rakam → main balik → jadikan boleh dimain balik → jalankan → jana laporan → baca setiap angka → tulis dapatan → rancang ujian sebenar.</p><p>Sebut terus: fokus penganjur ialah <b>laporan</b> (setiap bahagian dashboard + istilah) dan <b>cara merancang</b> ujian — itulah petang ini. Borang penilaian kursus dibuka 2.00 ptg. Soalan pembuka: "Siapa pernah diminta 'buat laporan prestasi' — apa yang anda serahkan?"</p></aside>
 </section>
 
 <section class="slide codey">
   <div class="eyebrow">Hari 2 · Objektif hari ini</div>
   <h2>Pada akhir Hari 2, anda boleh…</h2>
   <table class="t xs">
-    <tr><th style="width:44px">#</th><th>Objektif (boleh diukur)</th><th style="width:52px">Sesi</th><th style="width:400px">Bukti</th></tr>
-    <tr><td><b>O1</b></td><td><b>Menerangkan</b> kenapa replay gagal; parameterisasi vs korelasi</td><td>S1</td><td><code>04-rakaman-mentah</code>: 200 → 401 → 401 dijelaskan</td></tr>
-    <tr><td><b>O2</b></td><td><b>Membina</b> korelasi <code>token</code> + <code>csrf</code> (JSON / Regex / Boundary)</td><td>S1</td><td>Latihan 1: <code>BERJAYA</code>, 0% ralat · <code>csrf</code> salah → 403</td></tr>
-    <tr><td><b>O3</b></td><td><b>Membina</b> Transaction Controller + If Controller</td><td>S2</td><td>Latihan 2: baris <code>Pembaharuan Cukai Jalan</code> (10 × 2)</td></tr>
-    <tr><td><b>O4</b></td><td><b>Mengekstrak</b> pelbagai nilai (Match No. <code>-1</code>) + ForEach</td><td>S2</td><td><code>08-foreach-kenderaan</code>: 3 pengguna → 5 <code>BERJAYA</code></td></tr>
-    <tr><td><b>O5</b></td><td><b>Menulis</b> JSR223 Groovy &amp; guna fungsi <code>__Random/__UUID/__P/__time</code></td><td>S2</td><td>Latihan 3: log masuk gagal dengan mesej tersuai</td></tr>
-    <tr><td><b>O6</b></td><td><b>Menjalankan</b> non-GUI (<code>-Jpengguna/-Jrampup/-Jtempoh</code>) + dashboard</td><td>S3</td><td>Latihan 4: <code>hasil/&lt;cap-masa&gt;/laporan/index.html</code></td></tr>
-    <tr><td><b>O7</b></td><td><b>Mentafsir</b> APDEX, percentile, Error % · <b>mengenal pasti</b> titik pecah</td><td>S3</td><td>Latihan 5: jadual 50 / 150 / 400 pengguna</td></tr>
-    <tr><td><b>O8</b></td><td><b>Menguatkuasakan</b> SLA dengan Duration Assertion (<code>-Jsla_ms</code>)</td><td>S3</td><td>Latihan 6: <code>2000</code> → ≈ 0% · <code>150</code> → Error % naik</td></tr>
-    <tr><td><b>O9</b></td><td><b>Menghuraikan</b> distributed, CI/CD, Grafana &amp; <b>membina</b> gerbang SLA</td><td>S4</td><td>Latihan 7: skrip keluar kod <code>1</code> bila NFR dilanggar</td></tr>
+    <tr><th style="width:44px">#</th><th>Objektif (boleh diukur)</th><th style="width:52px">Sesi</th><th style="width:430px">Bukti</th></tr>
+    <tr><td><b>O1</b></td><td><b>Merancang</b> perjalanan 4 langkah &amp; <b>merakamnya</b> (proxy 8888) ke Transaction Controller bernama</td><td>S1</td><td>Latihan 1: 4 sampler <code>/api/...</code> dalam 4 kumpulan, tiada aset statik</td></tr>
+    <tr><td><b>O2</b></td><td><b>Mendiagnosis</b> main balik gagal &amp; <b>membezakan</b> 401 (token) dengan 403 (csrf)</td><td>S1</td><td>Latihan 2: 200 / 401 / 200 / 401 · token sahaja dikorelasi → 403</td></tr>
+    <tr><td><b>O3</b></td><td><b>Membaiki</b> rakaman: korelasi <code>token</code> + <code>csrf</code> &amp; CSV <code>pengguna.csv</code></td><td>S2</td><td>Latihan 3: Debug Sampler — token (UUID) + csrf (32 hex), 3 pengguna</td></tr>
+    <tr><td><b>O4</b></td><td><b>Menghasilkan</b> plan boleh dimain balik setara <code>05-transaksi-penuh.jmx</code></td><td>S2</td><td>Latihan 3: 80 sampel HTTP + 20 transaksi, Error % ≈ 0</td></tr>
+    <tr><td><b>O5</b></td><td><b>Menjana</b> HTML dashboard (<code>-e -o</code>, <code>-g … -o</code>) &amp; <b>melaras</b> dengan <code>-J</code></td><td>S3</td><td>Latihan 4: <code>index.html</code> + dashboard kedua dari <code>.jtl</code> sama</td></tr>
+    <tr><td><b>O6</b></td><td><b>Mentafsir</b> setiap bahagian dashboard dengan istilah yang betul</td><td>S3</td><td>Latihan 4: lembaran kerja 14 baris, nilai sebenar + tafsiran</td></tr>
+    <tr><td><b>O7</b></td><td><b>Menilai</b> larian puncak vs SLA &amp; <b>menulis</b> dapatan</td><td>S3</td><td>Latihan 5: tiga dapatan (SLA 2000 vs 150 ms)</td></tr>
+    <tr><td><b>O8</b></td><td><b>Merancang</b> ujian: NFR, Little's Law, jenis larian, kriteria, kebenaran</td><td>S4</td><td>Latihan 6: <code>templat-pelan-ujian.md</code> + pengiraan N &amp; pacing</td></tr>
+    <tr><td><b>O9</b></td><td><b>Membentangkan</b> pelan &amp; satu dapatan dalam 3 minit</td><td>S4</td><td>Latihan 7: pembentangan mini berpasangan</td></tr>
   </table>
-  <aside class="notes"><p>Sama seperti Hari 1: setiap objektif ada bukti dalam lab. Kita semak semula senarai ini sebelum penutup.</p><p>Tekankan O8 dan O9 — itulah yang membezakan "boleh guna JMeter" dengan "boleh mempertahankan keputusan ujian prestasi".</p></aside>
+  <aside class="notes"><p>Baca objektif dengan kuat. Setiap objektif ada kata kerja yang boleh diperhatikan dan bukti dalam lab — kemajuan dalam pelatih.my = kuiz di hujung setiap sesi.</p><p>Tekankan O6–O8: itulah yang membezakan "boleh menekan Start" dengan "boleh mempertahankan keputusan di hadapan pengurusan". Kita semak semula senarai ini di penutup.</p></aside>
 </section>
 
-<section class="slide codey">
-  <div class="eyebrow">Hari 2 · Persediaan</div>
-  <h2>Test plan Hari 2 &amp; SUT yang “bersih”</h2>
-  <table class="t sm">
-    <tr><th style="width:260px">Plan (<code>hari-2/test-plans/</code>)</th><th>Senario</th><th style="width:300px">Beban lalai</th></tr>
-    <tr><td><code>04-korelasi-log-masuk.jmx</code></td><td>Log masuk → senarai → bayar <code>WXY1234</code></td><td>5 pengguna · ramp 3 s · 3 gelung</td></tr>
-    <tr><td><code>05-transaksi-penuh.jmx</code></td><td>Transaction + If: log masuk → senarai → sebut harga → bayar</td><td>10 pengguna · ramp 10 s · 2 gelung</td></tr>
-    <tr><td><code>06-ujian-beban-nogui.jmx</code></td><td>Beban non-GUI (dipakai <code>run-nogui.sh</code>)</td><td><code>${__P(pengguna,50)}</code> · <code>rampup 30</code> · <code>tempoh 120</code> s</td></tr>
-    <tr class="hot"><td><code>07-beban-puncak-cukai.jmx</code></td><td>Hari Kenaikan Harga Cukai + SLA <code>${__P(sla_ms,2000)}</code></td><td><code>${__P(pengguna,300)}</code> · ramp 30 s · 300 s</td></tr>
-    <tr><td><code>08-foreach-kenderaan.jmx</code></td><td>ForEach: bayar cukai <b>semua</b> kenderaan</td><td>3 pengguna · ramp 3 s · 1 gelung</td></tr>
-  </table>
-  <div class="split mt16">
-    <div class="codewrap"><div class="codebar">Terminal A · SUT<span class="lang alt">sh</span></div>
-<pre class="code sm" data-lang="sh">cd sut &amp;&amp; node server.js        # biasa (~1% bayaran 500)
-cd sut &amp;&amp; ERROR_RATE=0 node server.js   # lab "bersih"</pre></div>
-    <div class="callout info sm"><span class="i">📂</span><div>Simpan plan latihan dalam <code>hari-2/test-plans/</code> (cth. <code>latihan-01-korelasi.jmx</code>) supaya <code>../data/pengguna.csv</code> sah.</div></div>
+<section class="slide">
+  <div class="eyebrow">Hari 2 · Kitaran kerja &amp; persediaan</div>
+  <h2 class="wide">Satu hari, satu kitaran penuh jurutera prestasi</h2>
+  <div class="flow sm">
+    <div class="node"><span class="k">S1</span><b>Rancang &amp; rakam</b><span>T01…T04, proxy 8888</span></div><div class="arr">→</div>
+    <div class="node bad"><span class="k">S1</span><b>Main balik</b><span>200 / 401 / 200 / 401</span></div><div class="arr">→</div>
+    <div class="node"><span class="k">S2</span><b>Bersihkan</b><span>korelasi, CSV, assertion</span></div><div class="arr">→</div>
+    <div class="node hot"><span class="k">S3</span><b>Laporan</b><span><code>.jtl</code> → dashboard</span></div><div class="arr">→</div>
+    <div class="node hot"><span class="k">S3</span><b>Tafsir &amp; dapatan</b><span>bukti → cadangan</span></div><div class="arr">→</div>
+    <div class="node good"><span class="k">S4</span><b>Pelan ujian</b><span>NFR, Little's Law</span></div>
   </div>
-  <aside class="notes"><p><code>pengguna.csv</code> mengandungi tiga pengguna sintetik (<code>no_kp,kata_laluan</code>, kata laluan <code>rahsia123</code>).</p><p>Untuk demo ralat/latensi gunakan <code>LATENCY_MIN</code>, <code>LATENCY_MAX</code>, <code>ERROR_RATE</code>. Semak <code>http://localhost:3000/api/health</code> sebelum mula.</p></aside>
+  <div class="split mt16" style="grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr)">
+    <table class="t xs">
+      <tr><th style="width:250px">Plan</th><th>Guna hari ini</th><th style="width:150px">Beban lalai</th></tr>
+      <tr><td><code>hari-1/…/rakam-template.jmx</code></td><td>Templat perakam (S1)</td><td>1 × 1</td></tr>
+      <tr><td><code>hari-1/…/04-rakaman-mentah.jmx</code></td><td>Rakaman sandaran — sengaja gagal (S1)</td><td>1 × 1</td></tr>
+      <tr><td><code>04-korelasi-log-masuk.jmx</code></td><td>Rujukan korelasi (S2)</td><td>5 · ramp 3 s · 3 gelung</td></tr>
+      <tr class="hot"><td><code>05-transaksi-penuh.jmx</code></td><td><b>Kunci jawapan</b> S2 + dashboard pertama S3</td><td>10 · ramp 10 s · 2 gelung</td></tr>
+      <tr><td><code>06-ujian-beban-nogui.jmx</code></td><td>Non-GUI via <code>run-nogui.sh</code> (pilihan)</td><td>50 · 30 s · 120 s</td></tr>
+      <tr class="hot"><td><code>07-beban-puncak-cukai.jmx</code></td><td>Senario puncak + SLA (S3, S4)</td><td>300 · 30 s · 300 s</td></tr>
+      <tr><td><code>08-foreach-kenderaan.jmx</code></td><td>⭐ ForEach (S2 pilihan)</td><td>3 · ramp 3 s · 1 gelung</td></tr>
+    </table>
+    <div class="stack tight">
+      <div class="codewrap"><div class="codebar">Terminal A · akar repo<span class="lang alt">sh</span></div>
+<pre class="code sm" data-lang="sh">node sut/server.js
+# Latensi tiruan : 40-180 ms
+# Kadar ralat    : 1.0%</pre></div>
+      <div class="callout info sm"><span class="i">💻</span><div>Di kelas, <code>07</code> dijalankan dengan <code>-Jpengguna=50 -Jrampup=10 -Jtempoh=60</code> (≈ 1 minit). Lalai 300 × 300 s untuk mesin yang lebih kuat.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Tunjuk kitaran ini sekali sekarang dan rujuk sepanjang hari — setiap sesi ialah satu atau dua kotak. Terminal A dibiarkan berjalan sepanjang hari; semak <code>http://localhost:3000/api/health</code>.</p><p>Soalan: "Daripada enam kotak ini, yang mana pengurusan anda benar-benar baca?" (Jawapan: laporan &amp; dapatan — kotak S3.) Ingatkan: simpan plan latihan dalam <code>hari-2/test-plans/</code> supaya <code>../data/pengguna.csv</code> sah.</p></aside>
 </section>
 
 <!-- ---------- Hari 2 · S1 ---------- -->
 
 <section class="slide dark sesi">
   <div class="eyebrow">Hari 2 · Sesi 1</div>
-  <h1>Imbas Kembali &amp; Korelasi</h1>
-  <div class="threads"><span class="chip">S1 · 9.00 – 10.30</span></div>
+  <h1>Rakam &amp; Main Balik</h1>
+  <div class="threads"><span class="chip">S1 · 9.00 – 10.30</span><span class="chip">record → playback</span></div>
   <ul class="list">
-    <li>Warm-up 15 minit: <code>01-hello-jpj</code> &amp; <code>03-csv-berparameter</code></li>
-    <li>Kenapa replay gagal · parameterisasi vs korelasi</li>
-    <li>JSON / Regex / Boundary Extractor untuk <code>token</code> + <code>csrf</code></li>
+    <li>Imbas kembali Hari 1 (10 minit) · rancang perjalanan <code>T01_LogMasuk</code> … <code>T04_BayarCukai</code></li>
+    <li><code>rakam-template.jmx</code>: proxy <b>8888</b>, Recording Controller, satu Transaction Controller setiap langkah, Excludes, <code>${T}</code></li>
+    <li>Main balik → 200 / 401 / 200 / 401 · 401 vs 403 · perangkap “lulus palsu”</li>
   </ul>
-  <div class="labline"><b>LAB</b> Latihan 1 — Korelasi token + csrf · <b>KUIZ</b> S1</div>
+  <div class="labline"><b>LAB</b> Latihan 1 — Rakam · Latihan 2 — Main balik &amp; diagnosis · <b>KUIZ</b> S1</div>
   <div class="dayrail"><span class="now"></span><span></span><span></span><span></span><em>Hari 2 · S1 / S4</em></div>
   <div class="daynum"><small>SESI</small>S1</div>
-  <aside class="notes"><p>Hari 1 diajar dua minggu lalu — mulakan dengan tangan di papan kekunci, bukan slaid. Warm-up 15 minit sahaja.</p><p>Korelasi ialah inti ujian beban berasaskan sesi — luangkan masa supaya semua peserta lulus checkpoint Latihan 1 sebelum rehat.</p></aside>
+  <aside class="notes"><p>Mesej teras S1: <b>"Rakaman ialah titik mula, bukan produk siap"</b> dan <b>"Hijau ≠ betul"</b>. Nisbah ~40% demo/penerangan.</p><p>Dua momen kunci: (1) main balik tanpa restart = semua hijau → restart → 200/401/200/401; (2) token sahaja dikorelasi → 403. Imbas kembali juga ialah semakan pemasangan — JMeter/Java/Node yang rosak mesti dikesan sekarang.</p></aside>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">Hari 2 · S1 — Warm-up 15 minit</div>
-  <h2 class="wide">Panaskan semula tangan</h2>
+  <div class="eyebrow">Hari 2 · S1 — Imbas kembali Hari 1 (10 minit)</div>
+  <h2 class="wide">Panaskan semula tangan: rakaman Hari 1 masih gagal</h2>
   <div class="split">
     <ol class="steps tight">
-      <li><div><b>Buka <code>hari-1/test-plans/01-hello-jpj.jmx</code></b><span><b>Sebelum Start</b>: HTTP Request Defaults → <code>localhost</code> · <code>3000</code> · <code>http</code></span></div></li>
-      <li><div><b>Jalankan ▶</b><span>Summary Report: berapa <code># Samples</code>? (= Threads × Loop Count)</span></div></li>
-      <li><div><b>Buka <code>03-csv-berparameter.jmx</code></b><span>CSV <code>../data/kenderaan.csv</code> → <code>${no_pendaftaran}</code>: lima nombor berlainan dipanggil?</span></div></li>
+      <li><div><b>Terminal A: <code>node sut/server.js</code></b><span>Jangan tutup sepanjang hari</span></div></li>
+      <li><div><b>Buka <code>hari-1/test-plans/04-rakaman-mentah.jmx</code></b><span><b>Sebelum Start</b>: HTTP Request Defaults → <code>localhost</code> · <code>3000</code> · <code>http</code></span></div></li>
+      <li><div><b>Start ▶ → View Results Tree</b><span><code>/api/log-masuk</code> hijau · <code>/api/kenderaan</code> &amp; <code>…/bayar-cukai</code> merah</span></div></li>
     </ol>
     <table class="t sm">
-      <tr><th>Soalan pantas (lisan)</th><th>Jawapan</th></tr>
-      <tr><td>Skop elemen ditentukan oleh…?</td><td><b>Kedudukan</b> dalam pokok</td></tr>
+      <tr><th>Soalan pantas (lisan)</th><th style="width:210px">Jawapan</th></tr>
+      <tr><td>Port proxy perakam JMeter?</td><td><b>8888</b> (SUT ialah 3000)</td></tr>
+      <tr><td>Kenapa main balik gagal 401?</td><td>Token dalam <code>Authorization</code> ialah nilai <b>lama</b></td></tr>
       <tr><td>Average atau percentile untuk SLA?</td><td><b>Percentile</b> (90/95/99)</td></tr>
-      <tr><td>Kenapa tiada View Results Tree semasa beban?</td><td>Simpan setiap respons dalam RAM</td></tr>
-      <tr><td>Main balik <code>04-rakaman-mentah.jmx</code>?</td><td>200, kemudian <span class="st bad">401</span> <span class="st bad">401</span></td></tr>
+      <tr><td>Kenapa tiada View Results Tree semasa beban?</td><td>Simpan setiap respons dalam RAM → penjana sesak</td></tr>
     </table>
   </div>
-  <div class="mnemo mt24"><span class="tag">PERATURAN KELAS</span><p>Setiap plan yang dibuka — semak sasaran dahulu: <code>localhost:3000</code>.</p></div>
-  <aside class="notes"><p>Tanya soalan lisan secara rawak. Jangan biarkan warm-up melebihi 15 minit — peserta yang perlahan boleh kejar semasa Latihan 1.</p><p>Soalan terakhir (401) ialah jambatan terus ke slaid seterusnya.</p></aside>
+  <div class="mnemo mt24"><span class="tag">PERATURAN KELAS</span><p>Setiap plan yang dibuka — semak sasaran dahulu: <code>localhost:3000</code>. Itulah tabiat etika pertama hari ini.</p></div>
+  <aside class="notes"><p>Hari 1 diajar 21 Sep — dua minggu lalu. Semua jalankan SUT, buka <code>04-rakaman-mentah.jmx</code>, semak HTTP Request Defaults <b>bersama-sama</b> di skrin, Start: 1 hijau, 2 merah.</p><p>Tanya soalan lisan secara rawak; jangan melebihi 10 minit. Soalan 401 ialah jambatan: "Hari ini kita rakam semula dengan betul — dan baiki kegagalan ini."</p></aside>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">Hari 2 · S1 — Korelasi</div>
-  <h2 class="wide">Tangkap nilai dinamik pada masa larian, guna semula</h2>
-  <div class="flow sm">
-    <div class="node"><span class="k">SAMPLER 1</span><b>POST /api/log-masuk</b><span><code>{no_kp, kata_laluan}</code> dari CSV</span></div>
-    <div class="arr">→</div>
-    <div class="node warn"><span class="k">RESPONS</span><b>{token, csrf, …}</b><span>baharu setiap log masuk</span></div>
-    <div class="arr">→</div>
-    <div class="node hot"><span class="k">POST-PROCESSOR</span><b>JSON Extractor</b><span><code>$.token;$.csrf</code> → <code>${token}</code> <code>${csrf}</code></span></div>
-    <div class="arr">→</div>
-    <div class="node good"><span class="k">SAMPLER 2</span><b>GET /api/kenderaan</b><span>Header <code>Authorization: Bearer ${token}</code></span></div>
-    <div class="arr">→</div>
-    <div class="node good"><span class="k">SAMPLER 3</span><b>POST …/bayar-cukai</b><span>Badan <code>"csrf": "${csrf}"</code></span></div>
-  </div>
-  <div class="grid c2 mt24" style="gap:16px">
-    <div class="card side m-fail sm"><span class="k">TOKEN (UUID)</span><h3>Header Authorization</h3><p>Tiada / salah → <span class="st bad">401</span> <code>Token tidak sah atau tamat tempoh</code></p></div>
-    <div class="card side m-jpj sm"><span class="k">CSRF (32 HEX)</span><h3>Badan JSON bayar-cukai</h3><p>Salah / hilang → <span class="st bad">403</span> <code>Token CSRF tidak sah — sila log masuk semula</code></p></div>
-  </div>
-  <div class="callout info sm mt16"><span class="i">🧠</span><div>Nilai rakaman semalam sudah <b>luput</b> — atau tidak pernah wujud dalam memori pelayan semasa larian. Menangkapnya dari respons dan menyuntiknya ke permintaan seterusnya = <b>korelasi</b>.</div></div>
-  <aside class="notes"><p>Lukis aliran ini di papan putih dan rujuk sepanjang S1. <code>token</code> → header; <code>csrf</code> → badan JSON (bukan header). Dua ralat berbeza, dua punca berbeza.</p><p>Soalan Kuiz S1 #1: kenapa 401? Token dikeras-kod tidak wujud lagi dalam sesi pelayan.</p></aside>
-</section>
-
-<section class="slide">
-  <div class="eyebrow">Hari 2 · S1 — Dua jenis data dinamik</div>
-  <h2 class="wide">Parameterisasi vs korelasi</h2>
-  <div class="split" style="grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)">
-    <div class="stack">
-      <table class="t sm">
-        <tr><th style="width:150px"></th><th>Parameterisasi</th><th>Korelasi</th></tr>
-        <tr><td><b>Sumber data</b></td><td>Anda — CSV, User Defined Variables</td><td><b>Pelayan</b>, pada masa larian</td></tr>
-        <tr><td><b>Contoh</b></td><td><code>no_kp</code>, <code>kata_laluan</code> dari <code>pengguna.csv</code></td><td><code>token</code>, <code>csrf</code> dari respons log masuk</td></tr>
-        <tr><td><b>Elemen JMeter</b></td><td>CSV Data Set Config</td><td>Post-Processor: JSON / Regex / Boundary Extractor</td></tr>
-        <tr><td><b>Diketahui sebelum ujian?</b></td><td class="y">Ya</td><td class="x">Tidak</td></tr>
-      </table>
-      <div class="callout tip sm"><span class="i">🤝</span><div>Kedua-duanya diperlukan: <code>pengguna.csv</code> memberi <b>siapa</b> yang log masuk; extractor memberi <b>sesi</b> pengguna itu.</div></div>
-      <div class="callout info sm"><span class="i">🧵</span><div><code>${token}</code> disimpan dalam pembolehubah <b>thread itu sahaja</b>. 300 pengguna maya = 300 token berbeza — tepat seperti 300 pengguna sebenar.</div></div>
-    </div>
-    <figure class="shot"><img src="img/02-csv-dataset.png" alt="CSV Data Set Config: Filename ../data/pengguna.csv, Variable Names no_kp,kata_laluan, Sharing mode All threads"><figcaption>Parameterisasi — CSV Data Set Config <code>../data/pengguna.csv</code> → <code>no_kp,kata_laluan</code></figcaption></figure>
-  </div>
-  <aside class="notes"><p>Objektif O1. Ujian pantas: tanya "<code>no_pendaftaran</code> dalam <code>kenderaan.csv</code> — parameterisasi atau korelasi?" (parameterisasi). "<code>tempoh_bulan = 12</code>?" (nilai tetap).</p><p>Kuiz hari Hari 2 #1: nilai yang perlu dikorelasi = <code>token</code> dan <code>csrf</code>.</p></aside>
-</section>
-
-<section class="slide codey">
-  <div class="eyebrow">Hari 2 · S1 — Extractor</div>
-  <h2>Tiga cara menangkap <code>token</code></h2>
+  <div class="eyebrow">Hari 2 · S1 — Rancang dahulu, baru rakam</div>
+  <h2 class="wide">Perjalanan pengguna 4 langkah — di atas kertas dahulu</h2>
   <table class="t sm">
-    <tr><th style="width:230px">Extractor</th><th style="width:220px">Bila guna</th><th>Konfigurasi untuk <code>token</code></th></tr>
-    <tr class="hot"><td><b>JSON Extractor</b></td><td>Respons JSON (API moden) — paling bersih</td><td>JSON Path <code>$.token</code></td></tr>
-    <tr><td><b>Regular Expression Extractor</b></td><td>Mana-mana teks / HTML / header</td><td>Regex <code>"token":"([^"]+)"</code> · Template <code>$1$</code></td></tr>
-    <tr><td><b>Boundary Extractor</b></td><td>Sempadan kiri/kanan jelas — paling laju</td><td>Left <code>"token":"</code> · Right <code>"</code></td></tr>
+    <tr><th style="width:60px">#</th><th style="width:200px">Tindakan pengguna</th><th style="width:290px">Permintaan HTTP</th><th style="width:210px">Nama transaksi</th><th>Data dijangka dinamik</th></tr>
+    <tr><td>1</td><td>Log masuk dengan No. KP</td><td><span class="verb post">POST</span> <code>/api/log-masuk</code></td><td><code>T01_LogMasuk</code></td><td>Respons <code>token</code>, <code>csrf</code> · input <code>no_kp</code>, <code>kata_laluan</code></td></tr>
+    <tr><td>2</td><td>Lihat senarai kenderaan</td><td><span class="verb get">GET</span> <code>/api/kenderaan?no_kp=…</code></td><td><code>T02_SenaraiKenderaan</code></td><td>Header <code>Authorization: Bearer &lt;token&gt;</code></td></tr>
+    <tr><td>3</td><td>Semak cukai (sebut harga)</td><td><span class="verb get">GET</span> <code>…/WXY1234/cukai</code></td><td><code>T03_SemakCukai</code></td><td><code>no_pendaftaran</code>, respons <code>amaun</code>, <code>tempoh_bulan</code></td></tr>
+    <tr class="hot"><td>4</td><td>Bayar cukai</td><td><span class="verb post">POST</span> <code>…/WXY1234/bayar-cukai</code></td><td><code>T04_BayarCukai</code></td><td>Header token + badan <code>csrf</code>, <code>amaun</code></td></tr>
   </table>
-  <div class="split mt16">
-    <div class="codewrap"><div class="codebar">respons POST /api/log-masuk<span class="lang alt">json</span></div>
-<pre class="code sm" data-lang="json">{
-  "token": "b3519618-...",
-  "csrf": "cefa6be3...",
-  "nama": "Pengguna 5500",
-  "mesej": "Log masuk berjaya"
-}</pre></div>
-    <div class="stack tight">
-      <div class="card side m-h1 sm"><h3>Match No.</h3><p><code>1</code> = padanan pertama · <code>0</code> = rawak · <code>-1</code> = <b>semua</b> → <code>nama_1</code>, <code>nama_2</code>, … <code>nama_matchNr</code> (S2 + ForEach)</p></div>
-      <div class="callout warn sm"><span class="i">⚠️</span><div><code>$.csrf</code> ialah JSON Path. <code>//csrf</code> ialah XPath. <code>${csrf}</code> ialah cara <b>menggunakan</b> pembolehubah — bukan mengekstraknya.</div></div>
-    </div>
+  <div class="grid c2 mt16" style="gap:16px">
+    <div class="callout info"><span class="i">🖱️</span><div><b>Satu tindakan pengguna = satu transaksi.</b> Satu klik di portal sebenar boleh menjana 10–50 permintaan. Pengguna rasa <b>masa klik itu</b> — maka kumpulkan dalam <b>Transaction Controller</b>.</div></div>
+    <div class="callout tip"><span class="i">🏷️</span><div><b>Konvensyen nama:</b> nombor langkah + tindakan perniagaan (<code>T03_SemakCukai</code>) — mudah diisih, dan akan muncul sebagai <b>label</b> dalam setiap laporan hari ini.</div></div>
   </div>
-  <aside class="notes"><p>Regex lebih fleksibel (HTML, header) tetapi rapuh; JSON Extractor tahan perubahan susunan medan; Boundary paling mudah dibaca.</p><p>Soalan Kuiz S1 #2 dan #3: JSON Path untuk csrf = <code>$.csrf</code>; Regex yang betul = <code>"token":"([^"]+)"</code> dengan Template <code>$1$</code>.</p></aside>
+  <aside class="notes"><p>Lukis jadual ini di papan putih dan bulatkan data dinamik bersama kelas. Dalam SUT kita, setiap tindakan kebetulan hanya satu permintaan.</p><p>Tanya: <i>"Satu klik 'Bayar' di portal sebenar — berapa permintaan HTTP?"</i> (HTML, API, imej, analitik — puluhan.) Itulah kenapa nama transaksi dirancang <b>sebelum</b> Start.</p></aside>
 </section>
 
 <section class="slide codey">
-  <div class="eyebrow">Hari 2 · S1 — Bina (Latihan 1)</div>
-  <h2>Log masuk berparameter, kemudian guna semula</h2>
-  <div class="split" style="grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)">
+  <div class="eyebrow">Hari 2 · S1 — Sediakan perakam <span class="xy">rakam-template.jmx</span></div>
+  <h2>HTTP(S) Test Script Recorder: tetapan sebelum Start</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr)">
+    <table class="t xs">
+      <tr><th style="width:210px">Tab / medan</th><th>Tetapan</th><th style="width:200px">Mengapa</th></tr>
+      <tr><td><b>Port</b></td><td><code>8888</code></td><td>Proxy perakam (SUT = 3000)</td></tr>
+      <tr><td><b>Target Controller</b></td><td><code>Test Plan &gt; Thread Group &gt; Recording Controller</code></td><td>Di mana sampler dirakam</td></tr>
+      <tr class="hot"><td><b>Grouping</b></td><td><b>Put each group in a new transaction controller</b></td><td>Setiap “klik” = satu Transaction Controller</td></tr>
+      <tr><td><b>Create new transaction after request (ms)</b></td><td>Kosong → <code>proxy.pause</code> = <b>5000 ms</b></td><td>Jurang ≥ 5 s = kumpulan baharu → <b>tunggu &gt; 5 s</b></td></tr>
+      <tr><td><b>Capture HTTP Headers</b></td><td>Ditanda</td><td>Header Manager setiap sampler</td></tr>
+      <tr><td><b>URL Patterns to Exclude</b></td><td>Regex aset statik sedia ada (<code>css|js|png|woff…</code>) + <code>.*google-analytics.*</code>, <code>.*googletagmanager.*</code>, <code>.*/collect.*</code></td><td>Statik &amp; analitik pihak ketiga bukan beban yang diukur</td></tr>
+      <tr><td><b>URL Patterns to Include</b></td><td>Kosong (atau <code>localhost:3000.*</code>)</td><td>Jika diisi, <b>hanya</b> yang padan dirakam</td></tr>
+    </table>
     <div class="stack tight">
-      <ol class="steps tight">
-        <li><div><b>Thread Group 5 / 3 / 3</b><span>Defaults <code>localhost:3000</code> · Header <code>Content-Type: application/json</code></span></div></li>
-        <li><div><b>CSV <code>../data/pengguna.csv</code></b><span>Variable Names <code>no_kp,kata_laluan</code></span></div></li>
-        <li><div><b>POST <code>/api/log-masuk</code></b><span>Body Data dengan <code>${no_kp}</code>, <code>${kata_laluan}</code> + JSON Extractor</span></div></li>
-        <li><div><b>GET <code>/api/kenderaan</code></b><span>Param <code>no_kp=${no_kp}</code> + Header anak <code>Authorization: Bearer ${token}</code></span></div></li>
-        <li><div><b>POST <code>…/WXY1234/bayar-cukai</code></b><span>Header anak + Response Assertion <code>BERJAYA</code></span></div></li>
-      </ol>
-      <div class="codewrap"><div class="codebar">Body Data · bayar-cukai<span class="lang alt">json</span></div>
-<pre class="code sm" data-lang="json">{ "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": 90 }</pre></div>
+      <div class="card side m-jpj sm"><span class="k">THINK TIME SEBENAR</span><h3>Constant Timer <code>${T}</code></h3><p>Anak perakam. Disalin ke setiap kumpulan; <code>${T}</code> diganti jurang <b>ms sebenar</b> sejak permintaan sebelumnya.</p></div>
+      <div class="card side m-h1 sm"><span class="k">NAMAKAN SEMASA MERAKAM</span><h3>Recorder: Transactions Control</h3><p>Taip <code>T01_LogMasuk</code> dalam medan prefix <b>sebelum</b> setiap langkah.</p></div>
+      <div class="callout tip sm"><span class="i">🎯</span><div>Tambah <b>HTTP Request Defaults</b> (<code>localhost</code>/<code>3000</code>) dahulu — sampler dirakam dengan Server/Port kosong.</div></div>
     </div>
-    <figure class="shot"><img src="img/04-sampler-login.png" alt="HTTP Request POST /api/log-masuk dengan Body Data JSON berparameter no_kp dan kata_laluan"><figcaption>HTTP Request <code>POST /api/log-masuk</code> — Body Data <code>{"no_kp": "${no_kp}", "kata_laluan": "${kata_laluan}"}</code></figcaption></figure>
   </div>
-  <aside class="notes"><p>Latihan 1 (rujukan <code>04-korelasi-log-masuk.jmx</code>: 5 pengguna, ramp 3 s, 3 gelung, Think Time 500 ms). Tambah Debug Sampler selepas log masuk dan View Results Tree.</p><p>Checkpoint: Debug Sampler menunjukkan <code>token</code> (UUID) + <code>csrf</code> (32 hex); bayaran <code>BERJAYA</code>, 0% ralat.</p></aside>
+  <aside class="notes"><p>Demo §1.3: File → Open <code>hari-1/test-plans/rakam-template.jmx</code> → <b>Save As</b> <code>hari-2/test-plans/latihan-01-rakaman.jmx</code> (fail asal tidak berubah; laluan CSV sah pada S2). Templat asal guna <i>Add separators between groups</i> — tukar kepada Transaction Controller.</p><p>HTTPS? SUT kita <code>http://</code>, jadi sijil CA tidak diperlukan (rujuk <code>rakaman-https-setup.md</code>). Tanya: "Kenapa kita buang Google Analytics daripada rakaman?" — pihak ketiga, bukan beban kita, dan bukan sistem kita.</p></aside>
+</section>
+
+<section class="slide codey">
+  <div class="eyebrow">Hari 2 · S1 — Rakam (Latihan 1)</div>
+  <h2>Jana trafik melalui proxy — tunggu &gt; 5 s antara langkah</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr)">
+    <div class="codewrap"><div class="codebar">Terminal B · Git Bash di Windows<span class="lang alt">sh</span></div>
+<pre class="code xs" data-lang="sh">P=http://localhost:8888          # proxy perakam JMeter
+B=http://localhost:3000          # SUT tiruan
+# --- T01_LogMasuk ---
+R=$(curl -s -x $P -H 'Content-Type: application/json' \
+  -d '{"no_kp":"800101015500","kata_laluan":"rahsia123"}' \
+  $B/api/log-masuk)
+TOKEN=$(echo "$R" | sed -E 's/.*"token":"([^"]+)".*/\1/')
+CSRF=$(echo "$R"  | sed -E 's/.*"csrf":"([^"]+)".*/\1/')
+sleep 6
+# --- T02_SenaraiKenderaan ---
+curl -s -x $P -H "Authorization: Bearer $TOKEN" \
+  "$B/api/kenderaan?no_kp=800101015500"
+sleep 6
+# --- T03_SemakCukai ---
+curl -s -x $P "$B/api/kenderaan/WXY1234/cukai"
+sleep 6
+# --- T04_BayarCukai ---
+curl -s -x $P -H "Authorization: Bearer $TOKEN" \
+  -H 'Content-Type: application/json' \
+  -d "{\"csrf\":\"$CSRF\",\"tempoh_bulan\":12,\"amaun\":90}" \
+  $B/api/kenderaan/WXY1234/bayar-cukai
+# {"no_resit":"RJPJ…","status":"BERJAYA",…}</pre></div>
+    <div class="stack tight">
+      <p class="rlabel mb0">Apa yang perakam hasilkan</p>
+      <table class="t xs">
+        <tr><th style="width:150px">Dalam rakaman</th><th>Contoh</th></tr>
+        <tr><td>Nama sampler</td><td><code>T01_LogMasuk/api/log-masuk-1</code> (tanpa prefix: <code>/api/log-masuk-1</code>)</td></tr>
+        <tr><td>Header Manager</td><td><code>Content-Type</code>, <code>Accept</code>, <code>User-Agent: curl/…</code></td></tr>
+        <tr class="hot"><td><code>Authorization</code></td><td><code>Bearer &lt;token-rakaman&gt;</code> — <b>dikeras-kod</b></td></tr>
+        <tr><td>Badan JSON</td><td><code>"csrf": "&lt;csrf-rakaman&gt;"</code>, path <code>WXY1234</code> — literal</td></tr>
+        <tr><td>Constant Timer</td><td><code>${T}</code> → cth. <code>6012</code> ms</td></tr>
+      </table>
+      <div class="callout warn sm"><span class="i">⚠️</span><div><code>curl: (7) Failed to connect … 8888</code> = perakam belum <b>Start</b>. Tiada sampler = terlupa <code>-x $P</code>.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Kenapa curl? SUT ialah API (POST JSON) dan halaman <code>localhost:3000</code> tiada borang log masuk. Untuk aplikasi web sebenar: Firefox → proxy <code>localhost:8888</code> (Hari 1 §4.3). Sahkan proxy: <code>lsof -iTCP:8888 -sTCP:LISTEN -n -P</code> / <code>netstat -ano | findstr :8888</code>.</p><p>Selepas Stop: tunjuk Header Manager T02 (<code>Bearer</code> literal) dan badan T04 (<code>csrf</code> literal). Nota: JMeter 5.6 mengekalkan header <code>Authorization: Bearer</code>; header <code>Cookie</code> sentiasa dibuang — aplikasi cookie perlukan HTTP Cookie Manager. Latihan 1 = 20 minit; isu lazim: semua dalam satu kumpulan (tidak tunggu 5 s).</p></aside>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">Hari 2 · S1 — JSON Extractor</div>
-  <h2 class="wide">Anak sampler log masuk: <code>token;csrf</code></h2>
-  <div class="split" style="grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)">
-    <figure class="shot"><img src="img/05-json-extractor.png" alt="JSON Extractor: Names token;csrf, JSON Path $.token;$.csrf, Default TOKEN_TAK_JUMPA;CSRF_TAK_JUMPA"><figcaption>JSON Extractor — nilai dinamik ditangkap pada masa larian</figcaption></figure>
+  <div class="eyebrow">Hari 2 · S1 — Main balik (Latihan 2)</div>
+  <h2 class="wide">Luputkan sesi rakaman dahulu — kemudian Start</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)">
+    <div class="stack tight">
+      <table class="t sm">
+        <tr><th>Transaksi</th><th style="width:70px">Kod</th><th>Sebab</th></tr>
+        <tr><td><code>T01_LogMasuk</code></td><td><span class="st ok">200</span></td><td>Token <b>baharu</b> dikeluarkan — tiada siapa menangkapnya</td></tr>
+        <tr><td><code>T02_SenaraiKenderaan</code></td><td><span class="st bad">401</span></td><td>Token rakaman sudah tiada → <code>Token tidak sah atau tamat tempoh</code></td></tr>
+        <tr><td><code>T03_SemakCukai</code></td><td><span class="st ok">200</span></td><td>Sebut harga tiada token — <b>lulus walaupun skrip rosak</b></td></tr>
+        <tr><td><code>T04_BayarCukai</code></td><td><span class="st bad">401</span></td><td>Token lama ditolak sebelum <code>csrf</code> disemak</td></tr>
+      </table>
+      <div class="console"><span class="p">$</span> jmeter -n -t hari-1/test-plans/04-rakaman-mentah.jmx -l hasil/r04.jtl
+summary = 3 … <span class="e">Err: 2 (66.67%)</span></div>
+    </div>
+    <div class="stack tight">
+      <div class="card top m-h1 sm"><span class="k">LUPUTKAN SESI</span><h3>Terminal A: Ctrl+C → <code>node sut/server.js</code></h3><p>Mock menyimpan sesi dalam memori; restart = semua token lama tidak sah — seperti sesi tamat tempoh.</p></div>
+      <div class="callout danger"><span class="i">🪤</span><div><b>Lulus palsu:</b> main balik <b>tanpa</b> restart → mungkin 4 × <span class="st ok">200</span>. 300 pengguna maya akan berkongsi <b>satu</b> sesi &amp; satu <code>csrf</code> — dan gagal esok pagi. <b>Hijau ≠ betul.</b></div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Momen kunci #1. Demo: Start tanpa restart → semua hijau. Tanya: <i>"Siap untuk 300 pengguna?"</i> — biar mereka jawab. Kemudian Ctrl+C, <code>node sut/server.js</code>, Clear All, Start → 200/401/200/401.</p><p>Skrip analogi: "Anda merakam video masuk bank dengan kad akses semalam. Hari ini pengawal tidak buka pintu — kad sudah dibatalkan. Jika bank lupa membatalkannya, pintu terbuka dan anda sangka video anda 'berjaya' — itulah lulus palsu." Tanya kenapa T03 hijau → perlunya assertion.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S1 — Diagnosis</div>
+  <h2 class="wide">View Results Tree: 401 (token) vs 403 (csrf)</h2>
+  <div class="split">
+    <div class="stack tight">
+      <p class="rlabel mb0">Baca tiga tab, mengikut tertib</p>
+      <ol class="steps tight">
+        <li><div><b>Sampler result</b><span><code>Response code: 401</code> · <code>Unauthorized</code> · Load time, Latency, Connect Time</span></div></li>
+        <li><div><b>Request</b><span>Apa <b>sebenarnya</b> dihantar: <code>Authorization: Bearer &lt;token-rakaman&gt;</code> ≠ token baharu T01</span></div></li>
+        <li><div><b>Response data</b><span><code>{"ralat":"Token tidak sah atau tamat tempoh"}</code></span></div></li>
+      </ol>
+      <div class="callout info sm"><span class="i">🧪</span><div><b>Main balik ialah ujian fungsian dahulu:</b> 1 pengguna × 1 gelung, 0 ralat — sebelum beban. Beban pada skrip rosak hanya mengukur kelajuan halaman ralat.</div></div>
+    </div>
+    <div class="stack tight">
+      <table class="t xs">
+        <tr><th style="width:62px">Kod</th><th>Maksud dalam SUT</th><th>Pembaikan</th></tr>
+        <tr><td><span class="st bad">401</span></td><td><i>Siapa anda?</i> token tiada / tidak sah</td><td>Ekstrak <code>token</code> → <code>Bearer ${token}</code></td></tr>
+        <tr><td><span class="st bad">403</span></td><td><i>Permintaan ini sah?</i> token sah, <code>csrf</code> salah</td><td>Ekstrak <code>csrf</code> → <code>"csrf": "${csrf}"</code></td></tr>
+        <tr><td><span class="st warn">404</span></td><td>Laluan / kenderaan tidak wujud</td><td>Semak extractor / CSV (<code>NONE</code>?)</td></tr>
+      </table>
+      <div class="card top m-jpj sm"><span class="k">EKSPERIMEN — TOKEN SAHAJA DIKORELASI</span><h3>JSON Extractor <code>$.token</code> → <code>Bearer ${token}</code>; <code>csrf</code> tidak disentuh</h3></div>
+      <div class="console"><span class="p">T02 GET /api/kenderaan</span>  <span class="g">200</span>
+<span class="p">T04 POST …/bayar-cukai</span>  <span class="e">403</span>
+{"ralat":"Token CSRF tidak sah — sila log masuk semula"}</div>
+    </div>
+  </div>
+  <aside class="notes"><p>Momen kunci #2: korelasi token sahaja → bayaran berubah 401 → <b>403</b>. <i>"401 = siapa anda; 403 = adakah permintaan ini sah."</i> Pelayan sahkan identiti dahulu, kemudian integriti borang.</p><p>Tanya: "Di sistem JPJ sebenar, nilai dinamik apa lagi?" (cookie sesi, view-state, nonce pembayaran, ID transaksi FPX — <b>bincang sahaja</b>). Checkpoint + Kuiz S1. Jambatan: "Selepas rehat kita baiki rakaman ini sehingga boleh dimain balik oleh 10, 50, 300 pengguna."</p></aside>
+</section>
+
+<!-- ---------- Hari 2 · S2 ---------- -->
+
+<section class="slide dark sesi">
+  <div class="eyebrow">Hari 2 · Sesi 2</div>
+  <h1>Jadikan Rakaman Boleh Dimain Balik</h1>
+  <div class="threads"><span class="chip">S2 · 10.45 – 1.00</span><span class="chip">hasil ≈ 05-transaksi-penuh.jmx</span></div>
+  <ul class="list">
+    <li>Senarai semak 10 perkara · parameterisasi vs korelasi</li>
+    <li>Korelasi <code>token</code> + <code>csrf</code> (JSON / Regex / Boundary) · berantai <code>no_pendaftaran</code> + <code>amaun</code> · CSV <code>pengguna.csv</code></li>
+    <li>Nama sampler · Transaction Controller · think time · assertion · Summary &amp; Aggregate Report · ⭐ ForEach / JSR223</li>
+  </ul>
+  <div class="labline"><b>LAB</b> Latihan 3 — Jadikan rakaman boleh dimain balik · <b>KUIZ</b> S2</div>
+  <div class="dayrail"><span class="on"></span><span class="now"></span><span></span><span></span><em>Hari 2 · S2 / S4</em></div>
+  <div class="daynum"><small>SESI</small>S2</div>
+  <aside class="notes"><p>Korelasi diajar sebagai <b>alat</b> untuk menjadikan rakaman boleh dimain balik — bukan topik berdiri sendiri. Peserta tanpa rakaman sendiri: <code>04-rakaman-mentah.jmx</code> → Save As ke <code>hari-2/test-plans/</code>.</p><p>Momen kunci #3 (12.20): Aggregate Report 80 + 20, transaksi ≈ 440 ms walaupun think time 1–3 s. ⭐ ForEach/JSR223 hanya jika kelas mendahului — Latihan 3 lebih penting.</p></aside>
+</section>
+
+<section class="slide codey">
+  <div class="eyebrow">Hari 2 · S2 — Senarai semak</div>
+  <h2>“Bersihkan rakaman” — 10 perkara</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr)">
+    <table class="t xs">
+      <tr><th style="width:30px">#</th><th>Masalah dalam rakaman</th><th>Pembaikan</th><th style="width:205px">Elemen JMeter</th></tr>
+      <tr><td>1</td><td>Hos/port berulang setiap sampler</td><td>Satu tempat untuk sasaran</td><td><b>HTTP Request Defaults</b></td></tr>
+      <tr><td>2</td><td>Nama <code>/api/log-masuk-1</code></td><td>Nama bermakna = label laporan</td><td>Rename <code>1. POST /api/log-masuk</code></td></tr>
+      <tr class="hot"><td>3</td><td><code>token</code> &amp; <code>csrf</code> dikeras-kod</td><td><b>Korelasi</b></td><td>JSON Extractor</td></tr>
+      <tr class="hot"><td>4</td><td>Satu pengguna <code>800101015500</code></td><td><b>Parameterisasi</b></td><td>CSV Data Set Config</td></tr>
+      <tr><td>5</td><td>Kenderaan <code>WXY1234</code> dikeras-kod</td><td>Korelasi berantai</td><td><code>$.kenderaan[0].no_pendaftaran</code></td></tr>
+      <tr><td>6</td><td><code>"amaun": 90</code> dikeras-kod</td><td>Ambil dari respons</td><td>JSON Extractor</td></tr>
+      <tr><td>7</td><td>Timer <code>${T}</code> = jurang anda (6012 ms)</td><td>Think time <b>rawak</b></td><td>Uniform Random Timer</td></tr>
+      <tr><td>8</td><td>200 + mesej ralat dikira “lulus”</td><td><b>Assertion</b></td><td>Response Assertion <code>BERJAYA</code></td></tr>
+      <tr><td>9</td><td>Kumpulan per-langkah</td><td>Transaksi <b>perniagaan</b> penuh</td><td>Transaction Controller</td></tr>
+      <tr><td>10</td><td><code>User-Agent: curl/…</code>, <code>Accept</code></td><td>Pilihan</td><td>Buang atau biarkan</td></tr>
+    </table>
+    <div class="stack tight">
+      <table class="t xs">
+        <tr><th></th><th>Param.</th><th>Korelasi</th></tr>
+        <tr><td><b>Sumber</b></td><td>Anda (CSV)</td><td><b>Pelayan</b></td></tr>
+        <tr><td><b>Contoh</b></td><td><code>no_kp</code></td><td><code>token</code>, <code>csrf</code></td></tr>
+        <tr><td><b>Tahu awal?</b></td><td class="y">Ya</td><td class="x">Tidak</td></tr>
+      </table>
+      <div class="callout tip sm"><span class="i">🪪</span><div><i>“CSV ialah IC anda; token ialah nombor giliran kaunter — hanya kaunter yang tahu.”</i></div></div>
+      <div class="callout info sm"><span class="i">🔑</span><div>Kunci jawapan: <code>05-transaksi-penuh.jmx</code> — buka di tab lain.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Tunjuk setiap perkara pada rakaman di skrin (10 minit, termasuk §2.2). Kedua-dua jenis data diperlukan: <code>pengguna.csv</code> memberi <b>siapa</b> yang log masuk; extractor memberi <b>sesi</b> pengguna itu.</p><p>Soalan Kuiz S2 #1: nilai yang mesti dikorelasi (bukan CSV) = <code>token</code> dan <code>csrf</code>. Tanya: "<code>tempoh_bulan = 12</code> — parameter, korelasi, atau tetap?" (tetap dalam plan 05; dari sebut harga dalam plan 07).</p></aside>
+</section>
+
+<section class="slide codey">
+  <div class="eyebrow">Hari 2 · S2 — Korelasi <code>token</code> + <code>csrf</code></div>
+  <h2>Tangkap pada masa larian, guna dalam permintaan seterusnya</h2>
+  <div class="flow sm">
+    <div class="node"><span class="k">T01</span><b>POST /api/log-masuk</b><span><code>{no_kp, kata_laluan}</code></span></div>
+    <div class="arr">→</div>
+    <div class="node hot"><span class="k">JSON EXTRACTOR (ANAK)</span><b><code>$.token;$.csrf</code></b><span>→ <code>${token}</code> <code>${csrf}</code></span></div>
+    <div class="arr">→</div>
+    <div class="node good"><span class="k">T02 · HEADER</span><b><code>Bearer ${token}</code></b><span>Header Manager senarai &amp; bayar</span></div>
+    <div class="arr">→</div>
+    <div class="node good"><span class="k">T04 · BADAN</span><b><code>"csrf": "${csrf}"</code></b><span>badan JSON bayar</span></div>
+  </div>
+  <div class="split mt16" style="grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)">
     <div class="stack tight">
       <dl class="facts">
         <dt>Names</dt><dd><code>token;csrf</code></dd>
@@ -1531,538 +1648,853 @@ cd sut &amp;&amp; ERROR_RATE=0 node server.js   # lab "bersih"</pre></div>
         <dt>Match No.</dt><dd><code>1;1</code></dd>
         <dt>Default</dt><dd><code>TOKEN_TAK_JUMPA;CSRF_TAK_JUMPA</code></dd>
       </dl>
-      <div class="callout danger sm"><span class="i">📍</span><div><b>Skop:</b> letak sebagai <b>anak</b> sampler log masuk. Di bawah Thread Group, ia berjalan selepas <b>setiap</b> sampler dan menimpa <code>token</code> dengan nilai default.</div></div>
-      <div class="callout tip sm"><span class="i">🔦</span><div><b>Default yang ketara</b> — bila ekstrak gagal, tab Request menunjukkan <code>Bearer TOKEN_TAK_JUMPA</code>. Anda terus tahu korelasi rosak.</div></div>
+      <div class="callout danger sm"><span class="i">📍</span><div><b>Skop:</b> anak sampler log masuk. Di bawah Thread Group, ia berjalan selepas <b>setiap</b> sampler dan menimpa <code>token</code> dengan default.</div></div>
+    </div>
+    <div class="stack tight">
+      <table class="t xs">
+        <tr><th style="width:190px">Extractor</th><th style="width:170px">Bila guna</th><th>Konfigurasi untuk <code>token</code></th></tr>
+        <tr class="hot"><td><b>JSON Extractor</b></td><td>Respons JSON — paling bersih</td><td><code>$.token</code></td></tr>
+        <tr><td><b>Regular Expression</b></td><td>Teks / HTML / header</td><td><code>"token":"([^"]+)"</code> · Template <code>$1$</code> · Match <code>1</code></td></tr>
+        <tr><td><b>Boundary Extractor</b></td><td>Sempadan jelas</td><td>Left <code>"token":"</code> · Right <code>"</code></td></tr>
+      </table>
+      <div class="callout tip sm"><span class="i">🔦</span><div><b>Nyahpepijat:</b> (1) Response data log masuk (2) VRT → <b>JSON Path Tester</b> <code>$.token</code> (3) <b>Debug Sampler</b> (4) tab <b>Request</b> sampler seterusnya — <code>Bearer TOKEN_TAK_JUMPA</code> = korelasi rosak.</div></div>
+      <div class="callout info sm"><span class="i">🧵</span><div><code>${token}</code> per-thread: 300 pengguna maya = 300 token berbeza.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Bilangan Names dan JSON Path mesti sama, dipisah <code>;</code>. Kesilapan lazim: koma atau ruang.</p><p>Soalan Kuiz S1 #4: kenapa default <code>TOKEN_TAK_JUMPA</code>, bukan kosong? Supaya kegagalan ekstrak kelihatan jelas — dan boleh disemak oleh If Controller (S2).</p></aside>
+  <aside class="notes"><p>Live build §2.3 (taip perlahan): klik kanan sampler log masuk → Add → Post Processors → JSON Extractor. Bilangan Names = bilangan Paths, dipisah <code>;</code> — kesilapan lazim: koma atau ruang.</p><p>Soalan: "Kenapa default <code>TOKEN_TAK_JUMPA</code>, bukan kosong?" — kegagalan kelihatan serta-merta dalam tab Request. Kuiz S2 #2: extractor di bawah Thread Group menimpa token selepas setiap sampler.</p></aside>
 </section>
 
-<section class="slide">
-  <div class="eyebrow">Hari 2 · S1 — Nyahpepijat &amp; eksperimen</div>
-  <h2 class="wide">Buktikan korelasi wajib: 403 vs 401</h2>
+<section class="slide codey">
+  <div class="eyebrow">Hari 2 · S2 — Korelasi berantai &amp; CSV</div>
+  <h2>Kenderaan &amp; amaun dari respons · pengguna dari <code>pengguna.csv</code></h2>
   <div class="split">
-    <div class="stack">
-      <p class="rlabel mb0">Aliran nyahpepijat korelasi</p>
-      <ol class="steps tight">
-        <li><div><b>Response data log masuk</b><span>Adakah <code>token</code> wujud?</span></div></li>
-        <li><div><b>JSON Path Tester</b><span>Paparan dalam View Results Tree — uji <code>$.token</code></span></div></li>
-        <li><div><b>Debug Sampler</b><span><code>token=…</code>, <code>csrf=…</code></span></div></li>
-        <li><div><b>Tab Request sampler seterusnya</b><span>Header &amp; badan mengandungi nilai sebenar?</span></div></li>
-      </ol>
+    <div class="stack tight">
+      <div class="card top m-violet sm"><span class="k">ANAK “2. GET /api/kenderaan” · EKSTRAK KENDERAAN PERTAMA</span>
+        <dl class="facts mt8" style="box-shadow:none">
+          <dt>Names</dt><dd><code>no_pendaftaran;amaun</code></dd>
+          <dt>Paths</dt><dd><code>$.kenderaan[0].no_pendaftaran;$.kenderaan[0].amaun_cukai</code></dd>
+          <dt>Default</dt><dd><code>NONE;0</code></dd>
+        </dl>
+      </div>
+      <div class="codewrap"><div class="codebar">sampler 3 &amp; 4 selepas korelasi<span class="lang alt">txt</span></div>
+<pre class="code xs">Path 3 : /api/kenderaan/${no_pendaftaran}/cukai
+Path 4 : /api/kenderaan/${no_pendaftaran}/bayar-cukai
+Badan 4: { "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }</pre></div>
+      <div class="callout tip sm"><span class="i">💰</span><div>Plan <code>07</code> ambil <code>amaun</code> + <code>tempoh_bulan</code> dari <b>sebut harga</b> (<code>$.amaun;$.tempoh_bulan</code>) — pengguna membayar amaun yang dipaparkan.</div></div>
     </div>
-    <div class="stack">
-      <div class="card top m-jpj sm"><span class="k">EKSPERIMEN A</span><h3>Ganti <code>${csrf}</code> dengan <code>abc123</code></h3></div>
-      <div class="console"><span class="p">POST /api/kenderaan/WXY1234/bayar-cukai</span>
-<span class="e">403</span> {"ralat":"Token CSRF tidak sah — sila log masuk semula"}</div>
-      <div class="card top m-fail sm"><span class="k">EKSPERIMEN B</span><h3>Tukar header kepada <code>Bearer abc</code></h3></div>
-      <div class="console"><span class="p">GET /api/kenderaan?no_kp=800101015500</span>
-<span class="e">401</span> {"ralat":"Token tidak sah atau tamat tempoh"}</div>
-      <div class="callout tip sm"><span class="i">↩️</span><div>Pulihkan selepas setiap eksperimen. Dua ralat, dua punca — cara pelayan sebenar melindungi transaksi.</div></div>
+    <div class="stack tight">
+      <div class="card top m-h1 sm"><span class="k">ANAK THREAD GROUP · CSV DATA SET CONFIG</span>
+        <dl class="facts mt8" style="box-shadow:none">
+          <dt>Filename</dt><dd><code>../data/pengguna.csv</code></dd>
+          <dt>Variables</dt><dd><code>no_kp,kata_laluan</code></dd>
+          <dt>Ignore 1st</dt><dd><code>True</code> · Recycle on EOF <code>True</code></dd>
+          <dt>Sharing</dt><dd><code>All threads</code></dd>
+        </dl>
+      </div>
+      <div class="codewrap"><div class="codebar">badan log masuk &amp; parameter senarai<span class="lang alt">json</span></div>
+<pre class="code xs" data-lang="json">{ "no_kp": "${no_kp}", "kata_laluan": "${kata_laluan}" }</pre></div>
+      <p class="xsmall mb0">Parameter senarai: <code>no_kp</code> = <code>${no_kp}</code></p>
+      <div class="callout warn sm"><span class="i">📂</span><div>Laluan CSV <b>relatif kepada fail <code>.jmx</code></b> — simpan dalam <code>hari-2/test-plans/</code>, jika tidak <code>${no_kp}</code> dihantar secara literal.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Latihan 1 langkah 12–13. Semakan kendiri #2: bayaran 403 walaupun kenderaan 200 → csrf salah. Semak tab Request (adakah <code>CSRF_TAK_JUMPA</code>?), Debug Sampler, JSON Extractor (bilangan Names = Paths), ejaan <code>${csrf}</code>.</p><p>Tanya: "Kenapa 401 diperiksa sebelum 403?" — pelayan sahkan identiti dahulu, kemudian integriti borang.</p></aside>
-</section>
-
-<!-- ---------- Hari 2 · S2 ---------- -->
-
-<section class="slide dark sesi">
-  <div class="eyebrow">Hari 2 · Sesi 2</div>
-  <h1>Logic Controllers, ForEach &amp; JSR223 Groovy</h1>
-  <div class="threads"><span class="chip">S2 · 10.45 – 1.00</span></div>
-  <ul class="list">
-    <li>Transaction / If / Loop / Throughput / Runtime Controller</li>
-    <li>Match No. <code>-1</code> + ForEach — bayar <b>semua</b> kenderaan</li>
-    <li>JSR223 Groovy · fungsi <code>__Random</code> <code>__UUID</code> <code>__P</code> <code>__time</code></li>
-  </ul>
-  <div class="labline"><b>LAB</b> Latihan 2 — Transaction, If &amp; ForEach · Latihan 3 — JSR223 · <b>KUIZ</b> S2</div>
-  <div class="dayrail"><span class="on"></span><span class="now"></span><span></span><span></span><em>Hari 2 · S2 / S4</em></div>
-  <div class="daynum"><small>SESI</small>S2</div>
-  <aside class="notes"><p>Sesi ini menjadikan senario realistik: satu metrik transaksi, syarat integriti, gelung data dan skrip bila elemen terbina tidak cukup.</p><p>Hasil: <code>05-transaksi-penuh.jmx</code> dan <code>08-foreach-kenderaan.jmx</code>.</p></aside>
+  <aside class="notes"><p>Rakaman membekukan <code>WXY1234</code> dan <code>90</code> — pengguna lain tidak memiliki <code>WXY1234</code>. Selepas CSV, label kenderaan menjadi <code>WXY1234</code>, <code>JQK7788</code>, <code>BMT3030</code> (kenderaan pertama setiap pengguna).</p><p>Isu lazim Latihan 3: laluan <code>/api/kenderaan/NONE/cukai</code> → 404 = extractor bukan anak sampler senarai. Tanya: "Kenapa 404 lebih baik daripada bayaran ke kenderaan orang lain?" — kegagalan yang jelas mudah dinyahpepijat.</p></aside>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">Hari 2 · S2 — Logic Controllers</div>
-  <h2 class="wide">Mengawal <i>bila</i> dan <i>bagaimana</i> sampler berjalan</h2>
-  <table class="t sm">
-    <tr><th style="width:240px">Controller</th><th>Fungsi</th><th style="width:330px">Contoh JPJ</th></tr>
-    <tr class="hot"><td><b>Transaction Controller</b></td><td>Kumpul sampler sebagai <b>satu transaksi</b> &amp; ukur jumlah masa</td><td>“Pembaharuan Cukai Jalan” (4 langkah)</td></tr>
-    <tr class="hot"><td><b>If Controller</b></td><td>Jalankan anak hanya jika syarat benar</td><td>Bayar hanya jika ada kenderaan &amp; token sah</td></tr>
-    <tr><td><b>Loop Controller</b></td><td>Ulang anak N kali</td><td>Semak status bayaran 3 kali</td></tr>
-    <tr class="hot"><td><b>ForEach Controller</b></td><td>Gelung atas pembolehubah berindeks (<code>nama_1</code>, <code>nama_2</code>…)</td><td>Bayar cukai <b>setiap</b> kenderaan</td></tr>
-    <tr><td><b>Throughput Controller</b></td><td>Jalankan anak untuk <b>%</b> pelaksanaan</td><td>70% semak cukai, 30% bayar saman</td></tr>
-    <tr><td><b>Runtime Controller</b></td><td>Jalankan anak untuk tempoh saat tertentu</td><td>Semak saman berulang selama 60 s</td></tr>
-    <tr><td><b>Once Only Controller</b></td><td>Jalankan anak sekali per thread</td><td>Log masuk sekali, bayar banyak kali</td></tr>
-  </table>
-  <aside class="notes"><p>Tiga baris diserlahkan ialah yang kita bina hari ini. Lain-lain cukup dikenali — peserta akan menemui keperluannya dalam projek sebenar.</p><p>Tanya: "Senario sebenar portal — berapa peratus pengguna semak cukai berbanding bayar saman?" — itulah kegunaan Throughput Controller.</p></aside>
-</section>
-
-<section class="slide">
-  <div class="eyebrow">Hari 2 · S2 — Transaction Controller (plan 05)</div>
-  <h2 class="wide">Satu angka: “berapa lama untuk memperbaharui cukai?”</h2>
+  <div class="eyebrow">Hari 2 · S2 — Nama, Transaction Controller &amp; think time</div>
+  <h2 class="wide">Struktur akhir — setara <code>05-transaksi-penuh.jmx</code></h2>
   <div class="split" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
     <ul class="tree">
       <li><span class="el tg">Pengguna Pembaharuan Cukai <small>10 · 10 s · 2</small></span>
         <ul>
+          <li><span class="el cfg">CSV pengguna.csv · HTTP Request Defaults</span></li>
           <li><span class="el ctl hot">Pembaharuan Cukai Jalan <small>transaction</small></span>
             <ul>
-              <li><span class="el smp">1. POST /api/log-masuk</span>
-                <ul><li><span class="el pp">Ekstrak token + csrf</span></li></ul></li>
-              <li><span class="el smp">2. GET /api/kenderaan</span>
-                <ul><li><span class="el pp">Ekstrak kenderaan pertama</span></li></ul></li>
+              <li><span class="el smp">1. POST /api/log-masuk</span> <span class="el pp">token;csrf</span></li>
+              <li><span class="el smp">2. GET /api/kenderaan</span> <span class="el pp">no_pendaftaran;amaun</span></li>
               <li><span class="el ctl">Jika ada kenderaan <small>if</small></span>
                 <ul>
                   <li><span class="el smp">3. GET …/${no_pendaftaran}/cukai</span></li>
-                  <li><span class="el smp">4. POST …/bayar-cukai</span></li>
+                  <li><span class="el smp">4. POST …/bayar-cukai</span> <span class="el asr">BERJAYA</span></li>
                 </ul></li>
+              <li><span class="el tim">Think Time (1-3s) <small>uniform</small></span></li>
             </ul></li>
-          <li><span class="el tim">Think Time (1-3s)</span></li>
         </ul></li>
     </ul>
     <div class="stack tight">
       <table class="t xs">
-        <tr><th>Pilihan</th><th>Kesan</th></tr>
-        <tr><td><b>Generate parent sample</b> ☐ <small>(plan rujukan)</small></td><td>Baris transaksi <b>dan</b> setiap langkah — cari langkah lambat</td></tr>
-        <tr><td><b>Generate parent sample</b> ☑</td><td>Hanya baris transaksi — laporan pengurusan</td></tr>
+        <tr><th>Pilihan Transaction Controller</th><th>Kesan dalam laporan</th></tr>
+        <tr><td><b>Generate parent sample</b> ☐ <small>(rujukan)</small></td><td>Baris transaksi <b>dan</b> setiap sampler — cari langkah lambat</td></tr>
+        <tr><td><b>Generate parent sample</b> ☑</td><td>Sampler jadi sub-sampel — baris transaksi sahaja</td></tr>
         <tr><td><b>Include duration of timer…</b> ☐</td><td>Ukur masa <b>sistem</b>, bukan masa pengguna berfikir</td></tr>
       </table>
-      <dl class="facts">
-        <dt>Ekstrak</dt><dd><code>$.kenderaan[0].no_pendaftaran;$.kenderaan[0].amaun_cukai</code> → <code>no_pendaftaran;amaun</code> · default <code>NONE;0</code></dd>
-        <dt>Timer</dt><dd>Uniform: Offset <code>1000</code> + Random Max <code>2000</code> ms</dd>
-      </dl>
-      <div class="callout tip sm"><span class="i">💼</span><div>NFR ditulis pada aras <b>transaksi perniagaan</b>, bukan endpoint.</div></div>
+      <div class="card side m-jpj sm"><h3>Uniform Random Timer: Offset <code>1000</code> + Random Max <code>2000</code></h3><p>Timer berjalan sebelum <b>setiap</b> sampler dalam skop → 4 jeda × purata 2 s = <b>8 s</b> setiap lelaran. Padam timer <code>${T}</code> rakaman.</p></div>
+      <div class="callout warn sm"><span class="i">🏷️</span><div>Label dinamik <code>…/${no_pendaftaran}/…</code> = satu baris <b>per kenderaan</b>. Laporan pengurusan: nama statik atau baca baris <b>transaksi</b>.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Latihan 2. Checkpoint: baris <code>Pembaharuan Cukai Jalan</code> muncul dalam Summary Report bagi 10 pengguna × 2 gelung.</p><p>Soalan Kuiz S2 #1: kelebihan Transaction Controller — satu metrik untuk keseluruhan perjalanan pengguna.</p></aside>
+  <aside class="notes"><p>Demo §2.6–2.7: namakan semula sampler, Transaction Controller <code>Pembaharuan Cukai Jalan</code>, seret sampler <b>ke dalamnya</b> (bukan di bawahnya). Tunjuk Generate parent sample dua-dua cara.</p><p>Tanya: <i>"Timer di bawah TC dengan 4 sampler — berapa jeda?"</i> (4 → purata 8 s; Kuiz S2 #3). Fakta ini kita guna semula dalam Little's Law (S4). Timer <code>${T}</code> rakaman = think time <b>anda</b>, sama untuk semua thread → pengguna bergerak serentak.</p></aside>
 </section>
 
 <section class="slide codey">
-  <div class="eyebrow">Hari 2 · S2 — If Controller</div>
-  <h2>If Controller: pengawal integriti senario</h2>
-  <div class="codewrap"><div class="codebar">If Controller · “Jika ada kenderaan” · Condition<span class="lang alt">groovy</span></div>
-<pre class="code" data-lang="groovy">${__groovy(vars.get("no_pendaftaran") != "NONE" &amp;&amp; vars.get("token") != "TOKEN_TAK_JUMPA")}</pre></div>
-  <div class="grid c3 mt16" style="gap:14px">
-    <div class="card side m-h1 sm"><h3>Interpret Condition as Variable Expression? ☑</h3><p>Lalai JMeter 5.x — syarat mesti menilai kepada <code>true</code>/<code>false</code>. Paling cekap: <code>${__groovy(...)}</code>.</p></div>
-    <div class="card side m-violet sm"><h3>Setara JEXL3</h3><p><code>${__jexl3("${no_pendaftaran}" != "NONE")}</code> — tetapi <code>__groovy</code> disyorkan (paling laju).</p></div>
-    <div class="card side m-n sm"><h3>Evaluate for all children? ☐</h3><p>Biarkan tidak ditanda — syarat dinilai sekali sebelum anak berjalan.</p></div>
+  <div class="eyebrow">Hari 2 · S2 — Assertion, larian &amp; listener</div>
+  <h2>Assertion → 1 × 1 → 10 × 2 → Summary &amp; Aggregate Report</h2>
+  <div class="split" style="grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)">
+    <div class="stack tight">
+      <div class="card side m-fail sm"><h3>Response Assertion <code>BERJAYA</code></h3><p>Anak sampler bayar · Text Response · Substring. Tanpa assertion, <b>200 = lulus</b> — walaupun <code>{"status":"GAGAL"}</code>.</p></div>
+      <div class="codewrap"><div class="codebar">If Controller · Jika ada kenderaan<span class="lang alt">groovy</span></div>
+<pre class="code xs" data-lang="groovy">${__groovy(vars.get("no_pendaftaran") != "NONE" &amp;&amp;
+           vars.get("token") != "TOKEN_TAK_JUMPA")}</pre></div>
+      <div class="grid c3" style="gap:10px">
+        <div class="kpi m-h1"><i>Sampel HTTP</i><b>80</b><span>10 × 2 × 4</span></div>
+        <div class="kpi m-violet"><i>Transaksi</i><b>20</b><span>Pembaharuan…</span></div>
+        <div class="kpi m-pass"><i>Masa transaksi</i><b>≈ 440</b><span>ms, tanpa think time</span></div>
+      </div>
+    </div>
+    <div class="stack tight">
+      <table class="t xs center">
+        <tr><th>Lajur</th><th style="width:96px">Summary</th><th style="width:96px">Aggregate</th></tr>
+        <tr><td><code>Label</code>, <code># Samples</code>, <code>Average</code>, <code>Min</code>, <code>Max</code>, <code>Error %</code>, <code>Throughput</code>, <code>Received/Sent KB/sec</code></td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr class="hot"><td><code>Median</code>, <code>90% Line</code>, <code>95% Line</code>, <code>99% Line</code></td><td>—</td><td class="y">✓</td></tr>
+        <tr><td><code>Std. Dev.</code>, <code>Avg. Bytes</code></td><td class="y">✓</td><td>—</td></tr>
+      </table>
+      <div class="callout info sm"><span class="i">🔁</span><div>Aggregate Report: <code>90% Line</code> · HTML dashboard: <code>90th pct</code> — konsep sama, <b>percentile</b>.</div></div>
+      <div class="callout warn sm"><span class="i">⚙️</span><div>Larian 10 × 2: <b>Disable</b> View Results Tree. Sekali-sekala 1 bayaran 500 = <code>ERROR_RATE</code> 1% SUT — sengaja.</div></div>
+    </div>
   </div>
-  <div class="callout tip mt16"><span class="i">🛡️</span><div>Jika log masuk gagal atau pengguna tiada kenderaan, kita <b>tidak</b> menghantar bayaran palsu yang pasti gagal dan <b>mencemarkan Error %</b>.</div></div>
-  <aside class="notes"><p>Soalan Kuiz S2 #2: syarat yang betul = <code>${__groovy(vars.get("no_pendaftaran") != "NONE")}</code>. Yang lain sama ada bukan ungkapan atau tidak menilai kepada true/false.</p><p>Demo: tukar default extractor kepada nilai sebenar dan tunjuk bayaran palsu menaikkan Error % — kemudian pulihkan.</p></aside>
+  <aside class="notes"><p>Ujian fungsian dahulu (1 × 1, VRT aktif, semua hijau), baru 10 × 2. Demo 12.20: jalankan <code>05</code> — 80 sampel HTTP + 20 baris transaksi; transaksi ≈ 440 ms walaupun think time 1–3 s. <b>Momen kunci #3.</b></p><p><i>"Masa transaksi = masa sistem; think time mempengaruhi throughput, bukan response time."</i> — jambatan ke Little's Law. Kuiz S2 #4: Average ≈ 440 ms kerana <i>Include duration of timer</i> tidak ditanda. If Controller elak bayaran palsu yang mencemarkan Error %.</p></aside>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">Hari 2 · S2 — ForEach (plan 08)</div>
-  <h2 class="wide">Bayar cukai <b>semua</b> kenderaan setiap pengguna</h2>
+  <div class="eyebrow">Hari 2 · S2 — ⭐ Pilihan (sekilas)</div>
+  <h2 class="wide">ForEach &amp; JSR223 Groovy — bila elemen asas tidak cukup</h2>
   <div class="flow sm">
-    <div class="node"><span class="k">2. GET /api/kenderaan (semua)</span><b>JSON Extractor</b><span><code>$.kenderaan[*].no_pendaftaran</code> · Match No. <b><code>-1</code></b> · default <code>NONE</code></span></div>
+    <div class="node"><span class="k">JSON EXTRACTOR</span><b><code>$.kenderaan[*].no_pendaftaran</code></b><span>Match No. <b><code>-1</code></b> = semua</span></div>
     <div class="arr">→</div>
-    <div class="node warn"><span class="k">PEMBOLEHUBAH</span><b><code>no_pendaftaran_1</code>, <code>_2</code>, …</b><span>+ <code>no_pendaftaran_matchNr</code></span></div>
+    <div class="node warn"><span class="k">PEMBOLEHUBAH</span><b><code>no_pendaftaran_1</code>, <code>_2</code>…</b><span>+ <code>_matchNr</code></span></div>
     <div class="arr">→</div>
-    <div class="node hot"><span class="k">FOREACH — SETIAP KENDERAAN</span><b>prefix <code>no_pendaftaran</code></b><span>output <code>no_semasa</code> · ☑ Add “_” before number</span></div>
+    <div class="node hot"><span class="k">FOREACH CONTROLLER</span><b>prefix → <code>no_semasa</code></b><span>☑ Add “_” before number?</span></div>
     <div class="arr">→</div>
-    <div class="node good"><span class="k">DALAM FOREACH</span><b>3. cukai → 4. bayar-cukai</b><span><code>/api/kenderaan/${no_semasa}/…</code></span></div>
+    <div class="node good"><span class="k">08-FOREACH-KENDERAAN</span><b>3 pengguna → 5 bayaran</b><span>16 sampel HTTP, 0 ralat</span></div>
   </div>
-  <div class="split mt24">
-    <div class="callout danger"><span class="i">🪤</span><div><b>Gotcha — “Add _ before number?”</b> Extractor mencipta <code>nama_1</code>. Jika kotak tidak ditanda, ForEach mencari <code>nama1</code> → <b>0 lelaran</b>, tiada ralat, tiada bayaran. Biarkan Start/End index kosong.</div></div>
-    <div class="grid c3" style="gap:12px">
-      <div class="kpi m-h1"><i>Pengguna</i><b>3</b><span>pengguna.csv</span></div>
-      <div class="kpi m-pass"><i>BERJAYA</i><b>5</b><span>kenderaan dibayar</span></div>
-      <div class="kpi m-n"><i>Sampel HTTP</i><b>16</b><span>0 ralat</span></div>
-    </div>
+  <div class="grid c3 mt24" style="gap:14px">
+    <div class="card top m-fail sm"><span class="k">GOTCHA FOREACH</span><h3>Kotak “_” tidak ditanda</h3><p>ForEach mencari <code>no_pendaftaran1</code> → <b>0 lelaran, tiada ralat</b>, tiada bayaran.</p></div>
+    <div class="card top m-violet sm"><span class="k">JSR223 · GROOVY</span><h3>☑ Cache compiled script</h3><p>Dalam skrip guna <code>vars.get("token")</code> — bukan <code>${token}</code>. Contoh: <code>snippets/jsr223-groovy.groovy</code>.</p></div>
+    <div class="card top m-h1 sm"><span class="k">FUNGSI</span><h3><code>${__P(pengguna,50)}</code></h3><p>Property dari <code>-J</code> · <code>${__UUID}</code> · <code>${__Random(1,1000)}</code> · <code>${__time(yyyy-MM-dd)}</code></p></div>
   </div>
-  <aside class="notes"><p><code>800101015500</code> ada 2 kenderaan, <code>900202025600</code> ada 1, <code>850303035700</code> ada 2 → 5 bayaran. 16 sampel = 3 × (log masuk + senarai) + 5 × (cukai + bayar).</p><p>Soalan Kuiz S2 #3: ForEach berjalan 0 kali → kotak "Add _ before number?" tidak ditanda.</p></aside>
-</section>
-
-<section class="slide codey">
-  <div class="eyebrow">Hari 2 · S2 — JSR223 (Groovy)</div>
-  <h2>Bila elemen terbina tidak cukup — tulis Groovy</h2>
-  <div class="split" style="grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr)">
-    <div class="codewrap"><div class="codebar">hari-2/snippets/jsr223-groovy.groovy<span class="lang">groovy</span></div>
-<pre class="code xs" data-lang="groovy">// PreProcessor (anak bayar-cukai): jana nilai unik
-vars.put("no_rujukan",
-    "REF-" + System.currentTimeMillis() + "-" + Thread.currentThread().getId())
-def tempoh = (Math.random() &lt; 0.5) ? 6 : 12
-vars.put("tempoh_bulan", tempoh.toString())
-
-// PostProcessor (anak log-masuk): sahkan JSON + tanda gagal
-import groovy.json.JsonSlurper
-def kod = prev.getResponseCode()
-if (kod == "200") {
-    def json = new JsonSlurper().parseText(prev.getResponseDataAsString())
-    if (!json.token) {
-        prev.setSuccessful(false)
-        prev.setResponseMessage("Log masuk 200 tetapi tiada token dalam respons")
-    }
-} else {
-    prev.setSuccessful(false)
-    prev.setResponseMessage("Log masuk mengembalikan kod " + kod)
-}</pre></div>
-    <div class="stack tight">
-      <table class="t xs">
-        <tr><th style="width:70px">Objek</th><th>Maksud</th></tr>
-        <tr><td><code>vars</code></td><td>Pembolehubah thread (String)</td></tr>
-        <tr><td><code>props</code></td><td>Property global JMeter</td></tr>
-        <tr><td><code>prev</code></td><td><code>SampleResult</code> sampler sebelumnya</td></tr>
-        <tr><td><code>ctx</code></td><td>JMeterContext · <code>getThreadNum()</code></td></tr>
-        <tr><td><code>log</code></td><td><code>log.info</code> → <code>jmeter.log</code></td></tr>
-      </table>
-      <div class="callout tip sm"><span class="i">⚡</span><div>Groovy + ☑ <b>Cache compiled script</b>. Elak BeanShell untuk beban tinggi.</div></div>
-      <div class="callout danger sm"><span class="i">⛔</span><div>Dalam skrip, guna <code>vars.get("token")</code> — <b>bukan</b> <code>${token}</code>. <code>${}</code> diganti sebelum kompil dan mematahkan cache.</div></div>
-    </div>
-  </div>
-  <aside class="notes"><p>Latihan 3. Checkpoint: sampel log masuk ditanda gagal dengan mesej tersuai; <code>no_rujukan</code> kelihatan dalam Debug Sampler.</p><p>Soalan Kuiz S2 #4: kompil semula setiap lelaran memakan CPU penjana beban dan memesongkan keputusan.</p></aside>
-</section>
-
-<section class="slide codey">
-  <div class="eyebrow">Hari 2 · S2 — Fungsi JMeter</div>
-  <h2>Fungsi terbina &amp; <code>__P</code>: satu plan, banyak saiz beban</h2>
-  <div class="split" style="grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)">
-    <table class="t sm">
-      <tr><th style="width:230px">Fungsi</th><th>Hasil · contoh guna</th></tr>
-      <tr><td><code>${__Random(1,1000)}</code></td><td>Integer rawak — ID rawak, pilih cabang</td></tr>
-      <tr><td><code>${__RandomString(8,abcdef)}</code></td><td>Rentetan rawak — nama rujukan</td></tr>
-      <tr><td><code>${__UUID}</code></td><td>UUID unik — <code>X-Rujukan</code> / idempotency key</td></tr>
-      <tr><td><code>${__time(yyyy-MM-dd)}</code></td><td>Tarikh terformat — tarikh transaksi</td></tr>
-      <tr class="hot"><td><code>${__P(pengguna,50)}</code></td><td>Baca <b>property</b> <code>pengguna</code> (lalai 50)</td></tr>
-      <tr><td><code>${__threadNum}</code></td><td>Nombor thread semasa</td></tr>
-      <tr><td><code>${__groovy(...)}</code> / <code>${__jexl3(...)}</code></td><td>Nilai ungkapan — syarat If Controller</td></tr>
-    </table>
-    <div class="stack">
-      <div class="codewrap"><div class="codebar">Thread Group · plan 06<span class="lang alt">txt</span></div>
-<pre class="code sm">Number of Threads : ${__P(pengguna,50)}
-Ramp-up period    : ${__P(rampup,30)}
-Duration (s)      : ${__P(tempoh,120)}</pre></div>
-      <div class="codewrap"><div class="codebar">terminal<span class="lang alt">sh</span></div>
-<pre class="code sm" data-lang="sh">jmeter -n -t 06-ujian-beban-nogui.jmx -Jpengguna=200</pre></div>
-      <div class="callout tip sm"><span class="i">♻️</span><div>Tiada edit <code>.jmx</code> untuk tukar beban — asas CI dan ujian titik pecah (S3, S4).</div></div>
-    </div>
-  </div>
-  <aside class="notes"><p>Kuiz hari Hari 2 #3: <code>-Jpengguna=200</code> berfungsi tanpa edit kerana Thread Group menggunakan <code>${__P(pengguna,50)}</code>. Nilai 50 kekal sebagai lalai selamat.</p><p>Tanya: "Apa berlaku jika anda terlupa <code>-Jpengguna</code>?" — lalai 50 digunakan.</p></aside>
+  <aside class="notes"><p>Sekilas sahaja (12.35–12.50) — <b>atau</b> masa kejar Latihan 3 jika kelas ketinggalan. <code>800101015500</code> ada 2 kenderaan, <code>900202025600</code> ada 1, <code>850303035700</code> ada 2 → 5 bayaran; 16 sampel = 3 × 2 + 5 × 2.</p><p><code>__P</code> penting petang ini: plan <code>07</code> dibaca dengan <code>-Jpengguna/-Jrampup/-Jtempoh/-Jsla_ms</code>. Checkpoint + Kuiz S2. Jambatan: <i>"Selepas makan kita berhenti melihat GUI dan mula membaca laporan seperti pengurusan membacanya."</i></p></aside>
 </section>
 
 <!-- ---------- Hari 2 · S3 ---------- -->
 
 <section class="slide dark sesi">
   <div class="eyebrow">Hari 2 · Sesi 3</div>
-  <h1>Non-GUI, HTML Dashboard &amp; SLA</h1>
+  <h1>Laporan &amp; Istilah</h1>
   <div class="threads"><span class="chip">S3 · 2.00 – 3.30</span><span class="chip">📝 Borang penilaian dibuka 2.00 ptg</span></div>
   <ul class="list">
-    <li><code>jmeter -n -t … -l … -e -o</code> · <code>run-nogui.sh</code></li>
-    <li>APDEX, throughput, percentile, Error % · titik pecah</li>
-    <li>Senario puncak <code>07</code> + Duration Assertion <code>-Jsla_ms</code></li>
+    <li><code>.jtl</code> → HTML dashboard: <code>-e -o</code> · <code>-g … -o</code> · <code>overall_granularity</code></li>
+    <li>Setiap bahagian dashboard JMeter 5.6 · glosari istilah · corak tafsiran · baseline</li>
+    <li>Senario puncak <code>07</code> + <code>-Jsla_ms</code> → tiga dapatan bertulis</li>
   </ul>
-  <div class="labline"><b>LAB</b> Latihan 4 · 5 · 6 · <b>KUIZ</b> S3</div>
+  <div class="labline"><b>LAB</b> Latihan 4 — Lembaran kerja dashboard · Latihan 5 — <code>07</code> + SLA → 3 dapatan · <b>KUIZ</b> S3</div>
   <div class="dayrail"><span class="on"></span><span class="on"></span><span class="now"></span><span></span><em>Hari 2 · S3 / S4</em></div>
   <div class="daynum"><small>SESI</small>S3</div>
-  <aside class="notes"><p>Maklumkan sekarang: borang penilaian kursus dalam pelatih.my telah dibuka (2.00 ptg). Minta peserta isi sebelum tamat — jangan tunggu saat akhir.</p><p>Sesi ini menjawab soalan pengurusan: "Boleh tak sistem tampung hari kenaikan harga cukai?"</p></aside>
+  <aside class="notes"><p>Maklumkan sekarang: borang penilaian kursus dalam pelatih.my telah dibuka (2.00 ptg). Mesej teras: <b>"Laporan ialah produk anda"</b> — pengurusan tidak membaca <code>.jmx</code>; mereka membaca keputusan.</p><p>Sesi paling berat penerangan (~55%). Buka laporan sandaran R1/R2/R3 dalam tab pelayar sebelum mula. Tenaga: <i>"Siapa pernah diminta 'buat laporan' daripada tangkap layar?"</i></p></aside>
 </section>
 
 <section class="slide codey">
-  <div class="eyebrow">Hari 2 · S3 — Larian non-GUI (Latihan 4)</div>
-  <h2>Beban sebenar dari terminal + dashboard HTML</h2>
-  <div class="split">
-    <div class="stack">
-      <div class="codewrap"><div class="codebar">terminal · plan 06<span class="lang alt">sh</span></div>
-<pre class="code sm" data-lang="sh">jmeter -n -t hari-2/test-plans/06-ujian-beban-nogui.jmx \
-  -Jpengguna=100 -Jrampup=30 -Jtempoh=180 \
-  -l results.jtl \
-  -e -o laporan/</pre></div>
-      <div class="codewrap"><div class="codebar">pembungkus · PENGGUNA / RAMPUP / TEMPOH / HOST / PORT → -J…<span class="lang alt">sh</span></div>
-<pre class="code sm" data-lang="sh">cd hari-2/run
-./run-nogui.sh                     # 50 pengguna / 30 s / 120 s
-PENGGUNA=200 RAMPUP=60 TEMPOH=300 ./run-nogui.sh
-# hari-2/run/hasil/&lt;cap-masa&gt;/laporan/index.html</pre></div>
-      <p class="xsmall muted mb0">Windows: <code>run-nogui.bat</code> · <code>run-nogui.sh</code> sentiasa menjalankan plan <code>06</code>.</p>
-    </div>
-    <div class="stack">
+  <div class="eyebrow">Hari 2 · S3 — Dari larian ke laporan</div>
+  <h2><code>.jmx</code> → <code>.jtl</code> → HTML dashboard</h2>
+  <div class="flow sm">
+    <div class="node"><span class="k">PLAN</span><b><code>.jmx</code> boleh dimain balik</b><span>View Results Tree disabled</span></div>
+    <div class="arr">→</div>
+    <div class="node warn"><span class="k">jmeter -n -t … -l</span><b>Hasil mentah <code>.jtl</code></b><span>satu baris setiap sampel (CSV)</span></div>
+    <div class="arr">→</div>
+    <div class="node hot"><span class="k">-e -o (semasa) · -g -o (kemudian)</span><b>HTML dashboard</b><span><code>index.html</code> + <code>statistics.json</code></span></div>
+  </div>
+  <div class="split mt16" style="grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)">
+    <div class="stack tight">
+      <div class="codewrap"><div class="codebar">akar repo · Latihan 4<span class="lang alt">sh</span></div>
+<pre class="code xs" data-lang="sh">mkdir -p hasil         # folder induk -o MESTI wujud dahulu
+jmeter -n -t hari-2/test-plans/05-transaksi-penuh.jmx \
+  -l hasil/r05.jtl -e -o hasil/laporan05
+# jana semula dari .jtl sedia ada, graf setiap 5 s
+jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
+  -Jjmeter.reportgenerator.overall_granularity=5000</pre></div>
       <table class="t xs">
-        <tr><th style="width:120px">Bendera</th><th>Maksud</th></tr>
-        <tr><td><code>-n</code></td><td>Mod non-GUI</td></tr>
-        <tr><td><code>-t</code></td><td>Fail Test Plan (<code>.jmx</code>)</td></tr>
-        <tr><td><code>-l</code></td><td>Hasil mentah (<code>.jtl</code>)</td></tr>
-        <tr><td><code>-e -o &lt;dir&gt;</code></td><td>Dashboard HTML — dir <b>kosong / belum wujud</b></td></tr>
-        <tr><td><code>-J&lt;nama&gt;=&lt;nilai&gt;</code></td><td>Property tempatan → <code>${__P(...)}</code></td></tr>
-        <tr><td><code>-j &lt;fail&gt;</code></td><td>Fail log JMeter</td></tr>
-        <tr><td><code>-g &lt;jtl&gt;</code></td><td>Jana laporan dari <code>.jtl</code> sedia ada (+ <code>-o</code>)</td></tr>
+        <tr><th style="width:230px"><code>jmeter.reportgenerator.</code>…</th><th style="width:70px">Lalai</th><th>Guna</th></tr>
+        <tr class="hot"><td><code>overall_granularity</code></td><td>60000</td><td>Selang graf Over Time &amp; Throughput (min. 1000)</td></tr>
+        <tr><td><code>apdex_satisfied_threshold</code></td><td>500</td><td>Ambang T APDEX (ms)</td></tr>
+        <tr><td><code>apdex_tolerated_threshold</code></td><td>1500</td><td>Ambang F APDEX (ms)</td></tr>
       </table>
-      <div class="callout info sm"><span class="i">📄</span><div><code>.jtl</code> = CSV setiap sampel: <code>timeStamp, elapsed, label, responseCode, success, Latency, Connect…</code> Simpan — laporan boleh dijana kemudian.</div></div>
+    </div>
+    <div class="stack tight">
+      <table class="t xs">
+        <tr><th style="width:110px">Bendera</th><th>Maksud</th></tr>
+        <tr><td><code>-n</code> · <code>-t</code></td><td>Non-GUI · test plan</td></tr>
+        <tr><td><code>-l</code></td><td>Fail hasil mentah (cipta foldernya sendiri)</td></tr>
+        <tr><td><code>-e</code></td><td>Jana dashboard selepas larian</td></tr>
+        <tr class="hot"><td><code>-o</code></td><td>Folder output: <b>kosong</b>, dan folder <b>induk</b> mesti wujud</td></tr>
+        <tr><td><code>-g</code></td><td>Dashboard dari <code>.jtl</code> sedia ada (+ <code>-o</code>)</td></tr>
+        <tr><td><code>-J&lt;nama&gt;=…</code></td><td>Property: <code>${__P()}</code> <b>dan</b> penjana laporan</td></tr>
+      </table>
+      <div class="console"><span class="e">Cannot write to '…' as folder is not empty</span>
+<span class="e">… folder does not exist and parent folder is not writable</span></div>
+      <div class="callout danger sm"><span class="i">🚫</span><div>Listener GUI dimatikan semasa beban — ia memproses setiap sampel dalam JVM yang menjana beban. Analisis dibuat <b>selepas</b>.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Plan 06: <code>-Jpengguna</code> (50), <code>-Jrampup</code> (30), <code>-Jtempoh</code> (120 s, Thread lifetime, Loop Infinite), <code>-Jhost</code> (localhost), <code>-Jport</code> (3000).</p><p>Soalan Kuiz S3 #1: arahan yang betul = <code>jmeter -n -t plan.jmx -l hasil.jtl -e -o laporan/</code>. <code>-g</code> digunakan dengan <code>.jtl</code>, bukan <code>.jmx</code>.</p></aside>
+  <aside class="notes"><p>Demo 2.05: <code>mkdir -p hasil</code> → larian <code>05</code> dengan <code>-e -o</code> → buka <code>index.html</code>. Kemudian <code>-g</code> ke folder baharu dengan butiran 5 s. Jalankan <code>-g</code> sekali lagi ke folder sama → <code>folder is not empty</code> (sengaja). Jika lupa <code>mkdir</code>: ralat <i>parent folder is not writable</i> — JMeter menyemak ini <b>sebelum</b> ujian bermula.</p><p>Kuiz S3 #3: graf 1–2 titik → jana semula dengan <code>-g … -Jjmeter.reportgenerator.overall_granularity=5000</code>, bukan larian 1 jam. Summary/Aggregate Report boleh untuk larian GUI kecil; Simple Data Writer hanya jika perlu fail tambahan.</p></aside>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">Hari 2 · S3 — Dashboard</div>
-  <h2 class="wide">Membaca <code>laporan/index.html</code></h2>
-  <div class="split" style="grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)">
-    <table class="t xs">
-      <tr><th style="width:210px">Bahagian</th><th>Apa yang dicari</th></tr>
-      <tr><td><b>Dashboard → APDEX</b></td><td>Skor 0–1 per label</td></tr>
-      <tr><td><b>Requests Summary</b></td><td>Pai Pass / Fail</td></tr>
-      <tr class="hot"><td><b>Statistics</b></td><td># Samples, Average, <b>90th / 95th / 99th pct</b>, Throughput, Error % per label</td></tr>
-      <tr><td><b>Errors / Top 5 Errors</b></td><td>500, 403, “operation lasted too long”</td></tr>
-      <tr><td><b>Charts → Over Time</b></td><td>Response Times, Active Threads, Transactions Per Second</td></tr>
-      <tr><td><b>Charts → Throughput</b></td><td>Hits / Transactions per second</td></tr>
-      <tr><td><b>Charts → Response Times</b></td><td>Percentiles, Distribution</td></tr>
+  <div class="eyebrow">Hari 2 · S3 — Peta dashboard</div>
+  <h2 class="wide">Apa ada dalam <code>index.html</code> — dan tertib membacanya</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)">
+    <div class="stack tight">
+      <div class="card top m-h1 sm"><span class="k">MENU · DASHBOARD</span>
+        <div class="grid c3 mt8" style="gap:8px">
+          <div class="card flat sm"><b>a) Test and Report information</b><p>Source file · Start/End Time · Filter for display</p></div>
+          <div class="card flat sm"><b>b) APDEX</b><p>Apdex · T · F · Label</p></div>
+          <div class="card flat sm"><b>c) Requests Summary</b><p>Pai PASS / FAIL (sampel HTTP)</p></div>
+          <div class="card flat sm" style="border-color:var(--acc)"><b>d) Statistics</b><p>Jadual paling penting</p></div>
+          <div class="card flat sm"><b>e) Errors</b><p>Jenis ralat · bilangan · %</p></div>
+          <div class="card flat sm"><b>f) Top 5 Errors by sampler</b><p>Langkah mana gagal, kenapa</p></div>
+        </div>
+      </div>
+      <div class="grid c3" style="gap:10px">
+        <div class="card top m-violet sm"><span class="k">CHARTS · OVER TIME</span><h3>6 graf</h3><p>Response Times, Percentiles, Active Threads, Bytes, Latencies, Connect</p></div>
+        <div class="card top m-sky sm"><span class="k">CHARTS · THROUGHPUT</span><h3>6 graf</h3><p>Hits, Codes, Transactions, Total TPS, RT/Latency Vs Request</p></div>
+        <div class="card top m-pass sm"><span class="k">CHARTS · RESPONSE TIMES</span><h3>4 graf</h3><p>Percentiles, Overview, Time Vs Threads, Distribution</p></div>
+      </div>
+    </div>
+    <div class="stack tight">
+      <p class="rlabel mb0">Tertib bacaan 5 minit</p>
+      <ol class="steps tight">
+        <li><div><b>Test and Report information</b><span>Larian betul &amp; lengkap? Berhenti awal = amaran</span></div></li>
+        <li><div><b>Statistics — baris transaksi</b><span>p95 &amp; Error % vs NFR</span></div></li>
+        <li><div><b>Errors / Top 5</b><span>Apa yang gagal?</span></div></li>
+        <li><div><b>Active Threads Over Time</b><span>Model beban berlaku?</span></div></li>
+        <li><div><b>Response Times / Percentiles Over Time</b><span>Stabil sepanjang steady state?</span></div></li>
+        <li><div><b>Total Transactions Per Second</b><span>Throughput ikut beban?</span></div></li>
+      </ol>
+    </div>
+  </div>
+  <aside class="notes"><p>Lawatan dashboard (2.15–2.35) menggunakan laporan sandaran R1. Menu kiri: Dashboard, Charts (Over Time · Throughput · Response Times), Customs Graphs. <i>Filter for display</i> yang diisi = laporan tidak lengkap.</p><p>Jangan baca setiap graf panjang lebar — satu soalan setiap graf. Soalan: "Jika anda hanya ada 30 saat, bahagian mana anda buka dahulu?" (Statistics, baris transaksi.) Lembaran kerja Latihan 4 mengikut peta ini — 14 baris.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S3 — (b) APDEX</div>
+  <h2 class="wide">APDEX: skor kepuasan 0 – 1</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)">
+    <div class="stack tight">
+      <div class="mnemo"><span class="tag">FORMULA</span><p><b>APDEX = (Satisfied + Tolerating / 2) ÷ Jumlah sampel</b></p></div>
+      <div class="apdex">
+        <div style="background:var(--pass-700)">Satisfied<small>≤ T (500 ms)</small></div>
+        <div style="background:var(--jpj-700)">Tolerating — dikira ½<small>T &lt; masa ≤ F (1500 ms)</small></div>
+        <div style="background:var(--fail-700)">Frustrated<small>masa &gt; F — ATAU GAGAL</small></div>
+      </div>
+      <div class="card side m-pass sm"><span class="k">DISAHKAN · LARIAN 07 R1</span><h3><code>bayar-cukai</code> BMT3030: 196 sampel, 3 gagal (500)</h3><p>APDEX = 193 / 196 = <b>0.985</b> — sampel gagal = Frustrated <b>walaupun laju</b>.</p></div>
+      <div class="callout warn sm"><span class="i">⚠️</span><div>Transaksi 4 langkah (≈ 450 ms) dinilai dengan T = 500 ms yang sama → APDEX transaksi <b>0.862–0.875</b> walaupun sistem sihat. Guna <code>jmeter.reportgenerator.apdex_per_transaction</code>.</div></div>
+    </div>
+    <div class="stack tight">
+      <table class="t sm">
+        <tr><th>Skor</th><th>Tafsiran biasa</th></tr>
+        <tr><td><b>≥ 0.94</b></td><td><span class="st ok">Sangat baik</span></td></tr>
+        <tr><td><b>0.85 – 0.93</b></td><td><span class="st info">Baik</span></td></tr>
+        <tr><td><b>0.70 – 0.84</b></td><td><span class="st warn">Sederhana</span></td></tr>
+        <tr><td><b>&lt; 0.70</b></td><td><span class="st bad">Lemah</span></td></tr>
+      </table>
+      <dl class="facts">
+        <dt>Lajur</dt><dd><b>Apdex</b> · <b>T (Toleration threshold)</b> · <b>F (Frustration threshold)</b> · <b>Label</b></dd>
+        <dt>Total</dt><dd>Baris Total APDEX JMeter 5.6 <b>turut</b> mengira sampel transaksi (Statistics Total tidak)</dd>
+        <dt>R1</dt><dd>Total <b>0.971</b> · transaksi 0.862</dd>
+      </dl>
+    </div>
+  </div>
+  <aside class="notes"><p>Tulis formula di papan. Contoh lisan: 10 sampel — 7 ≤ 500 ms, 2 antara 500–1500 ms, 1 gagal → (7 + 2/2) ÷ 10 = 0.80.</p><p>Kuiz S3 #2: sampel 120 ms yang gagal HTTP 500 = <b>Frustrated</b>. Tanya: <i>"Kenapa APDEX transaksi 0.86 tetapi setiap langkah ~1.0?"</i> — transaksi 4 langkah ≈ 450 ms kadang-kadang melepasi T = 500 ms. Siapa memilih T/F? Pemilik sistem, bersama NFR — bukan penguji sendirian.</p></aside>
+</section>
+
+<section class="slide codey">
+  <div class="eyebrow">Hari 2 · S3 — (d) Statistics</div>
+  <h2>Jadual Statistics — setiap lajur, dengan baris transaksi R1</h2>
+  <table class="t xs">
+    <tr><th style="width:150px">Lajur</th><th style="width:130px">Kumpulan</th><th>Maksud &amp; cara baca</th><th style="width:150px">R1 · <code>…(Puncak)</code></th><th style="width:130px"><code>statistics.json</code></th></tr>
+    <tr><td><b>Label</b></td><td>—</td><td>Nama sampler/transaksi. Baris <b>Total</b> = sampel <b>HTTP</b> sahaja (2432)</td><td>Pembaharuan Cukai Jalan (Puncak)</td><td>kunci objek</td></tr>
+    <tr><td><b>#Samples</b></td><td>Executions</td><td>Sama dengan jangkaan (threads × gelung × sampler)?</td><td>598</td><td><code>sampleCount</code></td></tr>
+    <tr><td><b>FAIL</b></td><td>Executions</td><td>Kod 4xx/5xx, ralat rangkaian, <b>atau assertion gagal</b></td><td>6</td><td><code>errorCount</code></td></tr>
+    <tr class="hot"><td><b>Error %</b></td><td>Executions</td><td>FAIL ÷ #Samples × 100 — bandingkan dengan NFR (&lt; 1%)</td><td>1.00%</td><td><code>errorPct</code></td></tr>
+    <tr><td><b>Average</b></td><td>Response Times (ms)</td><td>Purata — mudah dipesongkan nilai ekstrem</td><td>446</td><td><code>meanResTime</code></td></tr>
+    <tr><td><b>Min</b> / <b>Max</b></td><td>Response Times (ms)</td><td>Paling laju / lambat — Max = <b>satu</b> sampel, bukan SLA</td><td>— / 693</td><td><code>min/maxResTime</code></td></tr>
+    <tr><td><b>Median</b></td><td>Response Times (ms)</td><td>50% sampel ≤ nilai ini — “pengalaman biasa”</td><td>446</td><td><code>medianResTime</code></td></tr>
+    <tr class="hot"><td><b>90th / 95th / 99th pct</b></td><td>Response Times (ms)</td><td><b>Asas SLA/NFR</b>; jurang besar Median → 99th = ekor panjang</td><td>554 / 583 / 644</td><td><code>pct1/2/3ResTime</code></td></tr>
+    <tr><td><b>Transactions/s</b></td><td>Throughput</td><td>Sampel siap sesaat bagi label; baris transaksi = transaksi perniagaan/s</td><td>10.46</td><td><code>throughput</code></td></tr>
+    <tr><td><b>Received / Sent</b></td><td>Network (KB/sec)</td><td>Jalur lebar — naik mendadak = respons besar / sumber tidak perlu</td><td>—</td><td><code>…KBytesPerSec</code></td></tr>
+  </table>
+  <p class="xsmall muted mt8 mb0">Total R1: 2432 sampel · 0.25% ralat · 41.29/s. 630 log masuk tetapi 598 transaksi — lelaran yang belum siap apabila 60 s tamat tidak menghasilkan sampel transaksi.</p>
+  <aside class="notes"><p>Lajur dikumpul di bawah empat tajuk: Executions, Response Times (ms), Throughput, Network (KB/sec). Baca baris transaksi dahulu, kemudian langkah paling lambat. <code>statistics.json</code> ialah data yang sama untuk mesin — kita guna untuk gerbang CI (S4 ⭐).</p><p>Kuiz hari #2: Total = sampel HTTP sahaja (plan 05: Total 80; baris transaksi 20 berasingan). Tanya: "Kenapa 630 log masuk tetapi hanya 598 transaksi?" — Thread Group tiada ramp-down; lelaran separuh jalan tidak dikira.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S3 — Percentile vs average</div>
+  <h2 class="wide">Average menipu — NFR ditulis dalam percentile</h2>
+  <div class="split">
+    <div class="stack tight">
+      <p class="rlabel mb0">99 permintaan × 100 ms + 1 × 10,000 ms</p>
+      <svg viewBox="0 0 520 210" style="width:100%;height:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px" role="img" aria-label="Lengkung percentile: rata 100 ms hingga percentile 99, kemudian melonjak ke 10000 ms; garis purata 199 ms">
+        <line x1="48" y1="180" x2="500" y2="180" style="stroke:var(--line-2)"/>
+        <line x1="48" y1="18" x2="48" y2="180" style="stroke:var(--line-2)"/>
+        <text x="40" y="22" text-anchor="end" style="font:11px var(--mono);fill:var(--muted)">10000</text>
+        <text x="40" y="168" text-anchor="end" style="font:11px var(--mono);fill:var(--muted)">100</text>
+        <text x="48" y="198" style="font:11px var(--mono);fill:var(--muted)">p0</text>
+        <text x="270" y="198" text-anchor="middle" style="font:11px var(--mono);fill:var(--muted)">p50</text>
+        <text x="496" y="198" text-anchor="end" style="font:11px var(--mono);fill:var(--muted)">p99 → p100</text>
+        <path d="M48 164 L486 164 L492 20 L500 20" style="fill:none;stroke:var(--acc);stroke-width:3;stroke-linejoin:round"/>
+        <line x1="48" y1="150" x2="500" y2="150" style="stroke:var(--jpj-700);stroke-width:2;stroke-dasharray:7 6"/>
+        <text x="60" y="142" style="font:700 12px var(--font);fill:var(--jpj-700)">Average ≈ 199 ms — “OK!”</text>
+        <text x="476" y="46" text-anchor="end" style="font:700 12px var(--font);fill:var(--fail-700)">1 pengguna menunggu 10 s</text>
+      </svg>
+      <div class="callout danger sm"><span class="i">🙈</span><div>Average ≈ <b>199 ms</b>, tetapi 99th pct = <b>10,000 ms</b> — dan seorang rakyat menunggu 10 saat.</div></div>
+    </div>
+    <div class="stack tight">
+      <p class="rlabel mb0">R1 · transaksi Pembaharuan Cukai Jalan (Puncak)</p>
+      <div class="stack tight" style="gap:6px;font-family:var(--mono);font-size:13px">
+        <div style="display:grid;grid-template-columns:84px 1fr 60px;gap:10px;align-items:center"><span>Median</span><div style="height:18px;border-radius:5px;background:var(--sky);width:64%"></div><b>446</b></div>
+        <div style="display:grid;grid-template-columns:84px 1fr 60px;gap:10px;align-items:center"><span>Average</span><div style="height:18px;border-radius:5px;background:var(--slate);width:64%"></div><b>446</b></div>
+        <div style="display:grid;grid-template-columns:84px 1fr 60px;gap:10px;align-items:center"><span>90th pct</span><div style="height:18px;border-radius:5px;background:var(--acc);width:80%"></div><b>554</b></div>
+        <div style="display:grid;grid-template-columns:84px 1fr 60px;gap:10px;align-items:center"><span>95th pct</span><div style="height:18px;border-radius:5px;background:var(--acc-700);width:84%"></div><b>583</b></div>
+        <div style="display:grid;grid-template-columns:84px 1fr 60px;gap:10px;align-items:center"><span>99th pct</span><div style="height:18px;border-radius:5px;background:var(--violet);width:93%"></div><b>644</b></div>
+        <div style="display:grid;grid-template-columns:84px 1fr 60px;gap:10px;align-items:center"><span>Max</span><div style="height:18px;border-radius:5px;background:var(--fail);width:100%"></div><b>693</b></div>
+      </div>
+      <div class="mnemo"><span class="tag">p95 = 583 ms</span><p><b>95%</b> transaksi selesai dalam ≤ 583 ms; <b>5%</b> lebih lambat. Bukan purata, bukan paling lambat.</p></div>
+      <div class="callout tip sm"><span class="i">📏</span><div>Jurang kecil Median → 99th (446 → 644) = taburan ketat. Jurang besar = <b>ekor panjang</b> — siasat.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Skrip: <i>"Jika 100 rakyat memperbaharui cukai dan purata 300 ms, kita tidak tahu apa-apa tentang rakyat yang paling lambat. p95 583 ms bermaksud: 95 orang selesai dalam 0.6 saat, 5 orang lebih lama. NFR yang baik melindungi 5 orang itu."</i></p><p>Kuiz S3 #1: 95th pct = 583 ms → 95% transaksi ≤ 583 ms. Salah faham lazim: "Max ialah SLA" — Max hanya satu sampel. Semakan kendiri #4: Average 350 ms tetapi p95 2900 ms vs NFR p95 &lt; 1500 ms → <b>gagal</b>.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S3 — (c) Requests Summary · (e) Errors · (f) Top 5</div>
+  <h2 class="wide">Apa yang gagal, berapa banyak, dan di langkah mana</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr)">
+    <div class="stack tight">
+      <p class="rlabel mb0">Errors · Type of error · Number of errors · % in errors · % in all samples</p>
+      <table class="t xs">
+        <tr><th>Contoh baris (disahkan)</th><th style="width:200px">Maksud</th></tr>
+        <tr><td><code>401/Unauthorized</code> · 2 · 100% · 66.67%</td><td>Main balik <code>04-rakaman-mentah</code></td></tr>
+        <tr><td><code>500/Internal Server Error</code></td><td>Ralat pelayan (SUT ~1% bayaran)</td></tr>
+        <tr class="hot"><td><code>The operation lasted too long: It took 166 milliseconds, but should not have lasted longer than 150 milliseconds.</code></td><td><b>Duration Assertion</b> gagal — kod HTTP tetap <span class="st ok">200</span></td></tr>
+      </table>
+      <div class="callout warn sm"><span class="i">🧮</span><div>Errors mengumpul ikut <b>teks mesej</b>. Mesej Duration Assertion mengandungi nilai ms → satu baris setiap nilai (R2: <b>~30 baris</b>). Jumlahkan, atau baca Top 5.</div></div>
+      <div class="card side m-violet sm"><span class="k">TOP 5 ERRORS BY SAMPLER</span><p><b>Sample</b> · <b>#Samples</b> · <b>#Errors</b> · lima pasangan <b>Error</b> / <b>#Errors</b>. Menjawab: <i>“langkah mana gagal, dan kenapa?”</i> Baris transaksi dikecualikan (<code>exclude_tc_from_top5_errors_by_sampler=true</code>).</p></div>
+    </div>
+    <div class="stack tight">
+      <div class="card top m-pass sm"><span class="k">REQUESTS SUMMARY</span>
+        <svg viewBox="0 0 120 120" style="width:130px;height:130px;display:block;margin:6px auto" role="img" aria-label="Carta pai: PASS 94.63%, FAIL 5.37%">
+          <circle cx="60" cy="60" r="46" style="fill:none;stroke:var(--pass);stroke-width:24"/>
+          <circle cx="60" cy="60" r="46" transform="rotate(-90 60 60)" style="fill:none;stroke:var(--fail);stroke-width:24;stroke-dasharray:15.5 289.5"/>
+        </svg>
+        <p style="text-align:center">Pai <b>PASS</b> / <b>FAIL</b> sampel HTTP (tanpa baris transaksi). R2 SLA 150 ms: FAIL <b>5.37%</b>.</p>
+      </div>
+      <div class="callout info sm"><span class="i">🔍</span><div>Sampel gagal dalam <code>.jtl</code>: lajur <code>failureMessage</code> = mesej assertion; <code>timeStamp</code> = bila — untuk dipadankan dengan log pelayan.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Tunjuk dalam laporan R2: Errors dipenuhi baris <i>The operation lasted too long…</i> — "jadual ini mengumpul ikut teks; jumlahkan". Kemudian Top 5 Errors by sampler: langkah bayar sahaja.</p><p>Tanya: "Requests Summary FAIL 5.37% tetapi Error % transaksi 21.75% — kenapa berbeza?" (Pai mengira semua sampel HTTP — log masuk/senarai tidak ada Duration Assertion; transaksi gagal jika <b>mana-mana</b> langkahnya gagal.)</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S3 — Masa: connect, latency, response time</div>
+  <h2 class="wide">Tiga jam randik dalam satu sampel</h2>
+  <div class="tbar" style="grid-template-columns:1.1fr 3fr 2.2fr">
+    <div style="background:var(--slate)">Connect</div>
+    <div style="background:var(--acc)">hantar + proses pelayan → bait pertama</div>
+    <div style="background:var(--violet)">terima baki respons</div>
+  </div>
+  <div style="display:grid;grid-template-columns:4.1fr 2.2fr;margin-top:8px">
+    <div style="border-top:3px solid var(--acc);padding-top:4px;font:700 12.5px var(--mono);color:var(--acc-700)">Latency ≈ time to first byte (TERMASUK connect)</div>
+  </div>
+  <div style="border-top:3px solid var(--violet);padding-top:4px;margin-top:6px;font:700 12.5px var(--mono);color:var(--violet)">Response time / elapsed = sejurus sebelum hantar → sejurus selepas bait TERAKHIR</div>
+  <div class="split mt16" style="grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)">
+    <div class="stack tight">
+      <div class="codewrap"><div class="codebar">satu baris .jtl (JMeter 5.6)<span class="lang alt">csv</span></div>
+<pre class="code xs">timeStamp,elapsed,label,responseCode,…,Latency,IdleTime,Connect
+1791115262980,<mark>141</mark>,1. POST /api/log-masuk,200,…,<mark>140</mark>,0,<mark>10</mark></pre></div>
+      <table class="t xs">
+        <tr><th style="width:170px">Corak</th><th>Tafsiran</th></tr>
+        <tr><td>Latency ≈ response time</td><td>Masa di <b>pelayan</b> (pemprosesan) → profil kod / DB</td></tr>
+        <tr><td>Latency kecil, RT besar</td><td><b>Pemindahan</b> respons besar / rangkaian → saiz, mampatan</td></tr>
+        <tr><td>Connect naik</td><td>Kehabisan sambungan / tiada keep-alive</td></tr>
+      </table>
+    </div>
+    <div class="stack tight">
+      <div class="grid c3" style="gap:10px">
+        <div class="kpi m-n"><i>Connect</i><b>10</b><span>ms</span></div>
+        <div class="kpi m-h1"><i>Latency</i><b>140</b><span>ms</span></div>
+        <div class="kpi m-violet"><i>Elapsed</i><b>141</b><span>ms</span></div>
+      </div>
+      <div class="callout tip sm"><span class="i">💡</span><div>Respons kecil: hampir semua 141 ms ialah pemprosesan pelayan. Connect 10 ms sambungan pertama, ~1 ms jika keep-alive.</div></div>
+      <div class="callout warn sm"><span class="i">🌐</span><div>JMeter <b>bukan pelayar</b>: response time tidak termasuk render atau JavaScript.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Lukis bar ini di papan. Latency diukur dari sejurus sebelum hantar hingga bahagian <b>pertama</b> respons — ia <b>termasuk</b> connect time (JMeter tidak menolaknya). Elapsed hingga bait <b>terakhir</b>.</p><p>Salah faham lazim: "Latency = response time". Lembaran kerja Latihan 4 baris 14: ambil satu sampel log masuk dari <code>.jtl</code> — masa di pelayan atau pemindahan? Graf berkaitan: Latencies Over Time, Connect Time Over Time.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S3 — Charts → Over Time</div>
+  <h2 class="wide">Over Time: adakah sistem stabil sepanjang ujian?</h2>
+  <table class="t xs">
+    <tr><th style="width:290px">Graf</th><th style="width:250px">Paksi</th><th>Soalan yang dijawab</th><th style="width:260px">Tanda amaran</th></tr>
+    <tr class="hot"><td><b>Response Times Over Time</b></td><td>Masa · purata ms setiap label (termasuk transaksi)</td><td>Masa respons stabil sepanjang ujian?</td><td>Garis naik berterusan — degradasi / kebocoran memori</td></tr>
+    <tr><td><b>Response Time Percentiles Over Time (successful responses)</b></td><td>Masa · Min, Median, 90th, 95th, 99th, Max — sampel <b>berjaya</b></td><td>Ekor (p95/p99) melebar pada puncak?</td><td>p99 melonjak semasa thread aktif maksimum</td></tr>
+    <tr class="hot"><td><b>Active Threads Over Time</b></td><td>Masa · thread aktif setiap Thread Group</td><td>Model beban (ramp-up → stabil) berlaku seperti dirancang?</td><td>Thread jatuh awal = ujian / penjana bermasalah</td></tr>
+    <tr><td><b>Bytes Throughput Over Time</b></td><td>Masa · bait diterima/dihantar sesaat</td><td>Rangkaian menjadi had?</td><td>Rata walaupun pengguna bertambah</td></tr>
+    <tr><td><b>Latencies Over Time</b></td><td>Masa · purata latency</td><td>Masa ke bait pertama — pemprosesan pelayan</td><td>Latency ≈ response time = pelayan lambat</td></tr>
+    <tr><td><b>Connect Time Over Time</b></td><td>Masa · purata connect time</td><td>Masalah sambungan TCP/TLS?</td><td>Naik = kehabisan sambungan / tiada keep-alive</td></tr>
+  </table>
+  <div class="grid c2 mt16" style="gap:14px">
+    <div class="callout warn sm"><span class="i">⏱️</span><div>Selang = <code>overall_granularity</code> (lalai <b>60 s</b>). Larian 60 s = 1–2 titik! Jana semula dengan <code>-Jjmeter.reportgenerator.overall_granularity=5000</code>.</div></div>
+    <div class="callout info sm"><span class="i">📈</span><div>R1 (butiran 5 s): 95th pct sampel HTTP rata <b>172–181 ms</b> setiap selang; baris transaksi <b>430–470 ms</b> sepanjang fasa stabil.</div></div>
+  </div>
+  <aside class="notes"><p>Momen kunci #4: tunjuk laporan R1 butiran 60 s (satu titik) bersebelahan laporan 5 s. "Graf tidak rosak — butirannya kasar."</p><p>Satu soalan setiap graf; jangan baca jadual. Tanya: "Active Threads Over Time menunjukkan 50 thread pada saat 10 — apa yang berlaku pada saat 0–10?" (ramp-up). "Kenapa graf Percentiles Over Time hanya sampel berjaya?" — sampel gagal (cth. 401 laju) akan memesongkan ke bawah.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S3 — Charts → Throughput</div>
+  <h2 class="wide">Throughput: berapa banyak kerja, dan bila ia gagal?</h2>
+  <table class="t xs">
+    <tr><th style="width:250px">Graf</th><th style="width:290px">Paksi</th><th>Soalan</th><th style="width:290px">Tanda amaran</th></tr>
+    <tr><td><b>Hits Per Second</b></td><td>Masa · permintaan HTTP <b>dihantar</b> sesaat</td><td>Berapa beban yang JMeter jana?</td><td>Hits/s rata sedangkan thread naik</td></tr>
+    <tr class="hot"><td><b>Codes Per Second</b></td><td>Masa · respons sesaat ikut <b>kod HTTP</b> (<code>200</code>, <code>500</code>…)</td><td>Bila ralat pelayan berlaku?</td><td>Siri 5xx pada puncak. Kegagalan <b>assertion</b> masih <code>200</code> di sini</td></tr>
+    <tr class="hot"><td><b>Transactions Per Second</b></td><td>Masa · sampel siap sesaat <b>setiap label</b>, <code>-success</code> / <code>-failure</code></td><td>Label mana gagal, dan bila?</td><td>Siri <code>-failure</code> naik</td></tr>
+    <tr><td><b>Total Transactions Per Second</b></td><td>Masa · <code>Transaction-success</code> / <code>Transaction-failure</code></td><td>Throughput keseluruhan sistem</td><td>Mendatar sedangkan pengguna naik = <b>tepu</b></td></tr>
+    <tr><td><b>Response Time Vs Request</b></td><td>Permintaan sesaat global · <b>median</b> RT</td><td>RT naik bila kadar naik?</td><td>Lengkung naik curam = titik lutut</td></tr>
+    <tr><td><b>Latency Vs Request</b></td><td>Permintaan sesaat global · <b>median</b> latency</td><td>Sama, untuk latency</td><td>—</td></tr>
+  </table>
+  <div class="grid c3 mt16" style="gap:12px">
+    <div class="kpi m-sky"><i>Hits/s · R1 Total</i><b>41.29</b><span>permintaan HTTP sesaat</span></div>
+    <div class="kpi m-violet"><i>TPS · transaksi R1</i><b>10.46</b><span>pembaharuan sesaat</span></div>
+    <div class="kpi m-jpj"><i>Nisbah</i><b>≈ 4 : 1</b><span>1 transaksi = 4 hits</span></div>
+  </div>
+  <aside class="notes"><p>Semakan kendiri #3: Hits Per Second = permintaan HTTP dihantar; Transactions Per Second = sampel siap per label (termasuk baris Transaction Controller); Total Transactions Per Second = jumlah keseluruhan. Salah faham lazim: "Hits/s = TPS".</p><p>Kuiz hari #3: R2 Error % 21.75% tetapi Codes Per Second hanya <code>200</code> (+ sedikit <code>500</code>) — Duration Assertion tidak mengubah kod HTTP. Lihat siri <code>-failure</code> dalam Transactions Per Second. Lembaran kerja baris 10: kenapa ≈ 4 : 1?</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S3 — Charts → Response Times</div>
+  <h2 class="wide">Response Times: bentuk taburan penuh</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)">
+    <table class="t sm">
+      <tr><th style="width:230px">Graf</th><th style="width:220px">Paksi</th><th>Soalan</th></tr>
+      <tr><td><b>Response Time Percentiles</b></td><td>Percentile 0–100 · ms</td><td>Di percentile berapa masa melonjak?</td></tr>
+      <tr class="hot"><td><b>Response Time Overview</b></td><td>4 bar (ambang = T/F APDEX)</td><td>Ringkasan ala-APDEX untuk pengurusan</td></tr>
+      <tr><td><b>Time Vs Threads</b></td><td>Thread aktif · purata ms</td><td>RT berubah dengan konkurensi?</td></tr>
+      <tr><td><b>Response Time Distribution</b></td><td>Baldi 100 ms · bilangan</td><td>Unimodal? <b>Dua puncak</b> = dua laluan kod (cache hit/miss)</td></tr>
     </table>
     <div class="stack tight">
-      <div class="kpi m-pass"><i>APDEX</i><b style="font-size:24px">(Satisfied + Tolerating/2) ÷ Jumlah</b><span>hampir 1.0 · ≥ 0.94 sangat baik</span></div>
-      <div class="apdex">
-        <div style="background:var(--pass-700)">Satisfied<small>≤ 500 ms</small></div>
-        <div style="background:var(--jpj-700)">Tolerating (×½)<small>≤ 1500 ms</small></div>
-        <div style="background:var(--fail-700)">Frustrated<small>&gt; 1500 ms</small></div>
+      <p class="rlabel mb0">Response Time Overview · 4 bar</p>
+      <div class="stack tight" style="gap:6px;font-size:13px">
+        <div style="display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center"><code>≤ 500ms</code><div style="height:18px;border-radius:5px;background:var(--pass);width:92%"></div></div>
+        <div style="display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center"><code>&gt; 500ms and ≤ 1,500ms</code><div style="height:18px;border-radius:5px;background:var(--jpj);width:18%"></div></div>
+        <div style="display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center"><code>&gt; 1,500ms</code><div style="height:18px;border-radius:5px;background:var(--fail);width:3%"></div></div>
+        <div style="display:grid;grid-template-columns:150px 1fr;gap:10px;align-items:center"><code>Requests in error</code><div style="height:18px;border-radius:5px;background:var(--slate);width:5%"></div></div>
       </div>
-      <div class="callout warn sm"><span class="i">🏷️</span><div>Label dinamik <code>4. POST …/${no_pendaftaran}/bayar-cukai</code> = satu baris per kenderaan. Laporan pengurusan: bandingkan baris <b>transaksi</b>.</div></div>
+      <p class="xsmall muted mb0">Ilustrasi bentuk — bukan angka larian.</p>
+      <div class="callout info sm"><span class="i">🗣️</span><div>Graf paling mudah untuk pengurusan: <i>“X% permintaan dalam 0.5 s, Y% gagal.”</i></div></div>
     </div>
   </div>
-  <aside class="notes"><p>Demo cue: buka dashboard Latihan 4 pada projektor dan baca dari atas ke bawah. Checkpoint Latihan 4: dashboard dibuka, Error % ≈ 0.</p><p>Soalan Kuiz S3 #3: sampel 1200 ms dengan ambang lalai = <b>Tolerating</b>. APDEX tidak menanda sampel gagal — itu kerja assertion.</p></aside>
+  <div class="callout tip mt16"><span class="i">🧭</span><div>Response Time Percentiles = versi graf bagi lajur 90th/95th/99th pct. Lengkung rata kemudian melonjak di hujung = ekor panjang (slaid “average menipu”).</div></div>
+  <aside class="notes"><p>Lembaran kerja baris 12–13: Response Time Overview (bilangan setiap bar) dan Response Time Distribution (julat paling banyak). Bar Overview menggunakan ambang T/F APDEX — jika anda menukar <code>apdex_satisfied_threshold</code>, bar berubah.</p><p>Tanya: "Distribution menunjukkan dua puncak — 100 ms dan 900 ms. Apa hipotesis anda?" (dua laluan kod: cache hit vs miss, atau satu endpoint berbeza dalam label sama). Bar dalam slaid ini hanya ilustrasi.</p></aside>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">Hari 2 · S3 — Metrik</div>
-  <h2 class="wide">Response time ≠ latency ≠ connect time</h2>
-  <div class="tbar" style="grid-template-columns:1fr 3fr 2.4fr">
-    <div style="background:var(--slate)">Connect</div>
-    <div style="background:var(--acc)">Latency → bait pertama</div>
-    <div style="background:var(--violet)">penstriman / pemprosesan</div>
+  <div class="eyebrow">Hari 2 · S3 — Corak tafsiran</div>
+  <h2 class="wide">Throughput vs response time: mengenal tepu (saturation)</h2>
+  <div class="split" style="grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)">
+    <div class="stack tight">
+      <svg viewBox="0 0 470 250" style="width:100%;height:auto;background:var(--surface);border:1px solid var(--line);border-radius:14px" role="img" aria-label="Graf: throughput naik kemudian mendatar; response time rata kemudian naik curam selepas titik lutut">
+        <line x1="40" y1="215" x2="455" y2="215" style="stroke:var(--line-2)"/>
+        <line x1="40" y1="20" x2="40" y2="215" style="stroke:var(--line-2)"/>
+        <text x="455" y="236" text-anchor="end" style="font:11px var(--mono);fill:var(--muted)">thread aktif →</text>
+        <rect x="235" y="20" width="220" height="195" style="fill:var(--fail-50)"/>
+        <line x1="235" y1="20" x2="235" y2="215" style="stroke:var(--fail);stroke-dasharray:5 5"/>
+        <text x="241" y="36" style="font:700 12px var(--font);fill:var(--fail-700)">titik lutut → tepu</text>
+        <path d="M40 205 L120 150 L200 98 L235 82 L300 74 L455 72" style="fill:none;stroke:var(--acc);stroke-width:3"/>
+        <path d="M40 190 L200 186 L235 180 L300 150 L370 95 L455 30" style="fill:none;stroke:var(--violet);stroke-width:3"/>
+        <text x="100" y="130" style="font:700 12px var(--font);fill:var(--acc-700)">throughput</text>
+        <text x="90" y="178" style="font:700 12px var(--font);fill:var(--violet)">response time</text>
+      </svg>
+      <div class="callout info sm"><span class="i">🧪</span><div><b>Batasan mock:</b> latensi ialah <code>setTimeout</code> rawak — ia tidak tepu. Di laptop, had biasanya <b>CPU laptop</b> (JMeter + Node berkongsi).</div></div>
+    </div>
+    <table class="t xs">
+      <tr><th>Corak dalam graf</th><th style="width:175px">Tafsiran</th><th style="width:150px">Tindakan</th></tr>
+      <tr><td>Thread ↑, throughput ↑ seiring, RT rata</td><td><span class="st ok">Sihat</span> bawah kapasiti</td><td>Naikkan beban (stress)</td></tr>
+      <tr class="hot"><td>Thread ↑, throughput <b>mendatar</b>, RT <b>naik</b></td><td><span class="st bad">Tepu</span> — permintaan beratur</td><td>Cari <b>bottleneck</b> (metrik pelayan)</td></tr>
+      <tr><td>Ralat bermula selepas N thread</td><td>Had kapasiti / sumber habis</td><td>N = had; laporkan</td></tr>
+      <tr><td>RT naik perlahan pada beban tetap</td><td>Degradasi — memori, data</td><td>Soak test; pantau memori</td></tr>
+      <tr><td>Ralat <b>rata</b>, tidak ikut beban</td><td>Ralat fungsian / sintetik</td><td>Banding baseline 1–5 pengguna</td></tr>
+      <tr><td>Ralat semasa ramp-up sahaja</td><td>Pemanasan (cold start)</td><td>Abaikan tempoh itu — nyatakan</td></tr>
+    </table>
   </div>
-  <div class="tscale" style="grid-template-columns:1fr 3fr 2.4fr"><span>jabat tangan TCP</span><span>masa hingga bait <b>pertama</b> respons</span><span style="text-align:right">elapsed = respons <b>penuh</b> ⟶|</span></div>
-  <table class="t sm mt24">
-    <tr><th style="width:210px">Metrik</th><th>Maksud</th><th style="width:360px">Pandangan sihat</th></tr>
-    <tr><td><b>Throughput</b></td><td>Permintaan / transaksi selesai sesaat</td><td>Naik seiring pengguna, kemudian stabil — <b>tidak menurun</b></td></tr>
-    <tr><td><b>Average / Median</b></td><td>Purata / titik tengah masa respons</td><td>Median &lt; ambang SLA</td></tr>
-    <tr class="hot"><td><b>90 / 95 / 99th pct</b></td><td>95% permintaan ≤ nilai ini</td><td>Utama untuk SLA</td></tr>
-    <tr><td><b>Error %</b></td><td>Peratus sampel gagal</td><td>≈ 0% (&lt; 1% biasanya diterima)</td></tr>
-    <tr><td><b>Response time vs Latency</b></td><td>Jumlah masa vs bait pertama</td><td>Jurang besar = pemprosesan / penstriman lambat</td></tr>
+  <aside class="notes"><p><b>Knee point (titik lutut)</b> = beban di mana response time mula naik curam — "selamat sehingga ~N pengguna". <b>Bottleneck</b> = komponen yang menghadkan kapasiti (DB, servis bayaran, rangkaian). Graf berkaitan: Total Transactions Per Second + Response Times Over Time + Active Threads Over Time, atau terus Response Time Vs Request.</p><p>Kuiz S3 #4: thread 50 → 150, TPS mendatar, RT naik → tepu. Tanya: "Bagaimana anda tahu yang tepu ialah SUT, bukan JMeter?" — pantau CPU penjana beban (&lt; ~80%).</p></aside>
+</section>
+
+<section class="slide codey">
+  <div class="eyebrow">Hari 2 · S3 — Glosari (1/2) · masa &amp; statistik</div>
+  <h2>Istilah seperti JMeter mengukurnya</h2>
+  <table class="t xs">
+    <tr><th style="width:200px">Istilah</th><th>Definisi</th><th style="width:300px">Contoh eJPJ</th></tr>
+    <tr><td><b>Response time / Elapsed</b></td><td>Sejurus sebelum permintaan dihantar → sejurus selepas respons <b>terakhir</b>; tanpa render/JS</td><td><code>elapsed</code> = 141 ms log masuk</td></tr>
+    <tr><td><b>Latency</b></td><td>Hingga bahagian <b>pertama</b> respons (≈ TTFB); <b>termasuk</b> connect</td><td>140 ms (elapsed 141)</td></tr>
+    <tr><td><b>Connect time</b></td><td>Membina sambungan (termasuk jabat tangan SSL/TLS)</td><td>10 ms pertama, ~1 ms keep-alive</td></tr>
+    <tr class="hot"><td><b>Throughput</b></td><td>Bilangan permintaan ÷ jumlah masa (mula sampel pertama → tamat terakhir)</td><td>Total 41.29/s (R1)</td></tr>
+    <tr><td><b>Hits/s</b></td><td>Permintaan HTTP <b>dihantar</b> sesaat</td><td>4 hits setiap pembaharuan</td></tr>
+    <tr><td><b>TPS</b></td><td>Sampel <b>siap</b> sesaat; bagi Transaction Controller = transaksi perniagaan/s</td><td>10.46 pembaharuan/s</td></tr>
+    <tr><td><b>Average (mean)</b> · <b>Median</b></td><td>Jumlah ÷ bilangan · 50th percentile</td><td>Dipesongkan oleh nilai ekstrem</td></tr>
+    <tr class="hot"><td><b>Percentile (pNN)</b></td><td>NN% sampel ≤ nilai ini</td><td>p95 = 583 ms</td></tr>
+    <tr><td><b>Standard deviation</b></td><td>Sebaran RT (sisihan piawai <b>populasi</b>); Summary Report, tiada dalam dashboard</td><td>Tinggi = tidak konsisten</td></tr>
+    <tr><td><b>Error %</b></td><td>Sampel gagal ÷ jumlah × 100 (kod HTTP, rangkaian, assertion)</td><td>1.00% transaksi</td></tr>
+    <tr><td><b>APDEX</b></td><td>(Satisfied + Tolerating/2) ÷ jumlah; gagal = Frustrated</td><td>0.971 (Total R1)</td></tr>
   </table>
-  <aside class="notes"><p>Jurang antara latency dan response time menunjukkan masa penstriman/pemprosesan. Connect time tinggi biasanya isu rangkaian atau pool sambungan.</p><p>Soalan Kuiz S3 #2: 95th pct = 1200 ms bermaksud 95% transaksi selesai ≤ 1200 ms; 5% lebih lambat. Max ialah <code>Max</code>, bukan percentile.</p></aside>
+  <aside class="notes"><p>Glosari ialah <b>rujukan</b> — jangan baca semua baris. Pilih 8 (2.50–3.00): response time / latency / connect, throughput / hits / TPS, percentile vs average, APDEX.</p><p>Tanya secara rawak: "Apa beza throughput dan TPS?" "Latency termasuk connect — ya atau tidak?" (ya). Definisi ini sama seperti glosari rasmi JMeter (<code>jmeter.apache.org/usermanual/glossary.html</code>).</p></aside>
 </section>
 
-<section class="slide">
-  <div class="eyebrow">Hari 2 · S3 — SLA &amp; titik pecah (Latihan 5)</div>
-  <h2 class="wide">NFR ditulis dalam percentile — kemudian cari titik pecah</h2>
-  <div class="mnemo"><span class="tag">NFR</span><p>“Pada <b>200 pengguna serentak</b>, transaksi <b>Pembaharuan Cukai Jalan</b> mesti mencapai <b>95th percentile &lt; 1500 ms</b>, <b>Error % &lt; 1%</b>, dan throughput ≥ 20 transaksi/saat, selama 10 minit.”</p></div>
-  <div class="flow mt16">
-    <div class="node good"><span class="k">PENGGUNA=50</span><b>throughput ↑ · p95 stabil</b><span>sistem selesa</span></div>
-    <div class="arr">→</div>
-    <div class="node warn"><span class="k">PENGGUNA=150</span><b>throughput ↑ · p95 mula naik</b><span>hampir had</span></div>
-    <div class="arr">→</div>
-    <div class="node bad"><span class="k">PENGGUNA=400</span><b>throughput rata · p95 melonjak · Error % ↑</b><span>titik pecah = had kapasiti</span></div>
+<section class="slide codey">
+  <div class="eyebrow">Hari 2 · S3 — Glosari (2/2) · beban &amp; sasaran</div>
+  <h2>Istilah model beban, kapasiti &amp; keperluan</h2>
+  <div class="split">
+    <table class="t xs">
+      <tr><th style="width:150px">Istilah</th><th>Maksud · contoh</th></tr>
+      <tr><td><b>Virtual user / thread</b></td><td>Satu thread = satu pengguna simulasi yang mengulang skrip · 50 threads</td></tr>
+      <tr><td><b>Concurrent users</b></td><td>Pengguna <b>dalam sesi</b> pada satu masa (termasuk yang berfikir) · 600 rakyat</td></tr>
+      <tr><td><b>Active threads</b></td><td>Thread hidup pada satu saat (<code>allThreads</code>) · 0 → 50 dalam 10 s</td></tr>
+      <tr><td><b>Ramp-up</b></td><td>Tempoh memulakan semua thread · 10 s → 1 thread / 0.2 s</td></tr>
+      <tr class="hot"><td><b>Steady state</b></td><td>Beban stabil selepas ramp-up — <b>di sinilah</b> NFR dinilai · saat 10–60</td></tr>
+      <tr><td><b>Ramp-down</b></td><td>Thread Group standard tiada; lelaran separuh jalan tiada sampel transaksi · 630 vs 598</td></tr>
+      <tr><td><b>Think time</b> · <b>Pacing</b></td><td>Jeda antara tindakan · kawal <b>kadar</b> lelaran (Constant Throughput Timer 600 sampel/min)</td></tr>
+      <tr><td><b>Open vs closed</b></td><td>Closed: N tetap, tunggu respons (biasa) · Open: kadar tetap (≈ Precise Throughput Timer)</td></tr>
+    </table>
+    <table class="t xs">
+      <tr><th style="width:150px">Istilah</th><th>Maksud · contoh</th></tr>
+      <tr><td><b>Saturation (tepu)</b></td><td>Sumber penuh, permintaan beratur — TPS mendatar, RT naik</td></tr>
+      <tr><td><b>Knee point</b> · <b>Bottleneck</b></td><td>Beban di mana RT naik curam · komponen yang menghadkan (DB, bayaran)</td></tr>
+      <tr><td><b>SLA</b></td><td>Service Level <b>Agreement</b> — janji kontrak · “99.5% ketersediaan; p95 &lt; 3 s”</td></tr>
+      <tr><td><b>SLO</b></td><td>Service Level <b>Objective</b> — sasaran dalaman, lebih ketat · “p95 &lt; 2 s”</td></tr>
+      <tr class="hot"><td><b>NFR</b></td><td>Keperluan prestasi yang <b>diuji</b> · “p95 transaksi ≤ 2000 ms pada 10 trans/s”</td></tr>
+      <tr><td><b>Baseline</b></td><td>Larian rujukan (beban rendah / versi lama) · larian 5 pengguna</td></tr>
+      <tr><td><b>Benchmark</b></td><td>Ukuran piawai banding sistem/versi · v1.2 vs v1.3, beban sama</td></tr>
+      <tr><td><b>Workload model</b></td><td>Siapa buat apa, berapa kerap, berapa ramai · 70% bayar, 30% semak</td></tr>
+    </table>
   </div>
-  <div class="split mt16">
-    <div class="codewrap"><div class="codebar">Latihan 5 · SUT “perlahan” + beban menaik<span class="lang alt">sh</span></div>
-<pre class="code xs" data-lang="sh">LATENCY_MIN=200 LATENCY_MAX=800 ERROR_RATE=0.05 node server.js
-PENGGUNA=50  RAMPUP=10 TEMPOH=60 ./run-nogui.sh
-PENGGUNA=150 RAMPUP=20 TEMPOH=60 ./run-nogui.sh
-PENGGUNA=400 RAMPUP=30 TEMPOH=60 ./run-nogui.sh</pre></div>
-    <div class="callout warn sm"><span class="i">🧮</span><div><code>ERROR_RATE=0.05</code> = ~5% bayaran gagal <b>tanpa mengira beban</b>. Bandingkan <b>trend</b> antara larian. Pantau CPU — JMeter atau Node yang sesak?</div></div>
-  </div>
-  <aside class="notes"><p>Purata tidak sesuai untuk SLA: purata 400 ms boleh wujud bersama 5% pengguna yang menunggu 6 saat. Kuiz hari #4: NFR terbaik menyatakan beban, transaksi, percentile dan ambang ralat.</p><p>Checkpoint Latihan 5: jadual 50/150/400 pengguna (throughput, p95, Error %, APDEX) dan anggaran kapasiti. Selepas itu pulihkan SUT biasa.</p></aside>
+  <aside class="notes"><p>Bahagian kiri = bahasa model beban (kita guna dalam Little's Law, S4). Bahagian kanan = bahasa keputusan (SLA/SLO/NFR, baseline). Tekankan: NFR dinilai pada <b>steady state</b>, bukan semasa ramp-up.</p><p>Tanya: "600 pengguna serentak bermaksud 600 klik sesaat?" (Tidak — kebanyakannya sedang berfikir/membaca. Itulah beza concurrent users dan throughput.) Jambatan ke slaid seterusnya: satu larian sahaja tidak bermakna — bandingkan.</p></aside>
 </section>
 
-<section class="slide">
-  <div class="eyebrow">Hari 2 · S3 — Senario puncak (plan 07)</div>
-  <h2 class="wide">Hari Kenaikan Harga Cukai: <code>07-beban-puncak-cukai.jmx</code></h2>
-  <div class="split" style="grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)">
+<section class="slide codey">
+  <div class="eyebrow">Hari 2 · S3 — Senario puncak <span class="xy">07-beban-puncak-cukai.jmx</span></div>
+  <h2>Hari Kenaikan Harga Cukai + SLA <code>-Jsla_ms</code> (Latihan 5)</h2>
+  <div class="split" style="grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)">
     <ul class="tree">
       <li><span class="el tg">Lonjakan Pembaharuan Cukai <small>${__P(pengguna,300)}</small></span>
         <ul>
           <li><span class="el ctl hot">Pembaharuan Cukai Jalan (Puncak) <small>transaction</small></span>
             <ul>
               <li><span class="el smp">1. POST /api/log-masuk</span> <span class="el pp">token + csrf</span></li>
-              <li><span class="el smp">2. GET /api/kenderaan</span> <span class="el pp">no_pendaftaran</span></li>
-              <li><span class="el ctl">Jika ada kenderaan &amp; token sah <small>if</small></span>
+              <li><span class="el smp">2. GET /api/kenderaan</span></li>
+              <li><span class="el ctl">If Controller</span>
                 <ul>
-                  <li><span class="el smp">3. GET …/cukai (sebut harga)</span> <span class="el pp">amaun + tempoh</span></li>
+                  <li><span class="el smp">3. GET …/cukai</span> <span class="el pp">amaun + tempoh</span></li>
                   <li><span class="el smp">4. POST …/bayar-cukai</span>
                     <ul>
-                      <li><span class="el asr">Bayaran BERJAYA</span></li>
+                      <li><span class="el asr">BERJAYA</span></li>
                       <li><span class="el asr hot">SLA Bayaran &lt; ${__P(sla_ms,2000)}ms</span></li>
                     </ul></li>
                 </ul></li>
+              <li><span class="el tim">Think Time Rush 0.5–1.5 s</span></li>
             </ul></li>
-          <li><span class="el tim">Think Time Rush (0.5-1.5s)</span></li>
         </ul></li>
     </ul>
     <div class="stack tight">
-      <table class="t xs">
-        <tr><th>Property</th><th>Lalai</th></tr>
-        <tr><td><code>-Jpengguna</code></td><td>300</td></tr>
-        <tr><td><code>-Jrampup</code></td><td>30 s</td></tr>
-        <tr><td><code>-Jtempoh</code></td><td>300 s</td></tr>
-        <tr><td><code>-Jhost</code> / <code>-Jport</code></td><td>localhost / 3000</td></tr>
-        <tr class="hot"><td><code>-Jsla_ms</code></td><td>2000 ms</td></tr>
-      </table>
-      <div class="callout tip sm"><span class="i">💰</span><div><code>amaun</code> + <code>tempoh_bulan</code> diambil dari <b>sebut harga</b> — bukan dikeras-kod.</div></div>
-      <div class="callout info sm"><span class="i">🧪</span><div>Ujian pantas di kelas: <code>-Jpengguna=10 -Jrampup=2 -Jtempoh=8</code></div></div>
+      <div class="codewrap"><div class="codebar">R1 (SLA 2000 ms) · R2 (SLA 150 ms, sistem sama)<span class="lang alt">sh</span></div>
+<pre class="code xs" data-lang="sh">jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx \
+  -Jpengguna=50 -Jrampup=10 -Jtempoh=60 -Jsla_ms=2000 \
+  -l hasil/r07-sla2000.jtl -e -o hasil/laporan07-sla2000
+jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx \
+  -Jpengguna=50 -Jrampup=10 -Jtempoh=60 -Jsla_ms=150 \
+  -l hasil/r07-sla150.jtl -e -o hasil/laporan07-sla150</pre></div>
+      <p class="rlabel mb0">Pelanggaran SLA (Duration Assertion) muncul dalam…</p>
+      <ul class="list xs good">
+        <li>Statistics → <b>Error %</b> · Requests Summary → FAIL</li>
+        <li><b>Errors</b> / <b>Top 5</b>: <code>The operation lasted too long…</code></li>
+        <li>Transactions Per Second → siri <code>-failure</code></li>
+      </ul>
+      <ul class="list xs bad"><li><b>Bukan</b> Codes Per Second — kod HTTP kekal <code>200</code></li></ul>
     </div>
   </div>
-  <aside class="notes"><p>Plan 07 menggabungkan semua yang dipelajari: CSV, korelasi, Transaction, If, extractor berantai, Duration Assertion dan property. Inilah "senario yang boleh dipertahankan di hadapan pengurusan".</p><p>Tanya: "Kenapa ambil amaun dari sebut harga dan tidak keras-kod 90?" — setiap kenderaan berbeza amaun; data realistik.</p></aside>
+  <aside class="notes"><p>Lancarkan R1 &amp; R2 (≈ 1 minit setiap satu) dan terangkan Duration Assertion semasa menunggu. Tambah <code>-Jjmeter.reportgenerator.overall_granularity=5000</code> (Latihan 5). Lalai plan: 300 pengguna, ramp 30 s, 300 s — terlalu berat untuk kelas.</p><p>Isu lazim: <code>-J sla_ms=150</code> dengan ruang → Error % R2 sama dengan R1. Plan <code>07</code> mengambil <code>amaun</code> + <code>tempoh_bulan</code> dari sebut harga. Tanya: "Kenapa Duration Assertion hanya pada langkah bayar?" — NFR biasanya pada transaksi kritikal; tukar ikut pelan.</p></aside>
 </section>
 
-<section class="slide codey">
-  <div class="eyebrow">Hari 2 · S3 — Gerbang SLA (Latihan 6)</div>
-  <h2>Turunkan <code>-Jsla_ms</code> — pelanggaran SLA muncul sebagai Error %</h2>
-  <div class="split">
-    <div class="codewrap good"><div class="codebar">SLA 2000 ms · dari hari-2/run<span class="lang alt">sh</span></div>
-<pre class="code xs" data-lang="sh">jmeter -n -t ../test-plans/07-beban-puncak-cukai.jmx \
-  -Jpengguna=300 -Jrampup=30 -Jtempoh=120 -Jsla_ms=2000 \
-  -l hasil/r7.jtl -e -o hasil/laporan7
-# Error % ≈ 0</pre></div>
-    <div class="codewrap bad"><div class="codebar">SLA 150 ms · SUT sama<span class="lang alt">sh</span></div>
-<pre class="code xs" data-lang="sh">jmeter -n -t ../test-plans/07-beban-puncak-cukai.jmx \
-  -Jpengguna=300 -Jrampup=30 -Jtempoh=120 -Jsla_ms=150 \
-  -l hasil/r7-sla150.jtl -e -o hasil/laporan7-sla150
-# Error % naik</pre></div>
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S3 — Bandingkan dengan baseline</div>
+  <h2 class="wide">Satu larian tiada makna — R1 vs R2 vs R3</h2>
+  <table class="t sm">
+    <tr><th style="width:150px">Larian <small>(07, 50 pengguna, 60 s)</small></th><th>Perubahan</th><th style="width:120px">Transaksi/s</th><th style="width:140px">p95 transaksi</th><th style="width:150px">Error % transaksi</th><th style="width:120px">APDEX Total</th></tr>
+    <tr class="hot"><td><b>R1</b> (baseline)</td><td><code>-Jsla_ms=2000</code>, mock biasa (40–180 ms)</td><td>10.46</td><td>583 ms</td><td>1.00%</td><td>0.971</td></tr>
+    <tr><td><b>R2</b></td><td><code>-Jsla_ms=150</code> — <b>sistem sama</b></td><td>10.54</td><td>572 ms</td><td class="x">21.75%</td><td>0.901</td></tr>
+    <tr><td><b>R3</b> ⭐</td><td>Mock perlahan <code>LATENCY_MIN=500 LATENCY_MAX=1500</code>, SLA 2000</td><td class="x">5.78</td><td class="x">4969 ms</td><td>0.90%</td><td class="x">0.401</td></tr>
+  </table>
+  <div class="grid c2 mt16" style="gap:16px">
+    <div class="card side m-jpj sm"><span class="k">R1 → R2</span><h3>Masa respons sama; definisi “cukup laju” berubah</h3><p>Error % melonjak 1% → 22%. Sebab itu NFR mesti dipersetujui <b>sebelum</b> ujian.</p></div>
+    <div class="card side m-fail sm"><span class="k">R1 → R3</span><h3>Pengguna sama (50), pelayan lebih lambat</h3><p>Throughput jatuh <b>45%</b>. Model tertutup: setiap pengguna menunggu respons — Little's Law (S4) dalam tindakan.</p></div>
   </div>
-  <p class="rlabel mt16">Top 5 Errors by sampler · laporan7-sla150</p>
-  <div class="console"><span class="e">The operation lasted too long:</span> It took 163 milliseconds, but should not have lasted longer than 150 milliseconds.</div>
-  <div class="callout tip mt16"><span class="i">🔗</span><div>Duration Assertion menanda sampel 200 OK yang melebihi ambang sebagai <b>gagal</b>. Latensi SUT 40–180 ms → sebahagian bayaran kini “melanggar SLA”. <b>Ambang SLA ↔ Error %</b> dalam satu eksperimen.</div></div>
-  <aside class="notes"><p>Latihan 6 (tempoh dipendekkan kepada 120 s untuk kelas; beban penuh kursus <code>-Jtempoh=300</code>). Nilai "163 ms" dalam console hanyalah contoh — angka sebenar berbeza setiap larian.</p><p>Soalan Kuiz S3 #4: Error % naik kerana Duration Assertion menanda bayaran &gt; 150 ms sebagai gagal — SUT tidak berubah.</p></aside>
+  <div class="codewrap mt16"><div class="codebar">⭐ R3 tanpa mengganggu SUT utama · Terminal C<span class="lang alt">sh</span></div>
+<pre class="code xs" data-lang="sh">PORT=3001 LATENCY_MIN=500 LATENCY_MAX=1500 node sut/server.js
+jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx -Jport=3001 \
+  -Jpengguna=50 -Jrampup=10 -Jtempoh=60 -l hasil/r07-perlahan.jtl -e -o hasil/laporan07-perlahan</pre></div>
+  <aside class="notes"><p>Momen kunci #5: R2 — Error % 1% → 22% tanpa sistem berubah. <i>"Yang berubah hanya definisi 'cukup laju'."</i> Baseline juga membuktikan ~1% ralat 500 wujud pada beban apa pun (<code>ERROR_RATE</code> 1%).</p><p>R3 pilihan (jika masa): throughput jatuh ~45%. Hentikan mock 3001 selepas itu. Windows PowerShell: <code>$env:PORT=3001; $env:LATENCY_MIN=500; $env:LATENCY_MAX=1500; node sut/server.js</code>. Kuiz hari #4: 10.46 → 5.78 trans/s = Little's Law (N tetap, R naik → X turun).</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S3 — Menulis dapatan <span class="xy">templat-laporan-ujian.md</span></div>
+  <h2 class="wide">Satu dapatan = Bukti → Kesan → Punca → Cadangan</h2>
+  <div class="flow sm">
+    <div class="node hot"><span class="k">BUKTI</span><b>Angka + bahagian dashboard</b><span><i>Statistics → 95th pct</i> = 583 ms</span></div><div class="arr">→</div>
+    <div class="node"><span class="k">KESAN</span><b>Kepada pengguna / perniagaan</b><span>~1 dalam 100 rakyat ulang bayaran</span></div><div class="arr">→</div>
+    <div class="node warn"><span class="k">PUNCA</span><b>Hipotesis</b><span>nyatakan jika belum disahkan metrik pelayan</span></div><div class="arr">→</div>
+    <div class="node good"><span class="k">CADANGAN</span><b>Tindakan + siapa</b><span>+ keterukan: Kritikal … Maklumat</span></div>
+  </div>
+  <table class="t xs mt16">
+    <tr><th style="width:230px">❌ Lemah</th><th>✅ Kuat</th></tr>
+    <tr><td>“Sistem agak perlahan.”</td><td>“Pada 50 pengguna (10.5 trans/s), p95 transaksi Pembaharuan Cukai Jalan = <b>583 ms</b> (NFR ≤ 2000 ms ✅) — <i>Statistics</i>.”</td></tr>
+    <tr><td>“Ada ralat.”</td><td>“6 bayaran (<b>1.00%</b> transaksi) gagal dengan <code>500/Internal Server Error</code>, bertaburan sepanjang ujian (<i>Codes Per Second</i>) — tidak berkait beban; NFR &lt; 1% gagal. Cadangan: siasat log <code>bayar-cukai</code>.”</td></tr>
+    <tr><td>“Graf naik.”</td><td>“Pada mock perlahan, throughput jatuh <b>45%</b> (10.46 → 5.78 trans/s) pada 50 pengguna yang sama; p95 <b>4969 ms</b> melanggar NFR.”</td></tr>
+  </table>
+  <div class="callout info sm mt16"><span class="i">📝</span><div>Latihan 5: tiga dapatan dengan angka <b>anda</b> — D1 masa respons vs NFR · D2 ralat 500 &amp; Error % · D3 kesan ambang SLA. Contoh penuh (D1–D4, R1/R2/R3) dalam bahagian <b>B</b> templat. Mulakan laporan dengan <b>keputusan</b>, bukan graf.</div></div>
+  <aside class="notes"><p>Tunjuk bahagian B templat: ringkasan eksekutif R1 = <b>LULUS BERSYARAT</b> — p95 583 ms ✅ tetapi Error % 1.00% tepat pada had NFR &lt; 1%. Setiap dapatan berakhir dengan "jadi…".</p><p>Isu lazim: dapatan berbunyi "sistem OK" tanpa angka. Tanya: "Jika p95 lulus tetapi Error % 2%, apa yang anda laporkan kepada pengurusan?" Checkpoint + Kuiz S3 sebelum rehat.</p></aside>
 </section>
 
 <!-- ---------- Hari 2 · S4 ---------- -->
 
 <section class="slide dark sesi">
   <div class="eyebrow">Hari 2 · Sesi 4</div>
-  <h1>Distributed, CI/CD, Grafana &amp; Penutup</h1>
-  <div class="threads"><span class="chip">S4 · 3.45 – 5.00</span></div>
+  <h1>Merancang Ujian Prestasi</h1>
+  <div class="threads"><span class="chip">S4 · 3.45 – 5.00</span><span class="chip">N = X × (R + Z)</span></div>
   <ul class="list">
-    <li>Controller / worker · gerbang SLA dalam CI</li>
-    <li>Backend Listener + InfluxDB + Grafana · amalan terbaik</li>
-    <li>Mini-demo capstone · rumusan 2 hari · borang penilaian</li>
+    <li>Kitaran hayat ujian · NFR boleh diukur · model beban &amp; <b>Little's Law</b> · pacing</li>
+    <li>Baseline / load / stress / spike / soak · kriteria masuk/keluar · pemantauan · risiko · <b>kebenaran bertulis</b></li>
+    <li>Templat pelan ujian · pembentangan mini · ⭐ CI, distributed, Grafana · penutup</li>
   </ul>
-  <div class="labline"><b>LAB</b> Latihan 7 — Gerbang SLA · <b>KUIZ</b> S4 · Kuiz hari</div>
+  <div class="labline"><b>LAB</b> Latihan 6 — Pelan + Little's Law · Latihan 7 — Pembentangan mini · <b>KUIZ</b> S4 · Kuiz hari</div>
   <div class="dayrail"><span class="on"></span><span class="on"></span><span class="on"></span><span class="now"></span><em>Hari 2 · S4 / S4</em></div>
   <div class="daynum"><small>SESI</small>S4</div>
-  <aside class="notes"><p>Distributed dan Grafana ialah sekilas pandang (konsep). Masa utama: Latihan 7 (gerbang SLA) dan mini-demo capstone.</p><p>Simpan 10 minit terakhir untuk rumusan, borang penilaian dan kuiz hari.</p></aside>
+  <aside class="notes"><p>Mesej teras: <b>"Bilangan pengguna dikira, bukan diteka"</b> dan <b>"Hanya sasaran yang dibenarkan secara bertulis"</b>. Semasa rehat, tulis di papan <code>N = X × (R + Z)</code> dan angka R1 (10.46/s, 0.446 s, 4 s).</p><p>Masa ketat (75 minit): Latihan 6 = 20 minit, Latihan 7 = 12 minit. <b>Jangan</b> potong penutup + borang penilaian. Jika lewat: langkau ⭐ CI/distributed/Grafana.</p></aside>
 </section>
 
-<section class="slide codey">
-  <div class="eyebrow">Hari 2 · S4 — Distributed testing</div>
-  <h2>Satu controller, banyak worker penjana beban</h2>
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S4 — Kitaran hayat</div>
+  <h2 class="wide">Kitaran hayat ujian prestasi — anda sudah buat separuh</h2>
   <div class="flow sm">
-    <div class="node hot"><span class="k">CONTROLLER</span><b><code>jmeter -n … -R …</code></b><span>mengarah &amp; mengumpul hasil — tidak menjana beban</span></div>
-    <div class="arr">→</div>
-    <div class="node" style="flex:.9"><span class="k">WORKERS · jmeter-server</span><b>worker1 · worker2 · worker3</b><span>setiap satu menjalankan <b>seluruh</b> Thread Group</span></div>
-    <div class="arr">→</div>
-    <div class="node good"><span class="k">SUT</span><b>Persekitaran dibenarkan</b><span>staging / mock</span></div>
+    <div class="node hot"><span class="k">1</span><b>Keperluan &amp; NFR</b></div><div class="arr">→</div>
+    <div class="node hot"><span class="k">2</span><b>Model beban</b></div><div class="arr">→</div>
+    <div class="node good"><span class="k">3</span><b>Skrip</b><span>rakam → bersihkan</span></div><div class="arr">→</div>
+    <div class="node good"><span class="k">4</span><b>Data ujian</b></div><div class="arr">→</div>
+    <div class="node"><span class="k">5</span><b>Persekitaran &amp; pemantauan</b></div><div class="arr">→</div>
+    <div class="node"><span class="k">6</span><b>Laksana</b><span>baseline → … → soak</span></div><div class="arr">→</div>
+    <div class="node good"><span class="k">7</span><b>Analisis</b></div><div class="arr">→</div>
+    <div class="node good"><span class="k">8</span><b>Laporan</b><span>↺ baiki &amp; ulang 6</span></div>
   </div>
-  <div class="split mt16">
-    <div class="codewrap"><div class="codebar">terminal<span class="lang alt">sh</span></div>
-<pre class="code sm" data-lang="sh"># pada setiap worker
-jmeter-server
-# pada controller
-jmeter -n -t plan.jmx -R worker1,worker2,worker3 \
-  -Gpengguna=100 -l results.jtl -e -o laporan/</pre></div>
-    <table class="t xs">
-      <tr><th style="width:140px">Perkara</th><th>Penting kerana</th></tr>
-      <tr><td>Seluruh Thread Group</td><td>100 thread × 3 worker = <b>300</b> pengguna</td></tr>
-      <tr class="hot"><td><code>-G</code> vs <code>-J</code></td><td><code>-G</code> hantar property ke <b>worker</b>; <code>-J</code> hanya di controller</td></tr>
-      <tr><td>Fail CSV</td><td>Mesti wujud pada laluan sama di <b>setiap</b> worker</td></tr>
-      <tr><td>RMI</td><td>SSL lalai (<code>create-rmi-keystore</code>) · <code>server.rmi.ssl.disable=true</code> makmal tertutup sahaja</td></tr>
-      <tr><td>Rangkaian</td><td>Rangkaian sama; versi Java/JMeter seragam</td></tr>
-    </table>
-  </div>
-  <aside class="notes"><p>Soalan Kuiz S4 #1 dan #2: 100 thread × 3 worker = 300; hantar property ke worker dengan <code>-G</code>.</p><p>Ramai pasukan kini guna JMeter dalam kontena/awan (CI, Kubernetes, Azure Load Testing). Prinsip etika sama: hanya sasaran yang dibenarkan secara bertulis.</p></aside>
-</section>
-
-<section class="slide codey">
-  <div class="eyebrow">Hari 2 · S4 — CI/CD (Latihan 7)</div>
-  <h2>Gerbang SLA: NFR yang boleh menggagalkan <i>build</i></h2>
-  <div class="split" style="grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)">
-    <div class="codewrap"><div class="codebar">hari-2/run/semak-sla.sh<span class="lang alt">sh</span></div>
-<pre class="code xs" data-lang="sh">#!/usr/bin/env bash
-# Penggunaan: ./semak-sla.sh hasil/laporan7/statistics.json
-STAT="$1"; LABEL="Pembaharuan Cukai Jalan (Puncak)"
-P95=$(jq --arg l "$LABEL" '.[$l].pct2ResTime' "$STAT")
-ERR=$(jq --arg l "$LABEL" '.[$l].errorPct' "$STAT")
-echo "p95=${P95} ms  error=${ERR}%"
-if awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 1500 &amp;&amp; e &lt; 1) }'; then
-  echo "LULUS SLA"
-else
-  echo "GAGAL SLA"; exit 1
-fi</pre></div>
-    <div class="stack tight">
-      <div class="callout danger sm"><span class="i">⚠️</span><div><code>jmeter -n</code> keluar dengan kod <b>0</b> walaupun sampel gagal — tanpa gerbang, <i>build</i> kekal hijau.</div></div>
-      <dl class="facts">
-        <dt>pct1ResTime</dt><dd>90th percentile</dd>
-        <dt>pct2ResTime</dt><dd>95th percentile</dd>
-        <dt>pct3ResTime</dt><dd>99th percentile</dd>
-        <dt>errorPct</dt><dd>Error % (0–100)</dd>
-      </dl>
-      <div class="console"><span class="p">$</span> ./semak-sla.sh hasil/laporan7/statistics.json
-<span class="g">LULUS SLA</span>  <span class="p"># kod 0</span>
-<span class="p">$</span> ./semak-sla.sh hasil/laporan7-sla150/…
-<span class="e">GAGAL SLA</span>  <span class="p"># kod 1</span></div>
-      <p class="xsmall muted mb0">Alternatif: Jenkins Performance Plugin · Taurus (bzt) <code>passfail</code> · Maven/Gradle plugin.</p>
-    </div>
-  </div>
-  <aside class="notes"><p>Latihan 7. "Shift-left performance": jalankan ujian prestasi awal &amp; automatik (setiap PR / setiap malam) untuk tangkap regresi sebelum ke pengeluaran. Windows: blok PowerShell dalam <code>hari-2/snippets/lab.md</code>.</p><p>Soalan Kuiz S4 #3: pipeline Error % 12% tetapi build hijau → tambah gerbang yang membaca <code>statistics.json</code> dan keluar bukan-sifar. Simpan <code>.jtl</code> + laporan sebagai artifak build.</p></aside>
-</section>
-
-<section class="slide">
-  <div class="eyebrow">Hari 2 · S4 — Pemantauan langsung</div>
-  <h2 class="wide">Backend Listener → InfluxDB → Grafana</h2>
-  <div class="flow">
-    <div class="node"><span class="k">JMETER</span><b>Backend Listener</b><span><code>InfluxdbBackendListenerClient</code> · <code>influxdbUrl</code></span></div>
-    <div class="arr">→</div>
-    <div class="node"><span class="k">TIME-SERIES DB</span><b>InfluxDB</b><span>throughput, percentile, ralat, thread aktif</span></div>
-    <div class="arr">→</div>
-    <div class="node hot"><span class="k">PAPAN PEMUKA</span><b>Grafana</b><span>masa nyata, semasa ujian berjalan</span></div>
-    <div class="arr">+</div>
-    <div class="node warn"><span class="k">PELAYAN</span><b>CPU · memori · sambungan DB</b><span>di <b>mana</b> kesesakan?</span></div>
-  </div>
-  <div class="grid c2 mt24" style="gap:16px">
-    <div class="card top m-h1"><span class="k">SELEPAS UJIAN</span><h3>HTML dashboard = bedah siasat</h3><p>Analisis terperinci, dikongsi sebagai laporan, disimpan bersama <code>.jtl</code>.</p></div>
-    <div class="card top m-pass"><span class="k">SEMASA UJIAN</span><h3>Grafana = pemantauan</h3><p>Tonton bersama pasukan infrastruktur — ujian panjang (soak), demo, berhenti awal jika perlu.</p></div>
-  </div>
-  <div class="callout info sm mt16"><span class="i">🔍</span><div>Percentile naik + CPU pelayan 100% memberitahu <b>di mana</b> kesesakan. Anda biasanya perlukan <b>kedua-dua</b> paparan.</div></div>
-  <aside class="notes"><p>Sekilas pandang sahaja — tiada lab Grafana dalam kursus ini. Konfigurasi: Add → Listener → Backend Listener, implementasi <code>org.apache.jmeter.visualizers.backend.influxdb.InfluxdbBackendListenerClient</code>.</p><p>Tanya: "Siapa dalam jabatan anda perlu melihat papan pemuka ini semasa ujian?" (NOC, pasukan infra, pemilik sistem).</p></aside>
-</section>
-
-<section class="slide">
-  <div class="eyebrow">Hari 2 · S4 — Amalan terbaik</div>
-  <h2 class="wide">Amalan terbaik &amp; kesilapan biasa</h2>
-  <table class="t xs">
-    <tr><th>✅ Amalan baik</th><th>❌ Elak</th></tr>
-    <tr><td>Beban sebenar dalam <b>non-GUI</b></td><td>GUI + View Results Tree semasa beban</td></tr>
-    <tr><td><b>Korelasi</b> semua nilai dinamik</td><td>Mengeras-kod token/csrf yang dirakam</td></tr>
-    <tr><td><b>Think time</b> &amp; ramp-up beransur</td><td>1000 pengguna serentak, 0 think time</td></tr>
-    <tr><td>Ukur dengan <b>percentile</b></td><td>Bergantung pada Average sahaja</td></tr>
-    <tr><td><b>Parameter</b> data (CSV)</td><td>Data sama diulang → cache palsu</td></tr>
-    <tr><td><code>${__P()}</code> + non-GUI untuk CI</td><td>Edit <code>.jmx</code> setiap kali tukar beban</td></tr>
-    <tr><td>Groovy + <i>Cache compiled script</i></td><td>BeanShell / <code>${}</code> dalam skrip JSR223</td></tr>
-    <tr><td><b>Panaskan</b> sistem sebelum ukur</td><td>Kira detik pertama (cold start) sebagai SLA</td></tr>
-    <tr><td>Pantau <b>penjana beban</b> (CPU &lt; ~80%)</td><td>Menyalahkan SUT bila JMeter sendiri sesak</td></tr>
-    <tr><td>Simpan <code>.jtl</code> + <code>.jmx</code> + versi setiap larian</td><td>Laporan tanpa konteks (beban? versi? tarikh?)</td></tr>
-    <tr class="hot"><td>Uji salinan/staging dengan <b>kebenaran bertulis</b></td><td><b>❗ Uji pengeluaran/sistem awam tanpa kebenaran</b></td></tr>
+  <table class="t xs mt16">
+    <tr><th style="width:190px">Fasa</th><th>Soalan utama</th><th style="width:270px">Hasil</th><th style="width:130px">Hari ini</th></tr>
+    <tr class="hot"><td>1. Keperluan &amp; NFR</td><td>Apa yang perniagaan perlukan? Apa itu “cukup laju”?</td><td>Jadual NFR boleh diukur</td><td>S4 · NFR</td></tr>
+    <tr class="hot"><td>2. Model beban</td><td>Berapa ramai, buat apa, berapa kerap?</td><td>Kadar sasaran, campuran, N pengguna</td><td>S4 · Little's Law</td></tr>
+    <tr><td>3. Skrip</td><td>Perjalanan realistik &amp; boleh dimain balik</td><td><code>.jmx</code></td><td>S1–S2 ✅</td></tr>
+    <tr><td>4. Data</td><td>Akaun/kenderaan cukup &amp; sintetik</td><td>CSV</td><td>S2 ✅</td></tr>
+    <tr><td>5. Persekitaran</td><td>Di mana? Setara pengeluaran? Siapa memantau?</td><td>Senarai persekitaran + pemantauan</td><td>S4</td></tr>
+    <tr><td>6. Laksana</td><td>Jenis larian mengikut tertib</td><td><code>.jtl</code> + dashboard</td><td>S3 ✅ · S4</td></tr>
+    <tr><td>7. Analisis</td><td>NFR lulus? Di mana had? Kenapa?</td><td>Dapatan</td><td>S3 ✅</td></tr>
+    <tr><td>8. Laporan</td><td>Apa keputusan &amp; tindakan?</td><td>Laporan ujian</td><td>S3 ✅</td></tr>
   </table>
-  <aside class="notes"><p>Minta setiap pasangan memilih dua baris "Elak" yang mereka pernah lihat (atau buat) di tempat kerja dan kongsikan.</p><p>Soalan Kuiz S4 #4: amalan paling tidak wajar — View Results Tree aktif dalam GUI dengan 300 pengguna.</p></aside>
+  <aside class="notes"><p>Kaitkan setiap fasa dengan apa yang mereka buat hari ini — fasa 3, 4, 6, 7, 8 sudah dibuat. Petang ini kita isi fasa 1, 2 dan 5 — yang <b>sepatutnya</b> dibuat dahulu.</p><p>Tanya: "Dalam projek anda, siapa yang menentukan 'cukup laju'?" Anak panah balik (8 → 6): baiki dan ulang larian — bandingkan dengan baseline.</p></aside>
 </section>
 
 <section class="slide">
-  <div class="eyebrow">Hari 2 · S4 — Mini-demo capstone</div>
-  <h2 class="wide">3 minit setiap pasangan: tunjuk, ukur, putuskan</h2>
-  <div class="split">
-    <ol class="steps">
-      <li><div><b>ForEach — GUI</b><span><code>08-foreach-kenderaan.jmx</code> + Summary Report → 5 bayaran <code>BERJAYA</code></span></div></li>
-      <li><div><b>Puncak — non-GUI</b><span><code>07-beban-puncak-cukai.jmx</code> → buka dashboard</span></div></li>
-      <li><div><b>Nyatakan angka</b><span>95th pct transaksi · Error % · APDEX · <b>LULUS / GAGAL</b> terhadap NFR (Latihan 7)</span></div></li>
-      <li><div><b>Satu ayat</b><span>“Jika ini sistem sebenar, langkah seterusnya ialah…”</span></div></li>
-    </ol>
-    <div class="stack">
-      <div class="codewrap"><div class="codebar">langkah 2 · dari hari-2/run<span class="lang alt">sh</span></div>
-<pre class="code sm" data-lang="sh">jmeter -n -t ../test-plans/07-beban-puncak-cukai.jmx \
-  -Jpengguna=50 -Jrampup=10 -Jtempoh=60 \
-  -l hasil/demo.jtl -e -o hasil/laporan-demo</pre></div>
-      <div class="grid c2" style="gap:12px">
-        <div class="kpi m-pass"><i>p95 transaksi</i><b>&lt; 1500 ms</b><span>NFR contoh</span></div>
-        <div class="kpi m-fail"><i>Error %</i><b>&lt; 1%</b><span>NFR contoh</span></div>
+  <div class="eyebrow">Hari 2 · S4 — Daripada keperluan kepada NFR</div>
+  <h2 class="wide">NFR yang boleh diuji: SMART</h2>
+  <div class="threads" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+    <span class="chip m-h1">Spesifik — transaksi apa</span><span class="chip m-violet">Measurable — metrik + percentile</span><span class="chip m-pass">Achievable</span><span class="chip m-jpj">Relevan — perniagaan</span><span class="chip m-sky">Time-bound — beban berapa lama</span>
+  </div>
+  <table class="t sm">
+    <tr><th style="width:260px">❌ Kabur</th><th>✅ Boleh diuji</th></tr>
+    <tr><td>“Portal mesti laju.”</td><td>“Pada <b>10 transaksi/s</b> selama <b>30 minit</b>, transaksi <b>Pembaharuan Cukai Jalan</b> p95 ≤ <b>2000 ms</b>, Error % &lt; <b>1%</b>.”</td></tr>
+    <tr><td>“Tahan ramai pengguna.”</td><td>“Menampung <b>600 pengguna serentak</b> (model beban Little's Law) dengan CPU pelayan aplikasi &lt; 75%.”</td></tr>
+    <tr><td>“Tiada ralat.”</td><td>“Error % &lt; 1% per transaksi; tiada ralat 5xx berterusan &gt; 1 minit.”</td></tr>
+  </table>
+  <div class="grid c3 mt16" style="gap:12px">
+    <div class="card top m-n sm"><span class="k">SLA · PALING LONGGAR</span><h3>Janji kontrak</h3><p>Kepada pengguna / klien.</p></div>
+    <div class="card top m-violet sm"><span class="k">SLO</span><h3>Sasaran dalaman</h3><p>Operasi — lebih ketat daripada SLA.</p></div>
+    <div class="card top m-pass sm hot"><span class="k">NFR · KITA UJI</span><h3>Sebelum pelancaran</h3><p>JMeter: <b>Duration Assertion</b> (per sampel) + <b>percentile</b> dalam laporan.</p></div>
+  </div>
+  <aside class="notes"><p>Tulis semula "portal mesti laju" bersama kelas menjadi NFR SMART di papan — transaksi + beban + metrik (percentile) + ambang + tempoh. Templat pelan bahagian 3 ada NFR-01 hingga NFR-06 sebagai contoh.</p><p>Kuiz S4 #4: NFR terbaik = "Pada 10 transaksi/s selama 30 minit, p95 transaksi Pembaharuan Cukai Jalan ≤ 2000 ms dan Error % &lt; 1%". Tanya JPJ: "Siapa yang patut menandatangani NFR ini?" (pemilik sistem).</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S4 — Model beban &amp; Little's Law</div>
+  <h2 class="wide">Bilangan pengguna dikira, bukan diteka</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)">
+    <div class="stack tight">
+      <div class="mnemo"><span class="tag">N = X × (R + Z)</span><p><b>N</b> pengguna serentak · <b>X</b> throughput (trans/s) · <b>R</b> masa respons (s) · <b>Z</b> think time satu lelaran (s)</p></div>
+      <div class="card top m-jpj sm"><span class="k">CONTOH KERJA eJPJ · ANDAIAN LATIHAN, BUKAN DATA RASMI</span>
+        <table class="t xs mt8" style="box-shadow:none">
+          <tr><td>Volum jam puncak</td><td>36,000 pembaharuan / 1 jam</td></tr>
+          <tr><td>Kadar sasaran <b>X</b></td><td>36,000 ÷ 3,600 = <b>10 transaksi/s</b></td></tr>
+          <tr><td>Permintaan HTTP</td><td>10 × 4 = <b>40 permintaan/s</b></td></tr>
+          <tr><td><b>R</b> (konservatif = had NFR)</td><td>2 s</td></tr>
+          <tr><td><b>Z</b> senarai 15 + sebut harga 20 + bayar 23</td><td>58 s</td></tr>
+          <tr class="hot"><td><b>N</b></td><td>10 × (2 + 58) = <b>600 pengguna serentak</b></td></tr>
+        </table>
       </div>
     </div>
+    <div class="stack tight">
+      <div class="card side m-pass sm"><span class="k">DISAHKAN DENGAN MAKMAL · PLAN 07</span><h3>Z ≈ 4 s (0.5–1.5 s × 4) · 50 pengguna</h3></div>
+      <div class="console">R1:  X = 10.46   R = 0.446 s   Z = 4.0 s
+     N = 10.46 × 4.446 ≈ <span class="g">46.5</span>
+R3:  X = 5.78    R = 3.954 s   Z = 4.0 s
+     N = 5.78 × 7.954  ≈ <span class="g">46.0</span>
+<span class="p">purata thread aktif ≈ 45.8 (ramp-up 10 s)</span></div>
+      <div class="callout tip sm"><span class="i">↔️</span><div><b>Dua arah:</b> (1) <i>merancang</i> — X sasaran → N threads; (2) <i>menyemak laporan</i> — X × (R + Z) ≠ purata thread aktif → timer tidak jalan, thread mati awal, atau penjana sesak.</div></div>
+      <div class="callout warn sm"><span class="i">🧮</span><div>Kuiz: 18,000/jam, R = 2 s, Z = 28 s → X = 5 → N = <b>150</b>. Unit: semua dalam <b>saat</b>.</div></div>
+    </div>
   </div>
-  <aside class="notes"><p>Nilai secara formatif — tujuan demo ialah refleksi. Gilir pasangan dengan pantas; jika masa suntuk, pilih tiga pasangan secara rawak.</p><p>Soalan cadangan: "Jika p95 lulus tetapi Error % 2%, apa yang anda laporkan kepada pengurusan?"</p></aside>
+  <aside class="notes"><p>Momen kunci #6: <i>"Little's Law membolehkan anda menyemak laporan orang lain dalam 30 saat."</i> R1 dan R3: N sama (≈ 46), R naik, X turun — inilah sebab throughput R3 jatuh 45%.</p><p>Salah faham lazim: "bilangan pengguna = pengguna berdaftar" — tidak, pengguna <b>serentak</b> = X × (R + Z). Isu lab: N sangat kecil kerana Z dilupakan; N berjuta kerana unit minit/saat bercampur. Semakan kendiri #5: 50 ÷ 4.45 ≈ 11.2 trans/s dijangka.</p></aside>
+</section>
+
+<section class="slide codey">
+  <div class="eyebrow">Hari 2 · S4 — Pacing &amp; campuran transaksi</div>
+  <h2>Kawal kadar: Constant / Precise Throughput Timer</h2>
+  <table class="t xs">
+    <tr><th style="width:220px">Timer</th><th>Medan utama</th><th style="width:330px">Contoh untuk 10 transaksi/s</th></tr>
+    <tr class="hot"><td><b>Constant Throughput Timer</b></td><td><i>Target throughput (in samples per <b>minute</b>)</i> · <i>Calculate Throughput based on</i> (<code>this thread only</code> / <code>all active threads</code> / <code>… in current thread group</code> / <code>… (shared)</code>)</td><td><code>600</code> · <code>all active threads in current thread group (shared)</code></td></tr>
+    <tr><td><b>Precise Throughput Timer</b></td><td><i>Target throughput (in samples per "throughput period")</i> · <i>Throughput period (seconds)</i> · <i>Test duration (seconds)</i></td><td><code>10</code> · <code>1</code> · <code>1800</code></td></tr>
+  </table>
+  <div class="split mt16">
+    <div class="stack tight">
+      <div class="callout danger sm"><span class="i">📍</span><div>Timer throughput mengira <b>sampel yang dipengaruhinya</b>. Letak sebagai <b>anak sampler pertama</b> (<code>1. POST /api/log-masuk</code>) untuk mengawal kadar <b>transaksi</b> — di bawah TC 4 sampler, kadar dikira per sampler.</div></div>
+      <div class="card side m-pass sm"><span class="k">DISAHKAN</span><p>CTT <code>300</code> (shared, current TG) anak log masuk, salinan <code>07</code>, 50 pengguna → log masuk <b>5.39/s</b> (≈ 300/min) walaupun 50 pengguna boleh capai ~10/s.</p></div>
+      <div class="callout warn sm"><span class="i">🐢</span><div>Timer hanya boleh <b>memperlahankan</b>. Jika N &lt; X × (R + Z), sasaran tidak tercapai — <b>tambah threads</b>.</div></div>
+    </div>
+    <div class="stack tight">
+      <table class="t xs">
+        <tr><th>Perjalanan</th><th style="width:50px">%</th><th style="width:56px">Kadar</th><th>JMeter</th></tr>
+        <tr><td>Pembaharuan (log masuk → senarai → sebut harga → bayar)</td><td>70%</td><td>7 /s</td><td>Plan <code>07</code></td></tr>
+        <tr><td>Semak sahaja (tanpa bayar)</td><td>30%</td><td>3 /s</td><td><b>Throughput Controller</b> (Percent Executions) membungkus bayar, atau Thread Group berasingan</td></tr>
+      </table>
+      <div class="callout info sm"><span class="i">🗃️</span><div><b>Data:</b> akaun ujian <b>unik</b> yang cukup (≈ N), sintetik, boleh di-reset. Data sama diulang = “cache palsu” (keputusan terlalu baik).</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Kuiz S4 #2: 10 transaksi/s dengan CTT = Target <code>600</code> (sampel <b>seminit</b>), <i>all active threads in current thread group (shared)</i>, anak sampler log masuk. Salah faham: "CTT 10 = 10/s" — unitnya seminit, jadi throughput jauh lebih rendah.</p><p>Pacing berguna apabila threads anda lebih daripada diperlukan atau mahu kadar tetap (≈ open model dengan Precise Throughput Timer). Campuran 70/30 ialah contoh templat bahagian 5.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S4 — Jenis larian &amp; tertib</div>
+  <h2 class="wide">Smoke → baseline → load → stress → spike → soak</h2>
+  <div class="grid c3" style="gap:12px">
+    <div class="card sm m-n"><span class="k">1 · SMOKE</span><svg class="shape" viewBox="0 0 160 46" preserveAspectRatio="none"><line x1="0" y1="44" x2="160" y2="44"/><path d="M2 42 L10 38 L158 38"/></svg><h3>Skrip &amp; persekitaran berfungsi?</h3><p><code>05</code> (10 × 2) → 0 ralat fungsian</p></div>
+    <div class="card sm m-sky"><span class="k">2 · BASELINE</span><svg class="shape" viewBox="0 0 160 46" preserveAspectRatio="none"><line x1="0" y1="44" x2="160" y2="44"/><path d="M2 42 L14 34 L158 34"/></svg><h3>Rujukan beban rendah</h3><p><code>-Jpengguna=5 -Jrampup=5 -Jtempoh=60</code></p></div>
+    <div class="card sm m-h1 hot"><span class="k">3 · LOAD</span><svg class="shape" viewBox="0 0 160 46" preserveAspectRatio="none"><line x1="0" y1="44" x2="160" y2="44"/><path d="M2 42 L40 14 L158 14"/></svg><h3>Puncak dijangka lulus NFR?</h3><p><code>-Jpengguna=50 -Jrampup=10 -Jtempoh=60</code></p></div>
+    <div class="card sm m-fail"><span class="k">4 · STRESS</span><svg class="shape" viewBox="0 0 160 46" preserveAspectRatio="none"><line x1="0" y1="44" x2="160" y2="44"/><path d="M2 42 L2 32 L52 32 L52 20 L104 20 L104 8 L158 8"/></svg><h3>Di mana titik lutut?</h3><p>Berperingkat <code>-Jpengguna=50</code> → <code>100</code> → <code>150</code> …</p></div>
+    <div class="card sm m-jpj"><span class="k">5 · SPIKE</span><svg class="shape" viewBox="0 0 160 46" preserveAspectRatio="none"><line x1="0" y1="44" x2="160" y2="44"/><path d="M2 36 L62 36 L66 4 L96 4 L100 36 L158 36"/></svg><h3>Lonjakan mengejut — pulih?</h3><p><code>-Jpengguna=150 -Jrampup=1</code></p></div>
+    <div class="card sm m-violet"><span class="k">6 · SOAK</span><svg class="shape" viewBox="0 0 160 46" preserveAspectRatio="none"><line x1="0" y1="44" x2="160" y2="44"/><path d="M2 42 L14 22 L158 22"/></svg><h3>Stabil jangka panjang?</h3><p><code>-Jpengguna=35 -Jtempoh=1800</code> (sebenar: jam)</p></div>
+  </div>
+  <div class="callout tip mt16"><span class="i">🧭</span><div><b>Sentiasa baseline dahulu.</b> Tanpa baseline, anda tidak tahu sama ada 1% ralat disebabkan beban — atau sudah wujud pada 1 pengguna (<code>ERROR_RATE</code> 1% SUT kita).</div></div>
+  <aside class="notes"><p>Dilaporkan: smoke = 0 ralat fungsian; baseline = angka rujukan semua larian; load = LULUS/GAGAL NFR; stress = N maksimum sebelum NFR dilanggar; spike = ralat semasa lonjakan + masa pulih; soak = trend RT &amp; memori. Templat bahagian 8 ada konfigurasi sistem sebenar (cth. load 600 pengguna, ramp 10 min, kekal 30 min).</p><p>Kuiz S4 #3: kenapa baseline dahulu → bezakan kesan beban daripada isu sedia ada. Tanya: "Ujian mana paling berisiko kepada sistem dikongsi?" (stress/spike — perlukan tetingkap masa dan prosedur henti).</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S4 — Kriteria, pemantauan &amp; risiko</div>
+  <h2 class="wide">Bila mula, bila berhenti, siapa memantau</h2>
+  <div class="grid c3" style="gap:12px">
+    <div class="card top m-pass sm"><span class="k">KRITERIA MASUK</span><ul><li>Skrip lulus smoke</li><li>Data sedia; persekitaran dibekukan</li><li>Pemantauan aktif</li><li><b>Kebenaran bertulis</b>; NOC/SOC dimaklumkan</li></ul></div>
+    <div class="card top m-h1 sm"><span class="k">KRITERIA KELUAR</span><ul><li>Semua larian selesai</li><li>Dianalisis vs NFR</li><li>Laporan diserahkan</li></ul></div>
+    <div class="card top m-fail sm"><span class="k">GANTUNG UJIAN JIKA</span><ul><li>Error % &gt; 10% selama 2 min</li><li>CPU penjana beban &gt; 80%</li><li>Pemilik sistem minta henti</li></ul></div>
+  </div>
+  <div class="split mt16">
+    <div class="layers">
+      <div class="layer" style="--c:var(--slate)"><b>Penjana beban</b><span>CPU, RAM, rangkaian</span><span class="chip m-n">Penguji</span></div>
+      <div class="layer" style="--c:var(--acc)"><b>JMeter</b><span><code>.jtl</code>, dashboard, ⭐ Grafana</span><span class="chip m-h1">Penguji</span></div>
+      <div class="layer" style="--c:var(--violet)"><b>Pelayan aplikasi</b><span>CPU, memori, thread</span><span class="chip m-violet">Aplikasi</span></div>
+      <div class="layer" style="--c:var(--jpj)"><b>Pangkalan data</b><span>Query perlahan, sambungan</span><span class="chip m-jpj">DBA</span></div>
+    </div>
+    <div class="stack tight">
+      <table class="t xs">
+        <tr><th>Risiko</th><th>Mitigasi</th></tr>
+        <tr><td>Persekitaran lebih kecil daripada pengeluaran</td><td>Nyatakan nisbah; skala berperingkat</td></tr>
+        <tr><td>Penjana beban jadi bottleneck</td><td>Non-GUI, tiada VRT, CPU &lt; 80%</td></tr>
+        <tr><td>Data habis / berulang</td><td>CSV cukup besar, reset data</td></tr>
+        <tr><td>Kesan pada sistem dikongsi</td><td>Tetingkap masa, orang hubungan “STOP”</td></tr>
+        <tr><td>Pihak ketiga (gerbang bayaran)</td><td>Stub; jangan sasar pihak ketiga</td></tr>
+      </table>
+      <div class="callout info sm"><span class="i">🔍</span><div>Tanpa metrik pelayan, laporan hanya menjawab <b>apa</b> — bukan <b>kenapa</b>.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Templat bahagian 9 (kriteria), 10 (pemantauan), 11 (risiko). Lapisan pemantauan: setiap lapisan ada <b>pemilik</b> yang jelas — jika tiada siapa memantau pelayan, jangan mula.</p><p>Tanya: "Jika Error % melonjak ke 15% pada minit ke-3, siapa yang tekan Stop — dan bagaimana mereka tahu?" Kriteria gantung ditulis <b>sebelum</b> larian supaya tiada perdebatan semasa insiden.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S4 — Etika &amp; kebenaran bertulis</div>
+  <h2 class="wide">Sebelum sesiapa menekan Start: <span style="color:var(--fail-700)">siapa yang menandatangani?</span></h2>
+  <div class="callout danger" style="font-size:18px"><span class="i">⛔</span><div>Ujian beban tanpa kebenaran ke atas sistem orang lain = <b>serangan DoS</b> dan menyalahi undang-undang — <b>saiz beban tidak relevan</b>.</div></div>
+  <table class="t sm mt16">
+    <tr><th>✅ Wajib sebelum menguji sistem sebenar</th><th style="width:360px">❌ Bukan alasan</th></tr>
+    <tr><td>Kebenaran <b>bertulis</b> pemilik sistem <b>dan</b> ketua infrastruktur/keselamatan</td><td>“Beban kecil sahaja”</td></tr>
+    <tr><td>Skop: hos/URL, endpoint, beban maksimum, <b>tetingkap masa</b></td><td>“Waktu malam, tiada siapa perasan”</td></tr>
+    <tr><td>NOC/SOC dimaklumkan; orang hubungan &amp; prosedur <b>STOP</b></td><td>“Saya pekerja jabatan ini”</td></tr>
+    <tr><td>Persekitaran staging yang ditetapkan; data sintetik</td><td>“Guna VPN supaya tidak dikesan”</td></tr>
+  </table>
+  <div class="mnemo mt16"><span class="tag">REFLEKS JPJ</span><p><i>“Siapa yang menandatangani kebenaran ujian ini?”</i> — sebelum sesiapa menekan Start. Di kelas: <code>localhost:3000</code> sahaja, termasuk <b>bukan</b> IP rakan.</p></div>
+  <aside class="notes"><p>Klien kita ialah JPJ — mereka mesti keluar dengan refleks ini. Kuiz hari #5: pasukan mahu uji portal JPJ sebenar dengan <code>07</code> pada 50 pengguna → kebenaran bertulis + staging + skop + tetingkap masa + prosedur henti; tanpanya, hanya <code>localhost</code>/mock.</p><p>Templat bahagian 12. Tanya: <i>"Siapa dalam organisasi anda yang menandatangani kebenaran ujian beban?"</i> Jika tiada siapa tahu — itu dapatan pertama mereka.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Hari 2 · S4 — Bengkel <span class="xy">templat-pelan-ujian.md</span></div>
+  <h2 class="wide">Latihan 6: isi pelan · Latihan 7: bentang 3 minit</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)">
+    <div class="card top m-h1 sm"><span class="k">STRUKTUR TEMPLAT PELAN (contoh eJPJ sudah diisi)</span>
+      <div class="grid c2 mt8" style="gap:4px 18px;font-size:14px;line-height:1.5">
+        <div>0. Maklumat dokumen</div><div>8. Jenis ujian &amp; jadual larian</div>
+        <div>1. Latar belakang &amp; objektif (Q1–Q4)</div><div>9. Kriteria masuk / keluar / gantung</div>
+        <div>2. Skop</div><div>10. Pemantauan</div>
+        <div><b>3. NFR / SLA</b> (NFR-01…06)</div><div>11. Risiko &amp; mitigasi</div>
+        <div><b>4. Model beban</b> + Little's Law + pacing</div><div><b>12. Kebenaran &amp; etika</b></div>
+        <div>5. Campuran transaksi &amp; skrip</div><div>13. Peranan &amp; tanggungjawab</div>
+        <div>6. Data ujian</div><div>14. Penyerahan</div>
+        <div>7. Persekitaran ujian</div><div><b>Lampiran A</b> — lembaran Little's Law</div>
+      </div>
+    </div>
+    <div class="stack tight">
+      <ol class="steps tight">
+        <li><div><b>Latihan 6 · pasangan · 20 minit</b><span>Pilih senario: (a) cukai jalan, (b) bayar saman hari terakhir diskaun, (c) sistem dalaman — konsep sahaja. ≥ 4 NFR · V → X → N · hits/s · CTT = X × 60</span></div></li>
+        <li><div><b>Latihan 7 · 3 minit setiap pasangan</b><span>(a) NFR utama (b) N &amp; pengiraan (c) jenis larian (d) <b>satu dapatan</b> S3 — Bukti → Kesan → Cadangan</span></div></li>
+        <li><div><b>Ayat penutup wajib</b><span><i>“Sebelum ujian sebenar, kami perlukan kebenaran bertulis daripada …”</i></span></div></li>
+      </ol>
+      <div class="callout tip sm"><span class="i">⏱️</span><div>Maksimum 45 s setiap bahagian · satu angka utama setiap bahagian. Pasangan lain tanya <b>satu</b> soalan: <i>“Bagaimana anda tahu …?”</i></div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Latihan 6 (4.18–4.38): pastikan setiap pasangan ada pengiraan N dengan unit saat. Jika lewat: bahagian 3 (NFR) + Lampiran A + 12 (kebenaran) sahaja. Semak dengan data makmal: 50 pengguna × (R + 4 s) memberi TPS yang dijangka?</p><p>Latihan 7 (4.38–4.50): 3–4 pasangan sukarelawan; jika masa singkat, 2. Nilai secara formatif. Soalan cadangan: "Bagaimana anda tahu Z = 58 s?" — dari analitik/log sistem sebenar, bukan tekaan.</p></aside>
+</section>
+
+<section class="slide codey">
+  <div class="eyebrow">Hari 2 · S4 — ⭐ Sekilas: CI, distributed, Grafana</div>
+  <h2>Bila pelan menjadi rutin</h2>
+  <div class="stack tight">
+    <div class="stack tight">
+      <div class="codewrap"><div class="codebar">gerbang SLA · baca statistics.json<span class="lang alt">sh</span></div>
+<pre class="code xs" data-lang="sh">STAT=hasil/laporan07-sla2000/statistics.json; L="Pembaharuan Cukai Jalan (Puncak)"
+P95=$(jq --arg l "$L" '.[$l].pct2ResTime' "$STAT"); ERR=$(jq --arg l "$L" '.[$l].errorPct' "$STAT")
+echo "p95=${P95} ms error=${ERR}%"
+awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' &amp;&amp; echo "LULUS SLA" || { echo "GAGAL SLA"; exit 1; }</pre></div>
+      <div class="callout danger sm"><span class="i">⚠️</span><div><code>jmeter -n</code> keluar dengan kod <b>0</b> walaupun sampel gagal. R1 kami: p95 583 ms, error 1.0033% → <b>GAGAL</b> (tepat pada had, 500 sintetik). Alternatif: Taurus (<code>bzt</code>) <code>passfail</code>, plugin Jenkins Performance.</div></div>
+    </div>
+    <div class="grid c2" style="gap:14px">
+      <div class="card top m-violet sm"><span class="k">DISTRIBUTED</span><h3><code>-R w1,w2 -Gpengguna=100</code></h3><p>Setiap worker (<code>jmeter-server</code>) menjalankan <b>seluruh</b> Thread Group → 100 × 2 = 200. <code>-G</code> hantar property ke worker; CSV mesti wujud pada setiap worker.</p></div>
+      <div class="card top m-pass sm"><span class="k">GRAFANA</span><h3>Backend Listener → InfluxDB</h3><p><code>InfluxdbBackendListenerClient</code>. Grafana = pemantauan <b>semasa</b>; HTML dashboard = bedah siasat <b>selepas</b>.</p></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Konsep sahaja — tiada demo (4.50–4.53). Langkau jika lewat. ⭐ Cabaran Latihan 7: jalankan blok ini pada <code>laporan07-sla2000</code> dan <code>laporan07-sla150</code>, tunjuk <code>echo $?</code>.</p><p>Salah faham lazim: "distributed membahagi thread antara worker" — setiap worker menjalankan seluruh Thread Group. Tanya: "Untuk soak 4 jam, anda pantau dengan apa?" (Backend Listener + Grafana semasa; HTML dashboard selepas.)</p></aside>
 </section>
 
 
@@ -2073,54 +2505,54 @@ fi</pre></div>
   <h1 style="max-width:18ch">Anda kini boleh menguji — <span class="grad">dan mempertahankan</span> keputusannya</h1>
   <div class="grid c3 mt16" style="gap:12px;max-width:1120px">
     <div class="card sm"><h3>🧱 Membina Test Plan</h3><p>Thread Group, Defaults, Header Manager, Assertion, Timer, CSV.</p></div>
-    <div class="card sm"><h3>🔗 Mengkorelasi sesi</h3><p><code>token</code> + <code>csrf</code> dengan JSON / Regex / Boundary Extractor.</p></div>
-    <div class="card sm"><h3>⚙️ Memodelkan senario</h3><p>Transaction, If, ForEach, JSR223 Groovy, <code>__P</code>.</p></div>
-    <div class="card sm"><h3>🖥️ Menjalankan beban</h3><p>Non-GUI, <code>.jtl</code>, dashboard HTML, distributed.</p></div>
-    <div class="card sm"><h3>📊 Mentafsir keputusan</h3><p>Percentile, APDEX, Error %, titik pecah.</p></div>
-    <div class="card sm"><h3>🚦 Menguatkuasakan SLA</h3><p><code>-Jsla_ms</code> + gerbang CI yang keluar kod <code>1</code>.</p></div>
+    <div class="card sm"><h3>🎬 Merakam &amp; main balik</h3><p>Perjalanan T01…T04, proxy 8888, diagnosis 401 / 403, “hijau ≠ betul”.</p></div>
+    <div class="card sm"><h3>🔗 Boleh dimain balik</h3><p>Korelasi <code>token</code> + <code>csrf</code>, CSV, Transaction Controller, think time, assertion.</p></div>
+    <div class="card sm"><h3>📊 Menjana &amp; membaca laporan</h3><p><code>-e -o</code> / <code>-g</code>, setiap bahagian dashboard, APDEX, percentile, latency.</p></div>
+    <div class="card sm"><h3>📝 Menulis dapatan</h3><p>Bukti → Kesan → Punca → Cadangan, berbanding baseline &amp; NFR.</p></div>
+    <div class="card sm"><h3>🗺️ Merancang ujian</h3><p>NFR SMART, Little's Law, pacing, jenis larian, kriteria, kebenaran.</p></div>
   </div>
   <div class="org"><i></i><span>Dan sentiasa: <b>kebenaran bertulis</b> sebelum menjana beban</span></div>
-  <aside class="notes"><p>Baca enam kemahiran dan minta peserta menilai diri (1–5) secara senyap untuk setiap satu. Kemahiran dengan skor terendah = fokus latihan selepas kursus.</p><p>Semak semula objektif O1–O9 Hari 2 dengan tunjuk tangan.</p></aside>
+  <aside class="notes"><p>Baca enam kemahiran dan minta peserta menilai diri (1–5) secara senyap untuk setiap satu. Kemahiran dengan skor terendah = fokus latihan selepas kursus.</p><p>Semak semula objektif O1–O9 Hari 2 dengan tunjuk tangan. Skrip: <i>"Hari 1 anda belajar menjana beban. Hari 2 anda belajar menjana beban yang <b>betul</b>, membaca apa yang ia beritahu, dan merancangnya supaya keputusan boleh dipercayai."</i></p></aside>
 </section>
 
 <section class="slide">
   <div class="eyebrow">Penutup · Rumusan 2 hari</div>
-  <h2 class="wide">Dari pemasangan kepada gerbang SLA</h2>
+  <h2 class="wide">Dari pemasangan kepada pelan ujian yang boleh dipertahankan</h2>
   <div class="flow sm">
     <div class="node"><span class="k">H1 S1</span><b>Pasang</b><span>Java, JMeter, SUT</span></div><div class="arr">→</div>
     <div class="node"><span class="k">H1 S2</span><b>Bina</b><span>Test Plan, Thread Group</span></div><div class="arr">→</div>
     <div class="node"><span class="k">H1 S3</span><b>Sahkan</b><span>Assertion, Timer, CSV</span></div><div class="arr">→</div>
     <div class="node warn"><span class="k">H1 S4</span><b>Rakam</b><span>gagal: 401</span></div><div class="arr">→</div>
-    <div class="node hot"><span class="k">H2 S1</span><b>Korelasi</b><span>token + csrf</span></div><div class="arr">→</div>
-    <div class="node"><span class="k">H2 S2</span><b>Logik</b><span>Transaction, ForEach</span></div><div class="arr">→</div>
-    <div class="node"><span class="k">H2 S3</span><b>Ukur</b><span>non-GUI, SLA</span></div><div class="arr">→</div>
-    <div class="node good"><span class="k">H2 S4</span><b>Automasi</b><span>gerbang CI</span></div>
+    <div class="node warn"><span class="k">H2 S1</span><b>Rakam semula</b><span>200/401/200/401</span></div><div class="arr">→</div>
+    <div class="node"><span class="k">H2 S2</span><b>Bersihkan</b><span>korelasi, CSV, TC</span></div><div class="arr">→</div>
+    <div class="node hot"><span class="k">H2 S3</span><b>Laporan</b><span>dashboard, dapatan</span></div><div class="arr">→</div>
+    <div class="node good"><span class="k">H2 S4</span><b>Rancang</b><span>NFR, Little's Law</span></div>
   </div>
   <table class="t xs mt16">
-    <tr><th>Hari 1 — Asas</th><th>Hari 2 — Lanjutan</th></tr>
-    <tr><td>Pasang Java + JMeter, SUT tiruan</td><td>Korelasi <code>token</code> + <code>csrf</code> (JSON / Regex / Boundary)</td></tr>
-    <tr><td>Anatomi Test Plan, skop mengikut kedudukan</td><td>Transaction / If / ForEach Controller</td></tr>
-    <tr><td>Thread Group: threads, ramp-up, loop</td><td>JSR223 Groovy + <code>__P</code>, <code>__UUID</code>, <code>__Random</code>, <code>__time</code></td></tr>
-    <tr><td>HTTP Request Defaults, Header Manager</td><td>Non-GUI + <code>.jtl</code> + HTML dashboard</td></tr>
-    <tr><td>Listener, Response &amp; Duration Assertion</td><td>APDEX, throughput, percentile, Error %, NFR, titik pecah</td></tr>
-    <tr><td>Timer (think time), CSV Data Set</td><td>Senario puncak <code>07</code> + SLA <code>-Jsla_ms</code></td></tr>
-    <tr><td>Rakaman HTTP(S) Test Script Recorder</td><td>Distributed, gerbang CI, Grafana, amalan terbaik</td></tr>
+    <tr><th>Hari 1 — Asas</th><th>Hari 2 — Kitaran penuh</th></tr>
+    <tr><td>Pasang Java + JMeter, SUT tiruan</td><td>Rancang &amp; rakam perjalanan pengguna (Transaction Controller, <code>${T}</code>)</td></tr>
+    <tr><td>Anatomi Test Plan, skop mengikut kedudukan</td><td>Main balik &amp; diagnosis 401 / 403</td></tr>
+    <tr><td>Thread Group: threads, ramp-up, loop</td><td>Korelasi, parameterisasi, think time, assertion → plan boleh dimain balik</td></tr>
+    <tr><td>HTTP Request Defaults, Header Manager</td><td><code>.jtl</code> → HTML dashboard (<code>-e -o</code>, <code>-g</code>)</td></tr>
+    <tr><td>Listener, Response &amp; Duration Assertion</td><td>Setiap bahagian dashboard + glosari istilah</td></tr>
+    <tr><td>Timer, CSV Data Set</td><td>Tafsiran, baseline, dapatan bertulis</td></tr>
+    <tr><td>Rakaman HTTP(S) Test Script Recorder</td><td>Pelan ujian: NFR, Little's Law, pacing, jenis larian, kebenaran</td></tr>
   </table>
-  <aside class="notes"><p>Ceritakan semula perjalanan: rakaman yang gagal pada Hari 1 menjadi senario puncak yang lulus SLA pada Hari 2. Setiap sesi menambah satu lapisan.</p><p>Tanya: "Sesi mana paling berguna untuk kerja anda minggu depan?"</p></aside>
+  <aside class="notes"><p>Ceritakan semula perjalanan: rakaman yang gagal pada Hari 1 dirakam semula, dibersihkan, dijalankan, dibaca, dan akhirnya dirancang sebagai ujian sebenar. Setiap sesi menambah satu lapisan.</p><p>Tanya: "Apa satu perkara yang anda akan ubah dalam cara pasukan anda melaporkan prestasi selepas kursus ini?"</p></aside>
 </section>
 
 <section class="slide">
   <div class="eyebrow">Penutup · Langkah seterusnya</div>
   <h2>Selepas kursus: ke mana dari sini?</h2>
   <div class="grid c3">
-    <div class="card top m-h1 sm"><span class="ico">🔁</span><h3>Ulang lab di rumah</h3><p><code>node sut/server.js</code> + plan <code>04</code>–<code>08</code> — semuanya tanpa internet.</p></div>
-    <div class="card top m-violet sm"><span class="ico">🧩</span><h3>Regex &amp; Boundary pada HTML</h3><p>Borang dengan <code>&lt;input name="csrf" value="…"&gt;</code>.</p></div>
-    <div class="card top m-pass sm"><span class="ico">🌙</span><h3>Pipeline CI malam</h3><p><code>06-ujian-beban-nogui.jmx</code> setiap malam + gerbang SLA.</p></div>
-    <div class="card top m-sky sm"><span class="ico">📈</span><h3>InfluxDB + Grafana</h3><p>Papan pemuka masa nyata untuk ujian panjang.</p></div>
+    <div class="card top m-h1 sm"><span class="ico">🔁</span><h3>Ulang hari ini di rumah</h3><p><code>node sut/server.js</code> + rakam → bersihkan → <code>07</code> → laporan — semuanya tanpa internet.</p></div>
+    <div class="card top m-violet sm"><span class="ico">🦊</span><h3>Rakam aliran web sebenar</h3><p>Staging <b>yang anda dibenarkan</b>, Firefox + proxy 8888. Berapa permintaan setiap klik? Tambah HTTP Cookie Manager.</p></div>
+    <div class="card top m-pass sm"><span class="ico">📋</span><h3>Guna templat</h3><p><code>templat-pelan-ujian.md</code> &amp; <code>templat-laporan-ujian.md</code> untuk projek sebenar pertama anda.</p></div>
+    <div class="card top m-sky sm"><span class="ico">📈</span><h3>Terokai lanjut</h3><p><code>apdex_per_transaction</code>, gerbang SLA dalam CI, Backend Listener + Grafana.</p></div>
     <div class="card top m-fail sm"><span class="ico">📝</span><h3>Sebelum sistem sebenar</h3><p>Kebenaran bertulis, staging, tetingkap masa, pasukan infra memantau bersama.</p></div>
-    <div class="card top m-jpj sm"><span class="ico">📚</span><h3>Dokumentasi rasmi</h3><p><code>jmeter.apache.org/usermanual</code> · Best Practices.</p></div>
+    <div class="card top m-jpj sm"><span class="ico">📚</span><h3>Dokumentasi rasmi</h3><p>Generating Report Dashboard · Glossary · Best Practices — <code>jmeter.apache.org/usermanual</code>.</p></div>
   </div>
-  <aside class="notes"><p>Cadangkan setiap peserta memilih SATU laluan dan menetapkan projek kecil dalam 30 hari — contohnya pipeline malam untuk staging unit mereka (dengan kebenaran).</p><p>Repo kursus kekal sebagai rujukan: README setiap hari, lab, plan rujukan, skrip <code>run-nogui</code>.</p></aside>
+  <aside class="notes"><p>Cadangkan setiap peserta memilih SATU laluan dan menetapkan projek kecil dalam 30 hari — contohnya pelan ujian (templat) untuk satu sistem unit mereka, dibincang dengan pemilik sistem sebelum sebarang larian.</p><p>Repo kursus kekal sebagai rujukan: README setiap hari, lab, plan rujukan, templat pelan &amp; laporan.</p></aside>
 </section>
 
 <section class="slide">
@@ -2130,7 +2562,7 @@ fi</pre></div>
     <ol class="steps">
       <li><div><b>Buka pelatih.my</b><span>Log masuk ke akaun peserta anda</span></div></li>
       <li><div><b>Menu “Borang penilaian”</b><span>Dibuka <b>2.00 ptg Hari 2</b> — isi sebelum tamat</span></div></li>
-      <li><div><b>Hantar Kuiz hari — penilaian kendiri Hari 2</b><span>Tanda item terakhir dalam lab</span></div></li>
+      <li><div><b>Hantar Kuiz S4 + Kuiz hari — Penilaian kendiri Hari 2</b><span>Melengkapkan checkpoint lab &amp; item “Isi penilaian kendiri Hari 2”</span></div></li>
       <li><div><b>Sijil penyertaan</b><span>Diuruskan oleh penganjur selepas kursus</span></div></li>
     </ol>
     <div class="stack">
@@ -2138,22 +2570,22 @@ fi</pre></div>
       <div class="callout tip"><span class="i">💬</span><div>Maklum balas jujur membantu kami menambah baik kursus untuk kumpulan JPJ seterusnya — terutamanya: kelajuan, lab, dan relevan kepada kerja anda.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Beri 5–7 minit dalam kelas untuk mengisi borang — kadar respons jauh lebih tinggi berbanding "isi di rumah".</p><p>Semak bahawa semua peserta boleh melihat menu Borang penilaian. Jika tidak, catat nama dan maklumkan penganjur.</p></aside>
+  <aside class="notes"><p>Beri 3 minit dalam kelas untuk mengisi borang — jangan tinggalkan untuk "nanti". Kadar respons jauh lebih tinggi berbanding "isi di rumah".</p><p>Sijil penyertaan dikeluarkan oleh penganjur selepas kehadiran dan borang penilaian disahkan — jangan janji tarikh yang anda tidak kawal. Jika peserta tidak nampak menu Borang penilaian, catat nama dan maklumkan penganjur.</p></aside>
 </section>
 
 <section class="slide dark cover">
   <div class="eyebrow">JMeter · Portal eJPJ (tiruan) · Penutup</div>
   <h1>Terima <span class="grad">kasih</span></h1>
-  <p class="lead" style="max-width:38ch">Dua hari: dari <code>/api/health</code> satu pengguna kepada lonjakan 300 pengguna pada Hari Kenaikan Harga Cukai — dengan SLA yang boleh diuji mesin.</p>
+  <p class="lead" style="max-width:40ch">Dua hari: dari <code>/api/health</code> satu pengguna kepada rakaman yang boleh dimain balik, laporan yang boleh diterangkan baris demi baris, dan pelan ujian yang boleh dipertahankan.</p>
   <div class="meta">
-    <span class="chip m-h1">01-hello-jpj.jmx</span>
-    <span class="chip m-jpj">04-korelasi-log-masuk.jmx</span>
-    <span class="chip m-violet">08-foreach-kenderaan.jmx</span>
+    <span class="chip m-h1">rakam-template.jmx</span>
+    <span class="chip m-jpj">05-transaksi-penuh.jmx</span>
     <span class="chip m-pass">07-beban-puncak-cukai.jmx</span>
+    <span class="chip m-violet">templat-pelan-ujian.md</span>
   </div>
   <p class="mt24" style="font-size:17px;color:#A9BAD6">Soalan? · Borang penilaian (pelatih.my) · Sijil</p>
   <div class="org"><i></i> Kursus Ujian Prestasi dengan Apache JMeter · Jabatan Pengangkutan Jalan Malaysia · 21 Sep &amp; 5 Okt 2026</div>
-  <aside class="notes"><p>Ucapkan terima kasih kepada peserta dan penganjur. Ingatkan sekali lagi borang penilaian sebelum sijil.</p><p>Soalan terbuka terakhir: "Apakah satu perkara yang anda akan guna di tempat kerja minggu depan?"</p></aside>
+  <aside class="notes"><p>Mesej akhir etika: <i>"Repo ini, SUT ini, templat ini — bawa pulang. Tetapi sebelum JMeter dihalakan ke sistem JPJ sebenar: kebenaran bertulis, staging, tetingkap masa, dan pasukan infra memantau bersama."</i></p><p>Ucapkan terima kasih kepada peserta dan penganjur. Soalan terbuka terakhir: "Apakah satu perkara yang anda akan guna di tempat kerja minggu depan?"</p></aside>
 </section>
 
 
