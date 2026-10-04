@@ -29,14 +29,14 @@ slides/jmeter-training.html
 
 URL `#n` membuka slaid ke-n (cth. `jmeter-training.html#42` = Hari 2).
 
-## Struktur (77 slaid)
+## Struktur (90 slaid)
 
 | Bahagian | `data-label` | Kandungan |
 |----------|--------------|-----------|
 | Pengenalan (9) | `Pengenalan` | Kulit, what's in it for you, agenda 2 hari (S1–S4 + masa), load testing, alat, apa & kenapa JMeter, endpoint Portal eJPJ (tiruan), **etika (localhost sahaja = elak DoS)**, cara lab berjalan |
 | Hari 1 (32) | `Hari 1 · Asas JMeter` | Pembahagi + objektif O1–O9. **S1 9.00–10.30**: ujian prestasi, 5 jenis ujian, pasang Java/JMeter, PATH Windows, GUI vs non-GUI, SUT, antara muka. **S2 10.45–1.00**: pokok Test Plan, skop & susunan, Test Plan pertama, Thread Group, kira sampel, Header Manager, Listeners, percentile. **S3 2.00–3.30**: Assertion, Timer, CSV Data Set, sharing/EOF, Kes 1–5. **S4 3.45–5.00**: perakam, Firefox + sijil CA, rakam, main balik 200/401/401, laporan HTML, rumusan |
-| Hari 2 (31) | `Hari 2 · Lanjutan & Analisis` | Pembahagi + objektif O1–O9 + plan 04–08. **S1**: warm-up, korelasi `token` + `csrf`, parameterisasi vs korelasi, 3 extractor, bina, JSON Extractor, 403 vs 401. **S2**: Logic Controllers, Transaction (05), If + `__groovy`, ForEach (08), JSR223 Groovy, fungsi `__P`. **S3**: non-GUI + `run-nogui.sh`, dashboard, APDEX/latency, NFR + titik pecah, plan 07, `-Jsla_ms`. **S4**: distributed, gerbang SLA CI, Grafana, amalan terbaik, mini-demo capstone |
-| Penutup (5) | `Penutup` | Apa anda kini boleh buat, rumusan 2 hari, langkah seterusnya, **borang penilaian (pelatih.my, dibuka 2.00 ptg Hari 2)**, terima kasih |
+| Hari 2 (44) | `Hari 2 · Rakam, Laporan & Perancangan` | Pembahagi + objektif O1–O9 + kitaran kerja & plan. **S1 Rakam & Main Balik 9.00–10.30** (7): imbas kembali, rancang T01…T04, `rakam-template.jmx` (proxy 8888, Transaction Controller, Excludes, `${T}`), rakam dengan curl, main balik 200/401/200/401 + lulus palsu, 401 vs 403. **S2 Jadikan Rakaman Boleh Dimain Balik 10.45–1.00** (7): senarai semak 10 perkara, korelasi `token` + `csrf`, korelasi berantai + CSV, nama + Transaction Controller + think time, assertion + Summary/Aggregate, ⭐ ForEach/JSR223. **S3 Laporan & Istilah 2.00–3.30** (17): `.jtl` → dashboard (`-e -o`, `-g`, `overall_granularity`), peta dashboard, APDEX, Statistics, percentile vs average, Errors/Top 5, connect/latency/elapsed, Over Time, Throughput, Response Times, tepu, glosari ×2, plan 07 + `-Jsla_ms`, baseline R1/R2/R3, menulis dapatan. **S4 Merancang Ujian Prestasi 3.45–5.00** (10): kitaran hayat, NFR, Little's Law, pacing + campuran, jenis larian, kriteria/pemantauan/risiko, kebenaran bertulis, templat pelan + Lab 6/7, ⭐ CI/distributed/Grafana |
+| Penutup (5) | `Penutup` | Apa anda kini boleh buat (rakam, laporan, rancang), rumusan 2 hari, langkah seterusnya, **borang penilaian (pelatih.my, dibuka 2.00 ptg Hari 2)**, terima kasih |
 
 Setiap sesi dibuka dengan slaid tajuk sesi gelap (kod sesi + masa + lab + kuiz).
 

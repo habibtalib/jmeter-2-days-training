@@ -1,249 +1,269 @@
-# Nota Penceramah — Hari 2: Korelasi, Logic Controllers, Non-GUI & Analisis SLA
+# Nota Penceramah — Hari 2: Rakam & Main Balik, Laporan Prestasi & Merancang Ujian
 
-[📖 README Hari 2](./README.md) · [🧪 Lab](./snippets/lab.md) · [🗂️ Test plans](./test-plans/) · [⬅️ README Hari 1](../hari-1/README.md)
+[📖 README Hari 2](./README.md) · [🧪 Lab](./snippets/lab.md) · [📋 Templat Pelan Ujian](./snippets/templat-pelan-ujian.md) · [📝 Templat Laporan Ujian](./snippets/templat-laporan-ujian.md) · [🗂️ Test plans](./test-plans/) · [⬅️ README Hari 1](../hari-1/README.md)
 
 > **Mesej teras hari ini:**
-> 1. **"Ujian yang tidak dikorelasi hanya mengukur halaman ralat."** Token dan csrf mesti ditangkap pada masa larian.
-> 2. **"Ukur perjalanan pengguna, bukan endpoint."** Transaction Controller = bahasa perniagaan.
-> 3. **"GUI untuk membina, non-GUI untuk mengukur."**
-> 4. **"SLA ditulis dalam percentile, dan ia mesti boleh gagal."** Duration Assertion + gerbang CI.
-> 5. **"Hanya sasaran yang dibenarkan secara bertulis."** Klien kita ialah JPJ — mereka mesti keluar dengan refleks ini.
+> 1. **"Rakaman ialah titik mula, bukan produk siap."** Perakam menyalin apa yang dilihat — termasuk token yang akan luput.
+> 2. **"Hijau ≠ betul."** Main balik yang lulus tanpa restart SUT, atau 200 tanpa assertion, ialah lulus palsu.
+> 3. **"Laporan ialah produk anda."** Setiap angka dashboard mesti boleh diterangkan dengan istilah yang betul.
+> 4. **"Percentile, baseline, NFR — dalam tertib itu."** Purata menipu; satu larian tanpa baseline tiada makna; NFR dipersetujui **sebelum** ujian.
+> 5. **"Bilangan pengguna dikira, bukan diteka."** N = X × (R + Z).
+> 6. **"Hanya sasaran yang dibenarkan secara bertulis."** Klien kita ialah JPJ — mereka mesti keluar dengan refleks ini.
 
 ## Ringkasan penyampai
 
 | Perkara | Nilai |
 |---------|-------|
-| Klien | JPJ — Jabatan Pengangkutan Jalan Malaysia. Senario dan istilah (cukai jalan, saman, no. pendaftaran) adalah dunia mereka; jemput mereka mengaitkan dengan sistem sebenar **secara lisan**, bukan dengan menguji sistem sebenar. |
-| Konteks | Hari 1 diajar pada **21 Sep** — dua minggu lalu. Jangkakan lupa: mulakan S1 dengan **warm-up 15 minit**. |
-| Nisbah | S1 ~40% penerangan/demo · S2 ~35% · S3 ~35% · S4 ~50% (konsep + penutup) · selebihnya lab |
-| Bahan | Projektor dengan dua panel: Terminal A (log SUT) + JMeter GUI. Papan putih untuk aliran korelasi (log masuk → token → header) dan jadual metrik dashboard. |
-| Momen kunci | (1) S1: replay `04-rakaman-mentah` → 401 di skrin; (2) S1: `csrf` salah → 403; (3) S2: ForEach 0 lelaran bila kotak "_" dinyahtanda; (4) S3: dashboard pertama dibuka; (5) S3: `-Jsla_ms=150` → Error % melonjak; (6) S4: gerbang SLA `kod keluar: 1` |
-| Hasil wajib hujung hari | ≥ 85% peserta: Latihan 1 (korelasi 0% ralat) + Latihan 4 (dashboard dibuka) + Kuiz hari dihantar |
+| Klien | JPJ — Jabatan Pengangkutan Jalan Malaysia. Senario (cukai jalan, saman, no. pendaftaran) ialah dunia mereka; jemput mereka mengaitkan dengan sistem sebenar **secara lisan**, bukan dengan menguji sistem sebenar. |
+| Tarikh & konteks | Hari 2: **Isnin, 5 Okt 2026**. Hari 1 diajar pada **21 Sep** — dua minggu lalu. Imbas kembali 10 minit sahaja; pemasangan rosak dikesan di S1. |
+| Fokus (permintaan penganjur) | **Rakam & main balik untuk menghasilkan laporan**, **penerangan laporan & istilah**, dan **cara merancang ujian**. Korelasi diajar sebagai alat untuk menjadikan rakaman boleh dimain balik — bukan topik berdiri sendiri. Logic controller lanjutan, JSR223, CI, distributed, Grafana = ⭐ sekilas. |
+| Nisbah | S1 ~40% demo/penerangan · S2 ~35% · S3 ~55% (dashboard & istilah) · S4 ~45% · selebihnya lab |
+| Bahan | Projektor dua panel: Terminal A (log SUT) + JMeter GUI / pelayar (dashboard). Papan putih: perjalanan pengguna 4 langkah, jadual 401/403, formula APDEX, Little's Law. |
+| Momen kunci | (1) S1: main balik tanpa restart = **semua hijau** → restart → 200/401/200/401; (2) S1: token sahaja dikorelasi → **403**; (3) S2: Aggregate Report 80 + 20, transaksi ≈ 440 ms walaupun think time 1–3 s; (4) S3: graf Over Time 1 titik → jana semula `-g` dengan butiran 5 s; (5) S3: SLA 150 ms → Error % 1% → 22% tanpa sistem berubah; (6) S4: Little's Law meramal 46 pengguna daripada laporan |
+| Hasil wajib hujung hari | ≥ 85% peserta: Latihan 3 (plan boleh dimain balik) + Latihan 4 (lembaran kerja dashboard) + Latihan 6 (pelan dengan pengiraan N) + Kuiz hari dihantar |
 | Kemajuan dalam pelatih.my | JMeter berjalan di laptop peserta — LMS tidak nampak. Item terakhir setiap ✅ Checkpoint ditanda apabila **Kuiz S1–S4** lulus; "Isi penilaian kendiri Hari 2" ditanda oleh **Kuiz hari**. Ingatkan peserta menghantar kuiz di hujung setiap sesi. |
+
+### Angka sebenar untuk dirujuk (disahkan dengan JMeter 5.6.3 pada mock, 4 Okt 2026)
+
+| Larian | Angka |
+|--------|-------|
+| `04-rakaman-mentah.jmx` (main balik) | 3 sampel, Err 2 (66.67%); Errors: `401/Unauthorized` 2 · 100% · 66.67% |
+| `05-transaksi-penuh.jmx` (10 × 2) | 80 sampel HTTP + 20 transaksi; 0% ralat; transaksi Avg ≈ 442 ms, p95 ≈ 561 ms; APDEX transaksi 0.875, Total 0.975 |
+| `07` R1 (`-Jpengguna=50 -Jrampup=10 -Jtempoh=60 -Jsla_ms=2000`) | Total 2432 sampel, 41.29/s, Err 0.25% (6 × 500); transaksi 598, **10.46/s**, Avg 446, p95 **583**, Err **1.00%**; APDEX Total 0.971, transaksi 0.862 |
+| `07` R2 (sama, `-Jsla_ms=150`) | Total Err 5.37%; transaksi Err **21.75%**, p95 572; bayar-cukai 19–26%; APDEX transaksi 0.717; ~30 baris berbeza `The operation lasted too long…` dalam Errors |
+| `07` R3 (mock perlahan port 3001, 500–1500 ms) | Total 22.78/s; transaksi **5.78/s**, Avg 3954, p95 **4969**; APDEX Total 0.401 |
+| Little's Law | R1: 10.46 × (0.446 + 4.0) ≈ 46.5 · R3: 5.78 × (3.954 + 4.0) ≈ 46.0 · purata thread aktif ≈ 45.8 (ramp-up 10 s) |
+| Constant Throughput Timer 300/min (shared, current TG) sebagai anak log masuk | log masuk 5.39/s ≈ 323/min |
+
+> Angka peserta akan berbeza sedikit (latensi mock rawak 40–180 ms, `ERROR_RATE` 1%). Tekankan **corak**, bukan nilai tepat.
 
 ---
 
 ## ✅ Senarai semak sebelum kelas (malam sebelum / 8.15 pagi)
 
 - [ ] **Java + JMeter 5.6** pada mesin demo: `java -version` (≥ 8; disyorkan 17) dan `jmeter --version` → 5.6.x.
-- [ ] **Node.js** dipasang; `node sut/server.js` → `Portal eJPJ (TIRUAN) berjalan di http://localhost:3000`. Uji <http://localhost:3000/api/health>.
-- [ ] **Internet tidak diperlukan** — SUT, plan, data dan laporan semuanya tempatan. (Hanya ⭐ Taurus/Grafana memerlukan muat turun — demo konsep sahaja.)
-- [ ] Buka dalam tab JMeter: `hari-1/test-plans/01-hello-jpj.jmx`, `03-csv-berparameter.jmx`, `04-rakaman-mentah.jmx`, `hari-2/test-plans/04`–`08`.
-- [ ] ⚠️ **Semak sasaran plan sebelum warm-up.** Klik **HTTP Request Defaults** setiap plan: Server mesti `localhost`, Port `3000`, Protocol `http`. Jadikan ini pengajaran etika: *"setiap plan yang dibuka — semak sasaran dahulu."*
-- [ ] Jalankan pengesahan pantas (≈ 2 minit):
+- [ ] **Mulakan SUT:** `node sut/server.js` → `Portal eJPJ (TIRUAN) berjalan di http://localhost:3000`. Uji <http://localhost:3000/api/health>.
+- [ ] **Port perakam 8888 bebas:** `lsof -iTCP:8888 -sTCP:LISTEN -n -P` (tiada output) / Windows `netstat -ano | findstr :8888`. Tutup Burp/Fiddler/proxy lain.
+- [ ] **curl melalui proxy:** buka `hari-1/test-plans/rakam-template.jmx` → Start perakam → `curl -s -x http://localhost:8888 http://localhost:3000/api/health` → satu sampler muncul dalam Recording Controller. Stop. Jangan simpan perubahan pada templat.
+- [ ] **Peserta Windows:** Git Bash dipasang (blok curl dalam README §1.4 ialah bash). Tanpa Git Bash → guna `04-rakaman-mentah.jmx` sebagai rakaman (pelan kejar).
+- [ ] **Proxy pelayar:** hanya jika anda mahu menunjukkan rakaman pelayar (Firefox → Manual proxy `localhost:8888`, kosongkan *No proxy for*). SUT tiada borang web, jadi demo utama guna curl. **Sijil CA hanya untuk HTTPS** — SUT `http://`, tidak perlu.
+- [ ] **Sandaran laporan:** jalankan sekali R1, R2 (dan R3) pada mesin demo ke `hasil/` (arahan dalam README §3.7) — jika larian langsung gagal, buka laporan sandaran.
   ```bash
-  node sut/server.js &
-  jmeter -n -t hari-2/test-plans/04-korelasi-log-masuk.jmx -l /tmp/r4.jtl      # 45 sampel, 0% Err
-  jmeter -n -t hari-2/test-plans/08-foreach-kenderaan.jmx  -l /tmp/r8.jtl      # 16 sampel, 0% Err
-  jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx -Jpengguna=10 -Jrampup=2 -Jtempoh=8 -l /tmp/r7.jtl
+  mkdir -p hasil
+  jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx -Jpengguna=50 -Jrampup=10 -Jtempoh=60 -Jsla_ms=2000 \
+    -l hasil/r07-sla2000.jtl -e -o hasil/laporan07-sla2000 -Jjmeter.reportgenerator.overall_granularity=5000
   ```
-- [ ] `hari-2/run/hasil/` dikosongkan (atau biarkan satu laporan contoh sedia dibuka sebagai sandaran).
-- [ ] `jq` dipasang pada mesin demo (Latihan 7). Peserta Windows: blok PowerShell dalam lab.
+- [ ] **Internet tidak diperlukan** — SUT, plan, data dan laporan semuanya tempatan.
+- [ ] Cetak / kongsi `templat-pelan-ujian.md` dan `templat-laporan-ujian.md` (atau pastikan peserta boleh membukanya).
+- [ ] ⚠️ **Semak sasaran setiap plan yang akan dibuka:** HTTP Request Defaults → `localhost` / `3000` / `http`. Jadikan ini pengajaran etika.
 - [ ] Pautan **Borang penilaian** dalam menu pelatih.my disahkan dibuka **2.00 ptg**.
 - [ ] Senarai pasangan (pair) + kenal pasti 2–3 peserta yang ketinggalan Hari 1 (pasangkan dengan peserta kuat).
 
-> ⚠️ **Risiko bilik:** setiap peserta menjalankan SUT **sendiri** pada `localhost:3000` — tiada server dikongsi. Latihan 5 (400 pengguna) membebankan laptop peserta; amaran awal supaya mereka menutup aplikasi berat. Jangan benarkan sesiapa menghalakan plan ke IP rakan tanpa persetujuan — itu juga "sistem orang lain".
+> ⚠️ **Risiko bilik:** setiap peserta menjalankan SUT **sendiri** pada `localhost:3000` dan perakam **sendiri** pada `localhost:8888`. Jangan benarkan sesiapa menghalakan curl/proxy/plan ke IP rakan tanpa persetujuan — itu juga "sistem orang lain". Larian `07` 50 pengguna × 60 s ringan untuk laptop biasa; jangan naikkan ke lalai 300 × 300 s di kelas.
 
 ---
 
-## S1 · 9.00 – 10.30 pagi · Imbas Kembali & Korelasi (90 minit)
+## S1 · 9.00 – 10.30 pagi · Rakam & Main Balik (90 minit)
 
 | Masa | Minit | Aktiviti | Nota |
 |------|------:|----------|------|
-| 9.00–9.05 | 5 | Selamat datang semula. Agenda hari (jadual README). Kemajuan dalam pelatih.my = kuiz per sesi. | Tekankan: hari ini **realistik**, esok mereka boleh terangkan kepada pasukan. |
-| 9.05–9.20 | 15 | **Warm-up Hari 1.** Semua: `cd sut && node server.js`. Buka `01-hello-jpj.jmx` → **semak HTTP Request Defaults bersama** (localhost/3000) → Start → # Samples. Buka `03-csv-berparameter.jmx` → Start → 5 no. pendaftaran berbeza. Soalan pantas README §1.1 (jadual 4 soalan). | Ini juga semakan pemasangan — sesiapa yang JMeter/Java rosak dikesan **sekarang**, bukan pada S3. |
-| 9.20–9.30 | 10 | 🎬 **Demo replay gagal** (`hari-1/test-plans/04-rakaman-mentah.jmx`): log masuk 200 → `/api/kenderaan` 401 → bayar 401. Tanya: *"Mengapa?"* | **Momen kunci #1.** Tunjuk Terminal A/View Results Tree. Jangan beri jawapan terus — biar mereka teka "token luput". |
-| 9.30–9.40 | 10 | §1.2–1.3 Korelasi vs parameterisasi (papan putih: `pengguna.csv` → log masuk → **`token`, `csrf`** → header/badan). §1.4 jadual 3 extractor. | Analogi: *"CSV ialah IC anda; token ialah nombor giliran kaunter — hanya kaunter yang tahu."* |
-| 9.40–9.55 | 15 | 🎬 **Live build** §1.5: sampler log masuk → JSON Extractor `token;csrf` → Debug Sampler → GET dengan `Bearer ${token}` → bayar dengan `${csrf}`. | Taip perlahan. Tunjuk JSON Path Tester dalam View Results Tree. |
-| 9.55–10.00 | 5 | 🎬 Eksperimen §1.7: `csrf` = `abc123` → **403**; token salah → **401**. | **Momen kunci #2.** *"Dua kod, dua punca — 401 siapa anda, 403 adakah permintaan ini sah."* |
-| 10.00–10.25 | 25 | **Latihan 1** (pasangan). | Minit 10.10: ronda — isu #1 extractor di bawah Thread Group, isu #2 CSV tidak dijumpai (plan belum disimpan). Pasangan pantas → ⭐ Regex/Boundary. |
-| 10.25–10.30 | 5 | Checkpoint + **Kuiz S1** dalam pelatih.my. | Jambatan: *"Kita boleh log masuk. Selepas rehat: kita jadikan ia satu transaksi pembaharuan cukai yang lengkap."* |
+| 9.00–9.05 | 5 | Selamat datang semula. Agenda hari (jadual README): *"Hari ini kita buat kerja jurutera prestasi dari rakaman sampai laporan dan pelan."* Kemajuan pelatih.my = kuiz per sesi. | Sebut terus: laporan & perancangan ialah fokus petang. |
+| 9.05–9.15 | 10 | **Imbas kembali Hari 1** (§1.1): semua jalankan `node sut/server.js`; buka `04-rakaman-mentah.jmx` → **semak HTTP Request Defaults bersama** → Start → 1 hijau, 2 merah. Jadual 4 soalan pantas. | Ini juga semakan pemasangan — JMeter/Java/Node rosak dikesan **sekarang**. |
+| 9.15–9.25 | 10 | **§1.2 Rancang dahulu** — papan putih: 4 langkah, nama `T01…T04`, bulatkan data dinamik. Tanya: *"Satu klik 'Bayar' di portal sebenar — berapa permintaan?"* | Konsep "satu tindakan = satu transaksi". |
+| 9.25–9.40 | 15 | 🎬 **Demo §1.3–1.5**: Save As `latihan-01-rakaman.jmx`; HTTP Request Defaults; Grouping → *Put each group in a new transaction controller*; Excludes (+ analitik); Constant Timer `${T}`; Start; dialog *Recorder: Transactions Control* (taip `T01_LogMasuk`); jalankan blok curl dengan `sleep 6`; Stop. Kembangkan pokok: nama `/api/log-masuk-1`, Header Manager dengan `Authorization: Bearer …` dikeras-kod, badan `csrf` literal, timer ≈ 6000 ms. | Tunjuk `lsof … :8888`. Tekankan: *"Perakam menyimpan Bearer token sebagai teks tetap; Cookie pula dibuang — aplikasi cookie perlukan Cookie Manager."* |
+| 9.40–10.00 | 20 | **Latihan 1** (pasangan). | Ronda: isu #1 lupa Start / lupa `-x $P` → tiada sampler; isu #2 semua dalam satu kumpulan (tidak tunggu 5 s). Pasangan pantas → ⭐ format string. |
+| 10.00–10.10 | 10 | 🎬 **Demo main balik** (momen kunci #1): Start **tanpa** restart → semua hijau. *"Siap untuk 300 pengguna?"* Biar mereka jawab. Restart SUT → Start → 200/401/200/401. VRT: Sampler result → Request → Response data. Kemudian korelasi `token` sahaja → **403** (momen kunci #2). | *"401 = siapa anda; 403 = adakah permintaan ini sah."* Tanya kenapa `T03` hijau (tiada token diperlukan) → perlunya assertion. |
+| 10.10–10.25 | 15 | **Latihan 2.** | Jika rakaman peserta gagal → guna `04-rakaman-mentah.jmx` (pelan kejar). |
+| 10.25–10.30 | 5 | Checkpoint + **Kuiz S1**. | Jambatan: *"Selepas rehat kita baiki rakaman ini sehingga boleh dimain balik oleh 10, 50, 300 pengguna."* |
 
-**Skrip ringkas (korelasi):**
-> *"Bayangkan anda merakam video diri anda masuk ke bank dengan kad akses semalam. Hari ini anda tayang video itu kepada pengawal — pintu tidak terbuka, kerana kad semalam sudah dibatalkan. Itulah replay. Korelasi bermaksud: setiap kali masuk, ambil kad baharu dari kaunter, dan tunjukkan kad **itu** di setiap pintu."*
+**Skrip ringkas (main balik):**
+> *"Bayangkan anda merakam video diri anda masuk ke bank dengan kad akses semalam. Hari ini anda tayang video itu kepada pengawal — pintu tidak terbuka, kerana kad semalam sudah dibatalkan. Itulah main balik rakaman. Tetapi jika bank lupa membatalkan kad semalam, pintu terbuka — dan anda fikir video anda 'berjaya'. Itulah lulus palsu."*
 
 **Soalan untuk ditanya:**
-- "Nilai mana dalam respons log masuk yang berubah setiap kali?" (`token`, `csrf`; `nama` tidak)
-- "Jika 300 thread log masuk, berapa token wujud?" (300 — `vars` per thread)
-- "Bila anda pilih Regex berbanding JSON Extractor?" (respons HTML/teks, header)
-- "Di sistem JPJ sebenar, nilai dinamik apa lagi yang mungkin ada?" (cookie sesi, view-state, nonce pembayaran, ID transaksi FPX — **bincang sahaja**)
+- "Kenapa kita tunggu 6 saat antara langkah?" (`proxy.pause` 5 s → kumpulan baharu)
+- "Apa yang `${T}` rakam?" (jurang masa sebenar antara permintaan)
+- "Kenapa semua hijau sebelum restart?" (sesi rakaman masih hidup dalam memori mock)
+- "Di sistem JPJ sebenar, nilai dinamik apa lagi?" (cookie sesi, view-state, nonce pembayaran, ID transaksi FPX — **bincang sahaja**)
 
 **Salah faham lazim:**
 
 | Salah faham | Pembetulan |
 |-------------|------------|
-| "Rakaman cukup — JMeter akan urus token" | Perakam menyalin nilai literal; korelasi kerja manual (atau plugin) |
-| "Letak extractor di mana-mana dalam Thread Group" | Skop mengikut kedudukan — anak sampler log masuk sahaja |
-| "Default value kosong lebih kemas" | Default ketara (`TOKEN_TAK_JUMPA`) = alat nyahpepijat |
-| "401 dan 403 sama sahaja" | 401 = identiti (token); 403 = kebenaran/permintaan (csrf) |
+| "Perakam akan uruskan token" | Perakam menyalin nilai literal; korelasi kerja kita (S2) |
+| "Semua hijau = skrip betul" | Lulus palsu: sesi rakaman masih sah; 200 tanpa assertion |
+| "Rakam dengan pelayar biasa sahaja" | Pelayar mesti dihalakan ke proxy 8888; SUT ini API → curl |
+| "Perlu sijil CA untuk merakam" | Hanya untuk HTTPS |
+| "401 dan 403 sama sahaja" | 401 = token (identiti); 403 = csrf (kesahihan permintaan) |
 
-**✅ Sebelum bergerak ke S2:** ≥ 80% pasangan menunjukkan Debug Sampler dengan `token`/`csrf` sebenar dan bayaran `BERJAYA`.
+**✅ Sebelum bergerak ke S2:** ≥ 80% pasangan mempunyai rakaman 4 langkah (sendiri atau `04-rakaman-mentah`) dan boleh menerangkan 401 vs 403.
 
 ---
 
 ## 10.30 – 10.45 pagi · Rehat
 
-Biarkan SUT berjalan. Jurulatih: semak siapa masih merah pada Latihan 1 → beri `04-korelasi-log-masuk.jmx` untuk dikaji selepas rehat.
+Biarkan SUT berjalan. Jurulatih: semak siapa tiada rakaman → beri `04-rakaman-mentah.jmx` (Save As ke `hari-2/test-plans/`) untuk S2.
 
 ---
 
-## S2 · 10.45 pagi – 1.00 tgh · Logic Controllers, ForEach & JSR223 Groovy (135 minit)
+## S2 · 10.45 – 1.00 tgh · Jadikan Rakaman Boleh Dimain Balik (135 minit)
 
 | Masa | Minit | Aktiviti | Nota |
 |------|------:|----------|------|
-| 10.45–10.55 | 10 | §2.1 jadual Logic Controllers. Tanya: *"Di kaunter JPJ, apakah satu 'transaksi' dari sudut pelanggan?"* | Kaitkan Throughput Controller dengan campuran trafik sebenar (70% semak, 30% bayar). |
-| 10.55–11.10 | 15 | 🎬 **Demo plan `05`**: Transaction Controller `Pembaharuan Cukai Jalan`, Generate parent sample (tidak ditanda vs ditanda), If Controller `${__groovy(...)}`, Uniform Random Timer 1–3 s. Jalankan → Summary Report baris transaksi. | Tunjuk bahawa masa transaksi ≈ jumlah 4 langkah (timer **tidak** dikira). |
-| 11.10–11.40 | 30 | **Latihan 2 Bahagian A.** | Isu lazim: sampler di **bawah** controller, bukan **di dalam**; syarat If tanpa `${__groovy(...)}`. |
-| 11.40–11.55 | 15 | 🎬 **Demo plan `08`** (ForEach): Match No. `-1` → Debug Sampler `no_pendaftaran_1/_2/_matchNr`. Nyahtanda *Add "_" before number?* → 0 lelaran, tiada ralat. | **Momen kunci #3.** *"Ujian yang tidak berbuat apa-apa tetapi hijau — paling berbahaya."* |
-| 11.55–12.10 | 15 | **Latihan 2 Bahagian B.** | Sasaran: 16 sampel, 5 bayaran. |
-| 12.10–12.25 | 15 | §2.6–2.7 JSR223 Groovy + fungsi. 🎬 Tampal PostProcessor; tukar path → `/api/log-masukX` → mesej tersuai merah. Tekankan *Cache compiled script* & `vars.get()` bukan `${}`. Jadual fungsi; `__P` sebagai jambatan ke S3. | Jangan ajar Groovy sebagai bahasa — tunjuk 5 objek (`vars`, `props`, `prev`, `ctx`, `log`) sahaja. |
-| 12.25–12.50 | 25 | **Latihan 3.** | Pasangan lambat: langkah 1–4 + 7 sahaja (langkau PreProcessor). |
-| 12.50–1.00 | 10 | Checkpoint + **Kuiz S2**. | Jambatan: *"Selepas makan, kita berhenti klik Start dalam GUI."* |
+| 10.45–10.55 | 10 | §2.1 senarai semak 10 perkara (tunjuk pada rakaman di skrin) + §2.2 parameterisasi vs korelasi. | Analogi: *"CSV ialah IC anda; token ialah nombor giliran kaunter — hanya kaunter yang tahu."* |
+| 10.55–11.15 | 20 | 🎬 **Live build** §2.3–2.5: JSON Extractor `token;csrf` + default `TOKEN_TAK_JUMPA` → `Bearer ${token}` / `${csrf}` → CSV `pengguna.csv` → extractor kenderaan `$.kenderaan[0]…` → path `${no_pendaftaran}`. Tunjuk JSON Path Tester + Debug Sampler. | Taip perlahan. Tekankan skop extractor (anak sampler) dan kedudukan `.jmx` (laluan CSV relatif). |
+| 11.15–11.25 | 10 | 🎬 §2.6–2.8: nama sampler, Transaction Controller (Generate parent sample — tunjuk dua-dua), padam timer `${T}`, Uniform Random Timer, Response Assertion, If Controller. | Tanya: *"Timer di bawah TC dengan 4 sampler — berapa jeda?"* (4) |
+| 11.25–12.20 | 55 | **Latihan 3.** Ujian fungsian 1 × 1 dahulu, kemudian 10 × 2. | Isu lazim: CSV tidak dijumpai (plan bukan dalam `hari-2/test-plans/`), extractor bukan anak, timer rakaman 6 s masih ada (larian "tergantung"). Minit 12.00: pasangan yang tersekat → buka `05` dan bandingkan elemen demi elemen. |
+| 12.20–12.35 | 15 | 🎬 Jalankan `05` (10 × 2): Summary vs Aggregate — setiap lajur (§2.9). 80 + 20; transaksi ≈ 440 ms walaupun think time. | **Momen kunci #3.** *"Masa transaksi = masa sistem; think time mempengaruhi throughput, bukan response time."* — jambatan ke Little's Law. |
+| 12.35–12.50 | 15 | ⭐ Sekilas §2.10: `08` ForEach (Match `-1`, *Add "_" before number ?* → 0 lelaran tanpa ralat) + JSR223 (Cache, `vars.get`). **Atau** masa kejar untuk Latihan 3. | Pilih ikut kemajuan kelas — Latihan 3 lebih penting. |
+| 12.50–1.00 | 10 | Checkpoint + **Kuiz S2**. | Jambatan: *"Selepas makan: kita berhenti melihat GUI dan mula membaca laporan seperti pengurusan membacanya."* |
 
 **Soalan untuk ditanya:**
-- "Mengapa kita tidak menghantar bayaran apabila tiada kenderaan?" (Error % palsu, mencemarkan analisis)
-- "Transaction Controller — patut termasuk think time?" (biasanya tidak; kita ukur sistem)
-- "ForEach hijau tetapi tiada bayaran — bagaimana anda mengesannya?" (kiraan sampel dalam Summary Report; Debug Sampler `_matchNr`)
-- "Mengapa `${__P(pengguna,50)}` lebih baik daripada 50?" (satu plan, banyak beban — S3)
+- "Mengapa default extractor `TOKEN_TAK_JUMPA`, bukan kosong?" (kegagalan kelihatan dalam tab Request)
+- "300 thread log masuk — berapa token?" (300; `vars` per thread)
+- "Kenapa If Controller sebelum bayar?" (elak bayaran palsu yang mencemarkan Error %)
+- "Kenapa satu baris setiap kenderaan dalam Aggregate Report?" (label dinamik `${no_pendaftaran}`)
 
 **Salah faham lazim:**
 
 | Salah faham | Pembetulan |
 |-------------|------------|
-| "If Controller boleh terima `no_pendaftaran != NONE`" | Mesti nilai akhir `true`/`false` → `${__groovy(...)}` / `${__jexl3(...)}` |
-| "Generate parent sample mesti ditanda" | Pilihan laporan; plan rujukan tidak menandanya untuk melihat setiap langkah |
-| "BeanShell dan Groovy sama" | Groovy dikompil + cache; BeanShell ditafsir setiap kali — elak untuk beban |
-| "`vars` dikongsi semua thread" | `vars` per thread; `props` global |
+| "Letak extractor di mana-mana dalam Thread Group" | Skop mengikut kedudukan — anak sampler log masuk |
+| "Biarkan timer `${T}` rakaman — ia realistik" | Ia think time **anda**, sama untuk semua thread → pengguna bergerak serentak; guna timer rawak |
+| "Transaksi patut termasuk think time" | Biasanya tidak — kita ukur masa sistem |
+| "Aggregate & Summary Report sama" | Aggregate ada Median & 90/95/99% Line; Summary ada Std. Dev. & Avg. Bytes |
 
-**✅ Sebelum bergerak ke S3:** ≥ 80% mempunyai baris transaksi dalam Summary Report; ≥ 60% selesai ForEach (selebihnya boleh kaji `08` dalam S4).
+**✅ Sebelum bergerak ke S3:** ≥ 80% mempunyai plan yang memberi baris transaksi `Pembaharuan Cukai Jalan` dengan Error % ≈ 0 (sendiri atau `05`).
 
 ---
 
 ## 1.00 – 2.00 ptg · Makan tengah hari
 
-Ingatkan: **jangan tutup Terminal A**. Jurulatih: sediakan `hari-2/run` dalam terminal besar; padam `hasil/` lama. **Borang penilaian kursus dibuka 2.00 ptg** — sebut sekali sebelum S3 bermula, dan sekali lagi di penutup.
+Ingatkan: **jangan tutup Terminal A**. Jurulatih: buka laporan sandaran R1/R2/R3 dalam tab pelayar. **Borang penilaian kursus dibuka 2.00 ptg** — sebut sekali di awal S3, dan sekali lagi di penutup.
 
 ---
 
-## S3 · 2.00 – 3.30 ptg · Non-GUI, HTML Dashboard & SLA (90 minit)
+## S3 · 2.00 – 3.30 ptg · Laporan & Istilah (90 minit)
 
 | Masa | Minit | Aktiviti | Nota |
 |------|------:|----------|------|
-| 2.00–2.05 | 5 | Tenaga: *"Siapa pernah lihat sistem 'jatuh' pada hari terakhir bayar sesuatu?"* Maklumkan borang penilaian sudah dibuka (isi sebelum tamat). | |
-| 2.05–2.15 | 10 | §3.1–3.2 Non-GUI: jadual bendera. 🎬 `./run-nogui.sh` dengan `PENGGUNA=50 TEMPOH=60` — baris `summary +` setiap 30 s. | Tunjuk `__P` dalam `06` → `-J` dalam wrapper. |
-| 2.15–2.30 | 15 | 🎬 **Buka dashboard** (momen kunci #4): APDEX → Statistics (90/95/99) → Errors → Response Times Over Time → Active Threads → TPS. §3.3 jadual metrik; response time vs latency vs connect. | Papan putih: graf p95 vs average dengan "ekor" lambat. |
-| 2.30–2.45 | 15 | **Latihan 4.** | Isu: folder `-o` tidak kosong; `chmod +x`. Windows → `run-nogui.bat`. |
-| 2.45–2.55 | 10 | §3.4–3.5 NFR dalam percentile + titik pecah (rajah Mermaid). **Latihan 5** dimulakan — setiap pasangan pilih **satu** tahap (50 / 150 / 400) dan kongsi angka di papan putih. | Membahagi tahap antara pasangan menjimatkan masa — kelas membina jadual bersama. |
-| 2.55–3.10 | 15 | §3.6 🎬 **Demo plan `07`** — lihat skrip demo di bawah (SLA 2000 → 150). | **Momen kunci #5.** |
-| 3.10–3.25 | 15 | **Latihan 6** (`-Jtempoh=120`, atau 60 jika kelas lambat). | Laptop lemah: `-Jpengguna=100`. |
+| 2.00–2.05 | 5 | Tenaga: *"Siapa pernah diminta 'buat laporan' daripada tangkap layar?"* Maklumkan borang penilaian sudah dibuka. | |
+| 2.05–2.15 | 10 | 🎬 §3.1: `mkdir -p hasil` → `jmeter -n -t …05… -l … -e -o …` → buka `index.html`. Kemudian `-g` ke folder baharu dengan `overall_granularity=5000`. Tunjuk ralat `folder is not empty`. Anatomi `.jtl` (buka dalam editor). | Jika lupa `mkdir`: ralat `parent folder is not writable` — tunjuk sebagai pengajaran. |
+| 2.15–2.35 | 20 | 🎬 **Lawatan dashboard** (§3.2–3.3) menggunakan laporan sandaran R1: Test and Report information → APDEX (formula di papan; kenapa transaksi 0.862; gagal = Frustrated) → Requests Summary → Statistics (4 kumpulan lajur; Total ≠ transaksi) → Errors → Top 5 → Over Time (6 graf) → Throughput (5 graf: Hits vs TPS vs Total TPS; Codes/s) → Response Times (4 graf). | **Momen kunci #4.** Tunjuk laporan butiran 60 s (1 titik) vs 5 s. Jangan baca setiap graf panjang lebar — satu soalan setiap graf (lajur "Soalan" dalam README). |
+| 2.35–2.50 | 15 | **Latihan 4** — lembaran kerja 14 baris. | Pasangan pantas → bandingkan `statistics.json` dengan jadual. |
+| 2.50–3.00 | 10 | §3.5 glosari (pilih 8: response time / latency / connect, throughput / hits / TPS, percentile vs average, APDEX, saturation) + §3.6 jadual corak. Contoh "average menipu" di papan. | Glosari ialah rujukan — jangan baca semua 30 baris. |
+| 3.00–3.05 | 5 | 🎬 §3.7: lancarkan R1 & R2 (60 s setiap satu) — terangkan Duration Assertion semasa menunggu. | Peserta mula Latihan 5 serentak. |
+| 3.05–3.25 | 20 | **Latihan 5** — larian + jadual perbandingan + 3 dapatan. Tunjuk contoh bahagian B `templat-laporan-ujian.md`. | **Momen kunci #5:** R2 — Error % 1% → 22% tanpa sistem berubah. *"Yang berubah hanya definisi 'cukup laju'."* |
 | 3.25–3.30 | 5 | Checkpoint + **Kuiz S3**. | |
 
+**Skrip ringkas (percentile):**
+> *"Jika 100 rakyat memperbaharui cukai dan purata 300 ms, kita tidak tahu apa-apa tentang rakyat yang paling lambat. p95 583 ms bermaksud: 95 orang selesai dalam 0.6 saat, 5 orang lebih lama. NFR yang baik melindungi 5 orang itu."*
+
 **Soalan untuk ditanya:**
-- "Average 350 ms, p95 2900 ms — lulus NFR p95 < 1500?" (tidak — ekor lambat)
-- "Throughput mendatar walaupun pengguna bertambah — maksudnya?" (kesesakan; sistem tepu)
-- "APDEX 0.75 — baik atau buruk?" (sederhana; banyak Tolerating/Frustrated)
-- "Error % 5% pada 50 pengguna dengan `ERROR_RATE=0.05` — beban atau asas?" (asas; lihat trend)
+- "Kenapa APDEX transaksi 0.86 tetapi setiap langkah 1.0?" (transaksi 4 langkah ≈ 450 ms dinilai dengan T = 500 ms yang sama)
+- "Kenapa Codes per Second hanya 200 walaupun R2 22% gagal?" (Duration Assertion; kod HTTP tetap 200)
+- "Throughput mendatar walaupun pengguna naik — maksudnya?" (tepu / titik lutut)
+- "Ralat 1% berlaku pada 5 pengguna juga — beban atau bukan?" (baseline!)
 
 **Salah faham lazim:**
 
 | Salah faham | Pembetulan |
 |-------------|------------|
-| "Lebih banyak pengguna = lebih banyak throughput selamanya" | Throughput mendatar pada kapasiti; selepas itu masa respons naik |
-| "APDEX menanda sampel gagal" | APDEX ialah skor kepuasan; kegagalan datang daripada assertion/kod HTTP |
-| "Latency = response time" | Latency = bait pertama; response time = respons penuh |
-| "Laptop JMeter boleh simulasi 10,000 pengguna" | Penjana beban sendiri ada had — pantau CPU; teragih untuk beban besar |
+| "Total Statistics termasuk transaksi" | Total = sampel HTTP sahaja; baris transaksi berasingan |
+| "APDEX tidak peduli ralat" | Dalam JMeter, sampel gagal = Frustrated |
+| "Latency = response time" | Latency = sehingga bait pertama (termasuk connect); response time = sehingga bait terakhir |
+| "Hits/s = TPS" | 1 transaksi pembaharuan = 4 hits |
+| "Graf Over Time rosak — satu titik sahaja" | Butiran lalai 60 s; jana semula dengan `overall_granularity` |
+| "Max ialah SLA" | Max = satu sampel; SLA pada percentile |
 
-**✅ Sebelum bergerak ke S4:** ≥ 85% telah membuka dashboard sendiri; jadual titik pecah kelas lengkap di papan putih; ≥ 60% telah menjalankan `07` dengan dua nilai `sla_ms`.
+**✅ Sebelum bergerak ke S4:** ≥ 85% telah membuka dashboard sendiri dan mengisi lembaran kerja; ≥ 60% mempunyai sekurang-kurangnya satu dapatan bertulis.
 
 ---
 
 ## 3.30 – 3.45 ptg · Rehat
 
-Jurulatih: ambil gambar jadual titik pecah di papan putih (untuk penutup). Semak berapa yang sudah isi borang penilaian.
+Jurulatih: tulis di papan formula `N = X × (R + Z)` dan angka R1 (10.46/s, 0.446 s, 4 s) — sedia untuk S4. Semak berapa yang sudah isi borang penilaian.
 
 ---
 
-## S4 · 3.45 – 5.00 ptg · Distributed, CI/CD, Grafana & Penutup (75 minit)
+## S4 · 3.45 – 5.00 ptg · Merancang Ujian Prestasi (75 minit)
 
 | Masa | Minit | Aktiviti | Nota |
 |------|------:|----------|------|
-| 3.45–3.55 | 10 | §4.1 Distributed: rajah controller → worker → SUT di papan. `-R`, `-G` vs `-J`, CSV di setiap worker, RMI SSL. | Konsep sahaja. Tanya: *"100 thread × 3 worker = ?"* |
-| 3.55–4.05 | 10 | §4.2 CI/CD: `jmeter -n` keluar 0 walaupun ralat → gerbang. 🎬 `jq` pada `statistics.json`, kemudian `semak-sla.sh` pada `laporan7` (LULUS, kod 0) dan `laporan7-sla150` (GAGAL, kod 1). | **Momen kunci #6.** *"Inilah yang Jenkins faham: kod keluar."* |
-| 4.05–4.10 | 5 | §4.3 Backend Listener + InfluxDB + Grafana (gambar/penerangan); HTML dashboard = bedah siasat, Grafana = pemantauan semasa. | Tiada demo langsung (perlukan Docker). |
-| 4.10–4.25 | 15 | **Latihan 7** (gerbang SLA). | Pasangan Windows: blok PowerShell. Tiada `jq`? Guna PowerShell atau tunjuk di skrin jurulatih. |
-| 4.25–4.30 | 5 | §4.4 Amalan terbaik — baca jadual dengan kelas; tekankan baris terakhir (etika). | Tanya JPJ: *"Siapa dalam organisasi anda yang memberi kebenaran bertulis untuk ujian beban?"* |
-| 4.30–4.45 | 15 | §4.5 **Mini-demo capstone** — 3–4 pasangan, 3 minit setiap satu. | Pilih sukarelawan; jika masa singkat, 2 pasangan sahaja. |
-| 4.45–4.55 | 10 | **Penutup** (lihat di bawah): rumusan 2 hari (§4.6), borang penilaian, Kuiz S4 + Kuiz hari, sijil. | |
-| 4.55–5.00 | 5 | Soal jawab terbuka & bersurai. | |
+| 3.45–3.55 | 10 | §4.1 kitaran hayat (rajah) + §4.2 NFR: tulis semula "portal mesti laju" bersama kelas menjadi NFR SMART. | Kaitkan setiap fasa dengan apa yang mereka buat hari ini. |
+| 3.55–4.10 | 15 | §4.3 **Little's Law**: contoh eJPJ (36,000/jam → 10/s → 600 pengguna). Kemudian **semak dengan R1**: 10.46 × 4.45 ≈ 46 ≈ thread aktif. R3: N sama, R naik → X turun. Pacing: Constant Throughput Timer (sampel/**minit**, anak sampler pertama) & Precise Throughput Timer. | **Momen kunci #6.** *"Little's Law membolehkan anda menyemak laporan orang lain dalam 30 saat."* |
+| 4.10–4.18 | 8 | §4.4–4.7: campuran transaksi, baseline → load → stress → spike → soak, kriteria masuk/keluar/gantung, pemantauan, risiko, **kebenaran bertulis**. | Tanya JPJ: *"Siapa dalam organisasi anda yang menandatangani kebenaran ujian beban?"* |
+| 4.18–4.38 | 20 | **Latihan 6** — isi templat pelan (pasangan). | Pastikan setiap pasangan mempunyai pengiraan N yang betul unit (saat). |
+| 4.38–4.50 | 12 | **Latihan 7** — pembentangan mini, 3–4 pasangan × 3 minit. | Pilih sukarelawan; jika masa singkat, 2 pasangan. Satu soalan "Bagaimana anda tahu…?" setiap pasangan. |
+| 4.50–4.53 | 3 | ⭐ §4.9 sekilas: CI (`jmeter -n` keluar 0 walaupun gagal → gerbang `statistics.json`), distributed (setiap worker = seluruh Thread Group, `-G`), Grafana (semasa vs selepas). | Konsep sahaja — tiada demo. |
+| 4.53–5.00 | 7 | **Penutup** (lihat di bawah). | **Jangan** potong penutup + borang penilaian. |
 
-**Penutup — skrip (10 minit):**
-1. **Rumusan 2 hari** — tunjuk jadual §4.6. *"Hari 1 anda belajar menjana beban. Hari 2 anda belajar menjana beban yang **betul**, dan membaca apa yang ia beritahu."*
-2. Tunjuk gambar jadual titik pecah kelas: *"Inilah output yang pengurusan mahu — 'sistem selamat sehingga N pengguna'."*
-3. **Borang penilaian kursus:** *"Borang penilaian kursus dibuka 2.00 ptg; isi sebelum tamat."* Dalam pelatih.my → menu **Borang penilaian**. Beri 3 minit di dalam kelas — jangan tinggalkan untuk "nanti".
-4. **Kuiz S4 + Kuiz hari — Penilaian kendiri Hari 2**: hantar sekarang; ia melengkapkan checkpoint lab dan item "Isi penilaian kendiri Hari 2".
-5. **Sijil:** sijil penyertaan dikeluarkan oleh penganjur selepas kehadiran dan borang penilaian disahkan — jangan janji tarikh yang anda tidak kawal.
-6. **Mesej akhir etika:** *"Repo ini, SUT ini — bawa pulang. Tetapi sebelum anda menghalakan JMeter ke sistem JPJ sebenar: kebenaran bertulis, staging, tetingkap masa, dan pasukan infra memantau bersama."*
+**Penutup — skrip (7 minit):**
+1. **Rumusan 2 hari** — jadual §4.10. *"Hari 1 anda belajar menjana beban. Hari 2 anda belajar menjana beban yang **betul**, membaca apa yang ia beritahu, dan merancangnya supaya keputusan boleh dipercayai."*
+2. **Borang penilaian kursus:** *"Borang penilaian kursus dibuka 2.00 ptg; isi sebelum tamat."* Dalam pelatih.my → menu **Borang penilaian**. Beri 3 minit di dalam kelas — jangan tinggalkan untuk "nanti".
+3. **Kuiz S4 + Kuiz hari — Penilaian kendiri Hari 2**: hantar sekarang; ia melengkapkan checkpoint lab dan item "Isi penilaian kendiri Hari 2".
+4. **Sijil:** sijil penyertaan dikeluarkan oleh penganjur selepas kehadiran dan borang penilaian disahkan — jangan janji tarikh yang anda tidak kawal.
+5. **Mesej akhir etika:** *"Repo ini, SUT ini, templat ini — bawa pulang. Tetapi sebelum JMeter dihalakan ke sistem JPJ sebenar: kebenaran bertulis, staging, tetingkap masa, dan pasukan infra memantau bersama."*
 
 **Soalan untuk ditanya:**
-- "Kenapa *build* hijau walaupun Error % 12%?" (kod keluar JMeter 0)
-- "`-J` atau `-G` untuk worker?" (`-G`)
-- "Apa satu perkara yang anda akan ubah dalam cara pasukan anda menguji selepas kursus ini?"
+- "Volum 18,000/jam, R = 2 s, Z = 28 s — berapa pengguna?" (150)
+- "Constant Throughput Timer 10 — kenapa throughput jauh lebih rendah?" (unit sampel/minit)
+- "Kenapa baseline dahulu?" (bezakan kesan beban daripada isu sedia ada)
+- "Apa satu perkara yang anda akan ubah dalam cara pasukan anda melaporkan prestasi selepas kursus ini?"
 
 **Salah faham lazim:**
 
 | Salah faham | Pembetulan |
 |-------------|------------|
+| "Bilangan pengguna = bilangan pengguna berdaftar" | Pengguna **serentak** = X × (R + Z) |
+| "Lebih ramai thread = lebih banyak throughput selamanya" | Throughput dihadkan oleh kapasiti; selepas tepu, response time naik |
+| "Pacing timer boleh mempercepatkan" | Timer hanya memperlahankan; jika N < X × (R + Z), tambah threads |
+| "Ujian kecil ke sistem awam tidak mengapa" | Saiz tidak relevan — kebenaran bertulis wajib |
 | "Distributed membahagi thread antara worker" | Setiap worker menjalankan **seluruh** Thread Group |
-| "CI akan gagal sendiri bila ujian gagal" | Perlu gerbang (skrip, Taurus `passfail`, plugin) |
-| "Grafana menggantikan HTML dashboard" | Saling melengkapi: semasa vs selepas |
-| "Ujian beban kecil ke sistem awam tidak mengapa" | Saiz tidak relevan — kebenaran bertulis wajib |
 
-**✅ Kriteria tamat hari:** ≥ 85% hantar Kuiz hari; borang penilaian diisi oleh semua; sekurang-kurangnya 2 mini-demo dibentangkan.
+**✅ Kriteria tamat hari:** ≥ 85% hantar Kuiz hari; borang penilaian diisi oleh semua; setiap pasangan mempunyai pelan dengan pengiraan N; sekurang-kurangnya 2 pembentangan mini.
 
 ---
 
-## 🎬 Skrip demo setiap plan
+## 🎬 Skrip demo
 
-### Plan `04-korelasi-log-masuk.jmx` (S1, ~5 minit)
-1. Tunjuk pokok: CSV `pengguna.csv` → `POST /api/log-masuk` → **Ekstrak token + csrf** → `GET /api/kenderaan (Bearer token)` → `POST /api/kenderaan/WXY1234/bayar-cukai` → Think Time 500ms → View Results Tree.
-2. Start (5 pengguna × 3 gelung = 45 sampel). Klik sampler bayar → **Request**: `Authorization: Bearer 3f…`, badan `"csrf": "a9…"`.
-3. Tukar `${csrf}` → `abc123` → **403** di skrin. Pulihkan. *"Satu medan, seluruh transaksi gagal."*
+### Demo rakaman (S1, ~15 minit)
+1. Buka `hari-1/test-plans/rakam-template.jmx` → **Save As** `hari-2/test-plans/latihan-01-rakaman.jmx`.
+2. Tambah HTTP Request Defaults (`localhost`/`3000`) di bawah Thread Group. Perakam: Grouping → *Put each group in a new transaction controller*; tambah `.*google-analytics.*` dalam Excludes; tambah Constant Timer `${T}` di bawah perakam.
+3. Start → tunjuk `lsof -iTCP:8888 -sTCP:LISTEN -n -P`. Dalam *Recorder: Transactions Control*, taip `T01_LogMasuk` → jalankan blok T01 (README §1.4). Ulang T02–T04 dengan nama masing-masing, tunggu > 5 s.
+4. Stop. Kembangkan pokok. Tunjuk: Header Manager `T02` → `Authorization: Bearer <uuid>` (teks tetap); badan `T04` → `csrf` tetap; Constant Timer → nombor sebenar.
+5. Jika rakaman gagal di skrin (proxy/port): beralih segera ke `04-rakaman-mentah.jmx` — *"inilah hasil rakaman yang sama."*
+
+### Demo main balik (S1, ~10 minit)
+1. Start tanpa restart → semua hijau. Tanya kelas: sedia untuk beban?
+2. Terminal A: Ctrl+C → `node sut/server.js`. Clear All → Start → 200 / 401 / 200 / 401.
+3. VRT `T02` → Request (token lama) vs Response data `T01` (token baharu).
+4. JSON Extractor `token` sahaja + `Bearer ${token}` → Start → `T02` 200, `T04` **403** `Token CSRF tidak sah — sila log masuk semula`.
 
 ### Plan `05-transaksi-penuh.jmx` (S2, ~5 minit)
-1. Tunjuk `Pembaharuan Cukai Jalan` → `Jika ada kenderaan` → `3. GET …/${no_pendaftaran}/cukai` → `4. POST …/bayar-cukai` (`"amaun": ${amaun}`).
-2. Start (10 × 2). Summary Report: baris transaksi ≈ jumlah 4 langkah.
-3. Jika muncul 1 ralat 500: *"Itu `ERROR_RATE` 1% SUT — sengaja. Dashboard akan memberitahu kita di mana."*
+1. Tunjuk `Pembaharuan Cukai Jalan` → `Jika ada kenderaan` → `3. GET …/${no_pendaftaran}/cukai` → `4. POST …/bayar-cukai` (`"amaun": ${amaun}`), Uniform Random Timer di bawah TC.
+2. Start (10 × 2). Aggregate Report: 80 sampel HTTP + 20 transaksi; 3 label kenderaan (`WXY1234`, `JQK7788`, `BMT3030` — kenderaan pertama setiap pengguna CSV).
+3. Jika muncul 1 ralat 500: *"`ERROR_RATE` 1% SUT — sengaja. Dashboard akan menunjukkannya pada petang ini."*
 
-### Plan `08-foreach-kenderaan.jmx` (S2, ~5 minit)
-1. Tambah Debug Sampler selepas GET kenderaan. Start → `no_pendaftaran_matchNr=2` untuk `800101015500`.
-2. Summary Report: 16 sampel HTTP (3 log masuk + 3 senarai + 5 sebut harga + 5 bayar), tidak termasuk baris transaksi `Bayar Cukai Semua Kenderaan`.
-3. Nyahtanda *Add "_" before number?* → Start → hanya 6 sampel HTTP (log masuk + senarai), **0 ralat**. Tanda semula.
-
-### Plan `06-ujian-beban-nogui.jmx` (S3, ~8 minit)
+### Dashboard pertama (S3, ~10 minit)
 ```bash
-cd hari-2/run
-PENGGUNA=50 RAMPUP=10 TEMPOH=60 ./run-nogui.sh
+mkdir -p hasil
+jmeter -n -t hari-2/test-plans/05-transaksi-penuh.jmx -l hasil/r05.jtl -e -o hasil/laporan05
+jmeter -g hasil/r05.jtl -o hasil/laporan05-5s -Jjmeter.reportgenerator.overall_granularity=5000
+jmeter -g hasil/r05.jtl -o hasil/laporan05-5s      # ralat: folder is not empty (sengaja)
 ```
-Sementara menunggu, tunjuk `__P` dalam Thread Group. Buka `hasil/<cap-masa>/laporan/index.html`. Laluan: APDEX → Statistics → Errors → Over Time.
 
-### Plan `07-beban-puncak-cukai.jmx` — demo pelanggaran SLA (S3, ~10 minit)
-1. Jalankan dengan SLA lalai (beban kecil supaya pantas):
-   ```bash
-   cd hari-2/run
-   jmeter -n -t ../test-plans/07-beban-puncak-cukai.jmx \
-     -Jpengguna=50 -Jrampup=10 -Jtempoh=60 -Jsla_ms=2000 \
-     -l hasil/demo7.jtl -e -o hasil/demo7
-   ```
-   Dashboard: Error % ≈ 0 (mungkin sedikit akibat 500 sintetik).
-2. Turunkan SLA — latensi SUT ialah 40–180 ms, jadi `150` memotong ekor taburan:
-   ```bash
-   jmeter -n -t ../test-plans/07-beban-puncak-cukai.jmx \
-     -Jpengguna=50 -Jrampup=10 -Jtempoh=60 -Jsla_ms=150 \
-     -l hasil/demo7-150.jtl -e -o hasil/demo7-150
-   ```
-   Dashboard: **Top 5 Errors** → `The operation lasted too long: It took … milliseconds, but should not have lasted longer than 150 milliseconds.` Error % langkah bayar dan transaksi naik (ujian kami: `-Jsla_ms=100` pada 10 pengguna → ~9% Err keseluruhan, ~37% transaksi gagal).
-3. Mesej: *"Pelayan sama, kod sama. Yang berubah ialah **definisi kita tentang 'cukup laju'**. Itulah mengapa NFR mesti dipersetujui **sebelum** ujian."*
-4. Pilihan dramatik: mulakan semula SUT dengan `LATENCY_MIN=1500 LATENCY_MAX=3000 node server.js` dan jalankan dengan `-Jsla_ms=2000` — SLA lalai kini gagal tanpa mengubah plan.
+### Plan `07` — SLA (S3, ~5 minit + larian)
+1. R1 & R2 (README §3.7, ≈ 1 minit setiap satu). Semasa menunggu: tunjuk Duration Assertion `${__P(sla_ms,2000)}` dalam GUI.
+2. R2 → Errors: ~30 baris `The operation lasted too long: It took 1xx milliseconds…` — *"jadual ini mengumpul ikut teks; jumlahkan."* Codes Per Second → hanya `200` (+ sedikit `500`). Transactions Per Second → siri `-failure`.
+3. ⭐ R3 (mock perlahan, port 3001) jika masa: `PORT=3001 LATENCY_MIN=500 LATENCY_MAX=1500 node sut/server.js` + `-Jport=3001` — throughput jatuh ~45%. Hentikan mock 3001 selepas itu.
+
+### Little's Law (S4, ~5 minit di papan)
+```
+R1:  X = 10.46 trans/s   R = 0.446 s   Z ≈ 4 × 1.0 s = 4.0 s
+     N = 10.46 × 4.446 ≈ 46.5   (purata thread aktif ≈ 45.8: 10 s ramp-up + 50 s × 50)
+R3:  X = 5.78            R = 3.954 s   Z = 4.0 s
+     N = 5.78 × 7.954 ≈ 46.0    → N sama, R naik, X turun
+```
 
 ---
 
@@ -251,20 +271,20 @@ Sementara menunggu, tunjuk `__P` dalam Thread Group. Buka `hasil/<cap-masa>/lapo
 
 | Situasi | Tindakan |
 |---------|----------|
-| JMeter/Java rosak pada laptop peserta (dikesan semasa warm-up) | Pasangkan dengan rakan serta-merta; baiki semasa rehat 10.30 (rujuk Hari 1 — Persediaan). Jangan berhenti kelas. |
-| SUT tidak boleh dijalankan (Node tiada) | Peserta guna SUT rakan sebelah **dengan persetujuan** — tukar HTTP Request Defaults ke IP rakan, pulihkan `localhost` selepas itu. Plan `06`/`07`: `-Jhost=<ip>`. |
-| Ketinggalan Latihan 1 > 15 minit | Buka `04-korelasi-log-masuk.jmx`, jalankan, dan **terangkan** setiap elemen kepada pasangan. Membina sendiri boleh jadi kerja rumah. |
-| Ketinggalan S2 | Latihan 2 A wajib (baris transaksi). Latihan 2 B: kaji `08` sahaja. Latihan 3: langkah 1–4 + 7. |
-| Kelas lewat menjelang S3 | Latihan 5: setiap pasangan satu tahap beban sahaja (jadual dikongsi). Latihan 6: `-Jtempoh=60`, `-Jpengguna=100`. |
-| Kelas lewat menjelang S4 | Latihan 7: jurulatih tunjuk `semak-sla.sh` di skrin; peserta jalankan `jq` sahaja. Kurangkan mini-demo kepada 2 pasangan. **Jangan** potong penutup + borang penilaian. |
-| Laptop terlalu perlahan untuk 300/400 pengguna | Kurangkan kepada 100/150; konsep titik pecah tetap kelihatan (bandingkan trend). |
-| Peserta pantas / berpengalaman | ⭐ Regex/Boundary (Lab 1), Throughput Controller saman (Lab 2), JSR223 Assertion (Lab 3), Taurus `passfail` (Lab 7), bantu pasangan lain. |
+| JMeter/Java/Node rosak pada laptop peserta (dikesan semasa imbas kembali) | Pasangkan dengan rakan serta-merta; baiki semasa rehat 10.30. Jangan berhenti kelas. |
+| **Rakaman gagal** (proxy, port 8888, tiada Git Bash, curl tidak melalui proxy) | Guna `hari-1/test-plans/04-rakaman-mentah.jmx` (Save As ke `hari-2/test-plans/`) sebagai rakaman — Latihan 2 & 3 berjalan sama. Untuk Latihan 4–5 guna `05-transaksi-penuh.jmx` / `07`. |
+| Port 8888 digunakan | Tukar port perakam (cth. 8889) dan `P=http://localhost:8889` |
+| Ketinggalan Latihan 3 > 20 minit | Buka `05-transaksi-penuh.jmx`, jalankan, dan **terangkan** setiap elemen kepada pasangan. Membina sendiri jadi kerja rumah. |
+| Larian `07` terlalu berat untuk laptop | `-Jpengguna=25`; atau buka laporan sandaran jurulatih (kongsi folder `hasil/` melalui pemacu USB/rangkaian kelas). Corak tetap kelihatan. |
+| Kelas lewat menjelang S3 | Lawatan dashboard kekal penuh (fokus penganjur). Latihan 4: baris 1–9 sahaja. Latihan 5: R1 & R2 + **dua** dapatan. |
+| Kelas lewat menjelang S4 | Latihan 6: bahagian 3 (NFR) + Lampiran A (Little's Law) + 12 (kebenaran) sahaja. Latihan 7: 2 pasangan. Langkau ⭐ §4.9. **Jangan** potong penutup + borang penilaian. |
+| Peserta pantas / berpengalaman | ⭐ format string perakam (Lab 1), Regex/Boundary + `08` ForEach (Lab 3), R3 + ambang APDEX + stress (Lab 5), gerbang SLA CI (Lab 7), bantu pasangan lain. |
 
 ## 📋 Semakan akhir hari (jurulatih)
 
 - [ ] Rekod bilangan peserta yang menghantar Kuiz hari (sasaran ≥ 85%)
 - [ ] Sahkan borang penilaian kursus diisi oleh semua peserta (menu **Borang penilaian** pelatih.my)
-- [ ] Simpan gambar jadual titik pecah kelas + soalan yang tidak terjawab (untuk e-mel susulan)
-- [ ] Hentikan SUT; padam `hari-2/run/hasil/` pada mesin demo
+- [ ] Kumpul (gambar) 2–3 pelan ujian & dapatan terbaik untuk e-mel susulan (dengan izin peserta)
+- [ ] Hentikan SUT (dan mock port 3001 jika digunakan); padam `hasil/` pada mesin demo
 - [ ] Maklumkan penganjur senarai kehadiran untuk sijil
 - [ ] Laporkan isu bahan yang ditemui supaya repo dibetulkan sebelum kelas seterusnya
