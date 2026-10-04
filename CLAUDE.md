@@ -17,9 +17,9 @@ This is a **course material repository** for a 2-day Apache JMeter performance-t
 - `hari-2/snippets/jsr223-groovy.groovy` — Groovy scripting examples.
 - `hari-2/run/run-nogui.{sh,bat}` — non-GUI load run + HTML dashboard generator.
 - `hari-{1,2}/snippets/lab.md` — per-day exercises.
-- `slides/jmeter-training.html` — reveal.js deck, vendored under `slides/vendor/reveal/` (works from `file://`).
+- `slides/jmeter-training.html` — self-contained deck (own CSS/JS engine shared with the PGN JavaScript and KKM CodeIgniter decks: 1280×720 scaled stage, `section.slide`, `data-label` day dividers "Hari 1 · …"/"Hari 2 · …", speaker notes in `<aside class="notes">`; no network, works from `file://`). `slides/vendor/reveal/` is no longer used by it.
 
-This layout mirrors the sibling `nodejs-2-days-training` and `powerbi-2-days-training` training repos (per-day folders, `snippets/` labs, vendored reveal.js deck).
+This layout mirrors the sibling `nodejs-2-days-training` and `powerbi-2-days-training` training repos (per-day folders, `snippets/` labs, single-file slide deck).
 
 ## Course Progression
 

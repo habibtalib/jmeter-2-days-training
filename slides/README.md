@@ -1,54 +1,72 @@
-# Slaid Kursus Apache JMeter 2 Hari
+# Slaid Kursus Apache JMeter 2 Hari (JMETER-JPJ-2)
 
-Buka deck slaid reveal.js terus dalam pelayar:
+Dek slaid **Ujian Prestasi dengan Apache JMeter — Ujian Prestasi Portal eJPJ (tiruan)** untuk Jabatan Pengangkutan Jalan Malaysia (Hari 1: Isnin 21 Sep 2026 · Hari 2: Isnin 5 Okt 2026). Buka terus dalam pelayar:
 
 ```text
 slides/jmeter-training.html
 ```
 
-## Rangka Kerja (Framework)
+## Enjin
 
-Deck ini menggunakan reveal.js, yang disimpan secara tempatan (vendored) di bawah:
-
-```text
-slides/vendor/reveal/
-```
-
-Ini membolehkan deck berfungsi terus dari `file://` tanpa CDN atau pelayan pembangunan.
+- Satu fail HTML **self-contained**: CSS + JS sendiri, tiada reveal.js, tiada CDN, tiada Google Fonts. Berfungsi dari `file://` dan dalam iframe bersandbox.
+- Enjin sama seperti dek saudara **CI-KKM-10** dan **JS-PGN-5**: pentas 1280×720 diskala, `section.slide` terus di bawah `#stage`, progress bar, kaunter slaid, HUD label hari, nota penceramah, gambaran keseluruhan, cetak PDF.
+- Tangkapan skrin dalam `slides/img/` (JMeter 5.6.3 terhadap mock eJPJ tempatan). Klik gambar untuk zum skrin penuh.
+- `slides/vendor/reveal/` ialah peninggalan dek lama. Dek baharu tidak menggunakannya.
 
 ## Kawalan
 
-- Anak panah kanan / bawah / Space: slaid seterusnya
-- Anak panah kiri / atas: slaid sebelumnya
-- Esc: gambaran keseluruhan slaid
-- S: nota penceramah (speaker notes)
-- Ctrl/Cmd + F: carian
-- Alt + klik: zum
+| Kekunci | Tindakan |
+|---------|----------|
+| `→` `Space` `PgDn` `N` / klik separuh kanan / leret kiri | Slaid seterusnya |
+| `←` `Shift+Space` `PgUp` `P` / klik separuh kiri / leret kanan | Slaid sebelumnya |
+| `Home` / `End` | Slaid pertama / terakhir |
+| `G` + nombor + `Enter` | Lompat ke slaid |
+| `O` | Gambaran keseluruhan (klik untuk lompat) |
+| `S` | Panel nota penceramah + jam + tajuk slaid seterusnya |
+| `F` | Skrin penuh |
+| `?` | Bantuan pintasan |
+| `Esc` | Tutup panel / zum gambar |
 
-## Kandungan Deck (44 slaid)
+URL `#n` membuka slaid ke-n (cth. `jmeter-training.html#42` = Hari 2).
 
-| Bahagian | Tajuk |
-|----------|-------|
-| Pembuka | Gambaran kursus, **agenda (What's in it for you)**, hasil pembelajaran, rentak kelas, peta jalan, apa itu performance testing, jenis ujian (Load/Stress/Spike/Soak/Scalability), **apa itu load testing, alat load testing (JMeter/WebLOAD/LoadUI/LoadRunner/NeoLoad/LoadNinja), apa itu JMeter, kenapa JMeter**, SUT mock eJPJ + etika, endpoint mock |
-| Hari 1 | Pasang JMeter (Java), GUI vs non-GUI, anatomi Test Plan, peranan elemen, Thread Group, HTTP Request Sampler, Config Elements, Listeners, CSV Data Set Config, Assertions, Timers |
-| Hari 2 | Correlation (token/csrf), Extractors (JSON/Regex/Boundary), Logic Controllers, JSR223 Groovy + functions, larian non-GUI + laporan HTML, membaca metrik (throughput/percentile/error %), ujian teragih, CI/CD + monitoring, amalan terbaik |
-| Demo | **Tangkapan skrin sebenar JMeter 5.6** — Test Plan dimuat, CSV Data Set, Thread Group, HTTP Request + Body Data, JSON Extractor (correlation), Summary Report (keputusan) |
-| Penutup | Ringkasan aliran kerja + langkah seterusnya |
+## Struktur (77 slaid)
 
-> **Tangkapan skrin demo** disimpan dalam `slides/img/` (ditangkap daripada Apache JMeter 5.6.3 terhadap mock eJPJ tempatan).
+| Bahagian | `data-label` | Kandungan |
+|----------|--------------|-----------|
+| Pengenalan (9) | `Pengenalan` | Kulit, what's in it for you, agenda 2 hari (S1–S4 + masa), load testing, alat, apa & kenapa JMeter, endpoint Portal eJPJ (tiruan), **etika (localhost sahaja = elak DoS)**, cara lab berjalan |
+| Hari 1 (32) | `Hari 1 · Asas JMeter` | Pembahagi + objektif O1–O9. **S1 9.00–10.30**: ujian prestasi, 5 jenis ujian, pasang Java/JMeter, PATH Windows, GUI vs non-GUI, SUT, antara muka. **S2 10.45–1.00**: pokok Test Plan, skop & susunan, Test Plan pertama, Thread Group, kira sampel, Header Manager, Listeners, percentile. **S3 2.00–3.30**: Assertion, Timer, CSV Data Set, sharing/EOF, Kes 1–5. **S4 3.45–5.00**: perakam, Firefox + sijil CA, rakam, main balik 200/401/401, laporan HTML, rumusan |
+| Hari 2 (31) | `Hari 2 · Lanjutan & Analisis` | Pembahagi + objektif O1–O9 + plan 04–08. **S1**: warm-up, korelasi `token` + `csrf`, parameterisasi vs korelasi, 3 extractor, bina, JSON Extractor, 403 vs 401. **S2**: Logic Controllers, Transaction (05), If + `__groovy`, ForEach (08), JSR223 Groovy, fungsi `__P`. **S3**: non-GUI + `run-nogui.sh`, dashboard, APDEX/latency, NFR + titik pecah, plan 07, `-Jsla_ms`. **S4**: distributed, gerbang SLA CI, Grafana, amalan terbaik, mini-demo capstone |
+| Penutup (5) | `Penutup` | Apa anda kini boleh buat, rumusan 2 hari, langkah seterusnya, **borang penilaian (pelatih.my, dibuka 2.00 ptg Hari 2)**, terima kasih |
 
-> **Sumber intro:** empat slaid pembuka (apa itu load testing → alat → apa itu JMeter → kenapa JMeter) diadaptasi daripada video pengenalan Simplilearn, *“JMeter Load Testing — Tutorial For Beginners”* ([YouTube](https://www.youtube.com/watch?v=NTyY8wKSvik)).
+Setiap sesi dibuka dengan slaid tajuk sesi gelap (kod sesi + masa + lab + kuiz).
 
-## Etika Ujian
+### Kontrak pengimport (pelatih.my)
 
-Deck menekankan satu prinsip penting: kita **tidak pernah** menguji beban laman JPJ produksi sebenar. Semua ujian dijalankan terhadap **Portal eJPJ (tiruan)** — aplikasi mock tempatan (`sut/`, `node server.js`, http://localhost:3000) sebagai System Under Test.
+- Setiap slaid ialah `<section class="slide …">` terus di bawah `#stage`.
+- Pembahagi hari: `<section class="slide dark divider" data-label="Hari N · …">`, eyebrow bermula `Hari N`.
+- Nota penceramah **hanya** dalam `<aside class="notes">…</aside>` — pengimport membuangnya untuk pelatih. Setiap slaid ada nota (apa nak cakap, isyarat demo, soalan kepada kelas).
+
+## Tema
+
+Token warna di `:root` sahaja (ubah di situ):
+
+| Token | Nilai | Guna |
+|-------|-------|------|
+| `--navy-950/900/800/700` | `#071026` `#0C1A3A` `#132A5C` `#1C3D80` | Kulit, pembahagi, sesi |
+| `--acc` / `--acc-700` | `#2563EB` / `#1D4ED8` | Aksen utama (biru JPJ), eyebrow, langkah |
+| `--jpj` / `--jpj-700` | `#FFC20E` / `#8A5A00` | Kuning JPJ: sorotan, amaran, label kod |
+| `--pass` / `--pass-700` | `#16A34A` / `#15803D` | Isyarat lulus (200, ✅, SLA lulus) |
+| `--fail` / `--fail-700` | `#DC2626` / `#B91C1C` | Isyarat gagal (401/403/500, ❌, SLA gagal) |
+| `--glow` / `--signal` | `#FFD24D` / `#4ADE80` | Aksen pada latar gelap |
+
+Teks pada latar cerah menggunakan varian `-700` untuk kontras AA.
+
+## Etika
+
+Dek menekankan: kita **tidak pernah** menguji beban sistem JPJ sebenar. Semua ujian menyasarkan **Portal eJPJ (tiruan)** (`sut/`, `node server.js`, `http://localhost:3000`) dengan data sintetik. Ujian beban tanpa kebenaran bertulis = serangan DoS.
 
 ## Eksport ke PDF
 
-Buka deck dengan:
+Buka dek, tekan `Ctrl/Cmd + P`, pilih **Save as PDF**, landskap A4, margin *None*, tanda *Background graphics*. Gaya cetak menghasilkan satu slaid satu halaman dengan nombor halaman; nota penceramah tidak dicetak.
 
-```text
-slides/jmeter-training.html?print-pdf
-```
-
-Kemudian guna dialog cetak pelayar dan pilih "Save as PDF".
+> **Sumber intro:** slaid pembuka (load testing → alat → JMeter) diadaptasi daripada video Simplilearn, *“JMeter Load Testing — Tutorial For Beginners”* ([YouTube](https://www.youtube.com/watch?v=NTyY8wKSvik)).
