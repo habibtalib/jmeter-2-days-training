@@ -651,6 +651,8 @@ Columns: **Sample** · **#Samples** · **#Errors** · then five **Error** / **#E
 | **Sample sender** | How an agent sends samples to the controller (`mode=`). 5.6 default: **StrippedBatch** — no response data, batched | Console: `summary + 85`, then `+ 155` |
 | **`-R`** | List of agents for this run (`host:port,…`); `-r` = all `remote_hosts` in properties | `-R 127.0.0.1:1099,127.0.0.1:1100` |
 | **`-G` vs `-J`** | `-G` = property sent to **all** agents; `-J` = property local to that JMeter process only (on an agent: different per location) | `-Gpengguna=10` (controller), `-Jsite=KL` (KL agent) |
+| **p99 / tail latency** | 99% of samples ≤ this value; the "tail" = the slowest 1%. Needs many samples (≈ ≥ 1000 per transaction) | Chatbot: p95 1665 ms, p99 6076 ms (§3.11) |
+| **ServerAgent / PerfMon** | A server-metrics agent (CPU, Memory, Disk, Network) + the *PerfMon Metrics Collector* listener (JMeter Plugins); metrics go to a separate `perfmon.jtl` | Server CPU 95% at 31–40 users (§3.10) |
 
 > **The average lies — example:** 99 requests at 100 ms + 1 request at 10,000 ms → Average ≈ **199 ms** ("OK!"), but the 99th pct = 10,000 ms and that user waited 10 seconds. NFRs are written as **percentiles**.
 
@@ -863,6 +865,248 @@ The `gabung` tool **rejects** files whose JTL headers differ (e.g. one location 
 | **Result bandwidth** | Large samples flood the network to the controller | `Stripped*` modes (responses not sent); do not save `responseData` |
 | **Mismatched JTL headers** (Mode 2) | Report fails / wrong columns | The same `jmeter.save.saveservice.*` settings at every location |
 
+### 3.10 Server CPU via an agent — PerfMon (ServerAgent)
+
+A JPJ report usually has three charts: **Active Threads Over Time**, **Response Times Over Time** and **server CPU**. The first two come from the JMeter `.jtl`. CPU is **not** measured by JMeter — it comes from an **agent** running on the **server**, which sends metrics to JMeter during the test. The usual agent: **ServerAgent** + the **PerfMon Metrics Collector** listener (JMeter Plugins).
+
+> The PerfMon agent ≠ the `jmeter-server` agent in §3.9. `jmeter-server` = a load generator. ServerAgent = a server-metrics collector (CPU, memory, disk, network) — it sends no load at all.
+
+**Architecture:**
+
+```
+┌──────── JMeter machine (load generator) ─────┐            ┌──────── Target SERVER ───────────┐
+│ jmeter -n -t 10b-chatbot-perfmon.jmx         │   HTTP     │ Application (chatbot / portal)   │
+│   ├─ Thread Group ───────────────────────────┼──────────► │                                  │
+│   │    → -l keputusan.jtl  (HTTP samples)    │            │                                  │
+│   └─ PerfMon Metrics Collector ◄─────────────┼─ TCP 4444 ─┤ ServerAgent (startAgent.sh)      │
+│        → perfmon.jtl  (CPU, Memory /1 s)     │  metrics   │   reads OS CPU/Memory (SIGAR)    │
+└──────────────────────────────────────────────┘            └──────────────────────────────────┘
+```
+
+- The collector opens a TCP connection to the agent (default port **4444**), asks for metrics, and the agent sends one value **every second**.
+- Metrics are written to a **separate file** (`perfmon.jtl`) — not to `-l keputusan.jtl`.
+- The agent must run on the **server under test** (server CPU). With several servers (web, app, DB), run one agent on each and add one row per server in the collector.
+
+**Install the plugins (JMeter machine) — verified with JMeter 5.6.3:**
+
+```bash
+# 1) Plugins Manager: download jmeter-plugins-manager-1.10.jar from https://jmeter-plugins.org/install/Install/
+#    copy it to  $JMETER_HOME/lib/ext/   then restart JMeter
+#    GUI: Options → Plugins Manager → Available Plugins → tick:
+#      "PerfMon (Servers Performance Monitoring)"   (jpgc-perfmon)
+#      "Command-Line Graph Plotting Tool"            (jpgc-cmd)
+#      "3 Basic Graphs"                              (jpgc-graphs-basic)
+#    → Apply Changes and Restart JMeter
+
+# 2) Or without the GUI (CI / server):
+cd $JMETER_HOME
+java -cp lib/ext/jmeter-plugins-manager-1.10.jar org.jmeterplugins.repository.PluginManagerCMDInstaller
+bin/PluginsManagerCMD.sh install jpgc-perfmon,jpgc-cmd,jpgc-graphs-basic      # Windows: PluginsManagerCMD.bat
+ls bin/JMeterPluginsCMD.*                                                       # graph export tool
+```
+
+![Plugins Manager — Available Plugins](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-03-plugins-manager-available-perfmon.png)
+*Available Plugins: tick "PerfMon (Servers Performance Monitoring)" (+ jpgc-cmd, 3 Basic Graphs). Review Changes lists what will be installed, including the perfmon library.*
+
+![Plugins Manager — Installed Plugins](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-04-plugins-manager-installed.png)
+*After the restart: the Installed Plugins tab shows PerfMon, Command-Line Graph Plotting Tool and 3 Basic Graphs (PerfMon version 2.1). The Plugins Manager also offers to upgrade itself — you can ignore that.*
+
+**Start ServerAgent (on the SERVER, needs Java 8+):**
+
+```bash
+# Download ServerAgent-2.2.3.zip: https://github.com/undera/perfmon-agent/releases  → unzip
+./startAgent.sh --udp-port 0 --tcp-port 4444          # Linux/macOS
+startAgent.bat --udp-port 0 --tcp-port 4444           # Windows
+# Expected log:
+#   INFO … Binding TCP to 4444
+#   INFO … JP@GC Agent v2.2.3 started
+# Test from the JMeter machine: telnet <server> 4444 → type  test  → the agent replies  Yep
+```
+
+![ServerAgent started](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-06-serveragent-mula.png)
+*A real ServerAgent console and the `test` → `Yep` check. Our Apple Silicon Mac uses an x86_64 Java (Rosetta), port 4445 and a localhost-only Java policy; on a Windows/Linux x64 server plain `startAgent` is enough.*
+
+`--udp-port 0` = disable UDP (we only use TCP). Another port (e.g. 4445) also works — set `-Jagent_port=4445` on the plan.
+
+**Configuration in the plan** ([`10b-chatbot-perfmon.jmx`](./test-plans/10b-chatbot-perfmon.jmx)): Add → Listener → **jp@gc - PerfMon Metrics Collector**, placed **under the Test Plan** (not inside the Thread Group).
+
+| Field | Value in plan `10b` | Note |
+|-------|---------------------|------|
+| Host / IP | `${__P(agent_host,localhost)}` | The **server's** IP, not the JMeter machine |
+| Port | `${__P(agent_port,4444)}` | Must match `--tcp-port` |
+| Metric to collect | `CPU` (empty param = combined) | Also: `Memory`, `Swap`, `Disks I/O`, `Network I/O`, `TCP`, `JMX` … |
+| Metric parameter | `Memory` → `usedperc` | Percentage of memory used |
+| Filename | `${__P(perfmon_jtl,perfmon.jtl)}` | A **separate file** from `-l` |
+
+![PerfMon Metrics Collector in plan 10b](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-01-gui-perfmon-metrics-collector.png)
+*PerfMon Metrics Collector (plan `10b`): one row per metric; host, port and file name use `__P()` so they can be changed from the command line.*
+
+> ⚠️ Plan `10b` **needs the** jpgc-perfmon **plugin**. Opening it without the plugin → error `CannotResolveClassException: kg.apc.jmeter.perfmon.PerfMonCollector` and the plan cannot be loaded. Plan [`10-chatbot-beban.jmx`](./test-plans/10-chatbot-beban.jmx) = the same but **core only** (no PerfMon) — use it if the plugin is not installed yet.
+
+**Run with the script** ([`run/run-chatbot-perfmon.sh`](./run/run-chatbot-perfmon.sh); Windows: `run-chatbot-perfmon.bat`):
+
+```bash
+# Terminal A: SUT (server)               Terminal B: ServerAgent (on the same server)
+node sut/server.js                       ./startAgent.sh --udp-port 0 --tcp-port 4444
+# Terminal C:
+cd hari-2/run
+./run-chatbot-perfmon.sh                              # 40 users, ramp-up 120 s, 180 s
+PENGGUNA=20 RAMPUP=60 TEMPOH=120 ./run-chatbot-perfmon.sh   # smaller laptop
+```
+
+The script: checks the SUT + agent → runs `10b` non-GUI (`-l hasil/<time>/keputusan.jtl`, `perfmon.jtl`, `-e -o laporan`) → exports PNGs with **JMeterPluginsCMD** → prints a p50/p95/p99, Error %, average/max CPU summary.
+
+```bash
+# Manual equivalent (from the results folder):
+jmeter -n -t hari-2/test-plans/10b-chatbot-perfmon.jmx -Jpengguna=40 -Jrampup=120 -Jtempoh=180 \
+  -Jagent_host=localhost -Jagent_port=4444 -Jperfmon_jtl=hasil/perfmon.jtl \
+  -Jjmeter.reportgenerator.overall_granularity=5000 -l hasil/keputusan.jtl -e -o hasil/laporan
+JMeterPluginsCMD.sh --generate-png hasil/cpu.png --input-jtl hasil/perfmon.jtl --plugin-type PerfMon --width 1200 --height 600
+JMeterPluginsCMD.sh --generate-png hasil/rt.png  --input-jtl hasil/keputusan.jtl --plugin-type ResponseTimesOverTime
+JMeterPluginsCMD.sh --generate-png hasil/thr.png --input-jtl hasil/keputusan.jtl --plugin-type ThreadsStateOverTime
+JMeterPluginsCMD.sh --generate-csv hasil/perfmon.csv --input-jtl hasil/perfmon.jtl --plugin-type PerfMon
+```
+
+![run-chatbot-perfmon.sh console](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-02-konsol-ringkasan.png)
+*Script console: SUT + agent checks → summary → PNG export → p50–p99 and CPU summary (our run on ports 3105/4445).*
+
+![Results folder](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-07-folder-hasil.png)
+*Contents of `hasil/<time>/`: `keputusan.jtl` (HTTP samples), `perfmon.jtl` (metrics), `laporan/` (HTML dashboard), PNGs + `perfmon.csv` from JMeterPluginsCMD.*
+
+**`perfmon.jtl` format:** the same CSV as a normal `.jtl`, but `label` = `<host> <metric>` and **`elapsed` = value × 1000**:
+
+```
+timeStamp,elapsed,label,responseCode,…
+1791176981660,14299,localhost CPU,,…                ← CPU 14.299 %
+1791176981661,93839,localhost Memory usedperc,,…    ← Memory 93.839 %
+```
+
+**Why is CPU not in the HTML dashboard?** The dashboard (`-e -o` / `-g`) reads only **one** `.jtl` of HTTP samples, and it has no PerfMon chart. If you write metrics to the **same `-l` file**, `localhost CPU` rows enter Statistics as fake "requests" (response time = CPU × 1000!) and corrupt p95/p99. Hence: a **separate file** + export with **JMeterPluginsCMD** (or open `perfmon.jtl` in the GUI: PerfMon Metrics Collector → *Filename* → Browse).
+
+**Real example — mock eJPJ chatbot, 40 users** (JMeter 5.6.3, 14-core laptop; SUT + JMeter + agent on the same machine; ramp-up 120 s, 180 s, think time 1–2 s, SLA 3000 ms):
+
+![Active Threads, CPU and Response Times — same time axis](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-cpu-threads-rt-bertindan.png)
+*Read these three charts together, on the same time axis: users rise → CPU rises → once CPU reaches ~90–100%, response time starts to climb (knee point).*
+
+| Users (threads) | Time (s) | Avg CPU | Max CPU | Throughput | p50 ms | p95 ms | p99 ms |
+|----------------:|---------:|--------:|--------:|-----------:|-------:|-------:|-------:|
+| 1–10 | 0–29 | 26 % | 53 % | 2.4 /s | 714 | 1067 | 3536 |
+| 11–20 | 30–59 | 53 % | 74 % | 6.6 /s | 761 | 1048 | 5007 |
+| 21–30 | 59–89 | 73 % | 96 % | 10.4 /s | 780 | 1121 | 5962 |
+| 31–40 (+ hold at 40) | 89–177 | **95 %** | 100 % | **14.0 /s** | 987 | **3024** | 6343 |
+
+- **Knee point:** CPU (10 s average) stays ≥ 80% from **t ≈ 80 s (~31 users)**. In the same window p95 jumps 1027 → **3567 ms**, and from t ≈ 110 s (40 users, CPU 94–100%) p95 stays high.
+- **Throughput:** rises almost linearly (2.4 → 6.6 → 10.4 /s), then only **14 /s** for 31–40 users. Without saturation, 40 users should give ≈ 40 ÷ (0.9 + 1.5) ≈ 16.7 /s (Little's Law, S4). Response time up, throughput flat → **saturation**, and CPU at 100% shows the **bottleneck = server CPU**.
+- p99 is high (3.5–6.3 s) at **every** load level — those are the long chatbot answers (long tail), not a load effect. See §3.11.
+
+![PerfMon: server CPU and Memory](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-perfmon-cpu-memory.png)
+*`--plugin-type PerfMon` export: CPU climbs ~12% → 100% with the ramp-up. Memory ~94% flat — that is **whole-laptop** memory (macOS counts cache too), not a memory leak. Always compare with a baseline taken before the test.*
+
+**How to read the three charts together:**
+
+| Pattern | Interpretation | Action |
+|---------|----------------|--------|
+| Threads up, CPU up in step, response time flat | Healthy — capacity left | Continue / increase load |
+| CPU ≈ 90–100%, response time up, throughput flat | Server **CPU saturation** — requests queue | Knee point = the user count at that moment; profile code, add CPU / scale out |
+| Response time up but server CPU low (< 60%) | **Another** bottleneck: DB, thread pool, locks, network, external service | Monitor DB / JVM (JMX) / network; an agent on the DB server |
+| **Load generator** CPU (JMeter machine) ≥ 80% | Test results **cannot be trusted** — JMeter is the one choking | Fewer threads per machine, non-GUI, add generators (§3.9) |
+| CPU high before the test starts | Other processes on the server | Take an idle baseline; stop other processes |
+
+> **Monitor the load generator too.** Add another row in the collector for the **JMeter machine's** IP (a second agent on the JMeter machine). In the class demo, SUT + JMeter + agent share **one laptop**, so "server CPU" = laptop CPU including JMeter — state that in the report. In a real test the server and the generator must be **separate machines**.
+
+**ServerAgent security (important):**
+
+- The agent opens a port **with no authentication** and listens on **all interfaces** (there is no option to bind to one IP). Verified: anyone who can reach the port can read metrics — **and** the `EXEC` metric can **run commands** on the server (we tested: `metrics:exec:/bin/echo:42` → the agent returns `42`).
+- So: **test environments only**, firewall port 4444 to allow **only** the JMeter machine's IP, run it as a normal user (not root/Administrator), and **stop the agent as soon as the test ends** (Ctrl+C). Never install it permanently on a production server.
+- Get written permission from the server owner before installing the agent (same as for load — §4.7).
+
+**Limits & platform issues:**
+
+| Issue | Symptom | Fix |
+|-------|---------|-----|
+| macOS **Apple Silicon** (M1–M4) | Agent starts, but values are empty; agent log `UnsatisfiedLinkError … Cpu.gather` (the SIGAR library is x86_64 only) | Run the agent with an **x86_64 Java** (Rosetta) — we used Temurin 8 x86_64 — or use a Linux/Windows x64 server |
+| Linux ARM (aarch64) | Same — no `libsigar` for ARM | Use an alternative below |
+| Old plugin | PerfMon/ServerAgent 2.2.3 (2017–2018) is no longer maintained | Fine for labs & short tests |
+
+**Modern alternatives (briefly):** **Prometheus + node_exporter** (Linux) / windows_exporter → **Grafana**; or **InfluxDB + Telegraf** → Grafana, combined with the JMeter **Backend Listener** (§4.9) so response time and CPU live in one live dashboard. APM (Dynatrace, New Relic, Elastic APM) if the organisation already has one. Same principle: **server metrics + JMeter metrics on the same time axis**.
+
+### 3.11 p95 & p99 for a chatbot — meaning, calculation, NFR
+
+**In plain words (chatbot example):**
+
+- **p95 = 1665 ms** → *"95 out of 100 questions are answered in 1.7 s or less; 5 questions take longer."*
+- **p99 = 6076 ms** → *"99 out of 100 questions are answered in 6.1 s or less; **1 in every 100 questions** waits more than 6 s."*
+- An eJPJ chatbot receiving 10 questions per second → **~6 people every minute** wait more than 6 seconds. That is what p99 protects.
+
+**Why p99 matters more for a chatbot:** a chatbot's answer time (especially an LLM) follows the **answer length** — most questions are short, but a small share produces long answers. The distribution has a **long tail**: the average and median look OK, and it is the tail that makes users angry / press "send" again (more load!).
+
+**The average lies — real numbers from our run:**
+
+| Metric | Value | What it "says" |
+|--------|------:|----------------|
+| Average | 1069 ms | "About 1 s — OK" |
+| Median (p50) | 902 ms | Typical experience |
+| p90 | 1375 ms | |
+| p95 | 1665 ms | 5% of questions are slower |
+| **p99** | **6076 ms** | 1% of questions wait > 6 s — **3.6× p95** |
+| Max | 9220 ms | A single sample — never use it as the SLA |
+
+![Statistics: p95 1665 ms, p99 6076 ms](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-chatbot-statistics-p95-p99.png)
+*Statistics for the chatbot run: the big jump from 95th pct → 99th pct = a long tail. Error 4.95% = 75 SLA breaches (Duration Assertion 3000 ms) + 18 synthetic 500 errors.*
+
+**How JMeter computes percentiles:**
+
+| Where | Column | Note |
+|-------|--------|------|
+| **Aggregate Report** (GUI) | `90% Line`, `95% Line`, `99% Line` | The sample value at that position (all samples of the label) |
+| **HTML dashboard → Statistics** | `90th pct`, `95th pct`, `99th pct`; `statistics.json`: `pct1ResTime`, `pct2ResTime`, `pct3ResTime` | Interpolated (hence `1374.60`); uses a **sliding window of the last 20000 samples** per label (`jmeter.reportgenerator.statistic_window`) — for long tests with > 20000 samples per label, raise this value |
+| **Charts → Response Times → Response Time Percentiles** | p0–p100 curve | Find where the curve "breaks" upwards |
+| **Charts → Over Time → Response Time Percentiles Over Time** | Min/Median/p90/p95/p99/Max per interval | ⚠️ **Successful responses only** — failed samples (including SLA breaches) are **not** counted |
+
+![Response Time Percentiles — a long tail after p95](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-chatbot-response-time-percentiles.png)
+*The chatbot percentile curve: flat at ~0.4–1.5 s up to ~p95, then almost vertical to ~9 s. That is the "long tail" shape.*
+
+![Response Time Percentiles Over Time — successful only](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-chatbot-percentiles-over-time.png)
+*Trap: this chart counts **successful** responses only. Answers > 3000 ms fail the Duration Assertion, so the Max in this chart never goes past ~3 s — while Statistics shows p99 6076 ms. Read Statistics for the real p99.*
+
+**Change the percentile columns** — `user.properties` (or `-J` at run time / at `-g` time). Verified: it changes the Aggregate Report columns **and** the dashboard:
+
+```properties
+aggregate_rpt_pct1=90
+aggregate_rpt_pct2=95
+aggregate_rpt_pct3=99.9
+```
+
+```bash
+# Regenerate the dashboard with p75 / p95 / p99.9 (no re-run):
+jmeter -g hasil/keputusan.jtl -o hasil/laporan-p999 -Jaggregate_rpt_pct1=75 -Jaggregate_rpt_pct3=99.9
+# Our run: p75 = 1110 ms, p95 = 1665 ms, p99.9 = 9156 ms
+```
+
+![Statistics with p75 / p95 / p99.9 columns](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-chatbot-statistics-p75-p999.png)
+*Dashboard regenerated with `-Jaggregate_rpt_pct1=75 -Jaggregate_rpt_pct3=99.9` (short run, 106 samples): the columns become 75th / 95th / 99.9th pct. Note p99.9 = Max — not enough samples.*
+
+**Sample size — p99 needs many samples:**
+
+- p99 means 1 in 100. With **100 samples**, p99 ≈ the **slowest** sample (in practice = Max). In our run, the 1–10 user level had only **67 samples** → p99 = Max = 3536 ms — meaningless.
+- Rule of thumb: **p95 ≥ 200 samples**, **p99 ≥ 1000 samples** (≈ 10 samples above p99) **per transaction**. Our run: 1877 samples → p99 can be trusted.
+- Compute it **per transaction/label**, not just Total — Total mixes fast and slow questions.
+- Lengthen the steady state or add users/pacing if there are not enough samples.
+
+**Write the NFR with p95 + p99** (format: *"p95 ≤ X s and p99 ≤ Y s for <transaction> at N concurrent users, Error % < Z"*):
+
+> *"eJPJ chatbot: p95 ≤ 2 s and p99 ≤ 8 s for `POST /api/chatbot` at 30 concurrent users (think time 1–2 s), Error % < 1% (excluding SLA breaches)."*
+
+| Level | p95 | p99 | NFR (p95 ≤ 2000, p99 ≤ 8000) |
+|-------|----:|----:|------------------------------|
+| 21–30 users | 1121 ms | 5962 ms | ✅ PASS |
+| 31–40 users | 3024 ms | 6343 ms | ❌ FAIL (p95) — CPU 95% |
+
+Finding: *"The chatbot meets the NFR up to ~30 concurrent users. At 31–40 users, server CPU averages 95% (PerfMon) and p95 rises to 3024 ms (> 2000 ms). Safe capacity ≈ 30 users per server; recommendation: profile answer generation / add CPU / scale out, then repeat the test."*
+
+![Report template B9 + C1](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-08-laporan-b9-c1.png)
+*The same finding in the report-template format (B9 + Finding C1).*
+
 ### 🎯 Quiz S3
 
 1. Statistics shows the `Pembaharuan Cukai Jalan (Puncak)` transaction with **95th pct = 583 ms**. What does this mean?
@@ -899,6 +1143,20 @@ The `gabung` tool **rejects** files whose JTL headers differ (e.g. one location 
    - [x] Total users is 20 (10 × 2 agents), and findings must be reported per location because the combined average hides PENANG violating the NFR
    - [ ] Per-location reports can only be generated if the test is re-run at each location
    > Each agent runs the whole Thread Group (threads × agents). `[LOKASI]`-prefixed labels allow the JTL to be split (or `sample_filter` to be used) to generate per-location reports from the same run.
+
+6. A chatbot test report shows server CPU (PerfMon) staying at 95–100% from minute 1.5, response time rising and throughput flat at ~14 questions/s even though users keep increasing. What is the most accurate conclusion?
+   - [ ] JMeter has too few threads — add users until throughput rises
+   - [x] The server is CPU-saturated — the knee point is the user count when CPU starts to stay ≥ 80%; also check the load generator's CPU before concluding
+   - [ ] Memory at 94% proves there is a memory leak
+   - [ ] CPU is unrelated to response time
+   > CPU 100% + flat throughput + rising response time = CPU saturation. PerfMon metrics come from the ServerAgent on the server (a separate `perfmon.jtl` file); make sure the load generator itself is not choking.
+
+7. Chatbot Statistics: Average **1069 ms**, 95th pct **1665 ms**, 99th pct **6076 ms**, 1877 samples. Which statement is **correct**?
+   - [ ] Most users wait about 6 s
+   - [ ] The 1069 ms average is enough to write the NFR
+   - [x] 1 in every 100 questions takes more than 6 s — a long tail (long answers) hidden by the average; the NFR should state p95 **and** p99
+   - [ ] p99 can be trusted even with only 50 samples
+   > p99 = 99% of samples ≤ 6076 ms. For a chatbot, the long tail is the real experience of some users. p99 needs many samples (≈ ≥ 1000 per transaction).
 
 ---
 
@@ -1040,6 +1298,7 @@ Data: enough **unique** test accounts (≈ N), synthetic and resettable — reus
   (Our R1 run: p95 583 ms, error 1.0033% → **FAIL** — right on the limit, because of the synthetic 500s.) Alternatives: Taurus (`bzt`) `passfail`, the Jenkins Performance plugin.
 - **Distributed testing:** one controller + several workers (`jmeter-server`); `jmeter -n -t plan.jmx -R w1,w2 -Gpengguna=100 …` — **each worker runs the whole Thread Group** (100 × 2 = 200), `-G` sends a property to the workers, and the CSV must exist on every worker. A complete example with combined + per-site reports, a comparison table and pitfalls: **[§3.9](#39-reports-from-agents-in-several-locations)** / Lab 8.
 - **Grafana:** **Backend Listener** (`InfluxdbBackendListenerClient`) → InfluxDB → a dashboard **during** the test. HTML dashboard = post-mortem **afterwards**; Grafana = monitoring **during** the run.
+- **Server metrics during the test:** server CPU/Memory via the PerfMon agent (ServerAgent), read together with Active Threads and Response Times — a complete chatbot example: **[§3.10](#310-server-cpu-via-an-agent--perfmon-serveragent)** / Lab 9; p95/p99 for NFRs: **[§3.11](#311-p95--p99-for-a-chatbot--meaning-calculation-nfr)**.
 
 ### 4.10 Two-day summary & close
 

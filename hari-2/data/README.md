@@ -22,3 +22,11 @@ Memetakan setiap `no_kp` kepada kenderaan & amaun cukai — untuk senario bayar 
 | `amaun` | Nombor | Amaun cukai (RM) | `90` |
 
 > **Nota:** Nilai `token` dan `csrf` **tidak** disimpan dalam CSV — ia diperoleh secara dinamik pada masa larian melalui **korelasi** (JSON Extractor pada respons `/api/log-masuk`). Itulah inti pelajaran Hari 2.
+
+## `soalan-chatbot.csv`
+
+Soalan lazim (FAQ) sintetik untuk chatbot eJPJ tiruan (`POST /api/chatbot`, plan `10` / `10b`). Tiada koma atau tanda petik dalam soalan (CSV mudah, `quotedData=false`).
+
+| Lajur | Jenis | Keterangan | Contoh |
+|-------|-------|------------|--------|
+| `soalan` | Teks | Soalan pengguna — mock padankan kata kunci (cukai, lesen, saman, hak milik, nombor, MyJPJ) dengan jawapan sintetik | `Bagaimana nak semak saman JPJ menggunakan No. KP?` |

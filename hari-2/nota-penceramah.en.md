@@ -194,6 +194,18 @@ Before class: run `cd hari-2/run && ./run-berbilang-lokasi.sh` once to warm up t
 
 **✅ Before moving on to S4:** ≥ 85% have opened their own dashboard and filled in the worksheet; ≥ 60% have at least one written finding.
 
+**⏱️ PerfMon + chatbot add-on (§3.10–3.11, Lab 9) — ~22 minutes.** The JPJ participants asked for this topic (their real reports have CPU from an agent + a chatbot system). Take the time from existing blocks:
+
+| Original time | Change | Saved | Used for |
+|---------------|--------|------:|----------|
+| 3.05–3.12 §3.9 demo + 3.12–3.25 Lab 8 | §3.9 demo only (5 min); Lab 8 → homework / ⭐ | 15 | 🎬 PerfMon demo (8 min) + Lab 9 steps 5–8 with the trainer's report (7 min) |
+| 2.38–2.45 glossary | Pick 4 terms, not 6 | 2 | §3.11 chatbot p95/p99 (whiteboard "1 in 100 questions") |
+| 2.48–3.05 Lab 5 | 2nd finding becomes homework | 5 | Quiz S3 questions 6–7 + p95/p99 NFR |
+
+**Night-before prep:** (1) install jpgc-perfmon, jpgc-cmd, jpgc-graphs-basic in the trainer's JMeter; (2) unzip ServerAgent-2.2.3; (3) run `./run-chatbot-perfmon.sh` once and keep the `hasil/<time>/` folder as a **backup report** (the run takes ~3.5 min — do not wait for it in class if you are late); (4) Apple Silicon Mac: the agent must use an x86_64 Java (README §3.10 "Limits & platform issues").
+
+**Short script (chatbot p99):**
+> *"The JPJ chatbot receives 10 questions per second. p95 1.7 s — OK. But p99 6 s means 6 people every minute wait more than 6 seconds, and many will press 'send' again. The 1.07 s average hides all of that."*
 ---
 
 ## 3.30 – 3.45 pm · Break
@@ -273,6 +285,18 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s      # ralat: folder is not empty 
 1. R1 & R2 (README §3.7, ≈ 1 minute each). While waiting: show the Duration Assertion `${__P(sla_ms,2000)}` in the GUI.
 2. R2 → Errors: ~30 rows of `The operation lasted too long: It took 1xx milliseconds…` — *"this table groups by text; add them up."* Codes Per Second → only `200` (+ a few `500`). Transactions Per Second → `-failure` series.
 3. ⭐ R3 (slow mock, port 3001) if time allows: `PORT=3001 LATENCY_MIN=500 LATENCY_MAX=1500 node sut/server.js` + `-Jport=3001` — throughput drops ~45%. Stop the 3001 mock afterwards.
+
+### PerfMon + chatbot (S3, ~8 minutes + 3.5-minute run)
+1. Whiteboard: JMeter machine ↔ server (ServerAgent port 4444). *"JMeter measures response time; CPU comes from an agent on the server — a separate `perfmon.jtl` file."*
+2. Terminal: `./startAgent.sh --udp-port 0 --tcp-port 4444` → `telnet localhost 4444` → `test` → `Yep`. Show plan `10b` in the GUI: PerfMon Metrics Collector (CPU, Memory `usedperc`, Filename).
+3. `cd hari-2/run && ./run-chatbot-perfmon.sh` (or open the backup report). While it runs: §3.11 — *"p95 vs p99, the average lies"*; show `summary` rising every 30 s.
+4. Open `active-threads.png`, `cpu-perfmon.png`, `response-times-over-time.png` side by side: in our run CPU ≥ 80% from ~31 users, p95 1027 → 3567 ms in the same window, throughput flat at ~14 /s.
+5. Dashboard → Statistics: p95 1665 vs **p99 6076 ms**; Response Time Percentiles (vertical tail after p95); **trap:** *Percentiles Over Time* = successful only — Max never passes ~3 s.
+6. **Ctrl+C ServerAgent.** *"This agent has no password and can run commands (`exec`) — test env only, firewall, stop it after the test."*
+
+**Expected question — *"Why is Memory at 94% for the whole test?"*** That is whole-laptop memory (macOS counts cache), flat from the start — not a leak. Take an idle baseline first; what matters is the **change** under load.
+
+**Expected question — *"Our servers are Windows/Linux — is it the same?"*** Yes: `startAgent.bat`/`startAgent.sh` on the test server, open port 4444 only to the JMeter machine's IP. More modern alternatives: node_exporter/Prometheus or Telegraf/InfluxDB + Grafana.
 
 ### Little's Law (S4, ~5 minutes on the board)
 ```
