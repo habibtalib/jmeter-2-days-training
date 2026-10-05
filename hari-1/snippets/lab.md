@@ -76,6 +76,9 @@ cd sut && node server.js      # biarkan terbuka
 
 6. Buka GUI: `jmeter` (atau `bin\jmeter.bat`). Kenal pasti **test tree** (kiri), **panel setting** (kanan), button **Start / Stop / Clear All**, dan ikon **Log** (segi tiga amaran, kanan atas).
 
+   ![JMeter GUI baru dibuka: Test Plan kosong](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab0-04-gui-test-plan-kosong.png)
+   *GUI JMeter 5.6.3: **test tree** di kiri, **panel setting** di kanan; toolbar ada Start ▶, Stop, Clear All (berus); ikon **Log** (segi tiga amaran) dan kiraan thread di kanan atas.*
+
 ### ✅ Checkpoint
 - [ ] `java --version` memaparkan versi 11 atau lebih baru
 - [ ] `jmeter -v` berjalan dari folder selain `bin` dan memaparkan versi 5.6.x
@@ -113,10 +116,30 @@ Start SUT dengan `ERROR_RATE=0.2 node server.js` dan baca `sut/server.js` — en
 ### Langkah
 
 1. Buka JMeter (GUI). **Klik kanan Test Plan → Add → Threads (Users) → Thread Group** — 1 user, ramp-up 1, 1 loop.
+
+   ![Thread Group baru: 1 thread, ramp-up 1, loop 1](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab1-04-thread-group-1-1-1.png)
+   *Thread Group baru bawah Test Plan: Number of Threads `1`, Ramp-up `1`, Loop Count `1` (nilai default).*
+
 2. **Klik kanan Thread Group → Add → Config Element → HTTP Request Defaults**: Protocol `http`, server `localhost`, port `3000`. *(Plan rujukan letak Defaults bawah Test Plan — kesan sama.)*
+
+   ![HTTP Request Defaults http localhost 3000](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab1-05-http-request-defaults.png)
+   ***HTTP Request Defaults**: Protocol `http`, Server `localhost`, Port `3000`.*
+
 3. **Klik kanan Thread Group → Add → Sampler → HTTP Request** → `GET /api/health` (biarkan Server/Port kosong).
+
+   ![HTTP Request GET /api/health dengan Server dan Port kosong](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab1-06-sampler-api-health.png)
+   *Sampler `GET /api/health`: Method `GET`, Path `/api/health`; Protocol/Server/Port **kosong** — diambil dari Defaults.*
+
 4. Tambah sampler kedua `GET /` (page info).
+
+   ![HTTP Request kedua GET /](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab1-07-sampler-halaman-info.png)
+   *Sampler kedua `GET / (halaman info)`: Path `/`.*
+
 5. **Klik kanan Thread Group → Add → Listener → View Results Tree**.
+
+   ![View Results Tree ditambah bawah Thread Group](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab1-08-view-results-tree-ditambah.png)
+   ***View Results Tree** di hujung Thread Group — kosong sehingga anda run.*
+
 6. **File → Save** sebagai `lab1-saya.jmx`, kemudian run (▶). Pastikan response `{"status":"ok"}` dan code **200**.
 
 ![View Results Tree: tab Sampler result dengan Response code 200](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab1-01-vrt-sampler-result.png)
@@ -173,14 +196,29 @@ Tambah **HTTP Header Manager** dengan `Accept: application/json`, kemudian pasti
 *Thread Group dalam `02-cukai-beban.jmx`: **Number of Threads 20**, **Ramp-up period 10**, **Loop Count 5**. Tree kiri tunjuk susunan sampler, assertion, timer dan listener.*
 
 2. Sampler: `GET /api/kenderaan/WXY1234/cukai` (buang atau disable sampler lain).
+
+   ![Sampler GET /api/kenderaan/WXY1234/cukai; sampler lain disabled](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab2-04-sampler-cukai-lain-disable.png)
+   *Sampler `GET /api/kenderaan/WXY1234/cukai`; dua sampler Latihan 1 di-**disable** (kelabu dalam tree).*
+
 3. Tambah **Response Assertion** (klik kanan sampler → Add → Assertions) — Field to Test *Text Response*, *Substring*, pattern `amaun`.
 4. Tambah **Duration Assertion** (klik kanan sampler yang sama → Add → Assertions → Duration Assertion) — *Duration in milliseconds* `2000`.
+
+   ![Duration Assertion 2000 ms child sampler](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab2-05-duration-assertion-2000.png)
+   ***Duration Assertion** child sampler cukai: Duration in milliseconds `2000` (Response Assertion `amaun` di atasnya).*
 
 ![Response Assertion: Text Response, Substring, amaun](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab2-02-response-assertion-amaun.png)
 *Response Assertion (child sampler): **Field to Test = Text Response**, **Pattern Matching Rules = Substring**, pattern `amaun`.*
 
 5. Tambah **Constant Timer** 300 ms (think time) bawah Thread Group (klik kanan Thread Group → Add → Timer → Constant Timer; *Thread Delay* `300`).
+
+   ![Constant Timer 300 ms bawah Thread Group](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab2-06-constant-timer-300.png)
+   ***Constant Timer** bawah Thread Group: Thread Delay `300`.*
+
 6. Tambah **Summary Report** dan **Aggregate Report** (klik kanan Thread Group → Add → Listener). **Disable** View Results Tree (klik kanan → **Disable**) — listener ni berat masa load test.
+
+   ![Summary Report dan Aggregate Report ditambah, View Results Tree disabled](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab2-07-summary-aggregate-vrt-disable.png)
+   *Summary Report + Aggregate Report ditambah; View Results Tree **disabled** (kelabu). Jadual kosong sehingga run.*
+
 7. **Ramal** jumlah request, kemudian **Clear All** dan run. Catat: **Throughput**, **Average**, **Error %**, **95% Line**.
 
 ![Summary Report: 100 sample, 0% error](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab2-03-summary-report-100.png)
@@ -225,6 +263,10 @@ Tukar Constant Timer kepada **Gaussian Random Timer** (Deviation 300, Constant D
 ### Langkah
 
 1. Save plan anda **dalam folder `hari-1/test-plans/`** (supaya path relatif `../data/` betul).
+
+   ![Menu File JMeter: Save Test Plan as](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-13-menu-file.png)
+   ***File → Save Test Plan as** → simpan dalam `hari-1/test-plans/`.*
+
 2. Tambah **CSV Data Set Config** (klik kanan Thread Group → Add → Config Element → CSV Data Set Config; plan rujukan letak ia bawah Test Plan — kesan sama) yang baca `../data/kenderaan.csv`
    (variable names: `no_pendaftaran,model`; ignore first line: **True**; recycle: **True**; stop thread: **False**; sharing mode: **All threads**).
 
@@ -232,8 +274,15 @@ Tukar Constant Timer kepada **Gaussian Random Timer** (Deviation 300, Constant D
 *CSV Data Set Config: Filename `../data/kenderaan.csv`, Variable Names `no_pendaftaran,model`, Ignore first line **True**, Recycle on EOF **True**, Stop thread on EOF **False**, Sharing mode **All threads**.*
 
 3. Tukar path sampler kepada `/api/kenderaan/${no_pendaftaran}/cukai`.
+
+   ![Sampler path /api/kenderaan/${no_pendaftaran}/cukai](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab3-03-path-no-pendaftaran.png)
+   *Path sampler: `/api/kenderaan/${no_pendaftaran}/cukai` (nama sampler pun guna `${no_pendaftaran}` supaya label berubah ikut baris CSV).*
+
 4. Tukar Thread Group kepada **10 / 5 / 10** (threads / ramp-up / loop) dan enable balik View Results Tree. Run (10 users × 10 loop). Dalam View Results Tree, pastikan
    setiap request guna nombor pendaftaran yang berlainan.
+
+   ![Thread Group 10 threads, ramp-up 5, loop 10; View Results Tree enabled](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab3-04-thread-group-10-5-10.png)
+   *Thread Group `10` / `5` / `10`; View Results Tree dah di-enable semula.*
 
 ![View Results Tree: setiap sample guna nombor pendaftaran berlainan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab3-02-vrt-nombor-berlainan.png)
 *View Results Tree: label sample bertukar ikut baris CSV (`WXY1234`, `VAB88`, `JQK77`, `BMT30…`, `PKL90…`); tab **Request** tunjuk `${no_pendaftaran}` dah diganti — `…/api/kenderaan/VAB88/cukai`.*
@@ -289,6 +338,9 @@ Tambah sampler `GET /api/saman?no_kp=${no_kp}` guna **CSV kedua** dengan column 
 
 4. Tengok **Error %** naik dalam Summary Report. **Ramal dulu:** dengan 6 baris data dan Recycle = True, lebih kurang berapa peratus sample akan fail?
 5. Buang baris palsu tu lepas siap.
+
+   ![kenderaan.csv sebelum dan selepas buang ABC0000](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-05-buang-baris-palsu.png)
+   *Sebelum: baris terakhir `ABC0000,Kereta Hantu`. Selepas buang: berakhir dengan `PKL909` dan `grep -c ABC0000` = `0`.*
 
 ![Summary Report: baris ABC0000 100% error, TOTAL 16% Error](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-04-summary-error.png)
 *Jawapan langkah 4: hanya baris `ABC0000` gagal (100%), jadi Error % TOTAL ≈ 1/6 — di sini 16.00% (16 daripada 100 sample).*
@@ -350,6 +402,9 @@ Jangan ubah file asal — copy ke `kenderaan-rosak.csv` dan tukar Filename dalam
 
 4. Restore SUT: Ctrl+C → `node server.js` (tanpa variable).
 
+   ![Terminal: SUT dimulakan semula tanpa variable latency](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-04-restart-sut.png)
+   *Lepas restore: banner tunjuk **Latensi tiruan : 40-180 ms** semula. (Tangkapan ini guna `PORT=3917`; anda run `node server.js` sahaja.)*
+
 > **Soalan refleksi:** Kenapa throughput jatuh bila latency naik, walaupun bilangan users sama? (Hint: setiap thread kena tunggu lebih lama sebelum boleh hantar request seterusnya.)
 
 ### ✅ Checkpoint
@@ -394,6 +449,10 @@ Naikkan threads ke 60 (latency tinggi kekal). Throughput naik balik tak? Apa yan
 
 2. Pada recorder: tab **Requests Filtering → URL Patterns to Exclude → Add** → tambah regex static asset
    `(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|eot|otf|ttf|mp4|woff|woff2)([?;].*)?`.
+
+   ![Recorder Requests Filtering: regex static asset dalam URL Patterns to Exclude](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab6-05-requests-filtering-exclude.png)
+   *Tab **Requests Filtering → URL Patterns to Exclude**: regex static asset `(?i).*\.(bmp|css|js|…)…` (dah ada dalam `rakam-template.jmx`).*
+
 3. Klik **Start**. Hantar request melalui proxy JMeter (port 8888):
    ```bash
    curl -s -x http://localhost:8888 -H 'Content-Type: application/json' \
@@ -402,7 +461,14 @@ Naikkan threads ke 60 (latency tinggi kekal). Throughput naik balik tak? Apa yan
    curl -s -x http://localhost:8888 -H 'Authorization: Bearer TOKEN_PALSU' \
      'http://localhost:3000/api/kenderaan?no_kp=800101015500'
    ```
+
+   ![Dua curl melalui proxy: log-masuk 200 dan kenderaan TOKEN_PALSU](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab6-06-curl-melalui-proxy.png)
+   *Dua request melalui proxy: log masuk pulangkan token; `/api/kenderaan` dengan `TOKEN_PALSU` → `Token tidak sah atau tamat tempoh`. (tangkapan ini guna proxy 18888 dan instance mock kami sendiri pada port 3917 supaya tak ganggu kelas — anda guna 8888 / 3000)*
+
 4. Klik **Stop**. Tengok sampler yang dah di-record dalam Recording Controller. Buka sampler `/api/kenderaan` → child **HTTP Header Manager** → perasan `Authorization: Bearer TOKEN_PALSU` di-hardcode.
+
+   ![Recording Controller: Header Manager /api/kenderaan dengan Authorization Bearer TOKEN_PALSU](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab6-07-header-manager-token-palsu.png)
+   *Lepas **Stop**: `/api/log-masuk-1` dan `/api/kenderaan-2` dalam Recording Controller; Header Manager `/api/kenderaan-2` ada `Authorization: Bearer TOKEN_PALSU` — hardcode.*
 
 ![Portal web: Log Masuk, Kenderaan Saya, Bayar Cukai Jalan, Pembayaran Berjaya](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab6-02-portal-aliran.png)
 *Flow portal web yang dirakam melalui browser (Cabaran / [`rakaman-e2e.md`](./rakaman-e2e.md)): **Log Masuk** → **Kenderaan Saya** → **Bayar Cukai Jalan** (form ada field tersembunyi `csrf`) → **Pembayaran Berjaya** (Status: BERJAYA).*
@@ -412,6 +478,10 @@ Naikkan threads ke 60 (latency tinggi kekal). Throughput naik balik tak? Apa yan
 
 5. Tambah **View Results Tree** bawah Thread Group (kalau guna `rakam-template.jmx`, ia dah ada bawah Test Plan — guna yang tu). **Replay** (Run). Tengok request kenderaan → **401** sebab token yang di-record
    dah expired / palsu.
+
+   ![Replay: /api/kenderaan-2 merah 401 Unauthorized](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab6-08-replay-kenderaan-401.png)
+   *Replay rakaman: `/api/log-masuk-1` hijau, `/api/kenderaan-2` merah — `Response code:401`, `Unauthorized`.*
+
 6. Buktikan guna plan rujukan dalam mode non-GUI, dan generate report HTML:
    ```bash
    jmeter -n -t hari-1/test-plans/04-rakaman-mentah.jmx \
@@ -466,8 +536,20 @@ Ikut [`rakaman-e2e.md`](./rakaman-e2e.md) sepenuhnya: record flow **3 langkah** 
 ### Langkah
 
 1. Bina **satu Test Plan** dengan **dua sampler** (`/api/health` dan `/api/saman?no_kp=900202025600`) bawah Thread Group yang sama.
+
+   ![Dua sampler: GET /api/health dan GET /api/saman dengan parameter no_kp](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab7-03-dua-sampler-saman.png)
+   *Dua sampler bawah Thread Group yang sama; `GET /api/saman` dengan parameter `no_kp` = `900202025600`.*
+
 2. Bagi setiap sampler **Response Assertion sendiri** (sebagai child): `ok` untuk health, `saman` untuk saman.
+
+   ![Response Assertion saman sebagai child sampler saman](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab7-04-assertion-saman.png)
+   *Setiap sampler ada **Response Assertion** sendiri (child): `ok` untuk health, `saman` untuk saman (dipaparkan).*
+
 3. Tambah **HTTP Request Defaults** dan **Constant Timer** 500 ms bawah Thread Group, dan **Summary Report**.
+
+   ![HTTP Request Defaults, Constant Timer 500 ms dan Summary Report bawah Thread Group](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab7-05-defaults-timer-summary.png)
+   *HTTP Request Defaults, **Constant Timer 500 ms** (dipaparkan) dan Summary Report bawah Thread Group — timer di sini kena pada kedua-dua sampler.*
+
 4. **Ramal:** berapa jumlah jeda timer setiap iteration? Lepas tu pindahkan timer jadi child sampler saman sahaja, dan ramal semula.
 
 ![Constant Timer di bawah Thread Group: kena pada kedua-dua sampler](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab7-01-timer-bawah-thread-group.png)
