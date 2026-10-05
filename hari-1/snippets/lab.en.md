@@ -47,7 +47,15 @@ cd sut && node server.js      # biarkan terbuka
    ```bash
    java --version        # 11 atau lebih baru (disyorkan 17/21)
    ```
+
+   ![Terminal: java --version](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab0-05-java-version.png)
+   *Real `java --version` output: OpenJDK **21** (Temurin) — 11 or newer is enough.*
+
 2. Install JMeter (README §1.5). **Windows:** unzip to `C:\apache-jmeter-5.6.3`, add `C:\apache-jmeter-5.6.3\bin` to **User variables → Path**, then **close & reopen** the terminal.
+
+   ![Terminal: jmeter -v banner 5.6.3](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab0-06-jmeter-v-banner.png)
+   *Once JMeter is on the PATH, `jmeter -v` from any folder prints the **5.6.3** banner. (The Windows Path dialog is not captured here.)*
+
 3. Verify from a **different** folder (not `bin`):
    ```bash
    cd ~            # Windows: cd %USERPROFILE%
@@ -62,6 +70,10 @@ cd sut && node server.js      # biarkan terbuka
    cd sut
    node server.js
    ```
+
+   ![Terminal A: Portal eJPJ (TIRUAN) SUT banner](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab0-07-sut-banner.png)
+   *The real SUT banner: latency 40–180 ms, error rate 1.0%, web portal, chatbot — leave this terminal open. (This capture used `PORT=3917` so it would not disturb the class; you run `node server.js` and get port `3000`.)*
+
 5. In a second terminal (or a browser):
    ```bash
    curl -s http://localhost:3000/api/health
@@ -201,6 +213,10 @@ Add an **HTTP Header Manager** with `Accept: application/json` and confirm the h
    *Sampler `GET /api/kenderaan/WXY1234/cukai`; the two Lab 1 samplers are **disabled** (greyed out in the tree).*
 
 3. Add a **Response Assertion** (right-click the sampler → Add → Assertions) — Field to Test *Text Response*, *Substring*, pattern `amaun`.
+
+   ![Response Assertion as a child of the tax sampler: Text Response, Substring, amaun](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab2-08-response-assertion-amaun-baru.png)
+   ***Response Assertion** as a child of the tax sampler: Field to Test **Text Response**, Pattern Matching Rules **Substring**, Patterns to Test `amaun`.*
+
 4. Add a **Duration Assertion** (right-click the same sampler → Add → Assertions → Duration Assertion) — *Duration in milliseconds* `2000`.
 
    ![Duration Assertion 2000 ms as a sampler child](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab2-05-duration-assertion-2000.png)
@@ -328,6 +344,13 @@ Add a sampler `GET /api/saman?no_kp=${no_kp}` using a **second CSV** with a `no_
 
 2. Run Exercise 3 again. Notice that the `ABC0000` request **fails**
    the assertion (`amaun` is missing — the endpoint returns **404**).
+
+   ![View Results Tree: GET /api/kenderaan/ABC0000/cukai red, 404 Not Found](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-06-vrt-abc0000-404.png)
+   *A real run of your Lab 3 plan: the `ABC0000` sample is red — `Response code:404`, `Response message:Not Found`; the other numbers are green.*
+
+   ![Assertion result: Test failed: text expected to contain /amaun/](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-07-vrt-assertion-default-message.png)
+   *The **Response Assertion** node under the red sample: `Assertion failure message:Test failed: text expected to contain /amaun/` (the default message for your own plan).*
+
 3. In View Results Tree, click the red sample → **Sampler result** tab → read the *Assertion failure message*. Compare the response code (`404`) with the body `{"ralat":"Kenderaan tidak dijumpai"}`.
 
 ![View Results Tree: red ABC0000 sample with Response code 404](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-02-vrt-404.png)
@@ -337,6 +360,10 @@ Add a sampler `GET /api/saman?no_kp=${no_kp}` using a **second CSV** with a `no_
 *Expand the red sample and click the Response Assertion node — the **Assertion failure message** shows the custom message `Kenderaan ABC0000 tidak memulangkan sebut harga (mungkin 404)` (set in the *Custom failure message* of the reference plan `03-csv-berparameter.jmx`; your own plan shows the default message `Test failed: text expected to contain /amaun/`).*
 
 4. Watch **Error %** rise in the Summary Report. **Predict first:** with 6 data rows and Recycle = True, roughly what percentage of samples will fail?
+
+   ![Summary Report: ABC0000 100% error, TOTAL 16.00%](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-08-summary-report-error-16.png)
+   *Summary Report of the same run: `GET /api/kenderaan/ABC0000/cukai` **100.00%** errors (16 samples), TOTAL **16.00%** of 100 — ≈ 1/6.*
+
 5. Remove the fake row when you are done.
 
    ![kenderaan.csv before and after removing ABC0000](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-05-buang-baris-palsu.png)
