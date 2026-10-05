@@ -234,11 +234,25 @@ Add a sampler `GET /api/saman?no_kp=${no_kp}` using a **second CSV** with a `no_
 ### Steps
 
 1. Add one fake row to `hari-1/data/kenderaan.csv`, e.g.: `ABC0000,Kereta Hantu`.
+
+![kenderaan.csv with the fake ABC0000 row](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-01-csv-baris-palsu.png)
+*The fake row `ABC0000,Kereta Hantu` added at the end of the CSV — no blank line before it, and the header is unchanged.*
+
 2. Run Exercise 3 again. Notice that the `ABC0000` request **fails**
    the assertion (`amaun` is missing — the endpoint returns **404**).
 3. In View Results Tree, click the red sample → **Sampler result** tab → read the *Assertion failure message*. Compare the response code (`404`) with the body `{"ralat":"Kenderaan tidak dijumpai"}`.
+
+![View Results Tree: red ABC0000 sample with Response code 404](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-02-vrt-404.png)
+*The `ABC0000` sample is red — the **Sampler result** tab shows `Response code:404` and `Response message:Not Found`.*
+
+![View Results Tree: Assertion result with the Assertion failure message](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-03-vrt-assertion-gagal.png)
+*Expand the red sample and click the Response Assertion node — the **Assertion failure message** shows the custom message `Kenderaan ABC0000 tidak memulangkan sebut harga (mungkin 404)`.*
+
 4. Watch **Error %** rise in the Summary Report. **Predict first:** with 6 data rows and Recycle = True, roughly what percentage of samples will fail?
 5. Remove the fake row when you are done.
+
+![Summary Report: ABC0000 row at 100% error, TOTAL 16% Error](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-04-summary-error.png)
+*Answer to step 4: only the `ABC0000` row fails (100%), so the TOTAL Error % ≈ 1/6 — here 16.00% (16 of 100 samples).*
 
 ### ✅ Checkpoint
 - [ ] The `ABC0000` request fails the assertion (the endpoint returns **404**)
