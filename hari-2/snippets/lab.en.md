@@ -885,6 +885,11 @@
 
    ![PerfMon Metrics Collector in plan 10b](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-01-gui-perfmon-metrics-collector.png)
    *The PerfMon Metrics Collector configuration in plan `10b`.*
+
+   🎬 **Trainer demo (optional):** Start briefly in the GUI (agent must be running) to watch CPU rise **live** as users ramp up — then Stop. The real measurement still uses the non-GUI script (step 4), because the GUI itself uses CPU.
+
+   ![PerfMon Metrics Collector: live CPU rising to 100% as 20 users ramp up](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-10-gui-perfmon-live.png)
+   *2-minute run in the GUI: CPU (red) climbs from ~20% to 100% as users are added; Memory (blue) flat ~93% (whole laptop).*
 4. **Run the script** (≈ 3.5 minutes with the defaults; small laptop: `PENGGUNA=20 RAMPUP=60 TEMPOH=120`):
    ```bash
    cd hari-2/run
