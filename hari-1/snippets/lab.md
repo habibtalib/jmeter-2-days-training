@@ -1,29 +1,29 @@
 # Lab Hari 1 — Asas JMeter & Ujian Beban
 
-[⬅️ README Hari 1](../README.md) · [🎤 Nota Penceramah](../nota-penceramah.md) · [🎬 Rakam → Main Balik](./rakaman-e2e.md) · [🔒 Rakaman HTTPS](./rakaman-https-setup.md) · [🔑 Test plan rujukan](../test-plans/)
+[⬅️ README Hari 1](../README.md) · [🎤 Nota Penceramah](../nota-penceramah.md) · [🎬 Rakam → Replay](./rakaman-e2e.md) · [🔒 Recording HTTPS](./rakaman-https-setup.md) · [🔑 Test plan rujukan](../test-plans/)
 
-> **Peraturan lab:** Sebelum setiap larian, **ramal** dahulu — berapa sampel? Error % berapa? Throughput naik atau turun? Tulis ramalan, kemudian klik **Start**. Fail rujukan (jawapan) ada dalam `hari-1/test-plans/`. Cuba bina sendiri dahulu; buka fail rujukan hanya selepas checkpoint atau jika tersekat lebih 10 minit.
+> **Peraturan lab:** Sebelum setiap run, **ramal** dulu — berapa sample? Error % berapa? Throughput naik ke turun? Tulis ramalan anda, baru klik **Start**. File rujukan (jawapan) ada dalam `hari-1/test-plans/`. Cuba bina sendiri dulu; buka file rujukan hanya selepas checkpoint, atau kalau dah tersangkut lebih 10 minit.
 
-> ⚠️ **Etika:** Semua latihan mensasarkan **`http://localhost:3000`** sahaja — sentiasa sahkan Server=`localhost`, Port=`3000` sebelum Start.
+> ⚠️ **Etika:** Semua latihan target **`http://localhost:3000`** sahaja — sentiasa check Server=`localhost`, Port=`3000` sebelum Start.
 
-> 📊 **Bukti kemajuan:** JMeter berjalan pada mesin anda, jadi LMS tidak dapat melihat larian anda. Tandakan setiap ✅ Checkpoint dengan jujur, dan item terakhir setiap checkpoint ialah **kuiz sesi** dalam README — itulah bukti yang dinilai.
+> 📊 **Bukti progress:** JMeter run dalam laptop anda, jadi LMS tak boleh nampak run anda. Tick setiap ✅ Checkpoint dengan jujur. Item terakhir setiap checkpoint ialah **kuiz sesi** dalam README — itu bukti yang dinilai.
 
-Pastikan **pelayan tiruan berjalan** dahulu (biarkan terminal ini terbuka sepanjang hari):
+Pastikan **server mock dah running** dulu (biarkan terminal ini terbuka sepanjang hari):
 
 ```bash
 cd sut && node server.js      # biarkan terbuka
 ```
 
-| Latihan | Sesi | Fokus | Fail rujukan |
+| Latihan | Sesi | Fokus | File rujukan |
 |---------|------|-------|--------------|
-| 0 | S1 | Persediaan: Java, JMeter (PATH), SUT | — |
+| 0 | S1 | Setup: Java, JMeter (PATH), SUT | — |
 | 1 | S2 | Test Plan pertama | `01-hello-jpj.jmx` |
-| 2 | S3 | Ujian beban + assertion + timer | `02-cukai-beban.jmx` |
-| 3 | S3 | Parameterisasi CSV | `03-csv-berparameter.jmx` |
-| 4 | S3 | Buat assertion GAGAL | `03-csv-berparameter.jmx` + baris palsu |
-| 5 | S3 | Kesan latensi pelayan | `02-cukai-beban.jmx` |
-| 6 | S4 | Rakam & lihat main balik gagal | `rakam-template.jmx`, `04-rakaman-mentah.jmx` |
-| 7 ⭐ | S3 | Cabaran: dua sampler, skop yang betul | — |
+| 2 | S3 | Load test + assertion + timer | `02-cukai-beban.jmx` |
+| 3 | S3 | Parameterize guna CSV | `03-csv-berparameter.jmx` |
+| 4 | S3 | Buat assertion FAIL | `03-csv-berparameter.jmx` + baris palsu |
+| 5 | S3 | Kesan latency server | `02-cukai-beban.jmx` |
+| 6 | S4 | Record & tengok replay fail | `rakam-template.jmx`, `04-rakaman-mentah.jmx` |
+| 7 ⭐ | S3 | Cabaran: dua sampler, scope yang betul | — |
 
 ---
 
@@ -32,38 +32,38 @@ cd sut && node server.js      # biarkan terbuka
 **Sesi:** S1
 
 ### 🎯 Objektif
-- Memasang Java + JMeter dan menjalankan `jmeter` dari mana-mana folder (O2)
-- Menjalankan SUT tiruan dan mengesahkan endpoint kesihatan (O2)
-- Menyatakan sasaran sah kursus dan syarat etika (O1)
+- Install Java + JMeter dan run `jmeter` dari mana-mana folder (O2)
+- Run SUT mock dan check endpoint health (O2)
+- Boleh sebut target yang dibenarkan dalam kursus dan syarat etika (O1)
 
 ### Prasyarat
 - Node.js 18+ (`node --version`)
-- Pemasang JDK 17/21 dan zip JMeter 5.6.x (dari internet, atau USB daripada penceramah)
-- README §1.3–1.8 telah diterangkan
+- Installer JDK 17/21 dan zip JMeter 5.6.x (download dari internet, atau ambil dari USB penceramah)
+- README §1.3–1.8 dah diterangkan
 
 ### Langkah
 
-1. Sahkan Java:
+1. Check Java:
    ```bash
    java --version        # 11 atau lebih baru (disyorkan 17/21)
    ```
-2. Pasang JMeter (README §1.5). **Windows:** nyahzip ke `C:\apache-jmeter-5.6.3`, tambah `C:\apache-jmeter-5.6.3\bin` ke **User variables → Path**, kemudian **tutup & buka semula** terminal.
-3. Sahkan dari folder **lain** (bukan `bin`):
+2. Install JMeter (README §1.5). **Windows:** extract ke `C:\apache-jmeter-5.6.3`, tambah `C:\apache-jmeter-5.6.3\bin` dalam **User variables → Path**, kemudian **tutup & buka balik** terminal.
+3. Test dari folder **lain** (bukan `bin`):
    ```bash
    cd ~            # Windows: cd %USERPROFILE%
    jmeter -v
    ```
-4. Mulakan SUT dalam terminal berasingan dan biarkan terbuka:
+4. Start SUT dalam terminal lain dan biarkan terbuka:
    ```bash
    cd sut
    node server.js
    ```
-5. Dalam terminal kedua (atau pelayar):
+5. Dalam terminal kedua (atau browser):
    ```bash
    curl -s http://localhost:3000/api/health
    ```
-   Jangkaan: `{"status":"ok","masa":"…"}`. Buka `http://localhost:3000` dalam pelayar untuk senarai endpoint.
-6. Buka GUI: `jmeter` (atau `bin\jmeter.bat`). Kenal pasti **pokok ujian** (kiri), **panel konfigurasi** (kanan), butang **Start / Stop / Clear All**, dan ikon **Log** (segi tiga amaran, kanan atas).
+   Expected: `{"status":"ok","masa":"…"}`. Buka `http://localhost:3000` dalam browser untuk tengok senarai endpoint.
+6. Buka GUI: `jmeter` (atau `bin\jmeter.bat`). Kenal pasti **test tree** (kiri), **panel setting** (kanan), button **Start / Stop / Clear All**, dan ikon **Log** (segi tiga amaran, kanan atas).
 
 ### ✅ Checkpoint
 - [ ] `java --version` memaparkan versi 11 atau lebih baru
@@ -74,16 +74,16 @@ cd sut && node server.js      # biarkan terbuka
 
 ### 🧯 Masalah lazim
 
-| Gejala | Punca | Penyelesaian |
+| Simptom | Punca | Cara fix |
 |--------|-------|--------------|
-| `'jmeter' is not recognized…` (Windows) | `bin` tiada dalam PATH, atau terminal lama | Tambah ke **User variables → Path**; **buka terminal baharu** |
-| `jmeter` mengadu Java tidak dijumpai | Tiada JDK / `JAVA_HOME` salah | Pasang JDK 11+; set `JAVA_HOME` ke folder JDK; tambah `%JAVA_HOME%\bin` ke PATH; `java -version` |
-| `EADDRINUSE :::3000` semasa `node server.js` | SUT lain sudah berjalan di port 3000 | Guna tetingkap SUT yang sedia ada, atau hentikan (Ctrl+C); `PORT=3001 node server.js` hanya jika perlu (dan ubah Defaults) |
-| GUI JMeter sangat perlahan / fon kecil | Skrin resolusi tinggi / memori rendah | **Options → Zoom In**; tutup aplikasi lain |
-| `curl` tiada (Windows lama) | — | Buka `http://localhost:3000/api/health` dalam pelayar |
+| `'jmeter' is not recognized…` (Windows) | `bin` tak ada dalam PATH, atau guna terminal lama | Tambah dalam **User variables → Path**; **buka terminal baru** |
+| `jmeter` complain Java tak jumpa | JDK tak install / `JAVA_HOME` salah | Install JDK 11+; set `JAVA_HOME` ke folder JDK; tambah `%JAVA_HOME%\bin` dalam PATH; test `java -version` |
+| `EADDRINUSE :::3000` masa `node server.js` | Ada SUT lain dah running di port 3000 | Guna window SUT yang dah ada, atau stop dulu (Ctrl+C); guna `PORT=3001 node server.js` hanya kalau perlu (dan tukar Defaults) |
+| GUI JMeter sangat lambat / font kecil | Skrin resolusi tinggi / RAM rendah | **Options → Zoom In**; tutup aplikasi lain |
+| `curl` tak ada (Windows lama) | — | Buka `http://localhost:3000/api/health` dalam browser |
 
 ### ⭐ Cabaran
-Mulakan SUT dengan `ERROR_RATE=0.2 node server.js` dan baca `sut/server.js` — endpoint mana yang terkesan oleh `ERROR_RATE`? (Jawapan: hanya `POST …/bayar-cukai`.) Pulihkan dengan `node server.js` biasa.
+Start SUT dengan `ERROR_RATE=0.2 node server.js` dan baca `sut/server.js` — endpoint mana yang kena kesan `ERROR_RATE`? (Jawapan: hanya `POST …/bayar-cukai`.) Lepas tu restart dengan `node server.js` biasa.
 
 ---
 
@@ -92,22 +92,22 @@ Mulakan SUT dengan `ERROR_RATE=0.2 node server.js` dan baca `sut/server.js` — 
 **Sesi:** S2
 
 ### 🎯 Objektif
-- Membina Test Plan dengan Thread Group, HTTP Request Defaults, HTTP Request dan View Results Tree (O3)
-- Membaca tab Sampler result / Request / Response data dalam View Results Tree
+- Bina Test Plan dengan Thread Group, HTTP Request Defaults, HTTP Request dan View Results Tree (O3)
+- Baca tab Sampler result / Request / Response data dalam View Results Tree
 
 ### Prasyarat
-- Latihan 0 selesai; SUT berjalan
+- Latihan 0 dah siap; SUT running
 - README §2.1–2.2
 
 ### Langkah
 
-1. Buka JMeter (GUI). **Klik kanan Test Plan → Add → Threads (Users) → Thread Group** — 1 pengguna, ramp-up 1, 1 gelung.
+1. Buka JMeter (GUI). **Klik kanan Test Plan → Add → Threads (Users) → Thread Group** — 1 user, ramp-up 1, 1 loop.
 2. **Klik kanan Thread Group → Add → Config Element → HTTP Request Defaults**: Protocol `http`, server `localhost`, port `3000`.
 3. **Klik kanan Thread Group → Add → Sampler → HTTP Request** → `GET /api/health` (biarkan Server/Port kosong).
-4. Tambah sampler kedua `GET /` (halaman info).
+4. Tambah sampler kedua `GET /` (page info).
 5. **Klik kanan Thread Group → Add → Listener → View Results Tree**.
-6. **File → Save** sebagai `lab1-saya.jmx`, kemudian jalankan (▶). Sahkan respons `{"status":"ok"}` dan kod **200**.
-7. Dalam View Results Tree, klik sampel `/api/health` → tab **Request** — lihat URL penuh `http://localhost:3000/api/health` yang dibina daripada Defaults + Path.
+6. **File → Save** sebagai `lab1-saya.jmx`, kemudian run (▶). Pastikan response `{"status":"ok"}` dan code **200**.
+7. Dalam View Results Tree, klik sample `/api/health` → tab **Request** — tengok URL penuh `http://localhost:3000/api/health` yang terbentuk daripada Defaults + Path.
 
 > Bandingkan dengan `test-plans/01-hello-jpj.jmx`.
 
@@ -119,15 +119,15 @@ Mulakan SUT dengan `ERROR_RATE=0.2 node server.js` dan baca `sut/server.js` — 
 
 ### 🧯 Masalah lazim
 
-| Gejala | Punca | Penyelesaian |
+| Simptom | Punca | Cara fix |
 |--------|-------|--------------|
-| `Non HTTP response code: java.net.ConnectException` | SUT tidak berjalan / port salah | Mulakan `node server.js`; semak Port `3000` dalam Defaults |
-| `UnknownHostException` | Server Name ada `http://` atau ruang | Server Name = `localhost` sahaja (protokol di medan berasingan) |
-| View Results Tree kosong | Listener di luar skop (cth. di bawah Thread Group lain) atau plan tak dijalankan | Letak listener di bawah Thread Group yang sama; semak ikon Log |
-| Butang Start kelabu | Plan sedang berjalan | Tunggu, atau klik **Stop** |
+| `Non HTTP response code: java.net.ConnectException` | SUT tak running / port salah | Start `node server.js`; check Port `3000` dalam Defaults |
+| `UnknownHostException` | Server Name ada `http://` atau space | Server Name = `localhost` sahaja (protocol ada field sendiri) |
+| View Results Tree kosong | Listener di luar scope (contohnya di bawah Thread Group lain) atau plan tak di-run | Letak listener bawah Thread Group yang sama; tengok ikon Log |
+| Button Start kelabu | Plan masih running | Tunggu, atau klik **Stop** |
 
 ### ⭐ Cabaran
-Tambah **HTTP Header Manager** dengan `Accept: application/json` dan sahkan header itu kelihatan dalam tab **Request → Request Headers**.
+Tambah **HTTP Header Manager** dengan `Accept: application/json`, kemudian pastikan header itu keluar dalam tab **Request → Request Headers**.
 
 ---
 
@@ -136,25 +136,25 @@ Tambah **HTTP Header Manager** dengan `Accept: application/json` dan sahkan head
 **Sesi:** S3
 
 ### 🎯 Objektif
-- Menetapkan model beban 20 / 10 / 5 dan meramal bilangan sampel (O4)
-- Menambah Response Assertion, Duration Assertion dan Constant Timer (O7)
-- Membaca Throughput, Average, Error % dan 95% Line (O6)
+- Set load model 20 / 10 / 5 dan ramal bilangan sample (O4)
+- Tambah Response Assertion, Duration Assertion dan Constant Timer (O7)
+- Baca Throughput, Average, Error % dan 95% Line (O6)
 
 ### Prasyarat
-- Latihan 1 selesai
+- Latihan 1 dah siap
 - README §2.3–2.5 dan §3.1–3.2
 
 ### Langkah
 
-1. Tukar Thread Group kepada **20 pengguna**, **ramp-up 10s**, **5 gelung**.
-2. Sampler: `GET /api/kenderaan/WXY1234/cukai` (buang/nyahaktif sampler lain).
+1. Tukar Thread Group kepada **20 users**, **ramp-up 10s**, **5 loop**.
+2. Sampler: `GET /api/kenderaan/WXY1234/cukai` (buang atau disable sampler lain).
 3. Tambah **Response Assertion** (klik kanan sampler → Add → Assertions) — Field to Test *Text Response*, *Substring*, pattern `amaun`.
 4. Tambah **Duration Assertion** — 2000 ms.
-5. Tambah **Constant Timer** 300 ms (think time) di bawah Thread Group.
-6. Tambah **Summary Report** dan **Aggregate Report**. **Nyahaktif** View Results Tree (klik kanan → **Disable**) — listener berat semasa beban.
-7. **Ramal** jumlah permintaan, kemudian **Clear All** dan jalankan. Catat: **Throughput**, **Average**, **Error %**, **95% Line**.
+5. Tambah **Constant Timer** 300 ms (think time) bawah Thread Group.
+6. Tambah **Summary Report** dan **Aggregate Report**. **Disable** View Results Tree (klik kanan → **Disable**) — listener ni berat masa load test.
+7. **Ramal** jumlah request, kemudian **Clear All** dan run. Catat: **Throughput**, **Average**, **Error %**, **95% Line**.
 
-> **Soalan:** Berapa jumlah permintaan dijangka? (20 × 5 = 100). Sahkan.
+> **Soalan:** Berapa jumlah request yang dijangka? (20 × 5 = 100). Check betul ke tak.
 > Bandingkan dengan `test-plans/02-cukai-beban.jmx`.
 
 ### ✅ Checkpoint
@@ -166,16 +166,16 @@ Tambah **HTTP Header Manager** dengan `Accept: application/json` dan sahkan head
 
 ### 🧯 Masalah lazim
 
-| Gejala | Punca | Penyelesaian |
+| Simptom | Punca | Cara fix |
 |--------|-------|--------------|
-| `# Samples` = 200 atau 300, bukan 100 | Sampler lama (`/api/health`, `/`) masih aktif | Disable/buang sampler lain |
-| Angka berganda / bercampur | Keputusan larian lama tidak dikosongkan | **Clear All** sebelum setiap larian |
-| Semua sampel gagal assertion | Pattern salah eja / Field to Test salah | *Text Response* + *Substring* + `amaun` (huruf kecil) |
-| Throughput jauh lebih rendah dari jangkaan | Timer menyebabkan jeda (betul!) atau ramp-up masih berjalan | Bandingkan dengan larian tanpa timer — itulah pelajaran |
-| JMeter beku semasa larian | View Results Tree aktif dengan banyak sampel | Disable View Results Tree semasa beban |
+| `# Samples` = 200 atau 300, bukan 100 | Sampler lama (`/api/health`, `/`) masih enabled | Disable/buang sampler lain |
+| Nombor berganda / bercampur | Result run lama tak di-clear | **Clear All** sebelum setiap run |
+| Semua sample fail assertion | Pattern salah eja / Field to Test salah | *Text Response* + *Substring* + `amaun` (huruf kecil) |
+| Throughput jauh lebih rendah dari expected | Timer buat jeda (memang betul!) atau ramp-up belum habis | Bandingkan dengan run tanpa timer — itulah pengajarannya |
+| JMeter hang masa run | View Results Tree masih enabled dengan banyak sample | Disable View Results Tree masa load test |
 
 ### ⭐ Cabaran
-Gantikan Constant Timer dengan **Gaussian Random Timer** (Deviation 300, Constant Delay Offset 1000). Jalankan semula — bandingkan Throughput. Kemudian kurangkan Duration Assertion kepada `100` ms dan perhatikan Error % — inilah cara SLA "menggigit".
+Tukar Constant Timer kepada **Gaussian Random Timer** (Deviation 300, Constant Delay Offset 1000). Run semula — bandingkan Throughput. Lepas tu turunkan Duration Assertion ke `100` ms dan tengok Error % — macam ni lah SLA "menggigit".
 
 ---
 
@@ -184,20 +184,20 @@ Gantikan Constant Timer dengan **Gaussian Random Timer** (Deviation 300, Constan
 **Sesi:** S3
 
 ### 🎯 Objektif
-- Menyuap nombor pendaftaran berlainan melalui CSV Data Set Config dan `${no_pendaftaran}` (O8)
+- Hantar nombor pendaftaran yang berlainan guna CSV Data Set Config dan `${no_pendaftaran}` (O8)
 
 ### Prasyarat
-- Latihan 2 selesai
-- README §3.3; fail `hari-1/data/kenderaan.csv` wujud
+- Latihan 2 dah siap
+- README §3.3; file `hari-1/data/kenderaan.csv` ada
 
 ### Langkah
 
-1. Simpan plan anda **dalam folder `hari-1/test-plans/`** (supaya laluan relatif `../data/` betul).
-2. Tambah **CSV Data Set Config** (Thread Group → Add → Config Element) membaca `../data/kenderaan.csv`
+1. Save plan anda **dalam folder `hari-1/test-plans/`** (supaya path relatif `../data/` betul).
+2. Tambah **CSV Data Set Config** (Thread Group → Add → Config Element) yang baca `../data/kenderaan.csv`
    (variable names: `no_pendaftaran,model`; ignore first line: **True**; recycle: **True**; stop thread: **False**; sharing mode: **All threads**).
-3. Ubah path sampler kepada `/api/kenderaan/${no_pendaftaran}/cukai`.
-4. Dayakan semula View Results Tree. Jalankan (10 pengguna × 10 gelung). Dalam View Results Tree, sahkan
-   setiap permintaan guna nombor pendaftaran berlainan.
+3. Tukar path sampler kepada `/api/kenderaan/${no_pendaftaran}/cukai`.
+4. Enable balik View Results Tree. Run (10 users × 10 loop). Dalam View Results Tree, pastikan
+   setiap request guna nombor pendaftaran yang berlainan.
 
 > Bandingkan dengan `test-plans/03-csv-berparameter.jmx`.
 
@@ -209,15 +209,15 @@ Gantikan Constant Timer dengan **Gaussian Random Timer** (Deviation 300, Constan
 
 ### 🧯 Masalah lazim
 
-| Gejala | Punca | Penyelesaian |
+| Simptom | Punca | Cara fix |
 |--------|-------|--------------|
-| URL mengandungi `${no_pendaftaran}` secara literal | CSV tidak dibaca — laluan salah atau plan disimpan di folder lain | Simpan `.jmx` dalam `hari-1/test-plans/`; semak Log untuk "File … not found" |
-| Satu permintaan ke `/api/kenderaan/no_pendaftaran/cukai` → 404 | *Ignore first line* = False | Tetapkan **True** |
-| Semua thread guna nombor sama | CSV diletak sebagai anak sampler dalam skop pelik, atau *Sharing mode* bukan All threads + data 1 baris | Letak CSV terus di bawah Thread Group; semak fail ada 5 baris data |
-| Pembolehubah `model` kosong | Ruang dalam *Variable Names* (`no_pendaftaran, model`) | Tiada ruang selepas koma |
+| URL keluar `${no_pendaftaran}` bulat-bulat | CSV tak dibaca — path salah atau plan di-save dalam folder lain | Save `.jmx` dalam `hari-1/test-plans/`; check Log untuk "File … not found" |
+| Satu request ke `/api/kenderaan/no_pendaftaran/cukai` → 404 | *Ignore first line* = False | Set **True** |
+| Semua thread guna nombor yang sama | CSV diletak sebagai child sampler dengan scope pelik, atau *Sharing mode* bukan All threads + data cuma 1 baris | Letak CSV terus bawah Thread Group; check file ada 5 baris data |
+| Variable `model` kosong | Ada space dalam *Variable Names* (`no_pendaftaran, model`) | Jangan letak space lepas koma |
 
 ### ⭐ Cabaran
-Tambah sampler `GET /api/saman?no_kp=${no_kp}` menggunakan **CSV kedua** dengan lajur `no_kp` (tiga pengguna sintetik: `800101015500`, `900202025600`, `850303035700`). Simpan fail baharu dalam `hari-1/data/` dengan nama anda sendiri.
+Tambah sampler `GET /api/saman?no_kp=${no_kp}` guna **CSV kedua** dengan column `no_kp` (tiga user sintetik: `800101015500`, `900202025600`, `850303035700`). Save file baru dalam `hari-1/data/` dengan nama anda sendiri.
 
 ---
 
@@ -226,19 +226,19 @@ Tambah sampler `GET /api/saman?no_kp=${no_kp}` menggunakan **CSV kedua** dengan 
 **Sesi:** S3
 
 ### 🎯 Objektif
-- Membuktikan assertion menangkap respons salah dan menaikkan Error % (O7)
+- Buktikan assertion boleh tangkap response yang salah dan naikkan Error % (O7)
 
 ### Prasyarat
-- Latihan 3 selesai (plan berparameter CSV berjalan dengan 0% ralat)
+- Latihan 3 dah siap (plan CSV running dengan 0% error)
 
 ### Langkah
 
-1. Tambah satu baris palsu pada `hari-1/data/kenderaan.csv`, cth: `ABC0000,Kereta Hantu`.
-2. Jalankan semula Latihan 3. Perhatikan permintaan `ABC0000` **gagal**
-   assertion (`amaun` tiada — endpoint pulangkan **404**).
-3. Dalam View Results Tree, klik sampel merah → tab **Sampler result** → baca *Assertion failure message*. Bandingkan kod respons (`404`) dengan badan `{"ralat":"Kenderaan tidak dijumpai"}`.
-4. Lihat **Error %** meningkat dalam Summary Report. **Ramal dahulu:** dengan 6 baris data dan Recycle = True, kira-kira berapa peratus sampel akan gagal?
-5. Buang baris palsu selepas selesai.
+1. Tambah satu baris palsu dalam `hari-1/data/kenderaan.csv`, contohnya: `ABC0000,Kereta Hantu`.
+2. Run semula Latihan 3. Tengok request `ABC0000` **fail**
+   assertion (`amaun` tak ada — endpoint return **404**).
+3. Dalam View Results Tree, klik sample merah → tab **Sampler result** → baca *Assertion failure message*. Bandingkan response code (`404`) dengan body `{"ralat":"Kenderaan tidak dijumpai"}`.
+4. Tengok **Error %** naik dalam Summary Report. **Ramal dulu:** dengan 6 baris data dan Recycle = True, lebih kurang berapa peratus sample akan fail?
+5. Buang baris palsu tu lepas siap.
 
 ### ✅ Checkpoint
 - [ ] Permintaan `ABC0000` gagal assertion (endpoint pulangkan **404**)
@@ -248,14 +248,14 @@ Tambah sampler `GET /api/saman?no_kp=${no_kp}` menggunakan **CSV kedua** dengan 
 
 ### 🧯 Masalah lazim
 
-| Gejala | Punca | Penyelesaian |
+| Simptom | Punca | Cara fix |
 |--------|-------|--------------|
-| Baris palsu tidak pernah digunakan | Fail tidak disimpan, atau baris kosong sebelum baris palsu | Simpan fail; pastikan tiada baris kosong |
-| Error % = 100% | Baris palsu ditambah pada baris tajuk / format rosak | Buka CSV dalam editor teks (bukan Excel) dan semak |
-| Lupa buang baris palsu → Latihan seterusnya gagal | — | `git checkout hari-1/data/kenderaan.csv` atau padam baris secara manual |
+| Baris palsu tak pernah digunakan | File tak di-save, atau ada baris kosong sebelum baris palsu | Save file; pastikan tak ada baris kosong |
+| Error % = 100% | Baris palsu tertambah pada baris header / format rosak | Buka CSV dalam text editor (bukan Excel) dan check |
+| Lupa buang baris palsu → latihan seterusnya fail | — | `git checkout hari-1/data/kenderaan.csv` atau padam baris tu secara manual |
 
 ### ⭐ Cabaran
-Daripada mengubah fail asal, salin ke `kenderaan-rosak.csv` dan tukar Filename CSV Data Set Config. Kemudian tambah Response Assertion kedua dengan **Field to Test = Response Code**, pattern `200` — dua assertion, mesej kegagalan berbeza.
+Jangan ubah file asal — copy ke `kenderaan-rosak.csv` dan tukar Filename dalam CSV Data Set Config. Lepas tu tambah Response Assertion kedua dengan **Field to Test = Response Code**, pattern `200` — dua assertion, mesej fail yang berbeza.
 
 ---
 
@@ -264,29 +264,29 @@ Daripada mengubah fail asal, salin ke `kenderaan-rosak.csv` dan tukar Filename C
 **Sesi:** S3
 
 ### 🎯 Objektif
-- Memerhati hubungan latensi pelayan, throughput dan percentile (O6)
+- Tengok hubungan antara latency server, throughput dan percentile (O6)
 
 ### Prasyarat
-- Latihan 2 selesai dengan nilai Throughput / Average dicatat
+- Latihan 2 dah siap dan nilai Throughput / Average dah dicatat
 
 ### Langkah
 
-1. Hentikan pelayan (Ctrl+C). Mulakan semula dengan latensi tinggi:
+1. Stop server (Ctrl+C). Start semula dengan latency tinggi:
    ```bash
    LATENCY_MIN=300 LATENCY_MAX=900 node server.js
    ```
    Windows PowerShell: `$env:LATENCY_MIN=300; $env:LATENCY_MAX=900; node server.js`
-2. **Clear All**, kemudian jalankan semula Latihan 2. Bandingkan **Average**, **95% Line** dan **Throughput** dengan larian asal.
+2. **Clear All**, kemudian run semula Latihan 2. Bandingkan **Average**, **95% Line** dan **Throughput** dengan run asal.
 3. Isi jadual:
 
-   | Larian | Average (ms) | 95% Line (ms) | Throughput (/s) | Error % |
+   | Run | Average (ms) | 95% Line (ms) | Throughput (/s) | Error % |
    |--------|--------------|---------------|-----------------|---------|
    | Latihan 2 (40–180 ms) | | | | |
    | Latihan 5 (300–900 ms) | | | | |
 
-4. Pulihkan SUT: Ctrl+C → `node server.js` (tanpa pembolehubah).
+4. Restore SUT: Ctrl+C → `node server.js` (tanpa variable).
 
-> **Soalan reflektif:** Mengapa throughput jatuh apabila latensi naik walaupun bilangan pengguna sama? (Petunjuk: setiap thread menunggu lebih lama sebelum boleh menghantar permintaan seterusnya.)
+> **Soalan refleksi:** Kenapa throughput jatuh bila latency naik, walaupun bilangan users sama? (Hint: setiap thread kena tunggu lebih lama sebelum boleh hantar request seterusnya.)
 
 ### ✅ Checkpoint
 - [ ] Pelayan dimulakan semula dengan `LATENCY_MIN=300 LATENCY_MAX=900`
@@ -296,14 +296,14 @@ Daripada mengubah fail asal, salin ke `kenderaan-rosak.csv` dan tukar Filename C
 
 ### 🧯 Masalah lazim
 
-| Gejala | Punca | Penyelesaian |
+| Simptom | Punca | Cara fix |
 |--------|-------|--------------|
-| Angka sama seperti sebelum | Pembolehubah tidak sampai ke Node (Windows cmd) | `set LATENCY_MIN=300` dan `set LATENCY_MAX=900` dalam cmd, atau sintaks PowerShell di atas |
-| Error % naik mendadak | Duration Assertion 2000 ms masih OK — jika anda menurunkannya dalam Cabaran Latihan 2, ia kini gagal | Pulihkan kepada 2000 ms, atau gunakan ini sebagai demo SLA |
-| Latihan seterusnya terasa lambat | SUT masih dalam mod latensi tinggi | Mulakan semula SUT tanpa pembolehubah |
+| Nombor sama macam sebelum ni | Variable tak sampai ke Node (Windows cmd) | `set LATENCY_MIN=300` dan `set LATENCY_MAX=900` dalam cmd, atau guna syntax PowerShell di atas |
+| Error % naik mendadak | Duration Assertion 2000 ms masih OK — tapi kalau anda dah turunkan dalam Cabaran Latihan 2, sekarang ia fail | Set balik ke 2000 ms, atau guna ni sebagai demo SLA |
+| Latihan seterusnya rasa lambat | SUT masih dalam mode latency tinggi | Restart SUT tanpa variable |
 
 ### ⭐ Cabaran
-Naikkan threads kepada 60 (latensi tinggi kekal). Adakah throughput pulih? Apa yang ini ajar tentang hubungan concurrency, masa respons dan throughput (Little's Law: concurrency ≈ throughput × masa respons)?
+Naikkan threads ke 60 (latency tinggi kekal). Throughput naik balik tak? Apa yang ni ajar tentang hubungan concurrency, response time dan throughput (Little's Law: concurrency ≈ throughput × response time)?
 
 ---
 
@@ -312,21 +312,21 @@ Naikkan threads kepada 60 (latensi tinggi kekal). Adakah throughput pulih? Apa y
 **Sesi:** S4
 
 ### 🎯 Objektif
-- Merakam aliran dengan HTTP(S) Test Script Recorder ke dalam Recording Controller (O9)
-- Membuktikan main balik gagal (401) dan menamakan nilai yang perlu dikorelasi (O9)
+- Record flow guna HTTP(S) Test Script Recorder ke dalam Recording Controller (O9)
+- Buktikan replay fail (401) dan namakan nilai yang perlu di-correlate (O9)
 
 ### Prasyarat
-- SUT berjalan (`node sut/server.js`)
+- SUT running (`node sut/server.js`)
 - README §4.1–4.6; panduan penuh: [`rakaman-e2e.md`](./rakaman-e2e.md)
 
 ### Langkah
 
 1. **Klik kanan Test Plan → Add → Non-Test Elements → HTTP(S) Test Script Recorder.**
-   Tambah **Recording Controller** di bawah Thread Group dan set sebagai **Target Controller** perakam.
-   *(Atau buka terus `test-plans/rakam-template.jmx` — semuanya sudah dipasang.)*
-2. Pada perakam: **Requests Filtering → Excludes** → tambah regex aset statik
+   Tambah **Recording Controller** bawah Thread Group dan set sebagai **Target Controller** untuk recorder.
+   *(Atau terus buka `test-plans/rakam-template.jmx` — semua dah siap setup.)*
+2. Pada recorder: **Requests Filtering → Excludes** → tambah regex static asset
    `(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|eot|otf|ttf|mp4|woff|woff2)([?;].*)?`.
-3. Klik **Start**. Hantar satu permintaan melalui proxy JMeter (port 8888):
+3. Klik **Start**. Hantar request melalui proxy JMeter (port 8888):
    ```bash
    curl -s -x http://localhost:8888 -H 'Content-Type: application/json' \
      -d '{"no_kp":"800101015500","kata_laluan":"rahsia123"}' \
@@ -334,22 +334,22 @@ Naikkan threads kepada 60 (latensi tinggi kekal). Adakah throughput pulih? Apa y
    curl -s -x http://localhost:8888 -H 'Authorization: Bearer TOKEN_PALSU' \
      'http://localhost:3000/api/kenderaan?no_kp=800101015500'
    ```
-4. Klik **Stop**. Lihat sampler yang dirakam dalam Recording Controller. Buka sampler `/api/kenderaan` → **HTTP Header Manager** anaknya → perhatikan `Authorization: Bearer TOKEN_PALSU` dikeras-kod.
-5. Tambah **View Results Tree** di bawah Thread Group. **Main balik** (Run). Perhatikan permintaan berkumpul → **401** kerana token dirakam
-   sudah luput / palsu.
-6. Buktikan dengan plan rujukan, non-GUI, dan jana laporan HTML:
+4. Klik **Stop**. Tengok sampler yang dah di-record dalam Recording Controller. Buka sampler `/api/kenderaan` → child **HTTP Header Manager** → perasan `Authorization: Bearer TOKEN_PALSU` di-hardcode.
+5. Tambah **View Results Tree** bawah Thread Group. **Replay** (Run). Tengok request kenderaan → **401** sebab token yang di-record
+   dah expired / palsu.
+6. Buktikan guna plan rujukan dalam mode non-GUI, dan generate report HTML:
    ```bash
    jmeter -n -t hari-1/test-plans/04-rakaman-mentah.jmx \
      -l /tmp/rec.jtl -e -o /tmp/laporan-rakaman/
    ```
    Buka `/tmp/laporan-rakaman/index.html` — Error % sepatutnya **~67%** (200 / 401 / 401).
 
-> **Soalan analisis:** Nilai manakah yang **berubah setiap sesi** dan perlu **dikorelasi**
-> (bukan dikeras-kod)? Bandingkan dengan rujukan siap
-> [`test-plans/04-rakaman-mentah.jmx`](../test-plans/04-rakaman-mentah.jmx) — pembetulannya
-> ada di Hari 2 (korelasi `token` + `csrf`).
+> **Soalan analisis:** Nilai mana yang **berubah setiap session** dan perlu **di-correlate**
+> (bukan di-hardcode)? Bandingkan dengan rujukan siap
+> [`test-plans/04-rakaman-mentah.jmx`](../test-plans/04-rakaman-mentah.jmx) — cara fix-nya
+> ada dalam Hari 2 (correlation `token` + `csrf`).
 >
-> **Panduan hujung-ke-hujung langkah demi langkah:** [`rakaman-e2e.md`](./rakaman-e2e.md).
+> **Panduan end-to-end step by step:** [`rakaman-e2e.md`](./rakaman-e2e.md).
 
 ### ✅ Checkpoint
 - [ ] HTTP(S) Test Script Recorder dan Recording Controller (Target Controller) disediakan, dengan regex aset statik dalam Excludes
@@ -360,18 +360,18 @@ Naikkan threads kepada 60 (latensi tinggi kekal). Adakah throughput pulih? Apa y
 
 ### 🧯 Masalah lazim
 
-| Gejala | Punca | Penyelesaian |
+| Simptom | Punca | Cara fix |
 |--------|-------|--------------|
-| Tiada sampler dirakam | Perakam belum **Start**, atau trafik tidak melalui `:8888` | `lsof -iTCP:8888 -sTCP:LISTEN -n -P` (macOS/Linux) / `netstat -ano \| findstr :8888` (Windows); pastikan `curl -x http://localhost:8888` |
-| Firefox: tiada apa dirakam dari localhost | `localhost, 127.0.0.1` dalam **No proxy for** | Kosongkan kotak itu |
-| `Address already in use` bila Start | Port 8888 digunakan aplikasi lain / perakam kedua | Tutup plan lain yang ada perakam; atau tukar port (dan arahan `curl -x`) |
-| `curl` di Windows cmd: `{"ralat":…}` / JSON rosak | Petikan tunggal tidak difahami oleh cmd.exe | Guna Git Bash, atau: `curl -s -x http://localhost:8888 -H "Content-Type: application/json" -d "{\"no_kp\":\"800101015500\",\"kata_laluan\":\"rahsia123\"}" http://localhost:3000/api/log-masuk` |
-| Sampler dirakam di bawah Test Plan, bukan Recording Controller | Target Controller tidak ditetapkan | Pilih **Test Plan > Thread Group > Recording Controller** |
-| `-e -o` gagal: *"folder … not empty"* | Folder laporan sudah wujud | Padam folder atau guna nama baharu |
-| Pelayaran Firefox biasa gagal selepas latihan | Proxy masih menunjuk ke JMeter yang telah berhenti | Network Settings → **Use system proxy settings** |
+| Tak ada sampler di-record | Recorder belum **Start**, atau traffic tak lalu `:8888` | `lsof -iTCP:8888 -sTCP:LISTEN -n -P` (macOS/Linux) / `netstat -ano \| findstr :8888` (Windows); pastikan guna `curl -x http://localhost:8888` |
+| Firefox: tak ada apa di-record dari localhost | `localhost, 127.0.0.1` ada dalam **No proxy for** | Kosongkan kotak tu |
+| `Address already in use` bila Start | Port 8888 dah dipakai aplikasi lain / recorder kedua | Tutup plan lain yang ada recorder; atau tukar port (dan command `curl -x`) |
+| `curl` dalam Windows cmd: `{"ralat":…}` / JSON rosak | cmd.exe tak faham single quote | Guna Git Bash, atau: `curl -s -x http://localhost:8888 -H "Content-Type: application/json" -d "{\"no_kp\":\"800101015500\",\"kata_laluan\":\"rahsia123\"}" http://localhost:3000/api/log-masuk` |
+| Sampler di-record bawah Test Plan, bukan Recording Controller | Target Controller tak di-set | Pilih **Test Plan > Thread Group > Recording Controller** |
+| `-e -o` fail: *"folder … not empty"* | Folder report dah wujud | Padam folder tu atau guna nama baru |
+| Browsing biasa dalam Firefox tak jalan lepas latihan | Proxy masih point ke JMeter yang dah stop | Network Settings → **Use system proxy settings** |
 
 ### ⭐ Cabaran
-Ikut [`rakaman-e2e.md`](./rakaman-e2e.md) sepenuhnya: rakam aliran **3 langkah** (log masuk → senarai kenderaan → bayar cukai) dengan `TOKEN` dan `CSRF` **sebenar**, mulakan semula SUT, kemudian main balik. Mengapa kali ini bayar-cukai juga gagal walaupun token itu "sebenar" semasa dirakam? Untuk HTTPS (laman yang anda **dibenarkan** sahaja), ikut [`rakaman-https-setup.md`](./rakaman-https-setup.md) — termasuk import `ApacheJMeterTemporaryRootCA.crt` dan **membuangnya** selepas selesai.
+Ikut [`rakaman-e2e.md`](./rakaman-e2e.md) sepenuhnya: record flow **3 langkah** (log masuk → senarai kenderaan → bayar cukai) dengan `TOKEN` dan `CSRF` yang **sebenar**, restart SUT, kemudian replay. Kenapa kali ni bayar-cukai pun fail, walaupun token tu "sebenar" masa di-record? Untuk HTTPS (laman yang anda **dibenarkan** sahaja), ikut [`rakaman-https-setup.md`](./rakaman-https-setup.md) — termasuk import `ApacheJMeterTemporaryRootCA.crt` dan **buang** certificate tu lepas siap.
 
 ---
 
@@ -380,18 +380,18 @@ Ikut [`rakaman-e2e.md`](./rakaman-e2e.md) sepenuhnya: rakam aliran **3 langkah**
 **Sesi:** S3
 
 ### 🎯 Objektif
-- Menyusun elemen mengikut skop dan menerangkan kesan kedudukan setiap elemen (O5)
+- Susun element ikut scope dan terangkan kesan kedudukan setiap element (O5)
 
 ### Prasyarat
-- Latihan 1–3 selesai
+- Latihan 1–3 dah siap
 
 ### Langkah
 
-1. Bina **satu Test Plan** dengan **dua sampler** (`/api/health` dan `/api/saman?no_kp=900202025600`) di bawah Thread Group yang sama.
-2. Beri setiap sampler **Response Assertion tersendiri** (sebagai anak): `ok` untuk health, `saman` untuk saman.
-3. Tambah **HTTP Request Defaults** dan **Constant Timer** 500 ms di bawah Thread Group, serta **Summary Report**.
-4. **Ramal:** jumlah jeda timer setiap lelaran? Kemudian pindahkan timer menjadi anak sampler saman sahaja dan ramal semula.
-5. Susun elemen dengan betul (Config → Sampler → Assertion → Listener) dan terangkan **skop** setiap elemen kepada rakan sebelah anda.
+1. Bina **satu Test Plan** dengan **dua sampler** (`/api/health` dan `/api/saman?no_kp=900202025600`) bawah Thread Group yang sama.
+2. Bagi setiap sampler **Response Assertion sendiri** (sebagai child): `ok` untuk health, `saman` untuk saman.
+3. Tambah **HTTP Request Defaults** dan **Constant Timer** 500 ms bawah Thread Group, dan **Summary Report**.
+4. **Ramal:** berapa jumlah jeda timer setiap iteration? Lepas tu pindahkan timer jadi child sampler saman sahaja, dan ramal semula.
+5. Susun element dengan betul (Config → Sampler → Assertion → Listener) dan terangkan **scope** setiap element kepada rakan sebelah.
 
 ### ✅ Checkpoint
 - [ ] Dua sampler, setiap satu dengan Response Assertion sendiri, lulus 0% ralat
