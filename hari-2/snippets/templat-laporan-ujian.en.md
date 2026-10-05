@@ -220,3 +220,33 @@ Site findings: (1) … (2) …
 | Impact | A report that quotes only the combined figures would pass a system that fails for one site. |
 | Cause | A combined average/percentile mixes the distributions of two different populations. |
 | Recommendation | Report NFR results **per site** (`[LOKASI]` label + per-site reports); use combined figures only for total load/throughput. |
+
+### B9. Server CPU + p95/p99 — filled-in example (chatbot, plan `10b` + PerfMon)
+
+> A real run of `hari-2/run/run-chatbot-perfmon.sh` (JMeter 5.6.3 + jpgc-perfmon, 14-core laptop; SUT + JMeter + ServerAgent on the same machine): `POST /api/chatbot`, 40 users, ramp-up 120 s, 180 s, think time 1–2 s, SLA (Duration Assertion) 3000 ms. Figures from `laporan/statistics.json` and `perfmon.jtl`. NFR: **p95 ≤ 2000 ms and p99 ≤ 8000 ms at 30 concurrent users, Error % < 1% (excluding SLA breaches)**.
+
+| Users (threads) | Avg CPU | Max CPU | Throughput | p50 ms | p95 ms | p99 ms | NFR p95/p99 |
+|----------------:|--------:|--------:|-----------:|-------:|-------:|-------:|:-----------:|
+| 1–10 | 26 % | 53 % | 2.4 /s | 714 | 1067 | 3536* | ✅ |
+| 11–20 | 53 % | 74 % | 6.6 /s | 761 | 1048 | 5007 | ✅ |
+| 21–30 | 73 % | 96 % | 10.4 /s | 780 | 1121 | 5962 | ✅ |
+| 31–40 | 95 % | 100 % | 14.0 /s | 987 | 3024 | 6343 | ❌ (p95) |
+| Overall (1877 samples) | 73 % | 100 % | 10.35 /s | 902 | 1665 | 6076 | — |
+
+\* Only 67 samples → p99 = Max; not enough samples for p99.
+
+| Finding C1 | |
+|---|---|
+| Severity | High (capacity limit) |
+| Evidence | Server CPU (PerfMon, 10 s average) stays ≥ 80% from t ≈ 80 s (~31 users) and 94–100% at 40 users. In the same window p95 jumps 1027 → 3567 ms; for 31–40 users p95 = **3024 ms** (> 2000 ❌). Throughput only rises to **14.0 /s** (≈ 16.7 /s expected without saturation). *Active Threads Over Time* + `cpu-perfmon.png` + *Response Times Over Time* on the same time axis. |
+| Impact | Above ~30 concurrent users per server, questions queue — 5% of users wait > 3 s. |
+| Cause | Server **CPU saturation** (answer generation is CPU-bound); not the network — all traffic is on localhost. Note: JMeter shares the same laptop, so part of the CPU is the load generator. |
+| Recommendation | Safe capacity ≈ 30 users per server; profile answer generation, add CPU / scale out, repeat the test with the load generator on a separate machine. |
+
+| Finding C2 | |
+|---|---|
+| Severity | Medium (user experience) |
+| Evidence | Average **1069 ms** and p95 **1665 ms** look fine, but p99 is **6076 ms** (3.6× p95) and Max 9220 ms. p99 is high at **every** load level (3.5–6.3 s), including 11–20 users at 53% CPU. *Response Time Percentiles*: the curve is flat up to ~p95, then almost vertical. 75 samples failed the 3000 ms SLA (`The operation lasted too long`) + 18 synthetic HTTP 500s → Error % 4.95%. |
+| Impact | 1 in every 100 questions waits > 6 s — at 10 questions/s ≈ 6 users every minute; users may resend (more load). |
+| Cause | Long tail: ~2.5% long answers (600–1200 tokens) — a property of the chatbot, **not** a load effect. |
+| Recommendation | The NFR must state p95 **and** p99; consider streaming answers / capping answer length / a "typing…" message; monitor p99 per transaction with ≥ 1000 samples. |

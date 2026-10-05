@@ -10,12 +10,13 @@ This is a **course material repository** for a 2-day Apache JMeter performance-t
 
 ## Repository Structure
 
-- `sut/server.js` — the System Under Test: a **zero-dependency** Node.js (`http` module) mock API. Run with `node server.js` (no `npm install`). Env vars `PORT`, `LATENCY_MIN`/`LATENCY_MAX`, `ERROR_RATE` tune its behavior for demos.
+- `sut/server.js` — the System Under Test: a **zero-dependency** Node.js (`http` module) mock API. Run with `node server.js` (no `npm install`). Env vars `PORT`, `LATENCY_MIN`/`LATENCY_MAX`, `ERROR_RATE` tune its behavior for demos; `CHATBOT_KERJA` (CPU work multiplier, default 1) and `CHATBOT_PEKERJA` (worker-thread pool size, default = CPU cores) tune the chatbot endpoint.
 - `hari-{1,2}/README.md` — full step-by-step lecture notes for each day (Bahasa Melayu).
 - `hari-{1,2}/test-plans/*.jmx` — reference JMeter test plans (JMeter 5.6 format, XML). These are the "solution" artifacts the READMEs teach you to build in the GUI.
 - `hari-{1,2}/data/*.csv` — CSV Data Set inputs + data dictionaries.
 - `hari-2/snippets/jsr223-groovy.groovy` — Groovy scripting examples.
 - `hari-2/run/run-nogui.{sh,bat}` — non-GUI load run + HTML dashboard generator.
+- `hari-2/run/run-chatbot-perfmon.{sh,bat}` + `ringkasan-chatbot.js` — chatbot load run (plan `10b`) with server CPU/Memory from a PerfMon **ServerAgent**, HTML dashboard, JMeterPluginsCMD PNG/CSV export and a p50/p95/p99 + CPU summary (README §3.10–3.11, Lab 9).
 - `hari-{1,2}/snippets/lab.md` — per-day exercises.
 - `slides/jmeter-training.html` — self-contained deck (own CSS/JS engine shared with the PGN JavaScript and KKM CodeIgniter decks: 1280×720 scaled stage, `section.slide`, `data-label` day dividers "Hari 1 · …"/"Hari 2 · …", speaker notes in `<aside class="notes">`; no network, works from `file://`). `slides/vendor/reveal/` is no longer used by it.
 
@@ -35,6 +36,7 @@ Base: `http://localhost:3000`. Endpoints:
 - `POST /api/kenderaan/:no/bayar-cukai` — needs token + body `{csrf, tempoh_bulan, amaun}`; wrong/missing csrf → 403; ~1% synthetic 500.
 - `GET /api/saman?no_kp=` → `{saman:[...]}`.
 - `POST /api/saman/:id/bayar` — needs token + `{csrf}`.
+- `POST /api/chatbot` — body `{soalan}` → `{jawapan, token_dijana, masa_ms}` ("Chatbot eJPJ tiruan", no auth; empty `soalan` → 400). Does **real CPU work** (pure-JS xorshift loop) in a lazily created `worker_threads` pool: ≈ 5 ms CPU per token × `CHATBOT_KERJA`; ~97.5% of answers 60–180 tokens (≈ 0.3–0.9 s), ~2.5% 600–1200 tokens (≈ 3–6 s long tail). When all workers are busy, requests queue → server CPU and p95/p99 rise with concurrency. `ERROR_RATE` → 500 after the work. The CPU rate is calibrated once on the first chatbot request. Don't use `crypto` hashing for the work — OpenSSL locking stops it from scaling across threads.
 
 **Web portal (HTML forms, for browser recording):** `GET /portal/log-masuk` (form) → `POST /portal/log-masuk` (`application/x-www-form-urlencoded`: `no_kp`, `kata_laluan`) → 302 + cookie `SESI_EJPJ` (Path=/portal) → `GET /portal/kenderaan` (list) → `GET /portal/kenderaan/:no/bayar` (form with hidden `csrf` + `amaun`, select `tempoh_bulan`) → `POST /portal/kenderaan/:no/bayar` → receipt page `BERJAYA` (wrong csrf → 403 page; no cookie → 302 to login). Static: `/portal/gaya.css`, `/portal/favicon.svg` (to practise recorder Excludes). Separate session store from the API.
 
@@ -65,6 +67,17 @@ PENGGUNA=200 RAMPUP=60 TEMPOH=300 ./run-nogui.sh
 ```
 
 Plan `06` reads its load model from JMeter properties, so it's tunable without editing the `.jmx`: `-Jpengguna` / `-Jrampup` / `-Jtempoh` / `-Jhost` / `-Jport` (defaults via `__P(...,<default>)`). The wrapper maps the `PENGGUNA`/`RAMPUP`/`TEMPOH`/`HOST`/`PORT` env vars onto those `-J` flags. Plan `07` adds `-Jsla_ms` on top of these.
+
+**Chatbot + PerfMon (Day 2 S3 §3.10–3.11, Lab 9):** `hari-2/test-plans/10-chatbot-beban.jmx` (core only) and `10b-chatbot-perfmon.jmx` (same + PerfMon Metrics Collector, CPU + Memory `usedperc`) read `-Jpengguna` (20) / `-Jrampup` (60) / `-Jtempoh` (120) / `-Jhost` / `-Jport` / `-Jsla_ms` (3000); `10b` adds `-Jagent_host` (localhost) / `-Jagent_port` (4444) / `-Jperfmon_jtl` (perfmon.jtl, kept separate from `-l`). CSV `../data/soalan-chatbot.csv`. `10b` **needs the jpgc-perfmon plugin**: without it, loading fails with `CannotResolveClassException: kg.apc.jmeter.perfmon.PerfMonCollector`. Verify:
+
+```bash
+PORT=3105 node sut/server.js &                                  # never reuse the trainer's :3000
+jmeter -n -t hari-2/test-plans/10-chatbot-beban.jmx -Jport=3105 -Jpengguna=10 -Jrampup=5 -Jtempoh=30 -l /tmp/r10.jtl
+# 10b: plugins jpgc-perfmon,jpgc-cmd,jpgc-graphs-basic + ServerAgent 2.2.3 (startAgent.sh --udp-port 0 --tcp-port 4445)
+JMETER_HOME=<jmeter with plugins> PORT=3105 AGENT_PORT=4445 PENGGUNA=40 RAMPUP=120 TEMPOH=180 hari-2/run/run-chatbot-perfmon.sh
+```
+
+Reference run (2026-10-05, 14-core Mac, all on one machine, 40 users): 1877 samples, p50 902 / p95 1665 / p99 6076 / max 9220 ms, 4.95% errors (75 SLA + 18 synthetic 500), 10.35/s, CPU avg 73% / max 100%, CPU ≥ 80% from ~31 users. These numbers are quoted in README §3.10–3.11, the report template B9, Lab 9 and the trainer notes. If you change the chatbot cost model, re-run and update all of them. ServerAgent's SIGAR has **no arm64 build**: on Apple Silicon, run the agent with an x86_64 Java (Rosetta), or CPU values come back empty (`UnsatisfiedLinkError … Cpu.gather`). The agent has no auth, binds to all interfaces, and its `exec` metric runs commands. Only start it on localhost/test machines, and stop it after the run. Plan `05-transaksi-penuh.jmx` hardcodes port 3000 (no `-Jport`), so to regression-test it against another port, run a temporary copy with the port changed.
 
 ⚠️ **`hari-1/test-plans/04-rakaman-mentah.jmx` is intentionally broken — do not "fix" it.** It's the raw output of the HTTP(S) Test Script Recorder with a hardcoded/expired `token` + `csrf`. On replay, login returns 200 but `/api/kenderaan` and `bayar-cukai` return **401**, and the `BERJAYA` assertion fails — that failure is the teaching point (it motivates Day 2 correlation; the corrected version is `hari-2/test-plans/04-korelasi-log-masuk.jmx`). Its embedded `ProxyControl` (HTTP(S) Test Script Recorder) is a GUI-only, non-test element and stays `enabled="false"` so non-GUI runs ignore it.
 

@@ -9,12 +9,17 @@
 //  - Tiada pergantungan (dependency). Guna modul `http` terbina Node.js.
 //  - Jalankan:  node server.js       (lalai port 3000)
 //               PORT=8080 node server.js
+//  - POST /api/chatbot = "Chatbot eJPJ tiruan": buat kerja CPU SEBENAR
+//    (gelung aritmetik dalam worker thread) supaya CPU pelayan naik ikut
+//    beban — untuk latihan PerfMon (CPU via ejen) dan p95/p99.
 //
 //  Data adalah SINTETIK/rekaan — bukan data rasmi JPJ.
 // =====================================================================
 
 const http = require('http');
 const crypto = require('crypto');
+const os = require('os');
+const { Worker } = require('worker_threads');
 
 const PORT = process.env.PORT || 3000;
 
@@ -24,6 +29,11 @@ const LATENCY_MIN = Number(process.env.LATENCY_MIN || 40);
 const LATENCY_MAX = Number(process.env.LATENCY_MAX || 180);
 // Kadar ralat pelayan tiruan (5xx). 0.01 = 1% permintaan bayaran gagal.
 const ERROR_RATE = Number(process.env.ERROR_RATE || 0.01);
+// Chatbot tiruan: CHATBOT_KERJA = pengganda kerja CPU (1 = ~5 ms CPU setiap token;
+// kebanyakan jawapan 60-180 token = ~300-900 ms, ~2.5% jawapan panjang 600-1200
+// token = 3-6 s). CHATBOT_PEKERJA = saiz kolam worker thread (lalai = bilangan teras).
+const CHATBOT_KERJA = Number(process.env.CHATBOT_KERJA || 1);
+const CHATBOT_PEKERJA = Number(process.env.CHATBOT_PEKERJA || os.cpus().length);
 
 // ---------------------------------------------------------------------
 //  Data sintetik dalam memori
@@ -99,6 +109,88 @@ function tarikhTambahBulan(bulan) {
   const d = new Date();
   d.setMonth(d.getMonth() + Number(bulan || 12));
   return d.toISOString().slice(0, 10);
+}
+
+// ---------------------------------------------------------------------
+//  Chatbot eJPJ tiruan — "jana token" = kerja CPU sebenar (gelung
+//  aritmetik xorshift, JS tulen) dalam kolam worker thread. Bila semua worker sibuk, soalan
+//  BERATUR -> CPU tepu, response time & p95/p99 naik. Kolam dicipta
+//  hanya pada soalan pertama (endpoint lain tidak terjejas).
+// ---------------------------------------------------------------------
+// JS tulen (bukan crypto) supaya kerja berskala linear merentas teras.
+function kerjaCpu(ulangan, x) {
+  for (let i = 0; i < ulangan; i++) { x ^= x << 13; x ^= x >>> 17; x ^= x << 5; }
+  return x;
+}
+const KOD_PEKERJA = `
+const { parentPort } = require('worker_threads');
+${kerjaCpu.toString()}
+let x = 2463534242;
+parentPort.on('message', ({ id, ulangan }) => {
+  x = kerjaCpu(ulangan, x) || 1;
+  parentPort.postMessage({ id, x });
+});`;
+
+let ulanganSetiapMs = 0;  // ditentukur sekali: berapa ulangan = 1 ms CPU pada mesin ini
+function tentukur() {
+  let x = 88172645;
+  const ukur = (ms) => {
+    let n = 0;
+    const mula = process.hrtime.bigint();
+    while (process.hrtime.bigint() - mula < BigInt(ms) * 1000000n) {
+      x = kerjaCpu(100000, x) || 1;
+      n += 100000;
+    }
+    return n / ms;
+  };
+  ukur(300);                                          // panaskan JIT dahulu
+  ulanganSetiapMs = Math.max(1, Math.round(ukur(200)));
+}
+
+const KOLAM = { pekerja: [], lapang: [], giliran: [], tugas: new Map(), id: 0 };
+function jalankanKerja(ulangan) {
+  if (!KOLAM.pekerja.length) {
+    tentukur();
+    for (let i = 0; i < Math.max(1, CHATBOT_PEKERJA); i++) {
+      const w = new Worker(KOD_PEKERJA, { eval: true });
+      w.on('message', ({ id }) => {
+        const selesai = KOLAM.tugas.get(id);
+        KOLAM.tugas.delete(id);
+        KOLAM.lapang.push(w);
+        agih();
+        selesai();
+      });
+      KOLAM.pekerja.push(w);
+      KOLAM.lapang.push(w);
+    }
+  }
+  return new Promise((selesai) => {
+    const id = ++KOLAM.id;
+    KOLAM.tugas.set(id, selesai);
+    KOLAM.giliran.push({ id, ulangan });
+    agih();
+  });
+}
+function agih() {
+  while (KOLAM.lapang.length && KOLAM.giliran.length) KOLAM.lapang.pop().postMessage(KOLAM.giliran.shift());
+}
+
+// Soalan lazim (FAQ) sintetik — padanan kata kunci ringkas, BUKAN jawapan rasmi JPJ.
+const FAQ = [
+  [/cukai|lkm|roadtax|road tax/i, 'Cukai jalan boleh diperbaharui dalam talian melalui Portal eJPJ (tiruan) selepas insurans kenderaan sah. Semak amaun di menu Kenderaan Saya.'],
+  [/lesen|ldl|cdl|psv|gdl/i, 'Lesen memandu boleh diperbaharui 1 hingga 10 tahun. Pastikan tiada saman tertunggak dan rekod perubatan (jika perlu) dikemas kini.'],
+  [/saman|kompaun|denda/i, 'Saman JPJ boleh disemak dengan No. KP di menu Saman. Bayaran kompaun dalam talian dikemas kini dalam 1 hari bekerja (data sintetik).'],
+  [/hak milik|tukar milik|pindah milik|jual/i, 'Pertukaran hak milik memerlukan pengesahan biometrik pembeli dan penjual di kaunter atau ejen yang dibenarkan.'],
+  [/nombor|no\. pendaftaran|plat|bidaan/i, 'Nombor pendaftaran pilihan boleh dibida melalui sistem bidaan dalam talian (tiruan). Keputusan bidaan diumumkan selepas tempoh tutup.'],
+  [/myjpj|aplikasi|daftar akaun|kata laluan/i, 'Akaun boleh didaftar menggunakan No. KP dan e-mel aktif. Jika terlupa kata laluan, guna pautan "Lupa kata laluan".'],
+];
+const JAWAPAN_LALAI = 'Maaf, saya chatbot TIRUAN untuk latihan JMeter. Sila cuba soalan tentang cukai jalan, lesen, saman atau hak milik kenderaan.';
+
+function tokenUntukDijana() {
+  // Taburan ekor panjang (long tail): kebanyakan jawapan pendek, sedikit sangat panjang
+  return Math.random() < 0.025
+    ? 600 + Math.floor(Math.random() * 601)   // ~2.5%: jawapan panjang (3-6 s)
+    : 60 + Math.floor(Math.random() * 121);   // biasa: 60-180 token (0.3-0.9 s)
 }
 
 // ---------------------------------------------------------------------
@@ -179,6 +271,7 @@ const server = http.createServer(async (req, res) => {
       '<li>POST /api/kenderaan/:no_pendaftaran/bayar-cukai</li>' +
       '<li>GET  /api/saman?no_kp=800101015500</li>' +
       '<li>POST /api/saman/:id/bayar</li>' +
+      '<li>POST /api/chatbot  {"soalan":"..."} — chatbot tiruan (kerja CPU sebenar)</li>' +
       '</ul>' +
       '<p><b>Portal web (untuk latihan rakaman melalui browser):</b> <a href="/portal">/portal</a></p>');
   }
@@ -260,6 +353,25 @@ const server = http.createServer(async (req, res) => {
       return kirim(res, 403, { ralat: 'Token CSRF tidak sah' });
     }
     return kirim(res, 200, { no_resit: 'SJPJ' + Date.now().toString().slice(-9), id: m[1], status: 'BAYAR' });
+  }
+
+  // ---- Chatbot eJPJ tiruan: kerja CPU sebenar, masa ikut "token dijana" ----
+  if (method === 'POST' && laluan === '/api/chatbot') {
+    const badan = await bacaBadan(req);
+    const soalan = String(badan.soalan || '').trim();
+    if (!soalan) return kirim(res, 400, { ralat: 'Medan soalan diperlukan' });
+    const mula = Date.now();
+    const token_dijana = tokenUntukDijana();
+    await jalankanKerja(Math.round(token_dijana * 5 * CHATBOT_KERJA * ulanganSetiapMs || 1));
+    if (Math.random() < ERROR_RATE) {
+      return kirim(res, 500, { ralat: 'Chatbot tidak dapat menjana jawapan — sila cuba lagi' });
+    }
+    const padan = FAQ.find(([re]) => re.test(soalan));
+    return kirim(res, 200, {
+      jawapan: padan ? padan[1] : JAWAPAN_LALAI,
+      token_dijana,
+      masa_ms: Date.now() - mula,
+    });
   }
 
   // =================== Portal web (borang) ===================
@@ -355,5 +467,6 @@ server.listen(PORT, () => {
   console.log(`  Latensi tiruan : ${LATENCY_MIN}-${LATENCY_MAX} ms`);
   console.log(`  Kadar ralat    : ${(ERROR_RATE * 100).toFixed(1)}%`);
   console.log(`  Portal web     : http://localhost:${PORT}/portal  (untuk rakaman browser)`);
+  console.log(`  Chatbot        : POST /api/chatbot  (kerja x${CHATBOT_KERJA}, ${CHATBOT_PEKERJA} worker thread)`);
   console.log('  Tekan Ctrl+C untuk berhenti.');
 });

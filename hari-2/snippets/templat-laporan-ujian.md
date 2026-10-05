@@ -220,3 +220,33 @@ Findings lokasi: (1) … (2) …
 | Kesan | Report yang cuma quote nombor gabungan akan luluskan sistem yang sebenarnya gagal untuk satu lokasi. |
 | Punca | Purata/percentile gabungan campur taburan dua populasi yang berbeza. |
 | Cadangan | Report keputusan NFR **per lokasi** (label `[LOKASI]` + report per lokasi); nombor gabungan cuma untuk jumlah load/throughput. |
+
+### B9. CPU pelayan + p95/p99 — contoh diisi (chatbot, plan `10b` + PerfMon)
+
+> Run sebenar `hari-2/run/run-chatbot-perfmon.sh` (JMeter 5.6.3 + jpgc-perfmon, laptop 14 teras; SUT + JMeter + ServerAgent dalam mesin yang sama): `POST /api/chatbot`, 40 users, ramp-up 120 s, 180 s, think time 1–2 s, SLA (Duration Assertion) 3000 ms. Nombor dari `laporan/statistics.json` dan `perfmon.jtl`. NFR: **p95 ≤ 2000 ms dan p99 ≤ 8000 ms pada 30 pengguna serentak, Error % < 1% (tidak termasuk SLA breach)**.
+
+| Users (thread) | CPU purata | CPU maks | Throughput | p50 ms | p95 ms | p99 ms | NFR p95/p99 |
+|---------------:|-----------:|---------:|-----------:|-------:|-------:|-------:|:-----------:|
+| 1–10 | 26 % | 53 % | 2.4 /s | 714 | 1067 | 3536* | ✅ |
+| 11–20 | 53 % | 74 % | 6.6 /s | 761 | 1048 | 5007 | ✅ |
+| 21–30 | 73 % | 96 % | 10.4 /s | 780 | 1121 | 5962 | ✅ |
+| 31–40 | 95 % | 100 % | 14.0 /s | 987 | 3024 | 6343 | ❌ (p95) |
+| Keseluruhan (1877 sampel) | 73 % | 100 % | 10.35 /s | 902 | 1665 | 6076 | — |
+
+\* 67 sampel sahaja → p99 = Max; tak cukup sampel untuk p99.
+
+| Finding C1 | |
+|---|---|
+| Severity | Tinggi (had kapasiti) |
+| Bukti | CPU pelayan (PerfMon, purata 10 s) kekal ≥ 80% dari t ≈ 80 s (~31 users) dan 94–100% pada 40 users. Dalam tetingkap yang sama p95 melonjak 1027 → 3567 ms; untuk 31–40 users p95 = **3024 ms** (> 2000 ❌). Throughput cuma naik ke **14.0 /s** (jangkaan tanpa tepu ≈ 16.7 /s). *Active Threads Over Time* + `cpu-perfmon.png` + *Response Times Over Time* atas paksi masa yang sama. |
+| Kesan | Lebih daripada ~30 pengguna serentak setiap pelayan, soalan beratur — 5% pengguna tunggu > 3 s. |
+| Punca | **Tepu CPU** pelayan (penjanaan jawapan guna CPU); bukan network — semua trafik pada localhost. Nota: JMeter share laptop yang sama, jadi sebahagian CPU ialah penjana beban. |
+| Cadangan | Kapasiti selamat ≈ 30 users setiap pelayan; profile penjanaan jawapan, tambah CPU / scale out, ulang test dengan penjana beban pada mesin berasingan. |
+
+| Finding C2 | |
+|---|---|
+| Severity | Sederhana (pengalaman pengguna) |
+| Bukti | Average **1069 ms** dan p95 **1665 ms** nampak OK, tapi p99 **6076 ms** (3.6× p95) dan Max 9220 ms. p99 tinggi pada **semua** tahap beban (3.5–6.3 s), termasuk 11–20 users dengan CPU 53%. *Response Time Percentiles*: lengkung rata sampai ~p95, lepas tu hampir menegak. 75 sampel gagal SLA 3000 ms (`The operation lasted too long`) + 18 HTTP 500 sintetik → Error % 4.95%. |
+| Kesan | 1 dalam setiap 100 soalan tunggu > 6 s — pada 10 soalan/s ≈ 6 pengguna setiap minit; pengguna mungkin hantar semula (beban bertambah). |
+| Punca | Ekor panjang: ~2.5% jawapan panjang (600–1200 token) — sifat chatbot, **bukan** kesan beban. |
+| Cadangan | NFR mesti sebut p95 **dan** p99; pertimbangkan streaming jawapan / had panjang jawapan / mesej "sedang menaip"; pantau p99 per transaksi dengan ≥ 1000 sampel. |

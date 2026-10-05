@@ -18,6 +18,7 @@
 | 6 — Rancang test + Little's Law | S4 | `templat-pelan-ujian.md` | Test plan diisi + kiraan N & pacing |
 | 7 — Pembentangan mini | S4 | Test plan (Lat. 6) + report (Lat. 5) | Pembentangan 3 minit |
 | 8 — Report multi-lokasi (agent distributed) | S3 | `09-berbilang-lokasi.jmx`, `run/run-berbilang-lokasi.sh` | Report gabungan + per lokasi, jadual perbandingan, 2 dapatan |
+| 9 — CPU pelayan (PerfMon) + p95/p99 chatbot | S3 | `10b-chatbot-perfmon.jmx`, `run/run-chatbot-perfmon.sh`, ServerAgent | `perfmon.jtl` + 3 PNG + dashboard, knee point, NFR p95/p99 + 1 dapatan |
 
 ---
 
@@ -552,6 +553,94 @@
 1. Run `./run-berbilang-lokasi.sh gabung` (setiap lokasi run sendiri → `laporan-lokasi.js gabung` → `jmeter -g`). Apa yang berbeza dalam Active Threads Over Time berbanding mod distributed?
 2. Generate report KL **tanpa** pecahkan JTL: `jmeter -g hasil/semua.jtl -o laporan/KL-tapis -Jjmeter.reportgenerator.sample_filter='^\[KL\].*'`. Bandingkan Total dengan `laporan/KL`. Lepas tu cuba `series_filter='^\[KL\].*'` — kenapa graf kosong? (README §3.9)
 3. `PENGGUNA=20 GELUNG=5 ./run-berbilang-lokasi.sh` — berapa jumlah users? Jurang KL vs PENANG berubah tak?
+
+---
+
+## Latihan 9 — CPU pelayan (PerfMon) + p95/p99 chatbot
+
+**Sesi:** S3
+
+### 🎯 Objektif
+- Pasang plugin PerfMon, start **ServerAgent** dan kumpul CPU/Memory pelayan ke `perfmon.jtl` semasa load test chatbot (O5)
+- Baca **Active Threads**, **CPU** dan **Response Times Over Time** bersama untuk cari **knee point** dan bottleneck (O6)
+- Terangkan p95 vs p99 dengan angka chatbot anda dan tulis satu **NFR p95 + p99** + satu dapatan (O6, O7)
+
+### Prasyarat
+- Latihan 4 dah siap; README §3.10 dan §3.11 dah baca
+- Java + JMeter 5.6.x, Node.js; SUT dalam Terminal A (`node sut/server.js`) — versi repo terkini (ada `POST /api/chatbot`)
+- Plugin: **jpgc-perfmon**, **jpgc-cmd**, **jpgc-graphs-basic** (Plugins Manager — README §3.10)
+- ServerAgent 2.2.3: <https://github.com/undera/perfmon-agent/releases>; port **4444** kosong
+- Plan rujukan: [`../test-plans/10b-chatbot-perfmon.jmx`](../test-plans/10b-chatbot-perfmon.jmx) (tanpa plugin: [`10-chatbot-beban.jmx`](../test-plans/10-chatbot-beban.jmx)); script: [`../run/run-chatbot-perfmon.sh`](../run/run-chatbot-perfmon.sh) (Windows: `run-chatbot-perfmon.bat`)
+
+### Langkah
+1. **Uji chatbot sekali** (Terminal B):
+   ```bash
+   curl -s -X POST http://localhost:3000/api/chatbot -H 'Content-Type: application/json' \
+     -d '{"soalan":"Bagaimana nak semak saman JPJ?"}'
+   # {"jawapan":"Saman JPJ boleh disemak …","token_dijana":93,"masa_ms":784}
+   ```
+   Cuba 5 kali — perhatikan `masa_ms` ikut `token_dijana` (≈ 5 ms setiap token).
+2. **Start ServerAgent** (Terminal C — dalam kelas, laptop anda = "pelayan"):
+   ```bash
+   cd ServerAgent-2.2.3
+   ./startAgent.sh --udp-port 0 --tcp-port 4444        # Windows: startAgent.bat --udp-port 0 --tcp-port 4444
+   ```
+   Tunggu `JP@GC Agent v2.2.3 started`. Uji: `telnet localhost 4444` → taip `test` → `Yep` (Windows tanpa telnet: `Test-NetConnection localhost -Port 4444` → `TcpTestSucceeded : True`).
+3. **Buka plan `10b` dalam GUI** dan check **PerfMon Metrics Collector** (bawah Test Plan): dua baris (`CPU`, `Memory usedperc`), port `${__P(agent_port,4444)}`, Filename `${__P(perfmon_jtl,perfmon.jtl)}`. Jangan run dalam GUI — tutup GUI.
+
+   ![PerfMon Metrics Collector dalam plan 10b](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-01-gui-perfmon-metrics-collector.png)
+   *Konfigurasi PerfMon Metrics Collector dalam plan `10b`.*
+4. **Run script** (≈ 3.5 minit dengan default; laptop kecil: `PENGGUNA=20 RAMPUP=60 TEMPOH=120`):
+   ```bash
+   cd hari-2/run
+   ./run-chatbot-perfmon.sh            # Windows: run-chatbot-perfmon.bat (set JMETER_HOME dulu)
+   ```
+   Tengok console: `OK SUT`, `OK ServerAgent` → `summary` setiap 30 s → `OK cpu-perfmon.png` … → jadual ringkasan.
+
+   ![Console run-chatbot-perfmon.sh](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-02-konsol-ringkasan.png)
+   *Console run kami (port 3105/4445; default anda 3000/4444): ringkasan p50/p90/p95/p99 dan CPU purata/maks.*
+5. **Buka tiga PNG** dalam `hari-2/run/hasil/<masa>/`: `active-threads.png`, `cpu-perfmon.png`, `response-times-over-time.png`. Letak sebelah-menyebelah (paksi masa sama). Catat: pada **berapa pengguna** CPU mula kekal ≥ 80%? Bila response time mula naik?
+
+   ![Tiga graf atas paksi masa yang sama](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-cpu-threads-rt-bertindan.png)
+   *Run rujukan: CPU ≥ 80% dari ~31 pengguna; response time naik selepas tu.*
+6. **Buka dashboard** `laporan/index.html` → Statistics (p95, p99, Error %) → Charts → Response Times → **Response Time Percentiles**. Kat percentile berapa lengkung mula "patah" ke atas?
+7. **Isi lembaran:**
+
+   | Perkara | Anda | Rujukan kami |
+   |---------|------|--------------|
+   | Sampel / Error % | | 1877 / 4.95% |
+   | p50 / p95 / p99 (ms) | | 902 / 1665 / 6076 |
+   | CPU purata / maks | | 73% / 100% |
+   | Pengguna bila CPU kekal ≥ 80% | | ~31 |
+   | Throughput pada beban maksimum | | ~14 /s |
+8. **Tulis NFR + satu dapatan** dalam [`templat-laporan-ujian.md`](./templat-laporan-ujian.md) (contoh B9): *"p95 ≤ … s dan p99 ≤ … s pada … pengguna serentak"* — lulus atau gagal dengan angka anda? Sertakan CPU sebagai **punca**.
+9. **Hentikan ServerAgent** (Ctrl+C dalam Terminal C) sebaik siap — ejen tiada authentication.
+
+### ✅ Checkpoint
+- [ ] `perfmon.jtl` ada baris `localhost CPU` dan `localhost Memory usedperc`; tiga PNG + `laporan/index.html` dijana
+- [ ] Anda boleh tunjuk knee point (pengguna + masa) guna tiga graf bersama dan terangkan kenapa CPU tak ada dalam HTML dashboard
+- [ ] Anda boleh terangkan p95 vs p99 dalam ayat "X daripada 100 soalan …" dan kenapa p99 perlukan sampel yang banyak
+- [ ] Satu NFR p95 + p99 dan satu dapatan (Bukti → Kesan → Punca CPU → Cadangan) ditulis dengan angka anda
+- [ ] ServerAgent dihentikan selepas test
+- [ ] Jawab soalan 6–7 **Kuiz S3** (Kuiz S3)
+
+### 🧯 Masalah lazim
+
+| Simptom | Punca | Cara selesai |
+|--------|-------|--------------|
+| `RALAT: ServerAgent tidak dapat dihubungi pada localhost:4444 (Connection refused)` / log JMeter `Connection refused` | Ejen belum start, port lain, atau firewall block 4444 | Start `startAgent.sh --tcp-port 4444`; pastikan `-Jagent_port` = `--tcp-port`; `telnet <pelayan> 4444` → `test` → `Yep`; buka firewall untuk IP mesin JMeter sahaja |
+| Buka `10b` → `CannotResolveClassException: kg.apc.jmeter.perfmon.PerfMonCollector` | Plugin jpgc-perfmon belum dipasang | Plugins Manager → *PerfMon (Servers Performance Monitoring)* → restart; atau guna `10-chatbot-beban.jmx` (core sahaja) |
+| Windows Firewall / antivirus tanya "Allow access" untuk Java | Ejen buka port TCP | Benarkan untuk rangkaian **Private** sahaja; lab localhost tak perlukan akses luar |
+| CPU kosong / 0 dalam `perfmon.jtl` (macOS Apple Silicon); log ejen `UnsatisfiedLinkError … Cpu.gather` | SIGAR dalam ServerAgent cuma ada library x86_64 | Run ejen dengan Java **x86_64** (Rosetta), contoh `/Library/Java/JavaVirtualMachines/temurin-8.jdk/…/java -jar CMDRunner.jar --tool PerfMonAgent --udp-port 0 --tcp-port 4444`; atau run ejen pada mesin Windows/Linux x64 |
+| `perfmon.jtl` kosong (header sahaja) atau tiada | Collector tak boleh sambung ke ejen, atau collector berada dalam Thread Group yang disabled | Semak `jmeter.log` (cari `PerfMon`); letak collector bawah Test Plan; semak host/port |
+| `JMeterPluginsCMD.sh: No such file` / `AMARAN: … tiada — PNG tidak akan dijana` | Plugin jpgc-cmd belum dipasang, atau `jmeter` pada PATH bukan dari `$JMETER_HOME/bin` (contoh Homebrew) | Pasang jpgc-cmd + jpgc-graphs-basic; set `JMETER_HOME=<folder JMeter>` sebelum run script |
+| Error % tinggi (> 5%) dengan mesej `The operation lasted too long` | SLA 3000 ms dilanggar — jawapan panjang / pelayan tepu | Tu dapatan, bukan bug. Untuk banding: `SLA_MS=10000 ./run-chatbot-perfmon.sh` |
+| CPU 100% sejak 10 pengguna pertama | Laptop kecil (2–4 teras) — SUT + JMeter + browser share CPU | `PENGGUNA=10 RAMPUP=60`, atau `CHATBOT_KERJA=0.5 node sut/server.js`; tutup aplikasi lain |
+
+### ⭐ Cabaran
+1. Tambah baris ketiga dalam collector: `CPU` dengan parameter `user` — beza dengan `combined`?
+2. Jana semula dashboard dengan `-Jaggregate_rpt_pct1=75 -Jaggregate_rpt_pct3=99.9` (README §3.11). Berapa p99.9 anda? Berapa sampel di atas p99.9?
+3. Run `CHATBOT_PEKERJA=2 PORT=3001 node sut/server.js` (2 worker sahaja) dan `PORT=3001 ./run-chatbot-perfmon.sh`. Knee point jatuh ke berapa pengguna? CPU laptop sampai 100% tak? Apa maksudnya untuk bottleneck "thread pool"?
 
 ---
 
