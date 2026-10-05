@@ -36,6 +36,8 @@ Base: `http://localhost:3000`. Endpoints:
 - `GET /api/saman?no_kp=` → `{saman:[...]}`.
 - `POST /api/saman/:id/bayar` — needs token + `{csrf}`.
 
+**Web portal (HTML forms, for browser recording):** `GET /portal/log-masuk` (form) → `POST /portal/log-masuk` (`application/x-www-form-urlencoded`: `no_kp`, `kata_laluan`) → 302 + cookie `SESI_EJPJ` (Path=/portal) → `GET /portal/kenderaan` (list) → `GET /portal/kenderaan/:no/bayar` (form with hidden `csrf` + `amaun`, select `tempoh_bulan`) → `POST /portal/kenderaan/:no/bayar` → receipt page `BERJAYA` (wrong csrf → 403 page; no cookie → 302 to login). Static: `/portal/gaya.css`, `/portal/favicon.svg` (to practise recorder Excludes). Separate session store from the API.
+
 Synthetic users: `800101015500` (WXY1234, VAB88), `900202025600` (JQK7788), `850303035700` (BMT3030, PKL909). Any non-empty password is accepted.
 
 ## Verifying Test Plans
