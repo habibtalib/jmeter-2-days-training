@@ -441,7 +441,7 @@ Increase threads to 60 (keep the high latency). Does throughput recover? What do
 | Symptom | Cause | Fix |
 |--------|-------|--------------|
 | No samplers recorded | Recorder not **Start**ed, or traffic is not going through `:8888` | `lsof -iTCP:8888 -sTCP:LISTEN -n -P` (macOS/Linux) / `netstat -ano \| findstr :8888` (Windows); make sure you use `curl -x http://localhost:8888` |
-| Firefox: nothing recorded from localhost | `localhost, 127.0.0.1` in **No proxy for** | Clear that box |
+| Firefox: nothing recorded from localhost | `localhost, 127.0.0.1` in **No proxy for**, or Firefox 67+ bypasses the proxy for localhost | Clear that box **and** `about:config` → `network.proxy.allow_hijacking_localhost` = `true`; set the proxy to `127.0.0.1` port `8888` (Windows: allow Java in Defender Firewall) |
 | `Address already in use` on Start | Port 8888 is used by another application / a second recorder | Close other plans that contain a recorder; or change the port (and the `curl -x` command) |
 | `curl` in Windows cmd: `{"ralat":…}` / broken JSON | cmd.exe does not understand single quotes | Use Git Bash, or: `curl -s -x http://localhost:8888 -H "Content-Type: application/json" -d "{\"no_kp\":\"800101015500\",\"kata_laluan\":\"rahsia123\"}" http://localhost:3000/api/log-masuk` |
 | Samplers recorded under Test Plan, not the Recording Controller | Target Controller not set | Select **Test Plan > Thread Group > Recording Controller** |

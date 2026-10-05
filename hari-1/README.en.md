@@ -594,8 +594,8 @@ flowchart LR
 ### 4.3 B. Configure Firefox for the proxy
 
 4. Firefox → **Settings** → type "proxy" in the search box → **Network Settings → Settings…**
-5. Choose **Manual proxy configuration**: **HTTP Proxy** `localhost`, **Port** `8888`; tick **Also use this proxy for HTTPS**.
-6. **⚠️ Important:** **remove** `localhost, 127.0.0.1` from the **No proxy for** box — otherwise localhost traffic will **bypass** the proxy and **nothing will be recorded**. Click **OK**.
+5. Choose **Manual proxy configuration**: **HTTP Proxy** `127.0.0.1`, **Port** `8888`; tick **Also use this proxy for HTTPS**. *(Use `127.0.0.1`, not `localhost` — on Windows `localhost` can resolve to IPv6 `::1`.)*
+6. **⚠️ Important (2 settings):** (a) **remove** `localhost, 127.0.0.1` from the **No proxy for** box, click **OK**; (b) type `about:config` in the address bar → **Accept the Risk** → search `network.proxy.allow_hijacking_localhost` → set it to **`true`**. Firefox 67+ **never sends** `localhost` traffic to a proxy even with that box empty — without (b), **nothing is recorded**. *(Windows: the first time you click **Start**, if Windows Defender Firewall asks about Java, click **Allow access**.)*
 7. **For HTTPS targets only:** click **Start** (step C8) once first so that JMeter generates `ApacheJMeterTemporaryRootCA.crt` in the `bin/` folder, then in Firefox: **Settings → Privacy & Security → Certificates → View Certificates → Authorities → Import…** → choose that file → tick **Trust this CA to identify websites**. *(Our SUT is `http://`, so this certificate step is **not** needed.)*
 
 ### 4.4 C. Record

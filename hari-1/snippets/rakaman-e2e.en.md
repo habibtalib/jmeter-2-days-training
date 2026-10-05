@@ -69,7 +69,7 @@ curl -s -x http://localhost:8888 \
 # contoh respons: {"no_resit":"RJPJ…","status":"BERJAYA",…}
 ```
 
-> **Browser alternative:** set **Firefox/Chrome** to use the proxy `127.0.0.1:8888` (see README §4.3, steps B4–B6) and open `http://localhost:3000`. But a browser only makes **GET** requests from the address bar — the login POST needs a form, so `curl` is simpler for this API.
+> **Browser alternative:** set **Firefox** to use the proxy `127.0.0.1:8888` (see README §4.3, steps B4–B6 — including `about:config` → `network.proxy.allow_hijacking_localhost` = `true`, otherwise Firefox bypasses the proxy for localhost) and open `http://localhost:3000/portal` (login form → vehicles → pay). That portal flow records `/portal/...` form requests, not `/api/...` — for this JSON API, `curl` is simpler.
 >
 > ⚠️ **Make sure the client you use really goes through the proxy.** Your normal browser does **not** use the proxy unless it is configured. If nothing gets recorded, the traffic is almost certainly not going through `:8888`.
 
