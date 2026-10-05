@@ -155,7 +155,7 @@ Remind them: **do not close Terminal A**. Trainer: open the R1/R2/R3 backup repo
 | 2.45–2.48 | 3 | 🎬 §3.7: launch R1 & R2 (60 s each) — explain the Duration Assertion while waiting. | Participants start Exercise 5 at the same time. |
 | 2.48–3.05 | 17 | **Exercise 5** — runs + comparison table + **2** findings in class (3rd finding as homework). Show the section B example in `templat-laporan-ujian.md`. | **Key moment #5:** R2 — Error % 1% → 22% with no change to the system. *"The only thing that changed is the definition of 'fast enough'."* |
 | 3.05–3.12 | 7 | 🎬 **§3.9 Multi-site report** — demo `./run-berbilang-lokasi.sh` (script below). | **Key moment #7:** combined average 363 ms looks "OK" — PENANG p95 ≈ 890 ms fails. |
-| 3.12–3.25 | 13 | **Exercise 8** — run the script, open the 3 reports, fill in the comparison sheet, 2 site findings. | Slow participants: use the trainer's report (screen share) and fill in the sheet only. Make sure the Terminal A SUT is stopped first (port 3000). |
+| 3.12–3.25 | 13 | **Exercise 8 → trainer demo (5 min) + homework** (decided 5 Oct): run your script, show the combined + per-site reports, one finding. Remaining time → Lab 9 (see the extra table below). | Make sure the Terminal A SUT is stopped first (port 3000) before the demo. |
 | 3.25–3.30 | 5 | Checkpoint + **Quiz S3**. | |
 
 **Short script (percentiles):**
