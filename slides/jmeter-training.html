@@ -3085,6 +3085,7 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
     if (!opts.fromHash) {
       try { history.replaceState(null, '', '#' + (n + 1)); } catch (e) { /* file:// / sandboxed iframe */ }
     }
+    if (!opts.remote) { notifySync(n); }
     renderNotes();
     if (ovBuilt) {
       Array.prototype.forEach.call(ovGrid.children, function (t, i) { t.classList.toggle('cur', i === n); });
@@ -3092,6 +3093,23 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
   }
   function next() { go(current + 1); }
   function prev() { go(current - 1); }
+
+  /* presenter ⇄ projector sync (pelatih.my Present page) */
+  function notifySync(n) {
+    try {
+      if (window.parent && window.parent !== window) {
+        window.parent.postMessage({ source: 'pelatih-deck', type: 'slide', index: n, total: total }, '*');
+      }
+    } catch (e) { /* no parent */ }
+  }
+  window.addEventListener('message', function (e) {
+    var d = e.data;
+    if (!d || d.source !== 'pelatih-present') { return; }
+    // Only the Present page that opened (projector) or embeds (presenter) this deck may steer it.
+    if (e.source !== window.opener && e.source !== window.parent) { return; }
+    if (d.type === 'go' && typeof d.index === 'number') { go(d.index, { remote: true }); }
+  });
+  try { if (window.opener) { window.opener.postMessage({ source: 'pelatih-deck', type: 'ready' }, '*'); } } catch (e) { /* opener gone */ }
 
   /* trainer control bar */
   var ctl = document.getElementById('ctl');
