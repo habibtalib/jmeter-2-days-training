@@ -3095,10 +3095,27 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
   function prev() { go(current - 1); }
 
   /* presenter ⇄ projector sync (pelatih.my Present page) */
+  /* speaker notes as plain-text lines (the Present page shows them beside the deck) */
+  function notesText(n) {
+    var a = slides[n] && slides[n].querySelector('aside.notes'), out = [];
+    if (!a) { return out; }
+    Array.prototype.forEach.call(a.children, function (el) {
+      if (el.tagName === 'UL' || el.tagName === 'OL') {
+        Array.prototype.forEach.call(el.children, function (li) { var t = li.textContent.trim(); if (t) { out.push('• ' + t); } });
+      } else { var t = el.textContent.trim(); if (t) { out.push(t); } }
+    });
+    if (!out.length && a.textContent.trim()) { out.push(a.textContent.trim()); }
+    return out;
+  }
   function notifySync(n) {
     try {
       if (window.parent && window.parent !== window) {
-        window.parent.postMessage({ source: 'pelatih-deck', type: 'slide', index: n, total: total }, '*');
+        window.parent.postMessage({
+          source: 'pelatih-deck', type: 'slide', index: n, total: total,
+          title: titleOf(slides[n]), label: labels[n] || '',
+          next: n + 1 < total ? titleOf(slides[n + 1]) : '',
+          notes: notesText(n)
+        }, '*');
       }
     } catch (e) { /* no parent */ }
   }
