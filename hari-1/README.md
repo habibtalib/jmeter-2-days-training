@@ -594,8 +594,8 @@ flowchart LR
 ### 4.3 B. Konfigur Firefox untuk proxy
 
 4. Firefox → **Settings** → taip "proxy" dalam kotak search → **Network Settings → Settings…**
-5. Pilih **Manual proxy configuration**: **HTTP Proxy** `localhost`, **Port** `8888`; tick **Also use this proxy for HTTPS**.
-6. **⚠️ Penting:** **buang** `localhost, 127.0.0.1` dari kotak **No proxy for** — kalau tak, traffic localhost akan **bypass** proxy dan **tiada apa yang di-record**. Klik **OK**.
+5. Pilih **Manual proxy configuration**: **HTTP Proxy** `127.0.0.1`, **Port** `8888`; tick **Also use this proxy for HTTPS**. *(Guna `127.0.0.1`, bukan `localhost` — dalam Windows `localhost` boleh jadi IPv6 `::1`.)*
+6. **⚠️ Penting (2 setting):** (a) **buang** `localhost, 127.0.0.1` dari kotak **No proxy for**, klik **OK**; (b) taip `about:config` dalam address bar → **Accept the Risk** → cari `network.proxy.allow_hijacking_localhost` → set **`true`**. Firefox 67+ **tak hantar** traffic `localhost` ke proxy walaupun kotak tu kosong — tanpa (b), **tiada apa yang di-record**. *(Windows: masa klik **Start** kali pertama, kalau Windows Defender Firewall tanya pasal Java, klik **Allow access**.)*
 7. **Untuk target HTTPS sahaja:** klik **Start** (langkah C8) sekali dulu supaya JMeter jana `ApacheJMeterTemporaryRootCA.crt` dalam folder `bin/`, kemudian di Firefox: **Settings → Privacy & Security → Certificates → View Certificates → Authorities → Import…** → pilih file tu → tick **Trust this CA to identify websites**. *(SUT kita guna `http://`, jadi langkah certificate ni **tak** perlu.)*
 
 ### 4.4 C. Rakam

@@ -441,7 +441,7 @@ Naikkan threads ke 60 (latency tinggi kekal). Throughput naik balik tak? Apa yan
 | Simptom | Punca | Cara fix |
 |--------|-------|--------------|
 | Tak ada sampler di-record | Recorder belum **Start**, atau traffic tak lalu `:8888` | `lsof -iTCP:8888 -sTCP:LISTEN -n -P` (macOS/Linux) / `netstat -ano \| findstr :8888` (Windows); pastikan guna `curl -x http://localhost:8888` |
-| Firefox: tak ada apa di-record dari localhost | `localhost, 127.0.0.1` ada dalam **No proxy for** | Kosongkan kotak tu |
+| Firefox: tak ada apa di-record dari localhost | `localhost, 127.0.0.1` ada dalam **No proxy for**, atau Firefox 67+ bypass proxy untuk localhost | Kosongkan kotak tu **dan** `about:config` → `network.proxy.allow_hijacking_localhost` = `true`; proxy guna `127.0.0.1` port `8888` (Windows: benarkan Java dalam Defender Firewall) |
 | `Address already in use` bila Start | Port 8888 dah dipakai aplikasi lain / recorder kedua | Tutup plan lain yang ada recorder; atau tukar port (dan command `curl -x`) |
 | `curl` dalam Windows cmd: `{"ralat":…}` / JSON rosak | cmd.exe tak faham single quote | Guna Git Bash, atau: `curl -s -x http://localhost:8888 -H "Content-Type: application/json" -d "{\"no_kp\":\"800101015500\",\"kata_laluan\":\"rahsia123\"}" http://localhost:3000/api/log-masuk` |
 | Sampler di-record bawah Test Plan, bukan Recording Controller | Target Controller tak di-set | Pilih **Test Plan > Thread Group > Recording Controller** |

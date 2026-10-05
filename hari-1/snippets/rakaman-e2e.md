@@ -69,7 +69,7 @@ curl -s -x http://localhost:8888 \
 # contoh respons: {"no_resit":"RJPJ…","status":"BERJAYA",…}
 ```
 
-> **Alternatif guna browser:** setting **Firefox/Chrome** ke proxy `127.0.0.1:8888` (tengok README §4.3, langkah B4–B6) dan buka `http://localhost:3000`. Tapi browser cuma buat **GET** dari address bar — POST log masuk perlukan form, jadi `curl` lebih ringkas untuk API ni.
+> **Alternatif guna browser:** setting **Firefox** ke proxy `127.0.0.1:8888` (tengok README §4.3, langkah B4–B6 — termasuk `about:config` → `network.proxy.allow_hijacking_localhost` = `true`, kalau tak Firefox bypass proxy untuk localhost) dan buka `http://localhost:3000/portal` (borang log masuk → kenderaan → bayar). Flow portal tu record request borang `/portal/...`, bukan `/api/...` — untuk API JSON ni, `curl` lebih ringkas.
 >
 > ⚠️ **Pastikan client yang anda guna betul-betul lalu proxy.** Browser biasa anda **tidak** lalu proxy kalau tak di-configure. Kalau tiada apa-apa yang ter-record, hampir confirm trafik tak lalu `:8888`.
 
