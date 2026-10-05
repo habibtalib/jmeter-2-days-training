@@ -745,6 +745,8 @@
 
 **Session:** S3
 
+> 🎬 **5 Oct class: trainer demo (5 minutes)** — S3 time goes to Lab 9 (server CPU + chatbot). Watch the demo, then do this lab yourself as **homework** (all steps and screenshots are below); tick the checkpoint when done.
+
 ### 🎯 Objective
 - Run one distributed test (1 controller + 2 `jmeter-server` agents representing the KL and PENANG sites) and generate **one combined report** (O5)
 - Generate **per-site reports** from the same run by splitting the JTL by the `[LOKASI]` label prefix (O5)

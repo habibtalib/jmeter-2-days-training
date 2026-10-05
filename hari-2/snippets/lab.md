@@ -745,6 +745,8 @@
 
 **Sesi:** S3
 
+> 🎬 **Kelas 5 Okt: demo oleh jurulatih (5 minit)** — masa S3 diberi kepada Latihan 9 (CPU pelayan + chatbot). Tengok demo, kemudian buat latihan ni sendiri sebagai **kerja rumah** (semua langkah dan screenshot ada di bawah); checkpoint boleh ditanda bila siap.
+
 ### 🎯 Objektif
 - Run satu distributed test (1 controller + 2 agent `jmeter-server` mewakili lokasi KL dan PENANG) dan generate **satu report gabungan** (O5)
 - Generate **report per lokasi** daripada run yang sama dengan pecahkan JTL ikut prefix label `[LOKASI]` (O5)

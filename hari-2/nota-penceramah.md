@@ -155,7 +155,7 @@ Ingatkan: **jangan tutup Terminal A**. Jurulatih: buka report backup R1/R2/R3 da
 | 2.45–2.48 | 3 | 🎬 §3.7: launch R1 & R2 (60 s setiap satu) — explain Duration Assertion sementara tunggu. | Peserta mula Latihan 5 serentak. |
 | 2.48–3.05 | 17 | **Latihan 5** — run + jadual perbandingan + **2** dapatan dalam kelas (dapatan ke-3 jadi kerja rumah). Tunjuk contoh bahagian B `templat-laporan-ujian.md`. | **Momen kunci #5:** R2 — Error % 1% → 22% tanpa sistem berubah. *"Yang berubah cuma definisi 'cukup laju'."* |
 | 3.05–3.12 | 7 | 🎬 **§3.9 Report multi-lokasi** — demo `./run-berbilang-lokasi.sh` (skrip di bawah). | **Momen kunci #7:** average gabungan 363 ms nampak "OK" — tapi PENANG p95 ≈ 890 ms gagal. |
-| 3.12–3.25 | 13 | **Latihan 8** — run skrip, buka 3 report, isi lembaran perbandingan, 2 dapatan lokasi. | Peserta yang lambat: guna report jurulatih (share screen) dan isi lembaran je. Pastikan SUT Terminal A dah stop dulu (port 3000). |
+| 3.12–3.25 | 13 | **Latihan 8 → demo jurulatih (5 min) + kerja rumah** (keputusan 5 Okt): run skrip anda, tunjuk report gabungan + per lokasi, satu dapatan. Baki masa → Latihan 9 (lihat jadual tambahan di bawah). | Pastikan SUT Terminal A dah stop dulu (port 3000) sebelum demo. |
 | 3.25–3.30 | 5 | Checkpoint + **Kuiz S3**. | |
 
 **Skrip ringkas (percentile):**

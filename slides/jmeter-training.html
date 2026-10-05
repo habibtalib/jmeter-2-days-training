@@ -3309,7 +3309,7 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
     if (!opts.fromHash) {
       try { history.replaceState(null, '', '#' + (n + 1)); } catch (e) { /* file:// / sandboxed iframe */ }
     }
-    if (!opts.remote) { notifySync(n); }
+    notifySync(n, !!opts.remote);
     renderNotes();
     if (ovBuilt) {
       Array.prototype.forEach.call(ovGrid.children, function (t, i) { t.classList.toggle('cur', i === n); });
@@ -3354,7 +3354,14 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
     if (!out.length && a.textContent.trim()) { out.push(a.textContent.trim()); }
     return out;
   }
-  function notifySync(n) {
+  function notifySync(n, remote) {
+    // Projector window (opened by the Present page): report the trainer's own moves back to it (two-way sync).
+    try {
+      if (!remote && window.opener && window.parent === window) {
+        window.opener.postMessage({ source: 'pelatih-deck', type: 'slide', from: 'projector', index: n, total: total }, '*');
+      }
+    } catch (e) { /* opener gone */ }
+    // Presenter (iframe): always report, also for remote moves, so the Present page's notes follow.
     try {
       if (window.parent && window.parent !== window) {
         window.parent.postMessage({
