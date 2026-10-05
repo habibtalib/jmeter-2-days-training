@@ -219,7 +219,7 @@ Minta peserta install/buka **Firefox** masa rehat dan pastikan SUT masih running
 
 1. Buka file. Tunjuk **CSV Data Set Config - kenderaan**: `../data/kenderaan.csv`, `no_pendaftaran,model`, Ignore first line True, Recycle True, Stop thread False, Sharing *All threads*.
 2. Tunjuk **Uniform Random Timer (0.5-1.5s)**: Constant Delay Offset 500 + Random Delay Maximum 1000.
-3. Start (10 × 10) → View Results Tree → tunjuk 5 nombor pendaftaran yang bergilir.
+3. Plan ni cuma ada Summary Report — tambah **View Results Tree** dulu (klik kanan Thread Group → Add → Listener → View Results Tree) → Start (10 × 10) → tunjuk 5 nombor pendaftaran yang bergilir.
 4. **Live (Latihan 4):** tambah `ABC0000,Kereta Hantu` dalam CSV → Start → Error % naik → **buang balik baris tu**.
 
 **Jangkaan:** 100 sample cukai, 0% error; dengan `ABC0000` ~1/6 gagal.

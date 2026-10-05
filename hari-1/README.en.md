@@ -288,7 +288,7 @@ Let's build the simplest test — one user hitting `/api/health`.
 2. **Right-click Test Plan → Add → Threads (Users) → Thread Group.**
 3. On the Thread Group, set for now: **Number of Threads = 1**, **Ramp-up = 1**, **Loop Count = 1**.
 4. **Right-click Thread Group → Add → Config Element → HTTP Request Defaults.** Fill in:
-   - **Protocol:** `http` · **Server Name or IP:** `localhost` · **Port Number:** `3000`
+   - **Protocol:** `http` · **Server Name or IP:** `localhost` · **Port Number:** `3000` *(The reference plan `01-hello-jpj.jmx` puts Defaults directly under the **Test Plan** — same effect, because Test Plan scope covers every Thread Group.)*
 5. **Right-click Thread Group → Add → Sampler → HTTP Request.** Fill in:
    - **Method:** `GET` · **Path:** `/api/health` (leave server/port empty — inherited from Defaults)
 6. **Right-click Thread Group → Add → Listener → View Results Tree.**
@@ -339,7 +339,7 @@ Change your Thread Group to **20 / 10 / 5** for the next step.
 
 Many APIs require **headers** (e.g. `Content-Type`, `Accept`, `Authorization`). The **HTTP Header Manager** sets headers shared by the samplers in its scope.
 
-1. **Right-click Thread Group → Add → Config Element → HTTP Header Manager.**
+1. **Right-click Thread Group → Add → Config Element → HTTP Header Manager.** *(The reference plan `02-cukai-beban.jmx` puts it under the **Test Plan** — same effect.)*
 2. Click **Add** and enter: Name `Accept`, Value `application/json`.
 
 > **Concept — Other useful Config Elements:**
@@ -359,7 +359,7 @@ A **Listener** collects & displays results. The three most important:
 | **Summary Report** | Summary per label: # samples, Average, Min/Max, Error %, Throughput | Lightweight — suitable under load |
 | **Aggregate Report** | Like Summary + **Median**, **90/95/99 percentile** | Lightweight |
 
-Add all three under the Thread Group. Run the test (20/10/5) and observe:
+Add all three under the Thread Group (**right-click Thread Group → Add → Listener → View Results Tree / Summary Report / Aggregate Report**). Run the test (20/10/5) and observe:
 
 - **# Samples** = 100
 - **Average** — mean response time (ms)
@@ -442,7 +442,7 @@ Now a sample only "passes" if the response body contains `amaun`.
 
 #### Duration Assertion
 
-1. **Add → Assertions → Duration Assertion.**
+1. **Right-click the same HTTP Request → Add → Assertions → Duration Assertion** (a child of the sampler, next to the Response Assertion — as in `02-cukai-beban.jmx`).
 2. **Duration in milliseconds:** `2000` — the sample fails if it takes longer than 2 seconds.
 
 > **Concept — Assertions change the meaning of "failed":** Without assertions, only network/HTTP errors count as failures. With assertions, a response with the **wrong content** or that is **too slow** also counts as a failure → your **Error %** reflects real quality, not merely a successful connection.
@@ -461,7 +461,7 @@ Real users do **not** fire requests back to back — they read, think and type. 
 | **Uniform Random Timer** | Uniformly random pause (base + random range) | *Constant Delay Offset* + *Random Delay Maximum* — e.g. 500 + 1000 → 0.5–1.5 s |
 | **Gaussian Random Timer** | Normally distributed random pause (most realistic) | *Constant Delay Offset* + *Deviation* — e.g. 1000 ± 300 ms |
 
-1. **Right-click Thread Group → Add → Timer → Constant Timer.** Delay `300`.
+1. **Right-click Thread Group → Add → Timer → Constant Timer.** **Thread Delay (in milliseconds):** `300`.
 
 > **Concept — think time affects throughput:** Adding think time **lowers** throughput (threads wait instead of sending). This is **correct** — throughput without think time is unrealistic and can put false load on the system. To reach a specific *requests/second* target, tune the **number of threads** and **think time** together, or use a **Throughput Controller / Timer** (Day 2).
 
@@ -484,14 +484,14 @@ BMT3030,Toyota Hilux 2.4
 PKL909,Perodua Axia 1.0
 ```
 
-1. **Right-click Thread Group → Add → Config Element → CSV Data Set Config.**
+1. **Right-click Thread Group → Add → Config Element → CSV Data Set Config.** *(The reference plan `03-csv-berparameter.jmx` puts it under the **Test Plan** — same effect.)*
 2. Fill in:
    - **Filename:** `../data/kenderaan.csv` *(relative to the location of the `.jmx` file)*
    - **Variable Names:** `no_pendaftaran,model`
    - **Ignore first line:** `True` (header row) · **Recycle on EOF:** `True` · **Stop thread on EOF:** `False`
    - **Sharing mode:** `All threads`
 3. Change the sampler path to: `/api/kenderaan/${no_pendaftaran}/cukai`.
-4. Run it (10 users × 10 loops). In View Results Tree, confirm that each request uses a different number.
+4. Change the Thread Group to **10 / 5 / 10** (threads / ramp-up / loops — as in `03-csv-berparameter.jmx`), then run it (10 users × 10 loops = 100 samples). In View Results Tree, confirm that each request uses a different number.
 
 > **Concept — `${name}` is a JMeter variable:** The syntax `${no_pendaftaran}` substitutes the value from the CSV at run time. Values can come from a CSV, User Defined Variables, an Extractor (Day 2), or built-in functions such as `${__Random(1,100)}`.
 
@@ -586,8 +586,8 @@ flowchart LR
 ### 4.2 A. Set up the recorder (in the JMeter GUI)
 
 1. **Right-click Test Plan → Add → Non-Test Elements → HTTP(S) Test Script Recorder.**
-2. **Right-click Thread Group → Add → Logic Controller → Recording Controller** (the recording destination). On the recorder, set **Target Controller → Test Plan > Thread Group > Recording Controller**.
-3. **Requests Filtering → Excludes:** add the static asset regex `(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|eot|otf|ttf|mp4|woff|woff2)([?;].*)?` so that images/CSS/JS are not recorded.
+2. **Right-click Test Plan → Add → Threads (Users) → Thread Group**, then **right-click Thread Group → Add → Logic Controller → Recording Controller** (the recording destination). On the recorder, set **Target Controller → Test Plan > Thread Group > Recording Controller**.
+3. On the recorder, tab **Requests Filtering → URL Patterns to Exclude → Add:** add the static asset regex `(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|eot|otf|ttf|mp4|woff|woff2)([?;].*)?` so that images/CSS/JS are not recorded.
 
 > Or skip A1–A3: open [`test-plans/rakam-template.jmx`](./test-plans/rakam-template.jmx) — everything is already set up.
 
@@ -601,7 +601,7 @@ flowchart LR
 ### 4.4 C. Record
 
 8. In JMeter, select **HTTP(S) Test Script Recorder** → click the green **Start** ▶.
-9. In **Firefox**, browse to `http://localhost:3000` and perform the flow (log in → check vehicles → pay). Each request appears as a sampler in the **Recording Controller**.
+9. In **Firefox**, browse to `http://localhost:3000/portal` (the web portal with the login form) and perform the flow (log in → check vehicles → pay). Each request appears as a sampler in the **Recording Controller**.
    > Browser-free alternative (use `curl` through the JMeter proxy — handy for `POST`):
    > ```bash
    > curl -s -x http://localhost:8888 -H 'Content-Type: application/json' \

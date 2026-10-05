@@ -113,7 +113,7 @@ Start SUT dengan `ERROR_RATE=0.2 node server.js` dan baca `sut/server.js` — en
 ### Langkah
 
 1. Buka JMeter (GUI). **Klik kanan Test Plan → Add → Threads (Users) → Thread Group** — 1 user, ramp-up 1, 1 loop.
-2. **Klik kanan Thread Group → Add → Config Element → HTTP Request Defaults**: Protocol `http`, server `localhost`, port `3000`.
+2. **Klik kanan Thread Group → Add → Config Element → HTTP Request Defaults**: Protocol `http`, server `localhost`, port `3000`. *(Plan rujukan letak Defaults bawah Test Plan — kesan sama.)*
 3. **Klik kanan Thread Group → Add → Sampler → HTTP Request** → `GET /api/health` (biarkan Server/Port kosong).
 4. Tambah sampler kedua `GET /` (page info).
 5. **Klik kanan Thread Group → Add → Listener → View Results Tree**.
@@ -174,13 +174,13 @@ Tambah **HTTP Header Manager** dengan `Accept: application/json`, kemudian pasti
 
 2. Sampler: `GET /api/kenderaan/WXY1234/cukai` (buang atau disable sampler lain).
 3. Tambah **Response Assertion** (klik kanan sampler → Add → Assertions) — Field to Test *Text Response*, *Substring*, pattern `amaun`.
-4. Tambah **Duration Assertion** — 2000 ms.
+4. Tambah **Duration Assertion** (klik kanan sampler yang sama → Add → Assertions → Duration Assertion) — *Duration in milliseconds* `2000`.
 
 ![Response Assertion: Text Response, Substring, amaun](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab2-02-response-assertion-amaun.png)
 *Response Assertion (child sampler): **Field to Test = Text Response**, **Pattern Matching Rules = Substring**, pattern `amaun`.*
 
-5. Tambah **Constant Timer** 300 ms (think time) bawah Thread Group.
-6. Tambah **Summary Report** dan **Aggregate Report**. **Disable** View Results Tree (klik kanan → **Disable**) — listener ni berat masa load test.
+5. Tambah **Constant Timer** 300 ms (think time) bawah Thread Group (klik kanan Thread Group → Add → Timer → Constant Timer; *Thread Delay* `300`).
+6. Tambah **Summary Report** dan **Aggregate Report** (klik kanan Thread Group → Add → Listener). **Disable** View Results Tree (klik kanan → **Disable**) — listener ni berat masa load test.
 7. **Ramal** jumlah request, kemudian **Clear All** dan run. Catat: **Throughput**, **Average**, **Error %**, **95% Line**.
 
 ![Summary Report: 100 sample, 0% error](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab2-03-summary-report-100.png)
@@ -225,14 +225,14 @@ Tukar Constant Timer kepada **Gaussian Random Timer** (Deviation 300, Constant D
 ### Langkah
 
 1. Save plan anda **dalam folder `hari-1/test-plans/`** (supaya path relatif `../data/` betul).
-2. Tambah **CSV Data Set Config** (Thread Group → Add → Config Element) yang baca `../data/kenderaan.csv`
+2. Tambah **CSV Data Set Config** (klik kanan Thread Group → Add → Config Element → CSV Data Set Config; plan rujukan letak ia bawah Test Plan — kesan sama) yang baca `../data/kenderaan.csv`
    (variable names: `no_pendaftaran,model`; ignore first line: **True**; recycle: **True**; stop thread: **False**; sharing mode: **All threads**).
 
 ![CSV Data Set Config: ../data/kenderaan.csv, no_pendaftaran,model](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab3-01-csv-data-set-config.png)
 *CSV Data Set Config: Filename `../data/kenderaan.csv`, Variable Names `no_pendaftaran,model`, Ignore first line **True**, Recycle on EOF **True**, Stop thread on EOF **False**, Sharing mode **All threads**.*
 
 3. Tukar path sampler kepada `/api/kenderaan/${no_pendaftaran}/cukai`.
-4. Enable balik View Results Tree. Run (10 users × 10 loop). Dalam View Results Tree, pastikan
+4. Tukar Thread Group kepada **10 / 5 / 10** (threads / ramp-up / loop) dan enable balik View Results Tree. Run (10 users × 10 loop). Dalam View Results Tree, pastikan
    setiap request guna nombor pendaftaran yang berlainan.
 
 ![View Results Tree: setiap sample guna nombor pendaftaran berlainan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab3-02-vrt-nombor-berlainan.png)
@@ -285,7 +285,7 @@ Tambah sampler `GET /api/saman?no_kp=${no_kp}` guna **CSV kedua** dengan column 
 *Sample `ABC0000` berwarna merah — tab **Sampler result** tunjuk `Response code:404` dan `Response message:Not Found`.*
 
 ![View Results Tree: Assertion result dengan Assertion failure message](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-03-vrt-assertion-gagal.png)
-*Kembangkan sample merah dan klik nod Response Assertion — **Assertion failure message** papar mesej custom `Kenderaan ABC0000 tidak memulangkan sebut harga (mungkin 404)`.*
+*Kembangkan sample merah dan klik nod Response Assertion — **Assertion failure message** papar mesej custom `Kenderaan ABC0000 tidak memulangkan sebut harga (mungkin 404)` (diset dalam *Custom failure message* plan rujukan `03-csv-berparameter.jmx`; plan anda sendiri akan papar mesej default `Test failed: text expected to contain /amaun/`).*
 
 4. Tengok **Error %** naik dalam Summary Report. **Ramal dulu:** dengan 6 baris data dan Recycle = True, lebih kurang berapa peratus sample akan fail?
 5. Buang baris palsu tu lepas siap.
@@ -386,13 +386,13 @@ Naikkan threads ke 60 (latency tinggi kekal). Throughput naik balik tak? Apa yan
 ### Langkah
 
 1. **Klik kanan Test Plan → Add → Non-Test Elements → HTTP(S) Test Script Recorder.**
-   Tambah **Recording Controller** bawah Thread Group dan set sebagai **Target Controller** untuk recorder.
+   Tambah **Thread Group** (klik kanan Test Plan → Add → Threads (Users) → Thread Group), kemudian **Recording Controller** bawah Thread Group (klik kanan Thread Group → Add → Logic Controller → Recording Controller) dan set sebagai **Target Controller** untuk recorder.
    *(Atau terus buka `test-plans/rakam-template.jmx` — semua dah siap setup.)*
 
 ![HTTP(S) Test Script Recorder dalam rakam-template.jmx](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab6-01-recorder-port-8888.png)
 *`rakam-template.jmx`: HTTP(S) Test Script Recorder dengan **Port 8888** dan **Target Controller = Use Recording Controller**; Recording Controller di bawah Thread Group.*
 
-2. Pada recorder: **Requests Filtering → Excludes** → tambah regex static asset
+2. Pada recorder: tab **Requests Filtering → URL Patterns to Exclude → Add** → tambah regex static asset
    `(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|eot|otf|ttf|mp4|woff|woff2)([?;].*)?`.
 3. Klik **Start**. Hantar request melalui proxy JMeter (port 8888):
    ```bash
@@ -410,7 +410,7 @@ Naikkan threads ke 60 (latency tinggi kekal). Throughput naik balik tak? Apa yan
 ![Sampler yang dirakam di bawah Recording Controller](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab6-03-recording-controller.png)
 *Hasil rakaman flow portal di atas: setiap request jadi sampler bawah **Recording Controller**, masing-masing dengan **HTTP Header Manager**. Perasan `/portal/favicon.svg` turut dirakam (`svg` tiada dalam regex Excludes) dan `/time/1/current` ialah request latar belakang Chrome — buang sampler yang bukan flow anda. (Rakaman ini guna port proxy 8898.)*
 
-5. Tambah **View Results Tree** bawah Thread Group. **Replay** (Run). Tengok request kenderaan → **401** sebab token yang di-record
+5. Tambah **View Results Tree** bawah Thread Group (kalau guna `rakam-template.jmx`, ia dah ada bawah Test Plan — guna yang tu). **Replay** (Run). Tengok request kenderaan → **401** sebab token yang di-record
    dah expired / palsu.
 6. Buktikan guna plan rujukan dalam mode non-GUI, dan generate report HTML:
    ```bash
