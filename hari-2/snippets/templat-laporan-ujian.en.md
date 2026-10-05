@@ -1,6 +1,6 @@
 # Performance Test Report Template (Test Report & Findings)
 
-[⬅️ Day 2 README](../README.md) · [🧪 Day 2 Lab](./lab.md) · [📋 Test Plan Template](./templat-pelan-ujian.md)
+[⬅️ Day 2 README](../README.md) · [🧪 Day 2 Lab](./lab.md) · [📋 Test Plan Template](https://github.com/habibtalib/jmeter-2-days-training/blob/main/hari-2/snippets/templat-pelan-ujian.md)
 
 > **How to use:** Copy this file (e.g. `laporan-<run-id>.md`). Section **A** is the blank ✍️ template; section **B** is an example already filled in with **real figures** from runs of plan `07-beban-puncak-cukai.jmx` against the `localhost:3000` mock (JMeter 5.6.3). Your run's figures will differ slightly — the mock latency is random (40–180 ms) and ~1% of payments deliberately fail (500).
 >

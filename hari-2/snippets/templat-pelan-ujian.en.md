@@ -1,6 +1,6 @@
 # Performance Test Plan Template
 
-[⬅️ Day 2 README](../README.md) · [🧪 Day 2 Lab](./lab.md) · [📝 Test Report Template](./templat-laporan-ujian.md)
+[⬅️ Day 2 README](../README.md) · [🧪 Day 2 Lab](./lab.md) · [📝 Test Report Template](https://github.com/habibtalib/jmeter-2-days-training/blob/main/hari-2/snippets/templat-laporan-ujian.md)
 
 > **How to use:** Copy this file (e.g. `pelan-ujian-<team>.md`) and fill in every section. The **Filled-in example (eJPJ)** column shows one complete answer for the Portal eJPJ (mock) — replace it with your own system. Sections marked ✍️ are where you write.
 >

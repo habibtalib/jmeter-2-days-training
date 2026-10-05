@@ -1,6 +1,6 @@
 # Templat Laporan Ujian Prestasi (Test Report & Findings)
 
-[⬅️ README Hari 2](../README.md) · [🧪 Lab Hari 2](./lab.md) · [📋 Templat Pelan Ujian](./templat-pelan-ujian.md)
+[⬅️ README Hari 2](../README.md) · [🧪 Lab Hari 2](./lab.md) · [📋 Templat Pelan Ujian](https://github.com/habibtalib/jmeter-2-days-training/blob/main/hari-2/snippets/templat-pelan-ujian.md)
 
 > **Cara guna:** Copy file ni (contohnya `laporan-<id-larian>.md`). Bahagian **A** ialah templat kosong ✍️; bahagian **B** ialah contoh yang dah diisi guna **nombor sebenar** daripada run plan `07-beban-puncak-cukai.jmx` pada mock `localhost:3000` (JMeter 5.6.3). Nombor run anda akan beza sikit — latency mock adalah rawak (40–180 ms) dan ~1% bayaran memang sengaja gagal (500).
 >

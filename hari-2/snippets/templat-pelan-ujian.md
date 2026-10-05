@@ -1,6 +1,6 @@
 # Templat Pelan Ujian Prestasi (Performance Test Plan)
 
-[⬅️ README Hari 2](../README.md) · [🧪 Lab Hari 2](./lab.md) · [📝 Templat Laporan Ujian](./templat-laporan-ujian.md)
+[⬅️ README Hari 2](../README.md) · [🧪 Lab Hari 2](./lab.md) · [📝 Templat Laporan Ujian](https://github.com/habibtalib/jmeter-2-days-training/blob/main/hari-2/snippets/templat-laporan-ujian.md)
 
 > **Cara guna:** Copy file ni (contohnya `pelan-ujian-<pasukan>.md`), kemudian isi setiap bahagian. Column **Contoh diisi (eJPJ)** tunjuk satu jawapan lengkap untuk Portal eJPJ (tiruan) — tukar ikut sistem anda. Bahagian yang ada tanda ✍️ ialah tempat anda isi.
 >
