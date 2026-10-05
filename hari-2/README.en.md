@@ -905,6 +905,12 @@ bin/PluginsManagerCMD.sh install jpgc-perfmon,jpgc-cmd,jpgc-graphs-basic      # 
 ls bin/JMeterPluginsCMD.*                                                       # graph export tool
 ```
 
+![Plugins Manager — Available Plugins](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-03-plugins-manager-available-perfmon.png)
+*Available Plugins: tick "PerfMon (Servers Performance Monitoring)" (+ jpgc-cmd, 3 Basic Graphs). Review Changes lists what will be installed, including the perfmon library.*
+
+![Plugins Manager — Installed Plugins](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-04-plugins-manager-installed.png)
+*After the restart: the Installed Plugins tab shows PerfMon, Command-Line Graph Plotting Tool and 3 Basic Graphs (PerfMon version 2.1). The Plugins Manager also offers to upgrade itself — you can ignore that.*
+
 **Start ServerAgent (on the SERVER, needs Java 8+):**
 
 ```bash
@@ -916,6 +922,9 @@ startAgent.bat --udp-port 0 --tcp-port 4444           # Windows
 #   INFO … JP@GC Agent v2.2.3 started
 # Test from the JMeter machine: telnet <server> 4444 → type  test  → the agent replies  Yep
 ```
+
+![ServerAgent started](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-06-serveragent-mula.png)
+*A real ServerAgent console and the `test` → `Yep` check. Our Apple Silicon Mac uses an x86_64 Java (Rosetta), port 4445 and a localhost-only Java policy; on a Windows/Linux x64 server plain `startAgent` is enough.*
 
 `--udp-port 0` = disable UDP (we only use TCP). Another port (e.g. 4445) also works — set `-Jagent_port=4445` on the plan.
 
@@ -957,6 +966,12 @@ JMeterPluginsCMD.sh --generate-png hasil/rt.png  --input-jtl hasil/keputusan.jtl
 JMeterPluginsCMD.sh --generate-png hasil/thr.png --input-jtl hasil/keputusan.jtl --plugin-type ThreadsStateOverTime
 JMeterPluginsCMD.sh --generate-csv hasil/perfmon.csv --input-jtl hasil/perfmon.jtl --plugin-type PerfMon
 ```
+
+![run-chatbot-perfmon.sh console](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-02-konsol-ringkasan.png)
+*Script console: SUT + agent checks → summary → PNG export → p50–p99 and CPU summary (our run on ports 3105/4445).*
+
+![Results folder](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-07-folder-hasil.png)
+*Contents of `hasil/<time>/`: `keputusan.jtl` (HTTP samples), `perfmon.jtl` (metrics), `laporan/` (HTML dashboard), PNGs + `perfmon.csv` from JMeterPluginsCMD.*
 
 **`perfmon.jtl` format:** the same CSV as a normal `.jtl`, but `label` = `<host> <metric>` and **`elapsed` = value × 1000**:
 
@@ -1068,6 +1083,9 @@ jmeter -g hasil/keputusan.jtl -o hasil/laporan-p999 -Jaggregate_rpt_pct1=75 -Jag
 # Our run: p75 = 1110 ms, p95 = 1665 ms, p99.9 = 9156 ms
 ```
 
+![Statistics with p75 / p95 / p99.9 columns](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-chatbot-statistics-p75-p999.png)
+*Dashboard regenerated with `-Jaggregate_rpt_pct1=75 -Jaggregate_rpt_pct3=99.9` (short run, 106 samples): the columns become 75th / 95th / 99.9th pct. Note p99.9 = Max — not enough samples.*
+
 **Sample size — p99 needs many samples:**
 
 - p99 means 1 in 100. With **100 samples**, p99 ≈ the **slowest** sample (in practice = Max). In our run, the 1–10 user level had only **67 samples** → p99 = Max = 3536 ms — meaningless.
@@ -1085,6 +1103,9 @@ jmeter -g hasil/keputusan.jtl -o hasil/laporan-p999 -Jaggregate_rpt_pct1=75 -Jag
 | 31–40 users | 3024 ms | 6343 ms | ❌ FAIL (p95) — CPU 95% |
 
 Finding: *"The chatbot meets the NFR up to ~30 concurrent users. At 31–40 users, server CPU averages 95% (PerfMon) and p95 rises to 3024 ms (> 2000 ms). Safe capacity ≈ 30 users per server; recommendation: profile answer generation / add CPU / scale out, then repeat the test."*
+
+![Report template B9 + C1](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-08-laporan-b9-c1.png)
+*The same finding in the report-template format (B9 + Finding C1).*
 
 ### 🎯 Quiz S3
 

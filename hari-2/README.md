@@ -905,6 +905,12 @@ bin/PluginsManagerCMD.sh install jpgc-perfmon,jpgc-cmd,jpgc-graphs-basic      # 
 ls bin/JMeterPluginsCMD.*                                                       # alat eksport graf
 ```
 
+![Plugins Manager — Available Plugins](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-03-plugins-manager-available-perfmon.png)
+*Available Plugins: tanda "PerfMon (Servers Performance Monitoring)" (+ jpgc-cmd, 3 Basic Graphs). Review Changes senaraikan apa yang akan dipasang, termasuk library perfmon.*
+
+![Plugins Manager — Installed Plugins](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-04-plugins-manager-installed.png)
+*Lepas restart: tab Installed Plugins tunjuk PerfMon, Command-Line Graph Plotting Tool dan 3 Basic Graphs (versi PerfMon 2.1). Plugins Manager juga cadang naik taraf dirinya sendiri — boleh abaikan.*
+
 **Mula ServerAgent (atas PELAYAN, perlukan Java 8+):**
 
 ```bash
@@ -916,6 +922,9 @@ startAgent.bat --udp-port 0 --tcp-port 4444           # Windows
 #   INFO … JP@GC Agent v2.2.3 started
 # Uji dari mesin JMeter: telnet <pelayan> 4444 → taip  test  → ejen balas  Yep
 ```
+
+![ServerAgent dimulakan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-06-serveragent-mula.png)
+*Console ServerAgent sebenar dan ujian `test` → `Yep`. Mac Apple Silicon kami guna Java x86_64 (Rosetta), port 4445 dan polisi Java localhost sahaja; atas pelayan Windows/Linux x64 cukup `startAgent`.*
 
 `--udp-port 0` = matikan UDP (kita guna TCP sahaja). Port lain (contoh 4445) pun boleh — set `-Jagent_port=4445` pada plan.
 
@@ -957,6 +966,12 @@ JMeterPluginsCMD.sh --generate-png hasil/rt.png  --input-jtl hasil/keputusan.jtl
 JMeterPluginsCMD.sh --generate-png hasil/thr.png --input-jtl hasil/keputusan.jtl --plugin-type ThreadsStateOverTime
 JMeterPluginsCMD.sh --generate-csv hasil/perfmon.csv --input-jtl hasil/perfmon.jtl --plugin-type PerfMon
 ```
+
+![Console run-chatbot-perfmon.sh](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-02-konsol-ringkasan.png)
+*Console script: semakan SUT + ejen → summary → eksport PNG → ringkasan p50–p99 dan CPU (run kami pada port 3105/4445).*
+
+![Folder hasil](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-07-folder-hasil.png)
+*Isi `hasil/<masa>/`: `keputusan.jtl` (sampel HTTP), `perfmon.jtl` (metrik), `laporan/` (HTML dashboard), PNG + `perfmon.csv` daripada JMeterPluginsCMD.*
 
 **Format `perfmon.jtl`:** CSV sama macam `.jtl` biasa, tapi `label` = `<host> <metrik>` dan **`elapsed` = nilai × 1000**:
 
@@ -1068,6 +1083,9 @@ jmeter -g hasil/keputusan.jtl -o hasil/laporan-p999 -Jaggregate_rpt_pct1=75 -Jag
 # Run kami: p75 = 1110 ms, p95 = 1665 ms, p99.9 = 9156 ms
 ```
 
+![Statistics dengan column p75 / p95 / p99.9](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-chatbot-statistics-p75-p999.png)
+*Dashboard yang dijana semula dengan `-Jaggregate_rpt_pct1=75 -Jaggregate_rpt_pct3=99.9` (run pendek, 106 sampel): column jadi 75th / 95th / 99.9th pct. Perhatikan p99.9 = Max — sampel tak cukup.*
+
 **Saiz sampel — p99 perlukan banyak sampel:**
 
 - p99 bermaksud 1 dalam 100. Dengan **100 sampel**, p99 ≈ sampel **paling lambat** (praktikalnya = Max). Dalam run kami, tahap 1–10 pengguna cuma ada **67 sampel** → p99 = Max = 3536 ms — tak bermakna.
@@ -1085,6 +1103,9 @@ jmeter -g hasil/keputusan.jtl -o hasil/laporan-p999 -Jaggregate_rpt_pct1=75 -Jag
 | 31–40 pengguna | 3024 ms | 6343 ms | ❌ GAGAL (p95) — CPU 95% |
 
 Dapatan: *"Chatbot memenuhi NFR sehingga ~30 pengguna serentak. Pada 31–40 pengguna, CPU pelayan purata 95% (PerfMon) dan p95 naik ke 3024 ms (> 2000 ms). Kapasiti selamat ≈ 30 pengguna setiap pelayan; cadangan: profile penjanaan jawapan / tambah CPU / scale out, kemudian ulang test."*
+
+![Templat laporan B9 + C1](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-08-laporan-b9-c1.png)
+*Dapatan yang sama dalam format templat laporan (B9 + Finding C1).*
 
 ### 🎯 Kuiz S3
 

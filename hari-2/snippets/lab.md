@@ -572,6 +572,9 @@
 - ServerAgent 2.2.3: <https://github.com/undera/perfmon-agent/releases>; port **4444** kosong
 - Plan rujukan: [`../test-plans/10b-chatbot-perfmon.jmx`](../test-plans/10b-chatbot-perfmon.jmx) (tanpa plugin: [`10-chatbot-beban.jmx`](../test-plans/10-chatbot-beban.jmx)); script: [`../run/run-chatbot-perfmon.sh`](../run/run-chatbot-perfmon.sh) (Windows: `run-chatbot-perfmon.bat`)
 
+![Plugins Manager: PerfMon ditanda dalam Available Plugins](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-03-plugins-manager-available-perfmon.png)
+*Options → Plugins Manager → Available Plugins: tanda "PerfMon (Servers Performance Monitoring)", "Command-Line Graph Plotting Tool" dan "3 Basic Graphs"; Review Changes tunjuk apa yang akan dipasang → "Apply Changes and Restart JMeter".*
+
 ### Langkah
 1. **Uji chatbot sekali** (Terminal B):
    ```bash
@@ -580,12 +583,18 @@
    # {"jawapan":"Saman JPJ boleh disemak …","token_dijana":93,"masa_ms":784}
    ```
    Cuba 5 kali — perhatikan `masa_ms` ikut `token_dijana` (≈ 5 ms setiap token).
+
+   ![curl ke /api/chatbot](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-05-curl-chatbot.png)
+   *Tiga soalan sebenar ke chatbot tiruan (run kami pada port 3105; anda guna 3000): jawapan ikut kata kunci, `masa_ms` naik ikut `token_dijana`.*
 2. **Start ServerAgent** (Terminal C — dalam kelas, laptop anda = "pelayan"):
    ```bash
    cd ServerAgent-2.2.3
    ./startAgent.sh --udp-port 0 --tcp-port 4444        # Windows: startAgent.bat --udp-port 0 --tcp-port 4444
    ```
    Tunggu `JP@GC Agent v2.2.3 started`. Uji: `telnet localhost 4444` → taip `test` → `Yep` (Windows tanpa telnet: `Test-NetConnection localhost -Port 4444` → `TcpTestSucceeded : True`).
+
+   ![ServerAgent dimulakan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-06-serveragent-mula.png)
+   *ServerAgent sebenar: `Binding TCP to …` dan `JP@GC Agent v2.2.3 started`, kemudian `test` → `Yep`. Mac Apple Silicon kami: Java x86_64 (Temurin 8, Rosetta) + port 4445 + polisi Java localhost sahaja; Windows/Linux x64 cukup `startAgent.bat`/`startAgent.sh`.*
 3. **Buka plan `10b` dalam GUI** dan check **PerfMon Metrics Collector** (bawah Test Plan): dua baris (`CPU`, `Memory usedperc`), port `${__P(agent_port,4444)}`, Filename `${__P(perfmon_jtl,perfmon.jtl)}`. Jangan run dalam GUI — tutup GUI.
 
    ![PerfMon Metrics Collector dalam plan 10b](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-01-gui-perfmon-metrics-collector.png)
@@ -601,9 +610,18 @@
    *Console run kami (port 3105/4445; default anda 3000/4444): ringkasan p50/p90/p95/p99 dan CPU purata/maks.*
 5. **Buka tiga PNG** dalam `hari-2/run/hasil/<masa>/`: `active-threads.png`, `cpu-perfmon.png`, `response-times-over-time.png`. Letak sebelah-menyebelah (paksi masa sama). Catat: pada **berapa pengguna** CPU mula kekal ≥ 80%? Bila response time mula naik?
 
+   ![Kandungan folder hasil](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-07-folder-hasil.png)
+   *Folder `hasil/<masa>/` selepas script (run pendek 10 pengguna): `keputusan.jtl`, `perfmon.jtl`, `laporan/`, tiga PNG dan `perfmon.csv`. Baris `perfmon.jtl`: `elapsed` = nilai × 1000.*
+
    ![Tiga graf atas paksi masa yang sama](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-cpu-threads-rt-bertindan.png)
    *Run rujukan: CPU ≥ 80% dari ~31 pengguna; response time naik selepas tu.*
 6. **Buka dashboard** `laporan/index.html` → Statistics (p95, p99, Error %) → Charts → Response Times → **Response Time Percentiles**. Kat percentile berapa lengkung mula "patah" ke atas?
+
+   ![Statistics p95 dan p99](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-chatbot-statistics-p95-p99.png)
+   *Statistics run rujukan: 95th pct 1665 ms vs 99th pct 6076 ms.*
+
+   ![Response Time Percentiles](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-chatbot-response-time-percentiles.png)
+   *Lengkung patah ke atas selepas ~p95 — ekor panjang jawapan chatbot.*
 7. **Isi lembaran:**
 
    | Perkara | Anda | Rujukan kami |
@@ -613,8 +631,17 @@
    | CPU purata / maks | | 73% / 100% |
    | Pengguna bila CPU kekal ≥ 80% | | ~31 |
    | Throughput pada beban maksimum | | ~14 /s |
+
+   ![Graf bertindan untuk lembaran](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-cpu-threads-rt-bertindan.png)
+   *Baca nilai lembaran daripada graf bertindan: bila CPU kekal ≥ 80%, berapa thread aktif ketika itu, dan paras response time.*
 8. **Tulis NFR + satu dapatan** dalam [`templat-laporan-ujian.md`](./templat-laporan-ujian.md) (contoh B9): *"p95 ≤ … s dan p99 ≤ … s pada … pengguna serentak"* — lulus atau gagal dengan angka anda? Sertakan CPU sebagai **punca**.
+
+   ![Contoh B9 dan dapatan C1](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-08-laporan-b9-c1.png)
+   *Contoh diisi B9 + Finding C1 dalam `templat-laporan-ujian.md` (dirender): jadual NFR p95/p99 setiap tahap beban, kemudian Bukti → Kesan → Punca → Cadangan.*
 9. **Hentikan ServerAgent** (Ctrl+C dalam Terminal C) sebaik siap — ejen tiada authentication.
+
+   ![ServerAgent dihentikan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-09-serveragent-henti.png)
+   *Ctrl+C sebenar pada ejen, kemudian semak dari terminal lain: `Connection refused` = port dah ditutup.*
 
 ### ✅ Checkpoint
 - [ ] `perfmon.jtl` ada baris `localhost CPU` dan `localhost Memory usedperc`; tiga PNG + `laporan/index.html` dijana
@@ -631,7 +658,7 @@
 | `RALAT: ServerAgent tidak dapat dihubungi pada localhost:4444 (Connection refused)` / log JMeter `Connection refused` | Ejen belum start, port lain, atau firewall block 4444 | Start `startAgent.sh --tcp-port 4444`; pastikan `-Jagent_port` = `--tcp-port`; `telnet <pelayan> 4444` → `test` → `Yep`; buka firewall untuk IP mesin JMeter sahaja |
 | Buka `10b` → `CannotResolveClassException: kg.apc.jmeter.perfmon.PerfMonCollector` | Plugin jpgc-perfmon belum dipasang | Plugins Manager → *PerfMon (Servers Performance Monitoring)* → restart; atau guna `10-chatbot-beban.jmx` (core sahaja) |
 | Windows Firewall / antivirus tanya "Allow access" untuk Java | Ejen buka port TCP | Benarkan untuk rangkaian **Private** sahaja; lab localhost tak perlukan akses luar |
-| CPU kosong / 0 dalam `perfmon.jtl` (macOS Apple Silicon); log ejen `UnsatisfiedLinkError … Cpu.gather` | SIGAR dalam ServerAgent cuma ada library x86_64 | Run ejen dengan Java **x86_64** (Rosetta), contoh `/Library/Java/JavaVirtualMachines/temurin-8.jdk/…/java -jar CMDRunner.jar --tool PerfMonAgent --udp-port 0 --tcp-port 4444`; atau run ejen pada mesin Windows/Linux x64 |
+| CPU kosong / 0 dalam `perfmon.jtl` (macOS Apple Silicon); log ejen `UnsatisfiedLinkError … Cpu.gather` | SIGAR dalam ServerAgent cuma ada library x86_64 | Run ejen dengan Java x86_64 (Rosetta), contoh `/Library/Java/JavaVirtualMachines/temurin-8.jdk/…/java -jar CMDRunner.jar --tool PerfMonAgent --udp-port 0 --tcp-port 4444`; atau run ejen pada mesin Windows/Linux x64 |
 | `perfmon.jtl` kosong (header sahaja) atau tiada | Collector tak boleh sambung ke ejen, atau collector berada dalam Thread Group yang disabled | Semak `jmeter.log` (cari `PerfMon`); letak collector bawah Test Plan; semak host/port |
 | `JMeterPluginsCMD.sh: No such file` / `AMARAN: … tiada — PNG tidak akan dijana` | Plugin jpgc-cmd belum dipasang, atau `jmeter` pada PATH bukan dari `$JMETER_HOME/bin` (contoh Homebrew) | Pasang jpgc-cmd + jpgc-graphs-basic; set `JMETER_HOME=<folder JMeter>` sebelum run script |
 | Error % tinggi (> 5%) dengan mesej `The operation lasted too long` | SLA 3000 ms dilanggar — jawapan panjang / pelayan tepu | Tu dapatan, bukan bug. Untuk banding: `SLA_MS=10000 ./run-chatbot-perfmon.sh` |

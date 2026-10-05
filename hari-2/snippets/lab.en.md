@@ -572,6 +572,9 @@
 - ServerAgent 2.2.3: <https://github.com/undera/perfmon-agent/releases>; port **4444** free
 - Reference plan: [`../test-plans/10b-chatbot-perfmon.jmx`](../test-plans/10b-chatbot-perfmon.jmx) (without the plugin: [`10-chatbot-beban.jmx`](../test-plans/10-chatbot-beban.jmx)); script: [`../run/run-chatbot-perfmon.sh`](../run/run-chatbot-perfmon.sh) (Windows: `run-chatbot-perfmon.bat`)
 
+![Plugins Manager: PerfMon ticked in Available Plugins](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-03-plugins-manager-available-perfmon.png)
+*Options → Plugins Manager → Available Plugins: tick "PerfMon (Servers Performance Monitoring)", "Command-Line Graph Plotting Tool" and "3 Basic Graphs"; Review Changes shows what will be installed → "Apply Changes and Restart JMeter".*
+
 ### Steps
 1. **Try the chatbot once** (Terminal B):
    ```bash
@@ -580,12 +583,18 @@
    # {"jawapan":"Saman JPJ boleh disemak …","token_dijana":93,"masa_ms":784}
    ```
    Try it 5 times — notice that `masa_ms` follows `token_dijana` (≈ 5 ms per token).
+
+   ![curl to /api/chatbot](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-05-curl-chatbot.png)
+   *Three real questions to the mock chatbot (our run on port 3105; you use 3000): answers follow keywords, `masa_ms` grows with `token_dijana`.*
 2. **Start ServerAgent** (Terminal C — in class, your laptop = the "server"):
    ```bash
    cd ServerAgent-2.2.3
    ./startAgent.sh --udp-port 0 --tcp-port 4444        # Windows: startAgent.bat --udp-port 0 --tcp-port 4444
    ```
    Wait for `JP@GC Agent v2.2.3 started`. Test: `telnet localhost 4444` → type `test` → `Yep` (Windows without telnet: `Test-NetConnection localhost -Port 4444` → `TcpTestSucceeded : True`).
+
+   ![ServerAgent started](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-06-serveragent-mula.png)
+   *Real ServerAgent: `Binding TCP to …` and `JP@GC Agent v2.2.3 started`, then `test` → `Yep`. Our Apple Silicon Mac: x86_64 Java (Temurin 8, Rosetta) + port 4445 + a localhost-only Java policy; on Windows/Linux x64 plain `startAgent.bat`/`startAgent.sh` is enough.*
 3. **Open plan `10b` in the GUI** and check the **PerfMon Metrics Collector** (under the Test Plan): two rows (`CPU`, `Memory usedperc`), port `${__P(agent_port,4444)}`, Filename `${__P(perfmon_jtl,perfmon.jtl)}`. Do not run it in the GUI — close the GUI.
 
    ![PerfMon Metrics Collector in plan 10b](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-01-gui-perfmon-metrics-collector.png)
@@ -601,9 +610,18 @@
    *Our run's console (ports 3105/4445; your defaults are 3000/4444): the p50/p90/p95/p99 summary and average/max CPU.*
 5. **Open the three PNGs** in `hari-2/run/hasil/<time>/`: `active-threads.png`, `cpu-perfmon.png`, `response-times-over-time.png`. Put them side by side (same time axis). Note: at **how many users** does CPU start to stay ≥ 80%? When does response time start to rise?
 
+   ![Results folder contents](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-07-folder-hasil.png)
+   *The `hasil/<time>/` folder after the script (short 10-user run): `keputusan.jtl`, `perfmon.jtl`, `laporan/`, three PNGs and `perfmon.csv`. `perfmon.jtl` rows: `elapsed` = value × 1000.*
+
    ![Three charts on the same time axis](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-cpu-threads-rt-bertindan.png)
    *Reference run: CPU ≥ 80% from ~31 users; response time rises after that.*
 6. **Open the dashboard** `laporan/index.html` → Statistics (p95, p99, Error %) → Charts → Response Times → **Response Time Percentiles**. At which percentile does the curve "break" upwards?
+
+   ![Statistics p95 and p99](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-chatbot-statistics-p95-p99.png)
+   *Reference-run Statistics: 95th pct 1665 ms vs 99th pct 6076 ms.*
+
+   ![Response Time Percentiles](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-chatbot-response-time-percentiles.png)
+   *The curve breaks upwards after ~p95 — the long tail of chatbot answers.*
 7. **Fill in the sheet:**
 
    | Item | You | Our reference |
@@ -613,8 +631,17 @@
    | Average / max CPU | | 73% / 100% |
    | Users when CPU stays ≥ 80% | | ~31 |
    | Throughput at maximum load | | ~14 /s |
+
+   ![Stacked charts for the sheet](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-30-cpu-threads-rt-bertindan.png)
+   *Read the sheet values from the stacked charts: when CPU stays ≥ 80%, how many threads are active at that moment, and the response-time level.*
 8. **Write an NFR + one finding** in [`templat-laporan-ujian.md`](./templat-laporan-ujian.md) (example B9): *"p95 ≤ … s and p99 ≤ … s at … concurrent users"* — pass or fail with your numbers? Include CPU as the **cause**.
+
+   ![Example B9 and finding C1](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-08-laporan-b9-c1.png)
+   *Filled-in example B9 + Finding C1 in `templat-laporan-ujian.md` (rendered): the p95/p99 NFR table per load level, then Evidence → Impact → Cause → Recommendation.*
 9. **Stop ServerAgent** (Ctrl+C in Terminal C) as soon as you are done — the agent has no authentication.
+
+   ![ServerAgent stopped](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab9-09-serveragent-henti.png)
+   *A real Ctrl+C on the agent, then a check from another terminal: `Connection refused` = the port is closed.*
 
 ### ✅ Checkpoint
 - [ ] `perfmon.jtl` has `localhost CPU` and `localhost Memory usedperc` rows; three PNGs + `laporan/index.html` generated
@@ -631,7 +658,7 @@
 | `RALAT: ServerAgent tidak dapat dihubungi pada localhost:4444 (Connection refused)` / JMeter log `Connection refused` | Agent not started, a different port, or a firewall blocking 4444 | Start `startAgent.sh --tcp-port 4444`; make sure `-Jagent_port` = `--tcp-port`; `telnet <server> 4444` → `test` → `Yep`; open the firewall for the JMeter machine's IP only |
 | Opening `10b` → `CannotResolveClassException: kg.apc.jmeter.perfmon.PerfMonCollector` | The jpgc-perfmon plugin is not installed | Plugins Manager → *PerfMon (Servers Performance Monitoring)* → restart; or use `10-chatbot-beban.jmx` (core only) |
 | Windows Firewall / antivirus asks "Allow access" for Java | The agent opens a TCP port | Allow it for **Private** networks only; the localhost lab needs no outside access |
-| Empty / 0 CPU in `perfmon.jtl` (macOS Apple Silicon); agent log `UnsatisfiedLinkError … Cpu.gather` | SIGAR in ServerAgent only ships an x86_64 library | Run the agent with an **x86_64** Java (Rosetta), e.g. `/Library/Java/JavaVirtualMachines/temurin-8.jdk/…/java -jar CMDRunner.jar --tool PerfMonAgent --udp-port 0 --tcp-port 4444`; or run the agent on a Windows/Linux x64 machine |
+| Empty / 0 CPU in `perfmon.jtl` (macOS Apple Silicon); agent log `UnsatisfiedLinkError … Cpu.gather` | SIGAR in ServerAgent only ships an x86_64 library | Run the agent with an x86_64 Java (Rosetta), e.g. `/Library/Java/JavaVirtualMachines/temurin-8.jdk/…/java -jar CMDRunner.jar --tool PerfMonAgent --udp-port 0 --tcp-port 4444`; or run the agent on a Windows/Linux x64 machine |
 | `perfmon.jtl` empty (header only) or missing | The collector cannot reach the agent, or the collector sits in a disabled Thread Group | Check `jmeter.log` (search `PerfMon`); place the collector under the Test Plan; check host/port |
 | `JMeterPluginsCMD.sh: No such file` / `AMARAN: … tiada — PNG tidak akan dijana` | jpgc-cmd not installed, or the `jmeter` on PATH is not from `$JMETER_HOME/bin` (e.g. Homebrew) | Install jpgc-cmd + jpgc-graphs-basic; set `JMETER_HOME=<JMeter folder>` before running the script |
 | High Error % (> 5%) with the message `The operation lasted too long` | The 3000 ms SLA is breached — long answers / saturated server | That is a finding, not a bug. To compare: `SLA_MS=10000 ./run-chatbot-perfmon.sh` |
