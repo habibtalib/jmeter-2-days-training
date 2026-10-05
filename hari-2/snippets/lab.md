@@ -51,6 +51,18 @@
 9. Lepas langkah 4 keluar `"status":"BERJAYA"`, klik **Stop** ⏹ dan **File → Save**.
 10. Expand **Recording Controller**: catat nama setiap Transaction Controller dan sampler. Buka Header Manager `T02` — salin 8 aksara pertama nilai `Authorization`. Buka body sampler `T04` — cari `csrf`.
 
+![Portal eJPJ tiruan: borang log masuk](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-01-portal-log-masuk.png)
+*Aliran yang dirakam (versi browser): <http://localhost:3000/portal> → borang **Log Masuk** (POST `/portal/log-masuk`). Kalau browser di-set guna proxy `localhost:8888`, setiap klik jadi sampler.*
+
+![Portal eJPJ: senarai Kenderaan Saya](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-02-portal-senarai-kenderaan.png)
+*Lepas log masuk → **Kenderaan Saya** (GET `/portal/kenderaan`, perlu cookie session `SESI_EJPJ`). Klik **Bayar cukai** untuk WXY1234.*
+
+![Portal eJPJ: borang bayar cukai dengan medan tersembunyi csrf](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-03-portal-borang-bayar-csrf.png)
+*Borang **Bayar Cukai Jalan**: kotak merah tunjuk hidden field `csrf` dan `amaun` (dilihat melalui DevTools → Elements). `csrf` ni nilai dinamik — kena korelasi dalam Latihan 3.*
+
+![Portal eJPJ: resit Pembayaran Berjaya status BERJAYA](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-04-portal-resit-berjaya.png)
+*Langkah terakhir: resit **Status: BERJAYA**. Teks ni yang kita guna untuk Response Assertion.*
+
 ![HTTP(S) Test Script Recorder: proksi port 8888, Target Controller Recording Controller](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-29-gui-recorder-settings.png)
 *HTTP(S) Test Script Recorder: proxy port 8888, request yang di-record masuk ke dalam Recording Controller. (Template asal tunjuk “Add separators between groups” — tukar Grouping macam langkah 4.)*
 
@@ -112,6 +124,12 @@
    # summary = 3 ... Err: 2 (66.67%)
    ```
 8. Save plan (**File → Save**) — plan ni jadi titik mula untuk Latihan 3.
+
+![View Results Tree: log-masuk hijau, kenderaan dan bayar-cukai merah](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-01-vrt-401-merah.png)
+*Replay lepas SUT restart: **View Results Tree** — `/api/log-masuk` hijau (200), `/api/kenderaan` dan `/api/kenderaan/WXY1234/bayar-cukai` merah (**401**). Klik sampler merah → tab **Sampler result** / **Request** / **Response data** untuk siasat.*
+
+![HTML dashboard replay: Statistics dan Errors 401/Unauthorized](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-02-dashboard-statistics-errors-401.png)
+*Replay yang sama dalam non-GUI (`-e -o`): **Statistics** tunjuk Error % 66.67% (2 daripada 3), **Errors** = `401/Unauthorized` × 2 — sama dengan `summary = 3 ... Err: 2 (66.67%)`.*
 
 ### ✅ Checkpoint
 - [ ] Main balik tanpa restart menunjukkan 4 × 200 dan anda boleh menerangkan kenapa ia "lulus palsu"
@@ -399,6 +417,12 @@
 5. **Cross-check dengan data lab:** guna R1 Latihan 5 — 50 users × (R + 4 s) bagi Transactions/s macam yang dijangka ke?
 6. Isi bahagian 5 (transaction mix), 8 (jadual baseline → load → stress → spike → soak dengan config `-J`), 9 (kriteria entry/exit/suspend), 10 (monitoring), 11 (sekurang-kurangnya 3 risiko) dan 12 (kebenaran & prosedur stop).
 
+![Templat pelan ujian: workload model dan Little's Law](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab6-01-pelan-model-beban-littles-law.png)
+*Contoh diisi `templat-pelan-ujian.md` §4.1–4.2: V = 36,000/jam → X = 10 transaksi/s → **N = 10 × (2 + 58) = 600** concurrent users. Isi lajur ✍️ Anda dengan angka senario anda.*
+
+![Templat pelan ujian: pacing dan Lampiran A](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab6-02-pelan-pacing-lampiran-a.png)
+*§4.3 pacing (Constant Throughput Timer = X × 60 sample/minit) dan **Lampiran A** — worksheet Little's Law yang anda isi dalam langkah 4.*
+
 ### ✅ Checkpoint
 - [ ] Sekurang-kurangnya 4 NFR ditulis dengan transaksi, beban, metrik percentile, ambang dan tempoh
 - [ ] Pengiraan Little's Law lengkap: V → X → N, kadar hits/s, dan tetapan pacing
@@ -436,6 +460,12 @@
 2. Tutup dengan satu ayat: *"Sebelum ujian sebenar, kami perlukan kebenaran bertulis daripada …"*
 3. Present (pasangan lain tanya **satu** soalan: "Macam mana anda tahu …?").
 4. Catat satu feedback yang anda dapat.
+
+![Templat laporan: ringkasan eksekutif dan keputusan berbanding NFR](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab7-01-laporan-ringkasan-nfr.png)
+*Bahan pembentangan: `templat-laporan-ujian.md` B1 (ringkasan eksekutif — satu ayat + 3 perkara utama) dan B3 (keputusan berbanding NFR dengan sumber dashboard).*
+
+![Templat laporan: dapatan D2 bukti kesan punca cadangan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab7-02-laporan-dapatan-d2.png)
+*Contoh satu dapatan untuk slot "Satu dapatan": **D2** — Bukti (angka + bahagian dashboard) → Kesan → Punca → Cadangan.*
 
 ### ✅ Checkpoint
 - [ ] Pembentangan ≤ 3 minit merangkumi NFR, pengiraan N, jenis larian dan satu dapatan
