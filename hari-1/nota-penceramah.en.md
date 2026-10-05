@@ -219,7 +219,7 @@ Ask participants to install/open **Firefox** during the break and make sure the 
 
 1. Open the file. Show **CSV Data Set Config - kenderaan**: `../data/kenderaan.csv`, `no_pendaftaran,model`, Ignore first line True, Recycle True, Stop thread False, Sharing *All threads*.
 2. Show the **Uniform Random Timer (0.5-1.5s)**: Constant Delay Offset 500 + Random Delay Maximum 1000.
-3. Start (10 × 10) → View Results Tree → show the 5 registration numbers rotating.
+3. This plan only has a Summary Report — add a **View Results Tree** first (right-click Thread Group → Add → Listener → View Results Tree) → Start (10 × 10) → show the 5 registration numbers rotating.
 4. **Live (Latihan 4):** add `ABC0000,Kereta Hantu` to the CSV → Start → Error % rises → **remove that row**.
 
 **Expected:** 100 tax samples, 0% errors; with `ABC0000` ~1/6 fail.

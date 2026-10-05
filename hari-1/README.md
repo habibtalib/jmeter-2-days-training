@@ -288,7 +288,7 @@ Jom bina test paling ringkas — satu user hit `/api/health`.
 2. **Klik kanan Test Plan → Add → Threads (Users) → Thread Group.**
 3. Pada Thread Group, set dulu buat sementara: **Number of Threads = 1**, **Ramp-up = 1**, **Loop Count = 1**.
 4. **Klik kanan Thread Group → Add → Config Element → HTTP Request Defaults.** Isi:
-   - **Protocol:** `http` · **Server Name or IP:** `localhost` · **Port Number:** `3000`
+   - **Protocol:** `http` · **Server Name or IP:** `localhost` · **Port Number:** `3000` *(Plan rujukan `01-hello-jpj.jmx` letak Defaults terus bawah **Test Plan** — kesan sama, sebab skop Test Plan merangkumi semua Thread Group.)*
 5. **Klik kanan Thread Group → Add → Sampler → HTTP Request.** Isi:
    - **Method:** `GET` · **Path:** `/api/health` (biarkan server/port kosong — ambil dari Defaults)
 6. **Klik kanan Thread Group → Add → Listener → View Results Tree.**
@@ -339,7 +339,7 @@ Tukar Thread Group anda kepada **20 / 10 / 5** untuk langkah seterusnya.
 
 Banyak API perlukan **header** (contohnya `Content-Type`, `Accept`, `Authorization`). **HTTP Header Manager** set header yang dikongsi oleh semua sampler dalam skop dia.
 
-1. **Klik kanan Thread Group → Add → Config Element → HTTP Header Manager.**
+1. **Klik kanan Thread Group → Add → Config Element → HTTP Header Manager.** *(Plan rujukan `02-cukai-beban.jmx` letak ia bawah **Test Plan** — kesan sama.)*
 2. Klik **Add** dan masukkan: Name `Accept`, Value `application/json`.
 
 > **Konsep — Config Element lain yang berguna:**
@@ -359,7 +359,7 @@ Banyak API perlukan **header** (contohnya `Content-Type`, `Accept`, `Authorizati
 | **Summary Report** | Ringkasan setiap label: # sample, Average, Min/Max, Error %, Throughput | Ringan — sesuai untuk load test |
 | **Aggregate Report** | Macam Summary + **Median**, **90/95/99 percentile** | Ringan |
 
-Tambah ketiga-tiga bawah Thread Group. Run test (20/10/5) dan perhatikan:
+Tambah ketiga-tiga bawah Thread Group (**klik kanan Thread Group → Add → Listener → View Results Tree / Summary Report / Aggregate Report**). Run test (20/10/5) dan perhatikan:
 
 - **# Samples** = 100
 - **Average** — purata response time (ms)
@@ -442,7 +442,7 @@ Sekarang sample hanya "pass" kalau response body ada perkataan `amaun`.
 
 #### Duration Assertion
 
-1. **Add → Assertions → Duration Assertion.**
+1. **Klik kanan HTTP Request yang sama → Add → Assertions → Duration Assertion** (anak kepada sampler, sebelah Response Assertion — macam dalam `02-cukai-beban.jmx`).
 2. **Duration in milliseconds:** `2000` — sample dikira fail kalau ambil masa lebih 2 saat.
 
 > **Konsep — Assertion ubah maksud "fail":** Tanpa assertion, hanya network/HTTP error yang dikira fail. Dengan assertion, response yang **salah kandungan** atau **terlalu lambat** pun dikira fail → **Error %** anda tunjuk kualiti sebenar, bukan sekadar connection berjaya.
@@ -461,7 +461,7 @@ User sebenar **tak** hantar request bertubi-tubi — mereka baca, fikir, taip du
 | **Uniform Random Timer** | Jeda rawak sekata (asas + julat rawak) | *Constant Delay Offset* + *Random Delay Maximum* — contohnya 500 + 1000 → 0.5–1.5 s |
 | **Gaussian Random Timer** | Jeda rawak ikut taburan normal (paling realistik) | *Constant Delay Offset* + *Deviation* — contohnya 1000 ± 300 ms |
 
-1. **Klik kanan Thread Group → Add → Timer → Constant Timer.** Delay `300`.
+1. **Klik kanan Thread Group → Add → Timer → Constant Timer.** **Thread Delay (in milliseconds):** `300`.
 
 > **Konsep — think time effect throughput:** Tambah think time akan **turunkan** throughput (thread tunggu, tak hantar request). Ini memang **betul** — throughput tanpa think time tak realistik dan boleh bagi load palsu pada sistem. Kalau nak capai target *request/saat* tertentu, adjust **jumlah thread** dan **think time** sekali, atau guna **Throughput Controller / Timer** (Hari 2).
 
@@ -484,14 +484,14 @@ BMT3030,Toyota Hilux 2.4
 PKL909,Perodua Axia 1.0
 ```
 
-1. **Klik kanan Thread Group → Add → Config Element → CSV Data Set Config.**
+1. **Klik kanan Thread Group → Add → Config Element → CSV Data Set Config.** *(Plan rujukan `03-csv-berparameter.jmx` letak ia bawah **Test Plan** — kesan sama.)*
 2. Isi:
    - **Filename:** `../data/kenderaan.csv` *(relatif kepada lokasi file `.jmx`)*
    - **Variable Names:** `no_pendaftaran,model`
    - **Ignore first line:** `True` (baris header) · **Recycle on EOF:** `True` · **Stop thread on EOF:** `False`
    - **Sharing mode:** `All threads`
 3. Tukar path sampler kepada: `/api/kenderaan/${no_pendaftaran}/cukai`.
-4. Run (10 users × 10 loop). Dalam View Results Tree, pastikan setiap request guna nombor yang berbeza.
+4. Tukar Thread Group kepada **10 / 5 / 10** (threads / ramp-up / loop — macam `03-csv-berparameter.jmx`), kemudian run (10 users × 10 loop = 100 sample). Dalam View Results Tree, pastikan setiap request guna nombor yang berbeza.
 
 > **Konsep — `${nama}` ialah variable JMeter:** Syntax `${no_pendaftaran}` diganti dengan nilai dari CSV masa run. Nilai ni boleh datang dari CSV, User Defined Variables, Extractor (Hari 2), atau function built-in macam `${__Random(1,100)}`.
 
@@ -586,8 +586,8 @@ flowchart LR
 ### 4.2 A. Sediakan perakam (di JMeter GUI)
 
 1. **Klik kanan Test Plan → Add → Non-Test Elements → HTTP(S) Test Script Recorder.**
-2. **Klik kanan Thread Group → Add → Logic Controller → Recording Controller** (tempat simpan recording). Pada recorder, set **Target Controller → Test Plan > Thread Group > Recording Controller**.
-3. **Requests Filtering → Excludes:** tambah regex untuk static asset `(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|eot|otf|ttf|mp4|woff|woff2)([?;].*)?` supaya image/CSS/JS tak di-record.
+2. **Klik kanan Test Plan → Add → Threads (Users) → Thread Group**, kemudian **klik kanan Thread Group → Add → Logic Controller → Recording Controller** (tempat simpan recording). Pada recorder, set **Target Controller → Test Plan > Thread Group > Recording Controller**.
+3. Pada recorder, tab **Requests Filtering → URL Patterns to Exclude → Add:** tambah regex untuk static asset `(?i).*\.(bmp|css|js|gif|ico|jpe?g|png|swf|eot|otf|ttf|mp4|woff|woff2)([?;].*)?` supaya image/CSS/JS tak di-record.
 
 > Atau skip A1–A3: buka [`test-plans/rakam-template.jmx`](./test-plans/rakam-template.jmx) — semua dah siap setup.
 
@@ -601,7 +601,7 @@ flowchart LR
 ### 4.4 C. Rakam
 
 8. Di JMeter, pilih **HTTP(S) Test Script Recorder** → klik **Start** ▶ hijau.
-9. Dalam **Firefox**, buka `http://localhost:3000` dan buat flow (login → check kenderaan → bayar). Setiap request akan muncul sebagai sampler dalam **Recording Controller**.
+9. Dalam **Firefox**, buka `http://localhost:3000/portal` (portal web dengan borang log masuk) dan buat flow (login → check kenderaan → bayar). Setiap request akan muncul sebagai sampler dalam **Recording Controller**.
    > Alternatif tanpa browser (guna `curl` melalui proxy JMeter — berguna untuk `POST`):
    > ```bash
    > curl -s -x http://localhost:8888 -H 'Content-Type: application/json' \

@@ -69,7 +69,7 @@ curl -s -x http://localhost:8888 \
 # contoh respons: {"no_resit":"RJPJ…","status":"BERJAYA",…}
 ```
 
-> **Browser alternative:** set **Firefox/Chrome** to use the proxy `127.0.0.1:8888` (see Step 8 in the README) and open `http://localhost:3000`. But a browser only makes **GET** requests from the address bar — the login POST needs a form, so `curl` is simpler for this API.
+> **Browser alternative:** set **Firefox/Chrome** to use the proxy `127.0.0.1:8888` (see README §4.3, steps B4–B6) and open `http://localhost:3000`. But a browser only makes **GET** requests from the address bar — the login POST needs a form, so `curl` is simpler for this API.
 >
 > ⚠️ **Make sure the client you use really goes through the proxy.** Your normal browser does **not** use the proxy unless it is configured. If nothing gets recorded, the traffic is almost certainly not going through `:8888`.
 
@@ -88,7 +88,7 @@ After those 3 commands, **3 samplers** should appear under the **Recording Contr
 
 ## Step 5 — Replay (playback)
 
-1. Add a **View Results Tree** under the Thread Group (for debugging).
+1. `rakam-template.jmx` already has a **View Results Tree** (under the Test Plan) — select it for debugging. (If your plan has none: right-click Thread Group → Add → Listener → View Results Tree.)
 2. **Important — expire the recording session first:** restart the SUT so the old token is no longer valid:
    ```bash
    # Ctrl+C pada tetingkap SUT, kemudian:
@@ -102,7 +102,7 @@ After those 3 commands, **3 samplers** should appear under the **Recording Contr
 |---------|-----|-------|
 | `POST /api/log-masuk` | **200** | Login always succeeds (any password is accepted) |
 | `GET /api/kenderaan` | **401** | The hard-coded token has **expired** (new session after the restart) |
-| `POST …/bayar-cukai` | **401/403** | Token/csrf expired → not authorised |
+| `POST …/bayar-cukai` | **401** | The old token has expired → rejected before `csrf` is even checked |
 
 > This is the **main reason we need correlation**: the `token` & `csrf` values **change every session**. The recording stores them as fixed text, so the replay fails as soon as the session changes.
 

@@ -69,7 +69,7 @@ curl -s -x http://localhost:8888 \
 # contoh respons: {"no_resit":"RJPJ…","status":"BERJAYA",…}
 ```
 
-> **Alternatif guna browser:** setting **Firefox/Chrome** ke proxy `127.0.0.1:8888` (tengok Langkah 8 dalam README) dan buka `http://localhost:3000`. Tapi browser cuma buat **GET** dari address bar — POST log masuk perlukan form, jadi `curl` lebih ringkas untuk API ni.
+> **Alternatif guna browser:** setting **Firefox/Chrome** ke proxy `127.0.0.1:8888` (tengok README §4.3, langkah B4–B6) dan buka `http://localhost:3000`. Tapi browser cuma buat **GET** dari address bar — POST log masuk perlukan form, jadi `curl` lebih ringkas untuk API ni.
 >
 > ⚠️ **Pastikan client yang anda guna betul-betul lalu proxy.** Browser biasa anda **tidak** lalu proxy kalau tak di-configure. Kalau tiada apa-apa yang ter-record, hampir confirm trafik tak lalu `:8888`.
 
@@ -88,7 +88,7 @@ Lepas 3 command tu, **3 sampler** patutnya muncul bawah **Recording Controller**
 
 ## Langkah 5 — Main balik (playback)
 
-1. Tambah **View Results Tree** bawah Thread Group (untuk debug).
+1. `rakam-template.jmx` dah ada **View Results Tree** (bawah Test Plan) — pilih ia untuk debug. (Kalau plan anda tiada: klik kanan Thread Group → Add → Listener → View Results Tree.)
 2. **Penting — expire-kan session recording dulu:** restart SUT supaya token lama dah tak valid:
    ```bash
    # Ctrl+C pada tetingkap SUT, kemudian:
@@ -102,7 +102,7 @@ Lepas 3 command tu, **3 sampler** patutnya muncul bawah **Recording Controller**
 |---------|-----|-------|
 | `POST /api/log-masuk` | **200** | Log masuk sentiasa berjaya (apa-apa kata laluan pun boleh) |
 | `GET /api/kenderaan` | **401** | Token hardcoded dah **expired** (session baru lepas restart) |
-| `POST …/bayar-cukai` | **401/403** | Token/csrf dah expired → tak dibenarkan |
+| `POST …/bayar-cukai` | **401** | Token lama dah expired → terus ditolak sebelum `csrf` sempat di-check |
 
 > Inilah **sebab utama kita perlukan correlation**: nilai `token` & `csrf` **berubah setiap session**. Recording simpan nilai tu sebagai teks tetap, jadi replay terus fail bila session berubah.
 
