@@ -234,11 +234,25 @@ Tambah sampler `GET /api/saman?no_kp=${no_kp}` guna **CSV kedua** dengan column 
 ### Langkah
 
 1. Tambah satu baris palsu dalam `hari-1/data/kenderaan.csv`, contohnya: `ABC0000,Kereta Hantu`.
+
+![kenderaan.csv dengan baris palsu ABC0000](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-01-csv-baris-palsu.png)
+*Baris palsu `ABC0000,Kereta Hantu` ditambah di hujung CSV — tiada baris kosong sebelumnya, dan header kekal.*
+
 2. Run semula Latihan 3. Tengok request `ABC0000` **fail**
    assertion (`amaun` tak ada — endpoint return **404**).
 3. Dalam View Results Tree, klik sample merah → tab **Sampler result** → baca *Assertion failure message*. Bandingkan response code (`404`) dengan body `{"ralat":"Kenderaan tidak dijumpai"}`.
+
+![View Results Tree: sample ABC0000 merah dengan Response code 404](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-02-vrt-404.png)
+*Sample `ABC0000` berwarna merah — tab **Sampler result** tunjuk `Response code:404` dan `Response message:Not Found`.*
+
+![View Results Tree: Assertion result dengan Assertion failure message](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-03-vrt-assertion-gagal.png)
+*Kembangkan sample merah dan klik nod Response Assertion — **Assertion failure message** papar mesej custom `Kenderaan ABC0000 tidak memulangkan sebut harga (mungkin 404)`.*
+
 4. Tengok **Error %** naik dalam Summary Report. **Ramal dulu:** dengan 6 baris data dan Recycle = True, lebih kurang berapa peratus sample akan fail?
 5. Buang baris palsu tu lepas siap.
+
+![Summary Report: baris ABC0000 100% error, TOTAL 16% Error](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h1-lab4-04-summary-error.png)
+*Jawapan langkah 4: hanya baris `ABC0000` gagal (100%), jadi Error % TOTAL ≈ 1/6 — di sini 16.00% (16 daripada 100 sample).*
 
 ### ✅ Checkpoint
 - [ ] Permintaan `ABC0000` gagal assertion (endpoint pulangkan **404**)
