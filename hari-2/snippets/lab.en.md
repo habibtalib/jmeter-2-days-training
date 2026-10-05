@@ -100,7 +100,7 @@
 - Distinguish 401 (token) from 403 (csrf) through an experiment (O2)
 
 ### Prerequisites
-- Lab 1 completed (`latihan-01-rakaman.jmx`), or use the fallback `hari-1/test-plans/04-rakaman-mentah.jmx`
+- Lab 1 completed (`latihan-01-rakaman.jmx`), or use the fallback `hari-1/test-plans/04-rakaman-mentah.jmx` (the fallback has only 3 samplers — no tax check — and its token comes from another session, so step 1 already gives 200 / 401 / 401)
 - README §1.6–1.7
 
 ### Steps
@@ -160,7 +160,7 @@
 - Run 10 users × 2 loops and read the Summary & Aggregate Report (O4)
 
 ### Prerequisites
-- Lab 2 completed (plan with `token` correlated)
+- Lab 2 completed (plan with `token` correlated). If you use the fallback `04-rakaman-mentah` (3 samplers, no quote): step 4 skips the quote path, and the 10 × 2 run gives **60** HTTP samples, not 80
 - README §2.1–2.9; open `test-plans/05-transaksi-penuh.jmx` in another tab as the answer key
 
 ### Steps
@@ -170,9 +170,9 @@
 4. **Chained correlation:** **Right-click the list sampler → Add → Post Processors → JSON Extractor** (`Ekstrak kenderaan pertama`): Names `no_pendaftaran;amaun`, Paths `$.kenderaan[0].no_pendaftaran;$.kenderaan[0].amaun_cukai`, Match No. `1;1`, Default `NONE;0`. Change the quote path → `/api/kenderaan/${no_pendaftaran}/cukai`, the payment path → `/api/kenderaan/${no_pendaftaran}/bayar-cukai`, the payment body → `{ "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }`.
 5. **Names:** rename the samplers `1. POST /api/log-masuk`, `2. GET /api/kenderaan`, `3. GET /api/kenderaan/${no_pendaftaran}/cukai`, `4. POST /api/kenderaan/${no_pendaftaran}/bayar-cukai`.
 6. **Transaction Controller:** **Right-click Thread Group → Add → Logic Controller → Transaction Controller** `Pembaharuan Cukai Jalan`. Drag the Recording Controller (or all four samplers) **into it**. Leave *Generate parent sample* and *Include duration of timer…* **unticked**.
-7. **Think time:** delete the recorded Constant Timer (values such as `6012`). **Right-click Transaction Controller → Add → Timer → Uniform Random Timer** (`Think Time (1-3s)`): Random Delay Maximum `2000`, Constant Delay Offset `1000`.
+7. **Think time:** delete the recorded Constant Timer (one under the first sampler of each group, values such as `6012`). **Right-click Transaction Controller `Pembaharuan Cukai Jalan` → Add → Timer → Uniform Random Timer** (`Think Time (1-3s)`): Random Delay Maximum `2000`, Constant Delay Offset `1000`. The timer becomes a child of that TC, level with the samplers (same as `05`) — not under `T01…T04` and not a child of a sampler. Scope = all 4 samplers in the TC → 4 pauses per iteration (under the Thread Group gives the same effect here, because every sampler is inside the TC).
 8. **Assertion:** **Right-click the payment sampler → Add → Assertions → Response Assertion**: Text Response, Substring, pattern `BERJAYA`.
-9. **(Recommended) If Controller:** **Right-click Transaction Controller → Add → Logic Controller → If Controller** `Jika ada kenderaan`, Condition `${__groovy(vars.get("no_pendaftaran") != "NONE" && vars.get("token") != "TOKEN_TAK_JUMPA")}`; drag samplers 3 & 4 into it.
+9. **(Recommended) If Controller:** **Right-click Transaction Controller `Pembaharuan Cukai Jalan` → Add → Logic Controller → If Controller** `Jika ada kenderaan`, Condition `${__groovy(vars.get("no_pendaftaran") != "NONE" && vars.get("token") != "TOKEN_TAK_JUMPA")}`; drag samplers 3 & 4 into it.
 10. **Functional test first:** Thread Group 1 user, 1 loop, View Results Tree enabled. Start → all green, the payment Request contains the real token/csrf.
 11. **Small run:** Thread Group `10` users, Ramp-up `10`, Loop Count `2`. **Disable** View Results Tree. **Add → Listener → Summary Report** and **Aggregate Report**. Start.
 12. Note from the Aggregate Report: # Samples for the `Pembaharuan Cukai Jalan` row and the total samples of the 4 steps; Average, 95% Line of the transaction row; Error %.
@@ -259,7 +259,7 @@
    | 7 | Errors / Top 5 Errors by sampler | Error type, count | | |
    | 8 | Over Time → Active Threads Over Time | Ramp-up shape | | Did the load model happen? |
    | 9 | Over Time → Response Time Percentiles Over Time | Early vs late p95 | | Stable? |
-   | 10 | Throughput → Hits Per Second vs Total Transactions Per Second | Ratio | | Why ≈ 4 : 1? |
+   | 10 | Throughput → Hits Per Second vs Transactions Per Second (series `Pembaharuan Cukai Jalan-success`) | Ratio | | Why ≈ 4 : 1? (Hits vs **Total** Transactions Per Second is ≈ 4 : 5 — Total also counts the transaction rows) |
    | 11 | Throughput → Codes Per Second | Codes that appear | | |
    | 12 | Response Times → Response Time Overview | Count in each bar | | |
    | 13 | Response Times → Response Time Distribution | Most frequent range | | |

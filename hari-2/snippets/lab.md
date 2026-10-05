@@ -100,7 +100,7 @@
 - Bezakan 401 (token) dengan 403 (csrf) melalui eksperimen (O2)
 
 ### Prasyarat
-- Latihan 1 dah siap (`latihan-01-rakaman.jmx`), atau guna backup `hari-1/test-plans/04-rakaman-mentah.jmx`
+- Latihan 1 dah siap (`latihan-01-rakaman.jmx`), atau guna backup `hari-1/test-plans/04-rakaman-mentah.jmx` (backup ni cuma ada 3 sampler — tiada semak cukai — dan token dia dari session lain, jadi langkah 1 terus dapat 200 / 401 / 401)
 - README §1.6–1.7
 
 ### Langkah
@@ -160,7 +160,7 @@
 - Run 10 users × 2 loop dan baca Summary & Aggregate Report (O4)
 
 ### Prasyarat
-- Latihan 2 dah siap (plan dengan `token` dah di-correlate)
+- Latihan 2 dah siap (plan dengan `token` dah di-correlate). Kalau guna backup `04-rakaman-mentah` (3 sampler, tiada sebut harga): langkah 4 abaikan path sebut harga, dan run 10 × 2 bagi **60** sample HTTP, bukan 80
 - README §2.1–2.9; buka `test-plans/05-transaksi-penuh.jmx` dalam tab lain sebagai skema jawapan
 
 ### Langkah
@@ -170,9 +170,9 @@
 4. **Correlation berantai:** **Klik kanan sampler senarai → Add → Post Processors → JSON Extractor** (`Ekstrak kenderaan pertama`): Names `no_pendaftaran;amaun`, Paths `$.kenderaan[0].no_pendaftaran;$.kenderaan[0].amaun_cukai`, Match No. `1;1`, Default `NONE;0`. Tukar path sebut harga → `/api/kenderaan/${no_pendaftaran}/cukai`, path bayar → `/api/kenderaan/${no_pendaftaran}/bayar-cukai`, body bayar → `{ "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }`.
 5. **Nama:** rename sampler jadi `1. POST /api/log-masuk`, `2. GET /api/kenderaan`, `3. GET /api/kenderaan/${no_pendaftaran}/cukai`, `4. POST /api/kenderaan/${no_pendaftaran}/bayar-cukai`.
 6. **Transaction Controller:** **Klik kanan Thread Group → Add → Logic Controller → Transaction Controller** `Pembaharuan Cukai Jalan`. Drag Recording Controller (atau keempat-empat sampler) **masuk ke dalamnya**. Biarkan *Generate parent sample* dan *Include duration of timer…* **tak di-tick**.
-7. **Think time:** padam Constant Timer dari recording (nilai macam `6012`). **Klik kanan Transaction Controller → Add → Timer → Uniform Random Timer** (`Think Time (1-3s)`): Random Delay Maximum `2000`, Constant Delay Offset `1000`.
+7. **Think time:** padam Constant Timer dari recording (satu di bawah sampler pertama setiap kumpulan, nilai macam `6012`). **Klik kanan Transaction Controller `Pembaharuan Cukai Jalan` → Add → Timer → Uniform Random Timer** (`Think Time (1-3s)`): Random Delay Maximum `2000`, Constant Delay Offset `1000`. Timer ni jadi child TC tu, sebaris dengan sampler (sama macam `05`) — bukan bawah `T01…T04` dan bukan child sampler. Scope = semua 4 sampler dalam TC → 4 pause setiap iteration (bawah Thread Group pun kesan sama, sebab semua sampler ada dalam TC).
 8. **Assertion:** **Klik kanan sampler bayar → Add → Assertions → Response Assertion**: Text Response, Substring, pattern `BERJAYA`.
-9. **(Digalakkan) If Controller:** **Klik kanan Transaction Controller → Add → Logic Controller → If Controller** `Jika ada kenderaan`, Condition `${__groovy(vars.get("no_pendaftaran") != "NONE" && vars.get("token") != "TOKEN_TAK_JUMPA")}`; drag sampler 3 & 4 masuk ke dalamnya.
+9. **(Digalakkan) If Controller:** **Klik kanan Transaction Controller `Pembaharuan Cukai Jalan` → Add → Logic Controller → If Controller** `Jika ada kenderaan`, Condition `${__groovy(vars.get("no_pendaftaran") != "NONE" && vars.get("token") != "TOKEN_TAK_JUMPA")}`; drag sampler 3 & 4 masuk ke dalamnya.
 10. **Functional test dulu:** Thread Group 1 user, 1 loop, View Results Tree enabled. Start → semua hijau, Request bayar ada token/csrf yang betul.
 11. **Run kecil:** Thread Group `10` users, Ramp-up `10`, Loop Count `2`. **Disable** View Results Tree. **Add → Listener → Summary Report** dan **Aggregate Report**. Start.
 12. Catat dari Aggregate Report: # Samples untuk baris `Pembaharuan Cukai Jalan` dan jumlah sample 4 langkah; Average, 95% Line baris transaksi; Error %.
@@ -259,7 +259,7 @@
    | 7 | Errors / Top 5 Errors by sampler | Jenis error, bilangan | | |
    | 8 | Over Time → Active Threads Over Time | Bentuk ramp-up | | Load model betul-betul berlaku? |
    | 9 | Over Time → Response Time Percentiles Over Time | p95 awal vs akhir | | Stabil? |
-   | 10 | Throughput → Hits Per Second vs Total Transactions Per Second | Nisbah | | Kenapa ≈ 4 : 1? |
+   | 10 | Throughput → Hits Per Second vs Transactions Per Second (siri `Pembaharuan Cukai Jalan-success`) | Nisbah | | Kenapa ≈ 4 : 1? (Hits vs **Total** Transactions Per Second pula ≈ 4 : 5 — Total kira baris transaksi juga) |
    | 11 | Throughput → Codes Per Second | Kod yang keluar | | |
    | 12 | Response Times → Response Time Overview | Bilangan setiap bar | | |
    | 13 | Response Times → Response Time Distribution | Julat paling banyak | | |
