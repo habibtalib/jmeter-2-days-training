@@ -376,6 +376,17 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
 @media (prefers-reduced-motion:reduce){.progress{transition:none}}
 
 /* speaker notes */
+/* ---------- trainer control bar (outside the scaled stage) ---------- */
+.ctl{position:fixed;right:14px;bottom:14px;z-index:60;display:flex;align-items:center;gap:4px;padding:5px;border-radius:12px;
+  background:rgba(7,16,38,.86);box-shadow:0 6px 20px rgba(0,0,0,.35);transition:opacity .35s;opacity:1}
+.ctl.idle{opacity:0;pointer-events:none}
+.ctl button{all:unset;cursor:pointer;min-width:34px;height:34px;display:grid;place-items:center;border-radius:8px;color:#E2E8F0;font:600 14px/1 var(--font);padding:0 6px}
+.ctl button:hover,.ctl button:focus-visible{background:rgba(255,255,255,.14);outline:none}
+.ctl button[aria-pressed="true"]{background:#FFC20E;color:#071026}
+.ctl .cnt{min-width:74px;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.ctl .sep{width:1px;height:22px;background:rgba(255,255,255,.18);margin:0 3px}
+.notes-panel.open ~ .ctl{bottom:calc(30vh + 14px)}
+@media print{.ctl{display:none!important}}
 .notes-panel{position:fixed;left:0;right:0;bottom:0;height:30vh;background:#0C1A3A;color:#E2E8F0;border-top:1px solid #1B2C55;
   padding:18px 28px;display:none;grid-template-columns:1fr 280px;gap:28px;z-index:50;font-size:17px;line-height:1.55}
 .notes-panel.open{display:grid}
@@ -2911,6 +2922,17 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
   <div class="txt"><h5>Speaker notes</h5><div id="notesBody"></div></div>
   <div class="meta"><b id="notesMeta"></b><div id="notesNext"></div><div class="clock" id="notesClock">00:00</div></div>
 </div>
+<nav class="ctl" id="ctl" aria-label="Slide controls">
+  <button type="button" data-act="first" title="First slide (Home)" aria-label="First slide">⏮</button>
+  <button type="button" data-act="prev" title="Previous (←)" aria-label="Previous slide">◀</button>
+  <button type="button" class="cnt" data-act="jump" title="Jump to slide (G)" aria-label="Jump to slide" id="ctlCount">1 / 1</button>
+  <button type="button" data-act="next" title="Next (→ / Space)" aria-label="Next slide">▶</button>
+  <button type="button" data-act="last" title="Last slide (End)" aria-label="Last slide">⏭</button>
+  <span class="sep" aria-hidden="true"></span>
+  <button type="button" data-act="notes" title="Speaker notes (S)" aria-label="Speaker notes" aria-pressed="false" id="ctlNotes">📝</button>
+  <button type="button" data-act="overview" title="Overview (O)" aria-label="Slide overview">▦</button>
+  <button type="button" data-act="full" title="Fullscreen (F)" aria-label="Fullscreen">⛶</button>
+</nav>
 
 <div class="overview" id="overview" role="dialog" aria-label="Slide overview">
   <div class="ov-head"><span>Overview — click to jump</span><span>O / Esc to close</span></div>
@@ -3057,6 +3079,7 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
     current = n;
     progress.style.width = ((n + 1) / total * 100) + '%';
     hudCount.textContent = (n + 1) + ' / ' + total;
+    if (ctlCount) { ctlCount.textContent = (n + 1) + ' / ' + total; }
     hudDay.textContent = labels[n] || '';
     stage.classList.toggle('on-dark', slides[n].classList.contains('dark'));
     if (!opts.fromHash) {
@@ -3069,6 +3092,36 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
   }
   function next() { go(current + 1); }
   function prev() { go(current - 1); }
+
+  /* trainer control bar */
+  var ctl = document.getElementById('ctl');
+  var ctlCount = document.getElementById('ctlCount');
+  var ctlNotes = document.getElementById('ctlNotes');
+  // The trainee copy has its notes stripped: no notes button there.
+  if (ctlNotes && !document.querySelector('aside.notes')) { ctlNotes.style.display = 'none'; }
+  if (ctlCount) { ctlCount.textContent = (current + 1) + ' / ' + total; }
+  if (ctl) {
+    ctl.addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-act]');
+      if (!b) { return; }
+      e.stopPropagation();
+      var act = b.getAttribute('data-act');
+      if (act === 'first') { go(0); }
+      else if (act === 'prev') { prev(); }
+      else if (act === 'next') { next(); }
+      else if (act === 'last') { go(total - 1); }
+      else if (act === 'notes') { toggleNotes(); ctlNotes.setAttribute('aria-pressed', notesPanel.classList.contains('open') ? 'true' : 'false'); }
+      else if (act === 'overview') { if (overview.classList.contains('open')) { closeOverview(); } else { openOverview(); } }
+      else if (act === 'full') { toggleFullscreen(); }
+      else if (act === 'jump') {
+        jumpBuf = ''; showJump();
+      }
+    });
+    var idleT = null;
+    var wake = function () { ctl.classList.remove('idle'); clearTimeout(idleT); idleT = setTimeout(function () { if (!ctl.matches(':hover')) { ctl.classList.add('idle'); } }, 3000); };
+    ['mousemove', 'touchstart', 'keydown'].forEach(function (ev) { document.addEventListener(ev, wake, { passive: true }); });
+    wake();
+  }
 
   function renderNotes() {
     if (!notesPanel.classList.contains('open')) { return; }
@@ -3087,6 +3140,7 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
 
   function toggleNotes() {
     notesPanel.classList.toggle('open');
+    var cn = document.getElementById('ctlNotes'); if (cn) { cn.setAttribute('aria-pressed', notesPanel.classList.contains('open') ? 'true' : 'false'); }
     renderNotes(); tick(); fit();
   }
 
