@@ -71,6 +71,20 @@ Ulang blok ini untuk setiap dapatan (sasaran: 3 dapatan).
 
 - …
 
+### A8. Perbandingan lokasi (jika ujian teragih / berbilang lokasi) ✍️
+
+Ejen: … (lokasi → host:port) · Beban per ejen: … pengguna × … gelung · Jumlah pengguna = … × … ejen = …
+
+| Lokasi | Label | Sampel | Ralat % | Purata ms | p90 ms | p95 ms | TPS | NFR (✅/❌) |
+|--------|-------|-------:|--------:|----------:|-------:|-------:|----:|:----------:|
+| | (transaksi) | | | | | | | |
+| | TOTAL (sampel HTTP) | | | | | | | |
+| | (transaksi) | | | | | | | |
+| | TOTAL (sampel HTTP) | | | | | | | |
+| Gabungan | Total | | | | | | | — |
+
+Dapatan lokasi: (1) … (2) …
+
 ---
 
 ## B. Contoh diisi — Hari Kenaikan Harga Cukai (mock eJPJ)
@@ -178,3 +192,31 @@ Ulang blok ini untuk setiap dapatan (sasaran: 3 dapatan).
 - SUT dan JMeter berkongsi satu laptop; tiada metrik pelayan dikumpul.
 - Larian 60 s terlalu pendek untuk soak; graf Over Time dengan butiran lalai 60 s hanya ada 1–2 titik — jana semula dengan `-Jjmeter.reportgenerator.overall_granularity=5000`.
 - Seterusnya: Stress berperingkat (50 → 100 → 150 pengguna) + Spike, dengan pemantauan CPU.
+
+### B8. Perbandingan lokasi — contoh diisi (plan `09`, ujian teragih)
+
+> Larian sebenar `hari-2/run/run-berbilang-lokasi.sh` (JMeter 5.6.3, satu mesin, localhost sahaja): ejen **KL** `127.0.0.1:1099` → mock port 3000 (40–180 ms); ejen **PENANG** `127.0.0.1:1100` → mock port 3001 (300–900 ms, meniru rangkaian jauh). Beban per ejen: 10 pengguna × 3 gelung, ramp-up 5 s → **20 pengguna** jumlah. Angka dipetik dari `laporan/<LOKASI>/statistics.json`.
+
+| Lokasi | Label | Sampel | Ralat % | Purata ms | p90 ms | p95 ms | TPS | NFR p95 ≤ 800 ms/langkah |
+|--------|-------|-------:|--------:|----------:|-------:|-------:|----:|:------------------------:|
+| KL | Pembaharuan Cukai Jalan (transaksi) | 30 | 0.00 | 476 | 598 | 640 | 1.30 | — |
+| KL | TOTAL (sampel HTTP) | 120 | 0.00 | 119 | 170 | 178 | 4.04 | ✅ |
+| PENANG | Pembaharuan Cukai Jalan (transaksi) | 30 | 0.00 | 2430 | 2915 | 3000 | 1.06 | — |
+| PENANG | TOTAL (sampel HTTP) | 120 | 0.00 | 607 | 873 | 892 | 3.51 | ❌ |
+| Gabungan | Total (`laporan/gabungan`) | 240 | 0.00 | 363 | 790 | 873 | 6.90 | — (menyembunyikan beza) |
+
+| Dapatan L1 | |
+|---|---|
+| Keterukan | Tinggi |
+| Bukti | Transaksi PENANG purata **2430 ms** (p95 3000 ms) vs KL **476 ms** (p95 640 ms) — ~5× lebih perlahan; setiap langkah HTTP PENANG 570–670 ms vs KL 110–130 ms; ralat 0% di kedua-dua lokasi (*Statistics*, laporan per lokasi). |
+| Kesan | Rakyat yang mengakses dari kawasan PENANG menunggu ~2.4 s setiap pembaharuan berbanding ~0.5 s di KL. |
+| Punca | Kependaman laluan ke lokasi (rangkaian), bukan kegagalan aplikasi — aplikasi yang sama, ralat 0%. |
+| Cadangan | Semak laluan rangkaian/WAN PENANG (traceroute, RTT) dan pertimbangkan CDN/titik masuk serantau sebelum menala pelayan. |
+
+| Dapatan L2 | |
+|---|---|
+| Keterukan | Sederhana (risiko pelaporan) |
+| Bukti | Purata gabungan **363 ms** kelihatan baik, tetapi dengan NFR p95 ≤ 800 ms setiap langkah: KL p95 175–180 ms ✅, PENANG p95 886–896 ms ❌. |
+| Kesan | Laporan yang hanya memetik angka gabungan akan meluluskan sistem yang gagal untuk satu lokasi. |
+| Punca | Purata/percentile gabungan mencampurkan taburan dua populasi yang berbeza. |
+| Cadangan | Laporkan keputusan NFR **per lokasi** (label `[LOKASI]` + laporan per lokasi); angka gabungan hanya untuk jumlah beban/throughput. |

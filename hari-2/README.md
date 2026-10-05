@@ -496,6 +496,9 @@ Buka `index.html`. Menu kiri: **Dashboard**, **Charts** (Over Time · Throughput
 | **Start Time / End Time** | Tempoh larian | Sama dengan tempoh dirancang? Larian yang berhenti awal = amaran |
 | **Filter for display** | Penapis label (biasanya kosong) | Jika diisi, laporan tidak lengkap |
 
+![Dashboard: Test and Report information, APDEX dan Requests Summary](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-10-dashboard-info-apdex.png)
+*Skrin pertama dashboard HTML: maklumat larian, APDEX setiap label dan pecahan lulus/gagal (larian puncak `07`, 50 pengguna).*
+
 #### b) APDEX (Application Performance Index)
 
 Lajur: **Apdex** · **T (Toleration threshold)** · **F (Frustration threshold)** · **Label**.
@@ -541,6 +544,9 @@ Lajur dikumpul di bawah empat tajuk: **Executions**, **Response Times (ms)**, **
 
 `statistics.json` dalam folder laporan mengandungi data yang sama (mesra mesin): `sampleCount`, `errorCount`, `errorPct`, `meanResTime`, `medianResTime`, `minResTime`, `maxResTime`, `pct1ResTime` (90th), `pct2ResTime` (95th), `pct3ResTime` (99th), `throughput`, `receivedKBytesPerSec`, `sentKBytesPerSec`.
 
+![Jadual Statistics larian puncak](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-12-statistics-table.png)
+*Jadual Statistics: baca p90/p95/p99 dan Error % dahulu, kemudian throughput.*
+
 #### e) Errors
 
 Lajur: **Type of error** · **Number of errors** · **% in errors** · **% in all samples**.
@@ -571,6 +577,9 @@ Lajur: **Sample** · **#Samples** · **#Errors** · kemudian lima pasangan **Err
 | **Bytes Throughput Over Time** | Masa · bait diterima/dihantar sesaat | Rangkaian menjadi had? | Rata walaupun pengguna bertambah |
 | **Latencies Over Time** | Masa · purata latency (ms) | Masa ke bait pertama — pemprosesan pelayan | Latency ≈ response time = pelayan lambat, bukan pemindahan |
 | **Connect Time Over Time** | Masa · purata connect time | Masalah sambungan TCP/TLS? | Naik = pelayan kehabisan sambungan / tiada keep-alive |
+
+![Response Times Over Time setiap label](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-15-response-times-over-time.png)
+*Response Times Over Time: garis transaksi berada di atas permintaan individu.*
 
 **Charts → Throughput**
 
@@ -637,6 +646,11 @@ Lajur: **Sample** · **#Samples** · **#Errors** · kemudian lima pasangan **Err
 | **Benchmark** | Ukuran piawai untuk membandingkan sistem/konfigurasi/versi | Versi 1.2 vs 1.3 pada beban sama |
 | **Workload model** | Siapa buat apa, berapa kerap, berapa ramai: transaksi, campuran, kadar, think time | 70% pembaharuan, 30% semak |
 | **Open vs closed model** | Closed: N pengguna tetap, tunggu respons (Thread Group biasa). Open: permintaan tiba pada kadar tetap tanpa mengira respons | JMeter biasa = closed; Precise Throughput Timer ≈ open |
+| **Controller (master)** | Mesin JMeter yang menghantar plan kepada ejen, memulakan/menghentikan ujian dan mengumpul sampel ke satu `.jtl`; tidak menjana beban dengan `-R` | Laptop pusat menjalankan `jmeter -n -R …` |
+| **Ejen (agent / remote server)** | Proses `jmeter-server` (`jmeter -s`) yang menjalankan **seluruh** Thread Group dan menjana beban; dengar pada RMI `server_port` (1099) | Ejen KL (1099), ejen PENANG (1100) |
+| **Sample sender** | Cara ejen menghantar sampel ke controller (`mode=`). Lalai 5.6: **StrippedBatch** — tanpa data respons, berkelompok | Konsol: `summary + 85`, kemudian `+ 155` |
+| **`-R`** | Senarai ejen untuk larian ini (`host:port,…`); `-r` = semua `remote_hosts` dalam properties | `-R 127.0.0.1:1099,127.0.0.1:1100` |
+| **`-G` vs `-J`** | `-G` = property dihantar kepada **semua** ejen; `-J` = property tempatan bagi proses JMeter itu sahaja (pada ejen: berbeza setiap lokasi) | `-Gpengguna=10` (controller), `-Jsite=KL` (ejen KL) |
 
 > **Average menipu — contoh:** 99 permintaan 100 ms + 1 permintaan 10,000 ms → Average ≈ **199 ms** ("OK!"), tetapi 99th pct = 10,000 ms dan pengguna itu menunggu 10 saat. NFR ditulis dalam **percentile**.
 
@@ -667,6 +681,17 @@ Lajur: **Sample** · **#Samples** · **#Errors** · kemudian lima pasangan **Err
 - R1 → R3: pengguna sama (50), pelayan lebih lambat → **throughput jatuh 45%**. Dalam model tertutup, setiap pengguna menunggu respons sebelum lelaran seterusnya — inilah Little's Law (S4) dalam tindakan.
 
 > **Batasan mock:** SUT tiruan tidak mempunyai had kapasiti sebenar (latensi ialah `setTimeout` rawak), jadi ia tidak akan "tepu" seperti pelayan sebenar. Pada laptop, had yang anda jumpa biasanya **CPU laptop** (JMeter + Node berkongsi mesin) — pantau Activity Monitor/Task Manager dan nyatakannya dalam laporan.
+
+**Contoh sebenar — pelayan lebih perlahan, lebih ramai pengguna** (200 pengguna, mock 300–900 ms). Ini rujukan **sihat / belum tepu**, bukan titik lutut — mock tidak beratur (lihat batasan di atas):
+
+![Response Times Over Time pada mock perlahan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-21-slow-response-times-over-time.png)
+*Carta sama, pelayan lebih perlahan: semua garis naik, transaksi ~2.4 s.*
+
+![Total Transactions Per Second pada mock perlahan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-22-slow-total-tps.png)
+*Jumlah TPS naik semasa ramp-up, kemudian mendatar apabila bilangan pengguna berhenti bertambah — bukan tepu.*
+
+![Time Vs Threads pada mock perlahan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-23-slow-time-vs-threads.png)
+*Time vs Threads: garis mendatar bermaksud pelayan belum tepu. Kesesakan sebenar menunjukkan lengkung yang naik.*
 
 ### 3.7 Senario puncak `07` + SLA — contoh kerja
 
@@ -704,6 +729,140 @@ Satu dapatan = **Bukti → Kesan → Punca → Cadangan**, dengan keterukan. Gun
 | "Ada ralat." | "6 bayaran (1.00% transaksi) gagal dengan `500/Internal Server Error`, bertaburan sepanjang ujian (*Codes Per Second*) — tidak berkait beban; NFR < 1% gagal. Cadangan: siasat log `bayar-cukai`." |
 | "Graf naik." | "Pada mock perlahan, throughput jatuh 45% (10.46 → 5.78 trans/s) pada 50 pengguna yang sama; p95 4969 ms melanggar NFR." |
 
+### 3.9 Laporan daripada ejen di beberapa lokasi
+
+Senario JPJ: penjana beban (ejen) diletakkan di beberapa **lokasi** (cth. KL dan PENANG) supaya beban datang dari rangkaian yang berbeza. Persoalan pelaporan: **satu laporan gabungan** untuk keseluruhan ujian, **dan** perbandingan **per lokasi**.
+
+**Seni bina (distributed testing):**
+
+```
+                 ┌───────────── Controller (jmeter -n -R …) ─────────────┐
+                 │  hantar plan .jmx + property -G  │  terima sampel → semua.jtl → laporan
+                 └──────────┬────────────────────────────────┬──────────┘
+                    RMI 1099 (+4001)                  RMI 1100 (+4002)
+                 ┌──────────▼──────────┐          ┌──────────▼──────────┐
+                 │ Ejen KL             │          │ Ejen PENANG         │
+                 │ jmeter-server       │          │ jmeter-server       │
+                 │ -Jsite=KL -Jport=…  │          │ -Jsite=PENANG …     │
+                 └──────────┬──────────┘          └──────────┬──────────┘
+                            ▼ HTTP                           ▼ HTTP
+                     Sistem sasaran                   Sistem sasaran
+```
+
+- **Controller** (master/client) tidak menjana beban; ia menghantar plan kepada setiap **ejen** (agent / remote server / `jmeter-server`), memulakan ujian, dan **menerima sampel** semula melalui RMI lalu menulis **satu** `.jtl`.
+- **Sample sender** menentukan cara sampel dihantar balik. Lalai JMeter 5.6 (`jmeter.properties`: *"default is MODE_STRIPPED_BATCH"*) = **StrippedBatch**: data respons dibuang, sampel dihantar berkelompok (setiap 100 sampel atau 60 s). Itu sebabnya konsol controller memaparkan sampel secara "berlonggok" — dalam larian kami: `summary + 85` … kemudian `summary + 155`.
+- **Matematik beban:** setiap ejen menjalankan **seluruh** Thread Group. Jumlah pengguna = threads × bilangan ejen. Plan `09` dengan `-Gpengguna=10` pada 2 ejen = **20 pengguna**; jika anda mahu 100 pengguna keseluruhan di 4 lokasi, tetapkan 25 per ejen.
+- **Label berawalan lokasi:** plan [`09-berbilang-lokasi.jmx`](./test-plans/09-berbilang-lokasi.jmx) = aliran `05` (log masuk → kenderaan → sebut harga → bayar, korelasi + CSV + assertion) tetapi setiap sampler **dan** Transaction Controller dinamakan `[${__P(site,LOKAL)}] …`. Setiap ejen dimulakan dengan `-Jsite=<LOKASI>` tersendiri → label `[KL] 1. POST /api/log-masuk`, `[PENANG] 1. POST /api/log-masuk`, dsb.
+
+**Jalankan (demo satu mesin, localhost sahaja):** skrip [`run/run-berbilang-lokasi.sh`](./run/run-berbilang-lokasi.sh) (Windows: `run-berbilang-lokasi.bat`) melakukan semuanya:
+
+```bash
+cd hari-2/run && ./run-berbilang-lokasi.sh          # ~45 s
+```
+
+Langkah yang dilakukan oleh skrip (boleh ditaip secara manual):
+
+```bash
+# (dari akar repo) ROOT=$PWD
+# 1) Dua "lokasi" tiruan: PENANG sengaja lebih perlahan (meniru rangkaian jauh)
+PORT=3000 node sut/server.js
+PORT=3001 LATENCY_MIN=300 LATENCY_MAX=900 node sut/server.js
+
+# 2) Dua ejen — skrip jmeter-server, setiap satu dalam folder sendiri (ia menulis ./jmeter-server.log)
+#    macOS Homebrew: JS=$(brew --prefix jmeter)/libexec/bin/jmeter-server  (tidak dipautkan ke PATH)
+#    Linux/zip: JS=$JMETER_HOME/bin/jmeter-server · Windows: %JMETER_HOME%\bin\jmeter-server.bat
+mkdir -p hasil/ejen-KL hasil/ejen-PENANG
+(cd hasil/ejen-KL && SERVER_PORT=1099 $JS -Jserver.rmi.ssl.disable=true -Jserver.rmi.localport=4001 \
+  -Djava.rmi.server.hostname=127.0.0.1 -Jsite=KL -Jport=3000 -Jdata_dir=$ROOT/hari-2/data) &
+(cd hasil/ejen-PENANG && SERVER_PORT=1100 $JS -Jserver.rmi.ssl.disable=true -Jserver.rmi.localport=4002 \
+  -Djava.rmi.server.hostname=127.0.0.1 -Jsite=PENANG -Jport=3001 -Jdata_dir=$ROOT/hari-2/data) &
+#    (setara tanpa skrip: jmeter -s -Dserver_port=1099 -j ejen-KL.log …)
+
+# 3) Controller: -R = senarai ejen; -G = property untuk SEMUA ejen
+jmeter -n -t hari-2/test-plans/09-berbilang-lokasi.jmx -R 127.0.0.1:1099,127.0.0.1:1100 \
+  -Jserver.rmi.ssl.disable=true -Gpengguna=10 -Grampup=5 -Ggelung=3 \
+  -l hasil/semua.jtl -e -o laporan/gabungan -Jjmeter.reportgenerator.overall_granularity=1000
+
+# 4) Pecah JTL ikut awalan label → laporan per lokasi → jadual perbandingan
+node hari-2/run/laporan-lokasi.js pisah hasil/semua.jtl hasil KL PENANG
+jmeter -g hasil/KL.jtl -o laporan/KL ; jmeter -g hasil/PENANG.jtl -o laporan/PENANG
+node hari-2/run/laporan-lokasi.js banding laporan KL PENANG
+```
+
+> **`-J` vs `-G`:** `-Jsite=KL` pada **ejen** = property tempatan ejen itu (berbeza setiap lokasi). `-Gpengguna=10` pada **controller** = dihantar kepada **semua** ejen (beban sama). `-J` pada controller hanya memberi kesan kepada controller.
+
+**Apa yang berubah dalam laporan gabungan (`laporan/gabungan`)** — diperhatikan dalam larian sebenar:
+
+- **Statistics**: baris berasingan bagi `[KL] …` dan `[PENANG] …` (5 label × 2 lokasi). Baris **Total** = 240 sampel HTTP sahaja (baris Transaction Controller tidak dikira dalam Total).
+- **Active Threads Over Time**: **satu siri bagi setiap ejen** — `127.0.0.1:1099-Pengguna Pembaharuan Cukai` dan `127.0.0.1:1100-Pengguna Pembaharuan Cukai`. Lajur `threadName` dalam JTL juga diawali `host:port` ejen. Inilah cara pantas mengesahkan **semua ejen benar-benar berjalan**.
+- Total gabungan: purata **363 ms**, p95 **873 ms**, 6.90 TPS, 0% ralat — purata gabungan ini **menyembunyikan** perbezaan antara lokasi (lihat jadual di bawah).
+
+**Laporan per lokasi — dua cara (kedua-duanya disahkan):**
+
+1. **Pecah JTL ikut awalan label** (cara skrip): `laporan-lokasi.js pisah` mengekalkan header CSV dan memilih baris yang lajur `label`-nya bermula dengan `[KL]` (pengurai CSV sebenar — selamat untuk medan yang mengandungi koma/petikan; contohnya baris Transaction Controller mempunyai `responseMessage` `"Number of samples in transaction : 4, number of failing samples : 0"`). Kemudian `jmeter -g hasil/KL.jtl -o laporan/KL`. Laporan per lokasi lengkap: Statistics, APDEX dan semua graf hanya untuk lokasi itu.
+2. **Penapis semasa menjana laporan** (tanpa memecah fail):
+   ```bash
+   # Statistics + graf hanya KL (penapis sampel, regex Java):
+   jmeter -g hasil/semua.jtl -o laporan/KL-tapis -Jjmeter.reportgenerator.sample_filter='^\[KL\].*'
+   # Hanya GRAF ditapis; jadual Statistics masih ada semua label:
+   jmeter -g hasil/semua.jtl -o laporan/KL-graf -Jjmeter.reportgenerator.exporter.html.series_filter='^\\[KL\\]'
+   ```
+   ⚠️ `series_filter` dimasukkan ke dalam JavaScript dashboard sebagai rentetan, jadi backslash mesti **digandakan**. Dengan `'^\[KL\].*'` regex dalam pelayar menjadi `^[KL].*` (kelas aksara) dan **tiada** siri yang padan — graf kosong. Disahkan dalam `content/js/dashboard.js` yang dijana.
+
+**Jadual perbandingan lokasi** (disahkan — JMeter 5.6.3, 10 pengguna × 3 gelung **setiap ejen**, 2 ejen = 20 pengguna; dicetak oleh `laporan-lokasi.js banding` daripada `laporan/<LOKASI>/statistics.json`):
+
+| Lokasi | Label | Sampel | Ralat % | Purata ms | p90 ms | p95 ms | TPS |
+|--------|-------|-------:|--------:|----------:|-------:|-------:|----:|
+| KL | 1. POST /api/log-masuk | 30 | 0.00 | 121 | 169 | 180 | 1.27 |
+| KL | 2. GET /api/kenderaan | 30 | 0.00 | 111 | 161 | 175 | 1.30 |
+| KL | 3. GET /api/kenderaan/{no}/cukai | 30 | 0.00 | 128 | 176 | 179 | 1.27 |
+| KL | 4. POST /api/kenderaan/{no}/bayar-cukai | 30 | 0.00 | 116 | 171 | 179 | 1.29 |
+| KL | **Pembaharuan Cukai Jalan** (transaksi) | 30 | 0.00 | **476** | 598 | **640** | 1.30 |
+| KL | TOTAL (sampel HTTP) | 120 | 0.00 | 119 | 170 | 178 | 4.04 |
+| PENANG | 1. POST /api/log-masuk | 30 | 0.00 | 621 | 877 | 896 | 1.17 |
+| PENANG | 2. GET /api/kenderaan | 30 | 0.00 | 570 | 814 | 886 | 1.15 |
+| PENANG | 3. GET /api/kenderaan/{no}/cukai | 30 | 0.00 | 666 | 879 | 894 | 1.20 |
+| PENANG | 4. POST /api/kenderaan/{no}/bayar-cukai | 30 | 0.00 | 573 | 883 | 893 | 1.16 |
+| PENANG | **Pembaharuan Cukai Jalan** (transaksi) | 30 | 0.00 | **2430** | 2915 | **3000** | 1.06 |
+| PENANG | TOTAL (sampel HTTP) | 120 | 0.00 | 607 | 873 | 892 | 3.51 |
+
+Nombor anda akan sedikit berbeza (latensi mock rawak; mock juga ada ~1% ralat 500 sintetik pada bayaran — dalam satu larian MOD 2 kami, PENANG mendapat 1 ralat `bayar-cukai` = 3.33% bagi label itu). Perhatikan juga: TPS gabungan (6.90) ≠ KL + PENANG (4.04 + 3.51), kerana throughput dikira atas tetingkap masa yang berbeza (gabungan = dari sampel pertama hingga terakhir **semua** lokasi).
+
+**Menulis dapatan lokasi (contoh):**
+
+1. *"PENANG: transaksi Pembaharuan Cukai Jalan purata **2430 ms** (p95 3000 ms) berbanding KL **476 ms** (p95 640 ms) — ~5× lebih perlahan. Setiap langkah HTTP PENANG 570–670 ms vs KL 110–130 ms, dan **ralat 0%** di kedua-dua lokasi → isunya **kependaman laluan ke lokasi**, bukan kegagalan aplikasi. Cadangan: semak laluan rangkaian/WAN PENANG (traceroute, RTT) sebelum menala pelayan. — Laporan per lokasi, Statistics."*
+2. *"Purata gabungan 363 ms kelihatan 'OK' tetapi menyembunyikan PENANG. Dengan NFR p95 ≤ 800 ms setiap langkah: **KL LULUS** (p95 175–180 ms), **PENANG GAGAL** (p95 886–896 ms). Laporkan keputusan **per lokasi**; jangan bergantung pada purata gabungan sahaja."*
+
+**Mod 2 — setiap lokasi berjalan sendiri, kemudian gabung** (bila RMI tidak dibenarkan merentas rangkaian, atau setiap lokasi diuji oleh pasukan berbeza):
+
+```bash
+./run-berbilang-lokasi.sh gabung
+# setara manual:
+jmeter -n -t 09-berbilang-lokasi.jmx -Jsite=KL     -Jport=3000 -l hasil/KL.jtl       # di lokasi KL
+jmeter -n -t 09-berbilang-lokasi.jmx -Jsite=PENANG -Jport=3001 -l hasil/PENANG.jtl   # di lokasi PENANG
+node laporan-lokasi.js gabung hasil/gabung.jtl hasil/KL.jtl hasil/PENANG.jtl         # header sekali; disusun ikut timeStamp
+jmeter -g hasil/gabung.jtl -o laporan/gabung
+```
+
+Diperhatikan dalam laporan `laporan/gabung`: Active Threads Over Time hanya ada **satu** siri (`Pengguna Pembaharuan Cukai`), kerana tanpa RMI tiada awalan `host:port` pada `threadName` — kedua-dua lokasi bercampur. Jika anda perlukan siri per lokasi dalam Mod 2, letakkan `${__P(site)}` juga dalam nama Thread Group. Baris Statistics tetap terpisah kerana label berawalan `[LOKASI]`.
+
+Alat `gabung` **menolak** fail jika header JTL berbeza (cth. satu lokasi menyimpan `Hostname`, satu lagi tidak) — header yang tidak sepadan akan merosakkan laporan.
+
+**Perangkap lazim (pitfalls):**
+
+| Perangkap | Kesan | Langkah |
+|-----------|-------|---------|
+| **Jam tidak segerak** (NTP) / zon waktu berbeza | `timeStamp` setiap ejen datang dari jam **ejen** → graf "over time" tergeser, gabungan Mod 2 nampak berselerak | Segerakkan NTP pada semua mesin; simpan masa dalam epoch ms (lalai JTL CSV) |
+| **CSV mesti wujud pada setiap ejen** | Laluan CSV dibaca pada **ejen**, bukan controller. Diuji: ejen dengan `-Jdata_dir=/tiada` → log ejen `Could not read file header line for file /tiada/pengguna.csv`, controller `summary = 0` | Salin CSV ke laluan sama pada setiap ejen (`-Jdata_dir`); **pecahkan data** (fail berbeza setiap lokasi) supaya pengguna tidak bertindih |
+| **Controller menjadi bottleneck** | Semua sampel melalui RMI ke satu JVM controller | Kekalkan `mode=StrippedBatch` (lalai) atau `StrippedAsynch`; jangan guna `Standard` untuk beban besar; matikan listener GUI |
+| **Firewall / port RMI** | `Connection refused` | Buka **1099** (`server_port`) **dan** `server.rmi.localport` (kami tetapkan 4001/4002) pada ejen; controller juga menerima panggilan balik (`client.rmi.localport`) |
+| **`java.rmi.server.hostname`** | Diuji tanpa tetapan ini: `Cannot start. <host> is a loopback address.` | Tetapkan `-Djava.rmi.server.hostname=<IP ejen yang boleh dicapai controller>` |
+| **SSL RMI (keystore)** | Diuji: tanpa `server.rmi.ssl.disable=true`, ejen gagal `FileNotFoundException: rmi_keystore.jks`; controller yang tidak menetapkannya pula gagal `Failed to configure 127.0.0.1:1099` | Produksi: jana keystore dengan `bin/create-rmi-keystore.sh` dan salin ke **semua** mesin. Makmal: `-Jserver.rmi.ssl.disable=true` pada **kedua-dua** controller dan ejen |
+| **`jmeter-server` + `-j`** | Diuji: skrip `jmeter-server` sudah menghantar `-j jmeter-server.log`; menambah `-j` lagi → `Duplicate options for -j/--jmeterlogfile found.` Dua ejen dalam folder sama berkongsi satu log | Jalankan setiap ejen dalam folder sendiri; port RMI melalui `SERVER_PORT=1100`. Atau guna `jmeter -s -Dserver_port=1100 -j ejen-PENANG.log` |
+| **Versi berbeza** | Siri plan gagal / sampel pelik | Versi JMeter, Java dan **plugin** sama pada semua mesin |
+| **Lebar jalur keputusan** | Sampel besar membanjiri rangkaian ke controller | Mod `Stripped*` (respons tidak dihantar); jangan simpan `responseData` |
+| **Header JTL tidak sepadan** (Mod 2) | Laporan gagal / lajur salah | `jmeter.save.saveservice.*` yang sama pada setiap lokasi |
+
 ### 🎯 Kuiz S3
 
 1. Statistics menunjukkan transaksi `Pembaharuan Cukai Jalan (Puncak)` dengan **95th pct = 583 ms**. Apakah maksudnya?
@@ -733,6 +892,13 @@ Satu dapatan = **Bukti → Kesan → Punca → Cadangan**, dengan keterukan. Gun
    - [x] Sistem telah tepu (saturation) — permintaan tambahan beratur, bukan diproses lebih cepat
    - [ ] Error % pasti 0
    > Throughput mendatar + response time naik = tanda klasik tepu/titik lutut. Cari bottleneck dengan metrik pelayan; semak juga CPU penjana beban.
+
+5. Ujian teragih dengan plan `09` (`-Gpengguna=10`) dijalankan pada 2 ejen: KL dan PENANG. Laporan gabungan menunjukkan purata Total **363 ms**; laporan per lokasi menunjukkan p95 langkah KL ≈ 180 ms dan PENANG ≈ 890 ms. Pernyataan manakah yang **betul**?
+   - [ ] Jumlah pengguna ialah 10, kerana `-G` membahagikan thread antara ejen
+   - [ ] Purata gabungan 363 ms membuktikan kedua-dua lokasi memenuhi NFR p95 ≤ 800 ms
+   - [x] Jumlah pengguna ialah 20 (10 × 2 ejen), dan dapatan mesti dilaporkan per lokasi kerana purata gabungan menyembunyikan PENANG yang melanggar NFR
+   - [ ] Laporan per lokasi hanya boleh dijana jika ujian dijalankan semula pada setiap lokasi
+   > Setiap ejen menjalankan seluruh Thread Group (threads × ejen). Label berawalan `[LOKASI]` membolehkan JTL dipecah (atau `sample_filter`) untuk menjana laporan per lokasi daripada larian yang sama.
 
 ---
 
@@ -872,7 +1038,7 @@ Data: akaun ujian **unik** yang cukup (≈ N), sintetik, dan boleh di-reset — 
   awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p < 2000 && e < 1) }' && echo "LULUS SLA" || { echo "GAGAL SLA"; exit 1; }
   ```
   (Larian R1 kami: p95 583 ms, error 1.0033% → **GAGAL** — tepat pada had, kerana 500 sintetik.) Alternatif: Taurus (`bzt`) `passfail`, plugin Jenkins Performance.
-- **Distributed testing:** satu controller + beberapa worker (`jmeter-server`); `jmeter -n -t plan.jmx -R w1,w2 -Gpengguna=100 …` — **setiap worker menjalankan seluruh Thread Group** (100 × 2 = 200), `-G` menghantar property ke worker, CSV mesti wujud pada setiap worker.
+- **Distributed testing:** satu controller + beberapa worker (`jmeter-server`); `jmeter -n -t plan.jmx -R w1,w2 -Gpengguna=100 …` — **setiap worker menjalankan seluruh Thread Group** (100 × 2 = 200), `-G` menghantar property ke worker, CSV mesti wujud pada setiap worker. Contoh lengkap dengan laporan gabungan + per lokasi, jadual perbandingan dan perangkap: **[§3.9](#39-laporan-daripada-ejen-di-beberapa-lokasi)** / Latihan 8.
 - **Grafana:** **Backend Listener** (`InfluxdbBackendListenerClient`) → InfluxDB → papan pemuka **semasa** ujian. HTML dashboard = bedah siasat **selepas**; Grafana = pemantauan **semasa**.
 
 ### 4.10 Rumusan 2 hari & penutup
