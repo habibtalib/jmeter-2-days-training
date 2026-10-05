@@ -179,7 +179,7 @@ curl -s -x $P -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/js
 
 3. Click **Stop** ⏹. **File → Save**.
 
-> **Why curl, not a browser?** The proxy records **any** HTTP client. The SUT's `http://localhost:3000` page is only an info page (no login form), so a browser cannot produce these JSON POSTs. For a real web application, use Firefox with the proxy `localhost:8888` (Day 1 §4.3) — and remember to remove `localhost, 127.0.0.1` from *No proxy for*.
+> **Why curl, not a browser?** The proxy records **any** HTTP client. A browser cannot produce these JSON POSTs to `/api/...` — HTML forms send `application/x-www-form-urlencoded`. (A browser version lives at <http://localhost:3000/portal>: login form → vehicles → pay, with cookie `SESI_EJPJ` + hidden `csrf` — for extra practice, it needs an **HTTP Cookie Manager**.) For a real web application, use Firefox with the proxy `localhost:8888` (Day 1 §4.3) — remove `localhost, 127.0.0.1` from *No proxy for*; for a `localhost` target, Firefox 67+ also needs `about:config` → `network.proxy.allow_hijacking_localhost` = `true`.
 
 > ⚠️ `curl: (7) Failed to connect to localhost port 8888` = the recorder has not been **Started**. Nothing recorded even though curl succeeded = you forgot `-x $P`.
 
@@ -352,7 +352,7 @@ The recording froze `WXY1234` and `90`. Other users do not own `WXY1234`. Take b
 
 ### 2.7 Think time
 
-Delete the recorded `${T}` Constant Timer. **Right-click Transaction Controller → Add → Timer → Uniform Random Timer** (`Think Time (1-3s)`): Constant Delay Offset `1000`, Random Delay Maximum `2000` → each pause is 1–3 s.
+Delete the recorded `${T}` Constant Timer (one under the first sampler of each group). **Right-click Transaction Controller `Pembaharuan Cukai Jalan` → Add → Timer → Uniform Random Timer** (`Think Time (1-3s)`): Constant Delay Offset `1000`, Random Delay Maximum `2000` → each pause is 1–3 s. The timer becomes a child of that TC, level with the samplers — same as in `05`.
 
 > **Concept — timer scope:** A timer runs **before every sampler in its scope**. Under a Transaction Controller with 4 samplers → **4 pauses** per iteration (average 4 × 2 s = 8 s). We will use this fact in the Little's Law calculation (S4).
 
@@ -588,7 +588,7 @@ Columns: **Sample** · **#Samples** · **#Errors** · then five **Error** / **#E
 | **Hits Per Second** | Time · HTTP requests **sent** per second | How much load did JMeter generate? | Flat hits/s while threads rise |
 | **Codes Per Second** | Time · responses per second by **HTTP code** (`200`, `500`, …) | When do server errors occur? | A 5xx series appears at the peak. Note: **assertion** failures are still `200` here |
 | **Transactions Per Second** | Time · samples completed per second **per label**, split `-success` / `-failure` | Which label failed, and when? | A rising `-failure` series |
-| **Total Transactions Per Second** | Time · total `Transaction-success` / `Transaction-failure` | Overall system throughput | Flattening while users rise = **saturation** |
+| **Total Transactions Per Second** | Time · total `Transaction-success` / `Transaction-failure` (all samples — HTTP **and** transaction rows) | Overall system throughput | Flattening while users rise = **saturation** |
 | **Response Time Vs Request** | Global requests per second · **median** response time | Does response time rise as the rate rises? | A steeply rising curve = the knee point |
 | **Latency Vs Request** | Global requests per second · **median** latency | The same, for latency | |
 

@@ -179,7 +179,7 @@ curl -s -x $P -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/js
 
 3. Klik **Stop** ⏹. **File → Save**.
 
-> **Kenapa curl, bukan browser?** Proxy boleh record **apa-apa** HTTP client. Page `http://localhost:3000` SUT cuma page info (tak ada form log masuk), jadi browser tak boleh hasilkan POST JSON ni. Untuk web app sebenar, guna Firefox dengan proxy `localhost:8888` (Hari 1 §4.3) — dan ingat buang `localhost, 127.0.0.1` dari *No proxy for*.
+> **Kenapa curl, bukan browser?** Proxy boleh record **apa-apa** HTTP client. Browser tak boleh hasilkan POST JSON ke `/api/...` ni — form HTML hantar `application/x-www-form-urlencoded`. (Versi browser ada di <http://localhost:3000/portal>: form log masuk → kenderaan → bayar, dengan cookie `SESI_EJPJ` + hidden `csrf` — untuk latihan tambahan, perlukan **HTTP Cookie Manager**.) Untuk web app sebenar, guna Firefox dengan proxy `localhost:8888` (Hari 1 §4.3) — buang `localhost, 127.0.0.1` dari *No proxy for*; untuk target `localhost`, Firefox 67+ juga perlukan `about:config` → `network.proxy.allow_hijacking_localhost` = `true`.
 
 > ⚠️ `curl: (7) Failed to connect to localhost port 8888` = recorder belum **Start**. Tak ada apa di-record walaupun curl berjaya = anda terlupa `-x $P`.
 
@@ -352,7 +352,7 @@ Recording "bekukan" `WXY1234` dan `90`. User lain tak ada kenderaan `WXY1234`. A
 
 ### 2.7 Think time
 
-Delete Constant Timer `${T}` dari recording. **Klik kanan Transaction Controller → Add → Timer → Uniform Random Timer** (`Think Time (1-3s)`): Constant Delay Offset `1000`, Random Delay Maximum `2000` → setiap pause 1–3 s.
+Delete Constant Timer `${T}` dari recording (satu di bawah sampler pertama setiap kumpulan). **Klik kanan Transaction Controller `Pembaharuan Cukai Jalan` → Add → Timer → Uniform Random Timer** (`Think Time (1-3s)`): Constant Delay Offset `1000`, Random Delay Maximum `2000` → setiap pause 1–3 s. Timer jadi child TC tu, sebaris dengan sampler — sama macam dalam `05`.
 
 > **Konsep — scope timer:** Timer run **sebelum setiap sampler dalam scope dia**. Bawah Transaction Controller dengan 4 sampler → **4 pause** setiap iteration (purata 4 × 2 s = 8 s). Fakta ni kita guna nanti dalam kiraan Little's Law (S4).
 
@@ -588,7 +588,7 @@ Column: **Sample** · **#Samples** · **#Errors** · kemudian lima pasangan **Er
 | **Hits Per Second** | Masa · HTTP request **dihantar** sesaat | Berapa banyak load yang JMeter hantar? | Hits/s rata walhal thread naik |
 | **Codes Per Second** | Masa · response sesaat ikut **kod HTTP** (`200`, `500`, …) | Bila server error berlaku? | Siri 5xx muncul masa peak. Nota: **assertion** yang fail masih `200` di sini |
 | **Transactions Per Second** | Masa · sample siap sesaat **setiap label**, diasingkan `-success` / `-failure` | Label mana yang gagal, dan bila? | Siri `-failure` naik |
-| **Total Transactions Per Second** | Masa · jumlah `Transaction-success` / `Transaction-failure` | Throughput keseluruhan sistem | Mendatar walhal users naik = **saturated (tepu)** |
+| **Total Transactions Per Second** | Masa · jumlah `Transaction-success` / `Transaction-failure` (semua sample — HTTP **dan** baris transaksi) | Throughput keseluruhan sistem | Mendatar walhal users naik = **saturated (tepu)** |
 | **Response Time Vs Request** | Request sesaat global · **median** response time | Response time naik tak bila rate naik? | Graf naik curam = knee point |
 | **Latency Vs Request** | Request sesaat global · **median** latency | Sama, untuk latency | |
 
