@@ -394,14 +394,36 @@
      -l hasil/r05.jtl -e -o hasil/laporan05
    ```
    (Plan Latihan 3: ganti `05-transaksi-penuh.jmx` dengan `latihan-03-boleh-main-balik.jmx` — pastikan View Results Tree **disabled**.)
+
+   ![jmeter -n plan 05 dengan -e -o: summary 80 sample 0 error](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab4-01-nogui-r05-summary.png)
+   *Run non-GUI sebenar plan `05` dengan `-e -o`: `summary = 80 … Err: 0 (0.00%)`. (tangkapan ini run terhadap instance mock kami sendiri pada port 3917 supaya tak ganggu kelas — anda guna 3000)*
+
 2. Tengok baris `summary =` dalam terminal (jumlah sample, `Err:`). Buka `hasil/laporan05/index.html`.
+
+   ![hasil/laporan05/index.html: Test and Report information, APDEX, Requests Summary](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab4-02-laporan05-index.png)
+   *`hasil/laporan05/index.html`: Source file `r05.jtl`, Start/End Time, APDEX setiap label dan Requests Summary (PASS 100%).*
+
 3. Generate dashboard **kedua** daripada `.jtl` yang sama, dengan graf setiap 5 s:
    ```bash
    jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
      -Jjmeter.reportgenerator.overall_granularity=5000
    ```
    Bandingkan *Charts → Over Time → Response Times Over Time* dalam kedua-dua report.
+
+   ![jmeter -g ke laporan05-5s berjaya](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab4-03-jmeter-g-5s.png)
+   *`jmeter -g` daripada `.jtl` yang sama → folder `hasil/laporan05-5s` baru (tiada output bila berjaya).*
+
+   ![Response Times Over Time laporan05 granularity asal](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab4-04-rt-over-time-1s.png)
+   *`laporan05` — Response Times Over Time dengan granularity asal.*
+
+   ![Response Times Over Time laporan05-5s granularity 5 sec](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab4-05-rt-over-time-5s.png)
+   *`laporan05-5s` — paksi-x `granularity: 5 sec`: titik lebih jarang, garisan lebih licin.*
+
 4. Cuba generate sekali lagi ke `hasil/laporan05-5s` — catat mesej error yang keluar.
+
+   ![jmeter -g kali kedua: Cannot write ... folder is not empty](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab4-06-folder-not-empty.png)
+   *Generate kali kedua ke folder sama: `An error occurred: Cannot write to '…/hasil/laporan05-5s' as folder is not empty`.*
+
 5. Isi **worksheet** dengan nilai **sebenar** dari dashboard anda:
 
    | # | Bahagian | Apa yang anda catat | Nilai anda | Tafsiran (1 ayat) |
@@ -421,7 +443,13 @@
    | 13 | Response Times → Response Time Distribution | Julat paling banyak | | |
    | 14 | Latency vs Response time (`.jtl` atau Latencies Over Time) | Satu sample log masuk | | Masa di server atau masa transfer? |
 
+   ![Statistics laporan05: Total dan baris Pembaharuan Cukai Jalan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab4-07-statistics-laporan05.png)
+   *Jadual Statistics `laporan05` sebenar — sumber nilai worksheet #4–#6 (Total, baris transaksi `Pembaharuan Cukai Jalan`, langkah paling lambat).*
+
 6. Buka `hasil/laporan05/statistics.json` dalam editor; cari `pct2ResTime` untuk `Pembaharuan Cukai Jalan` dan pastikan nilainya sama dengan **95th pct** dalam jadual.
+
+   ![statistics.json Pembaharuan Cukai Jalan pct2ResTime](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab4-08-statistics-json-pct2.png)
+   *Entri `Pembaharuan Cukai Jalan` dalam `statistics.json` (dibuka dengan `jq`; editor pun sama): `pct2ResTime` = 95th pct dalam jadual.*
 
 **Rujukan visual worksheet** (contoh sebenar daripada run peak `07`, 50 users — angka anda untuk `05` akan lain; tapi rupa skrinnya sama):
 
@@ -485,6 +513,13 @@
 
 ### Langkah
 1. Buka `07-beban-puncak-cukai.jmx` dalam GUI **sekali** untuk tengok: Thread Group `${__P(pengguna,300)}`, Transaction Controller `Pembaharuan Cukai Jalan (Puncak)`, Duration Assertion `${__P(sla_ms,2000)}`, Think Time Rush 0.5–1.5 s. Jangan Start dalam GUI.
+
+   ![Plan 07 Thread Group Lonjakan Pembaharuan Cukai dengan __P(pengguna,300)](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab5-01-plan07-thread-group.png)
+   *Plan `07` — Thread Group `Lonjakan Pembaharuan Cukai`: Number of Threads `${__P(pengguna,300)}`, ramp-up/tempoh juga dari `-J`.*
+
+   ![Duration Assertion SLA Bayaran __P(sla_ms,2000)](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab5-02-plan07-duration-assertion.png)
+   *Duration Assertion `SLA Bayaran < ${__P(sla_ms,2000)}ms` bawah sampler bayar; `Think Time Rush (0.5-1.5s)` di hujung TC.*
+
 2. **R1 — SLA 2000 ms** (≈ 1 minit):
    ```bash
    jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx \
@@ -492,6 +527,10 @@
      -l hasil/r07-sla2000.jtl -e -o hasil/laporan07-sla2000 \
      -Jjmeter.reportgenerator.overall_granularity=5000
    ```
+
+   ![R1 SLA 2000 ms: summary 2446 sample](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab5-03-r1-sla2000-summary.png)
+   *R1 sebenar: `summary = 2446 in 00:01:00 … Err: 3 (0.12%)` — error cuma 500 sintetik. (tangkapan ini run terhadap instance mock kami sendiri pada port 3917 supaya tak ganggu kelas — anda guna 3000)*
+
 3. **R2 — SLA 150 ms**, sistem yang sama:
    ```bash
    jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx \
@@ -499,6 +538,10 @@
      -l hasil/r07-sla150.jtl -e -o hasil/laporan07-sla150 \
      -Jjmeter.reportgenerator.overall_granularity=5000
    ```
+
+   ![R2 SLA 150 ms: summary dengan Err lebih tinggi](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab5-04-r2-sla150-summary.png)
+   *R2 sebenar, sistem yang sama: `Err: 163 (6.83%)` — SLA ketat tukar response lambat jadi error. (tangkapan ini run terhadap instance mock kami sendiri pada port 3917 supaya tak ganggu kelas — anda guna 3000)*
+
 4. Isi jadual perbandingan:
 
    | Metrik (baris `Pembaharuan Cukai Jalan (Puncak)`) | R1 (2000 ms) | R2 (150 ms) |
@@ -511,9 +554,33 @@
    | Error % `Total` | | |
 
    (Rujukan run kami: R1 → 598 sample, 1.00%, 583 ms, 10.46/s, APDEX 0.862; R2 → 607 sample, **21.75%**, 572 ms, 10.54/s, APDEX 0.717.)
+
+   ![Statistics R1 SLA 2000 ms](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab5-05-r1-statistics.png)
+   *Statistics R1 (2000 ms): baris `Pembaharuan Cukai Jalan (Puncak)` — #Samples, Error %, 95th pct, Transactions/s untuk jadual perbandingan.*
+
+   ![Statistics R2 SLA 150 ms](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab5-06-r2-statistics.png)
+   *Statistics R2 (150 ms): Error % naik pada sampler bayar dan baris transaksi.*
+
 5. Dalam R2, buka **Errors**: berapa baris `The operation lasted too long…`? Kenapa banyak? Buka **Top 5 Errors by sampler** dan **Charts → Throughput → Codes Per Second** — ada kod `200` sahaja ke? Kenapa?
+
+   ![Errors R2: banyak baris The operation lasted too long](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab5-07-r2-errors-operation-lasted-too-long.png)
+   *Errors R2 (atas sahaja): satu baris untuk setiap nilai ms `The operation lasted too long: It took … milliseconds` — sebab tu banyak baris; `500/Internal Server Error` terselit di antaranya.*
+
+   ![Codes Per Second R2](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab5-08-r2-codes-per-second.png)
+   *Codes Per Second R2: hampir semuanya `200` — SLA breach ialah kegagalan **assertion**, bukan kod HTTP.*
+
 6. **Little's Law cepat:** guna Transactions/s R1, R ≈ Average transaksi (s), Z ≈ 4 s → kira X × (R + Z). Bandingkan dengan Active Threads Over Time.
+
+   ![Active Threads Over Time R1: ramp 0 ke 50](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab5-09-r1-active-threads.png)
+   *Active Threads Over Time R1: naik ke 50 dalam ~10 s — bandingkan dengan N = X × (R + Z).*
+
 7. Salin bahagian **A** `templat-laporan-ujian.md` ke `hasil/laporan-pasangan-<nama>.md` dan tulis **tiga dapatan** guna angka **anda sendiri** (cadangan: D1 response time vs NFR, D2 error 500 & Error %, D3 kesan threshold SLA).
+
+   ![Salin templat-laporan-ujian.md ke hasil](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab5-10-salin-templat-laporan.png)
+   *Salin template laporan ke `hasil/laporan-pasangan-<nama>.md`; bahagian **A1–A8** ialah template kosong.*
+
+   ![Templat laporan bahagian A5 Dapatan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab5-11-templat-a5-dapatan.png)
+   *Bahagian **A5. Dapatan**: tulis D1–D3 dengan angka run anda sendiri.*
 
 **Rujukan visual R2 (SLA 150 ms)** — run sebenar kami:
 
@@ -567,11 +634,34 @@
 
 ### Langkah
 1. Salin template ke `hasil/pelan-pasangan-<nama>.md`.
+
+   ![Salin templat-pelan-ujian.md ke hasil](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab6-03-salin-templat-pelan.png)
+   *Salin template ke `hasil/pelan-pasangan-<nama>.md` (contoh: `aminah`).*
+
 2. Pilih satu senario: **(a)** pembaharuan cukai jalan pada hari harga naik (macam contoh, tukar angka), **(b)** bayar saman pada hari terakhir diskaun saman, **(c)** sistem dalaman organisasi anda (konsep sahaja — tak ada run).
+
+   ![Templat pelan bahagian 1 Latar belakang dan objektif](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab6-04-pelan-latar-objektif.png)
+   *Bahagian **1. Latar belakang & objektif** dalam template — tukar senario & Q1–Q4 ikut pilihan (a), (b) atau (c).*
+
 3. Isi bahagian 1–3: objektif (Q1–Q4), skop, dan **sekurang-kurangnya 4 NFR** yang boleh diukur.
+
+   ![Templat pelan bahagian 3 NFR/SLA](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab6-05-pelan-nfr.png)
+   *Bahagian **3. NFR / SLA**: setiap NFR ada transaksi, beban, metrik percentile, ambang dan tempoh.*
+
 4. **Lampiran A — Little's Law:** tetapkan volum peak hour V, kira X = V ÷ 3600, anggar R dan Z, kira **N = X × (R + Z)**, kadar hits/s, dan setting **Constant Throughput Timer** (X × 60 sample/minit, letak sebagai child kepada sampler pertama).
+
+   ![Templat pelan Lampiran A lembaran kerja Little's Law](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab6-06-pelan-lampiran-a.png)
+   ***Lampiran A** — lembaran kerja Little's Law: V → X → N, hits/s dan Constant Throughput Timer.*
+
 5. **Cross-check dengan data lab:** guna R1 Latihan 5 — 50 users × (R + 4 s) bagi Transactions/s macam yang dijangka ke?
+
+   ![Statistics R1 untuk cross-check Little's Law](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab5-05-r1-statistics.png)
+   *Data R1 Latihan 5: ambil Transactions/s dan Average baris transaksi untuk cross-check 50 users × (R + 4 s).*
+
 6. Isi bahagian 5 (transaction mix), 8 (jadual baseline → load → stress → spike → soak dengan config `-J`), 9 (kriteria entry/exit/suspend), 10 (monitoring), 11 (sekurang-kurangnya 3 risiko) dan 12 (kebenaran & prosedur stop).
+
+   ![Templat pelan bahagian 8 Jenis ujian dan jadual larian](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab6-07-pelan-jenis-ujian.png)
+   *Bahagian **8. Jenis ujian & jadual larian**: baseline → load → stress → spike → soak dengan config `-J`.*
 
 ![Templat pelan ujian: workload model dan Little's Law](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab6-01-pelan-model-beban-littles-law.png)
 *Contoh diisi `templat-pelan-ujian.md` §4.1–4.2: V = 36,000/jam → X = 10 transaksi/s → **N = 10 × (2 + 58) = 600** concurrent users. Isi lajur ✍️ Anda dengan angka senario anda.*
@@ -613,7 +703,15 @@
    - **Load model** — X, R, Z → N (tunjuk kiraan)
    - **Jenis run** — turutan dan kenapa baseline dulu
    - **Satu dapatan** dari Latihan 5 — Bukti (angka + bahagian dashboard) → Kesan → Cadangan
+
+   ![Templat pelan 4.2 Little's Law bilangan pengguna serentak](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab7-03-pelan-littles-law-n.png)
+   *Untuk bahagian **Load model**: kiraan X, R, Z → N daripada §4.2 pelan anda.*
+
 2. Tutup dengan satu ayat: *"Sebelum ujian sebenar, kami perlukan kebenaran bertulis daripada …"*
+
+   ![Templat pelan bahagian 12 Kebenaran dan etika](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab7-04-pelan-kebenaran-etika.png)
+   *Bahagian **12. Kebenaran & etika** — sumber ayat penutup "kebenaran bertulis daripada …".*
+
 3. Present (pasangan lain tanya **satu** soalan: "Macam mana anda tahu …?").
 4. Catat satu feedback yang anda dapat.
 
@@ -665,10 +763,34 @@
    ./run-berbilang-lokasi.sh            # Windows: run-berbilang-lokasi.bat
    ```
    Tengok console: 2 SUT → 2 agent (`OK Ejen KL mendengar pada port 1099`) → `Configuring remote engine` × 2 → `summary` (keluar berkelompok — sample sender StrippedBatch) → pecah JTL → jadual perbandingan.
+
+   ![run-berbilang-lokasi.sh: 2 SUT, 2 ejen, Configuring remote engine, summary](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab8-01-skrip-berbilang-lokasi.png)
+   *Console sebenar: 2 SUT → 2 ejen (`OK Ejen KL mendengar …`) → `Configuring remote engine` × 2 → `summary = 240 …`. (tangkapan ini guna salinan skrip dengan port dianjak — SUT 3927/3928, ejen 11099/11100 — supaya tak ganggu kelas; anda nampak 3000/3001 dan 1099/1100)*
+
 2. **Buka report gabungan** `hari-2/run/laporan/gabungan/index.html`:
    - **Statistics:** berapa baris `[KL] …` dan `[PENANG] …`? Berapa sample dalam baris **Total**, dan baris transaksi dikira sekali ke?
    - **Charts → Over Time → Active Threads Over Time:** berapa siri? Apa namanya? (hint: `host:port` agent)
+
+   ![Laporan gabungan Statistics dengan baris KL dan PENANG](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab8-02-gabungan-statistics.png)
+   *Laporan `gabungan` — Statistics: baris `[KL] …` dan `[PENANG] …`, dan Total.*
+
+   ![Active Threads Over Time gabungan: dua siri host:port ejen](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab8-03-gabungan-active-threads.png)
+   *Active Threads Over Time: **dua siri**, satu per ejen (`127.0.0.1:<port>-Pengguna Pembaharuan Cukai`), bertindih jadi 20. (tangkapan ini guna salinan skrip dengan port dianjak — SUT 3927/3928, ejen 11099/11100 — supaya tak ganggu kelas; anda nampak 3000/3001 dan 1099/1100)*
+
 3. **Buka report per lokasi** `laporan/KL/index.html` dan `laporan/PENANG/index.html`. Bandingkan APDEX dan graf Response Times Over Time.
+
+   ![Laporan KL APDEX](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab8-04-kl-apdex.png)
+   *`laporan/KL` — APDEX.*
+
+   ![Laporan PENANG APDEX](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab8-05-penang-apdex.png)
+   *`laporan/PENANG` — APDEX lebih rendah sebab latensi 300–900 ms.*
+
+   ![Laporan KL Response Times Over Time](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab8-06-kl-response-times.png)
+   *`laporan/KL` — Response Times Over Time.*
+
+   ![Laporan PENANG Response Times Over Time](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab8-07-penang-response-times.png)
+   *`laporan/PENANG` — Response Times Over Time: paksi-y jauh lebih tinggi.*
+
 4. **Isi worksheet perbandingan** (salin dari console langkah 6 script, atau baca setiap `statistics.json`):
 
    | Lokasi | Label | Sampel | Ralat % | Purata ms | p90 ms | p95 ms | TPS |
@@ -680,7 +802,14 @@
    | Gabungan | Total (laporan `gabungan`) | | | | | | |
 
    (Rujukan run kami: transaksi KL 476 ms / p95 640 ms; PENANG 2430 ms / p95 3000 ms; Total gabungan 240 sample, average 363 ms, p95 873 ms, 6.90 TPS, 0% error.)
+
+   ![Langkah 6 skrip: jadual perbandingan lokasi KL vs PENANG](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab8-08-jadual-perbandingan-lokasi.png)
+   *Langkah 6 skrip — jadual perbandingan sebenar: transaksi KL ~446 ms vs PENANG ~2391 ms.*
+
 5. **Tulis dua dapatan lokasi** dalam bahagian "Perbandingan lokasi" [`templat-laporan-ujian.md`](./templat-laporan-ujian.md) (Bukti → Kesan → Punca → Cadangan). Satu dapatan mesti jawab: *average gabungan tu bagi gambaran yang betul ke?*
+
+   ![Templat laporan A8 Perbandingan lokasi](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab8-09-templat-a8-perbandingan-lokasi.png)
+   *Bahagian **A8. Perbandingan lokasi** dalam template laporan — tulis dua dapatan di sini.*
 
 ![Active Threads Over Time satu lokasi](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-16-active-threads-over-time.png)
 *Active Threads Over Time untuk satu run (satu siri). Dalam report `gabungan`, graf yang sama tunjuk **satu siri untuk setiap agent** (`host:port`) — bandingkan bentuk ramp-up setiap lokasi (langkah 2).*
