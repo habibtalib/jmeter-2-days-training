@@ -38,19 +38,73 @@
 
 ### Steps
 1. **Plan:** copy the table from README §1.2 onto your paper/notes. For each step, mark the values you **expect** to be dynamic (token, csrf, no_pendaftaran, amaun).
+
+   ![README §1.2: recording plan table T01–T04](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-05-rancang-jadual-transaksi.png)
+   *The README §1.2 table you copy: one row = one user action = one `T0x_…` transaction, with the values you expect to be dynamic.*
+
 2. **File → Open →** `hari-1/test-plans/rakam-template.jmx` → **File → Save As** → `hari-2/test-plans/latihan-01-rakaman.jmx`.
+
+   ![rakam-template.jmx opened in JMeter](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-06-rakam-template-dibuka.png)
+   *`rakam-template.jmx` after **Open**: Thread Group → Recording Controller, View Results Tree and the HTTP(S) Test Script Recorder.*
+
 3. **Right-click Thread Group → Add → Config Element → HTTP Request Defaults**: Protocol `http`, Server `localhost`, Port `3000`. (The recorder will leave the samplers' Server/Port empty.)
+
+   ![HTTP Request Defaults http localhost 3000 under Thread Group](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-07-http-request-defaults.png)
+   ***HTTP Request Defaults** under the Thread Group: `http` · `localhost` · `3000`.*
+
 4. Click **HTTP(S) Test Script Recorder**:
    - Port: `8888` · Target Controller: `Test Plan > Thread Group > Recording Controller`
    - **Grouping:** `Put each group in a new transaction controller`
    - **Capture HTTP Headers:** ticked
    - **Requests Filtering → URL Patterns to Exclude:** the static-asset regex is already there — add the lines `.*google-analytics.*` and `.*googletagmanager.*` (good practice for real sites)
+
+   ![Recorder Test Plan Creation tab: port 8888, Target Controller, Grouping transaction controller](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-08-recorder-test-plan-creation.png)
+   ***Test Plan Creation** tab: Port `8888`, Target Controller `… > Thread Group > Recording Controller`, Grouping **Put each group in a new transaction controller**, **Capture HTTP Headers** ticked.*
+
+   ![Recorder Requests Filtering tab: URL Patterns to Exclude with google-analytics and googletagmanager](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-09-recorder-requests-filtering.png)
+   ***Requests Filtering** tab: the original static-asset regex + the two new lines `.*google-analytics.*` and `.*googletagmanager.*`.*
+
 5. **Right-click HTTP(S) Test Script Recorder → Add → Timer → Constant Timer**: Thread Delay `${T}`.
+
+   ![Constant Timer Thread Delay ${T} under the recorder](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-10-constant-timer-t.png)
+   ***Constant Timer** as a child of the recorder, Thread Delay `${T}` — the recorder replaces `${T}` with the real gap (ms).*
+
 6. Click **Start** ▶. If the Root CA certificate dialog appears, click **OK** (it is not used for `http://`). The **Recorder: Transactions Control** window appears — leave it open.
+
+   ![Recorder after Start: Stop and Restart enabled](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-11-recorder-dah-start.png)
+   *After **Start**: Start is greyed out, **Stop** and **Restart** are enabled — the proxy is listening.*
+
+   ![Recorder: Transactions Control window](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-12-recorder-transactions-control.png)
+   *The **Recorder: Transactions Control** window — **Transaction name** (prefix), **Naming scheme**, **Create new transaction after request (ms)**. Leave it open.*
+
 7. Terminal B: confirm the proxy is up — `lsof -iTCP:8888 -sTCP:LISTEN -n -P` (Windows: `netstat -ano | findstr :8888`).
+
+   ![lsof shows java LISTEN on the proxy port](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-13-lsof-proxy-listen.png)
+   *Real `lsof` output: the `java` (JMeter) process is **LISTEN**ing — the proxy is up. (this capture used our own mock instance on port 3917 and proxy 18888 so it would not disturb the class — you use 3000 / 8888)*
+
 8. Before each step, type the transaction name (`T01_LogMasuk`, `T02_SenaraiKenderaan`, `T03_SemakCukai`, `T04_BayarCukai`) into the prefix/transaction name field of the *Recorder: Transactions Control* window. Then run that step's curl block from README §1.4 — **wait > 5 s** between blocks.
+
+   ![Transactions Control: Transaction name T01_LogMasuk](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-14-prefix-t01-logmasuk.png)
+   *Before the first block: type `T01_LogMasuk` into **Transaction name**.*
+
+   ![T01 curl block through the proxy: token and csrf response](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-15-curl-t01-logmasuk.png)
+   *The `T01_LogMasuk` block through the proxy (`-x $P`): the real response contains a fresh `token` and `csrf`.*
+
 9. After step 4 shows `"status":"BERJAYA"`, click **Stop** ⏹ and **File → Save**.
+
+   ![T04 curl block pay tax: status BERJAYA](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-16-curl-t04-berjaya.png)
+   *The `T04_BayarCukai` block: the last response is `"status":"BERJAYA"` — now click **Stop** and **File → Save**.*
+
 10. Expand the **Recording Controller**: note the name of each Transaction Controller and sampler. Open the `T02` Header Manager — copy the first 8 characters of the `Authorization` value. Open the `T04` sampler body — find `csrf`.
+
+    ![Recording Controller with Transaction Controllers T01 to T04](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-17-recording-controller-t01-t04.png)
+    *The real recording: four Transaction Controllers `T01_…`–`T04_…`, each with a sampler (`T01_LogMasuk/api/log-masuk-1`, …) + Constant Timer + HTTP Header Manager.*
+
+    ![T02 Header Manager: Authorization Bearer recorded token](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-18-header-manager-t02-bearer.png)
+    *`T02` Header Manager: `Authorization: Bearer <recorded-token>` — a **hardcoded** value.*
+
+    ![T04 sampler Body Data with literal csrf](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-19-body-t04-csrf.png)
+    *`T04` sampler Body Data: the literal `"csrf":"…"` from the recording session.*
 
 ![Mock eJPJ portal: login form](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-01-portal-log-masuk.png)
 *The flow being recorded (browser version): <http://localhost:3000/portal> → **Log Masuk** form (POST `/portal/log-masuk`). With the browser proxy set to `localhost:8888`, every click becomes a sampler.*
@@ -106,7 +160,15 @@
 
 ### Steps
 1. **First playback — without restarting the SUT:** Start ▶. Note the code of each step. (Expected: all 200 — a "false pass", the recording session is still alive.)
+
+   ![View Results Tree first replay: all green](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-03-vrt-replay-pertama-200.png)
+   *First replay without a restart: all green, `T02` = **200** — a "false pass" because the recording session is still alive.*
+
 2. **Expire the session:** Terminal A → **Ctrl+C** → `node sut/server.js`.
+
+   ![Terminal A: Ctrl+C and the SUT restarted](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-04-restart-sut.png)
+   *Terminal A after **Ctrl+C** → restart: the `Portal eJPJ (TIRUAN) berjalan di …` banner appears again = all old sessions are gone. (this capture used our own mock instance on port 3917 and proxy 18888 so it would not disturb the class — you use 3000 / 8888)*
+
 3. **Second playback:** click the **Clear All** icon (broom) on the toolbar, then Start ▶. Fill in the table:
 
    | Transaction | Code | Response message | `ralat` message in Response data |
@@ -116,15 +178,46 @@
    | T03_SemakCukai | | | |
    | T04_BayarCukai | | | |
 
+   ![View Results Tree second replay: T02 401 Unauthorized](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-05-vrt-t02-401.png)
+   *Second replay: `T01` green, `T02` red — **Sampler result** `Response code:401`, `Response message:Unauthorized`; `T03` green, `T04` red.*
+
 4. Click `T02` (red) → **Request** tab: compare the `Authorization: Bearer …` value with the **token** in the `T01` **Response data**. Same or different?
+
+   ![T02 Request tab: Authorization Bearer old token](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-06-request-t02-bearer-lama.png)
+   *`T02` **Request → Request Headers** tab: the token that was **sent** (the recorded one). (this capture used our own mock instance on port 3917 and proxy 18888 so it would not disturb the class — you use 3000 / 8888)*
+
+   ![T01 Response data: new token from the server](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-07-response-t01-token-baru.png)
+   *`T01` **Response data** tab: the **new** `token` issued by the server — not the same as the token in the `T02` Request tab.*
+
 5. **403 experiment (token only):** **Right-click the login sampler → Add → Post Processors → JSON Extractor**: Names `token`, JSON Path `$.token`, Match No. `1`, Default `TOKEN_TAK_JUMPA`. In the `T02` **and** `T04` Header Managers, change the `Authorization` value to `Bearer ${token}`. Do **not** touch `csrf`. Start ▶.
+
+   ![JSON Extractor token $.token TOKEN_TAK_JUMPA](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-08-json-extractor-token.png)
+   ***JSON Extractor** as a child of the login sampler: Names `token`, JSON Path `$.token`, Match No. `1`, Default `TOKEN_TAK_JUMPA`.*
+
+   ![T04 Header Manager: Authorization Bearer ${token}](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-09-header-bearer-token-var.png)
+   *`T04` (and `T02`) Header Manager: `Authorization` = `Bearer ${token}`. The `csrf` in the body is untouched.*
+
 6. Note: `T02` = ?, `T04` = ? and the `T04` error message.
+
+   ![View Results Tree: T02 green, T04 403 Forbidden](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-10-vrt-t04-403.png)
+   *With only the token correlated: `T02` green (200), `T04` red — `Response code:403`.*
+
+   ![T04 Response data: Token CSRF tidak sah](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-11-t04-403-csrf-tidak-sah.png)
+   *`T04` Response data: `{"ralat":"Token CSRF tidak sah — sila log masuk semula"}` — the cause is now `csrf`, not the token.*
+
 7. Compare with the non-GUI fallback (Terminal B, repo root):
    ```bash
    jmeter -n -t hari-1/test-plans/04-rakaman-mentah.jmx -l hasil/r04.jtl
    # summary = 3 ... Err: 2 (66.67%)
    ```
+
+   ![jmeter -n 04-rakaman-mentah: summary 3 Err 2 66.67%](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-12-nogui-r04-summary.png)
+   *Real non-GUI run of backup `04`: `summary = 3 … Err: 2 (66.67%)`. (this capture used our own mock instance on port 3917 and proxy 18888 so it would not disturb the class — you use 3000 / 8888)*
+
 8. Save the plan (**File → Save**) — it becomes the starting point for Lab 3.
+
+   ![JMeter File menu: Save and Save Test Plan as](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-13-menu-file.png)
+   ***File** menu: **Save** (⌘S / Ctrl+S) writes the same file; **Save Test Plan as** for a new name.*
 
 ![View Results Tree: log-masuk green, kenderaan and bayar-cukai red](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-01-vrt-401-merah.png)
 *Replay after the SUT restart: **View Results Tree** — `/api/log-masuk` green (200), `/api/kenderaan` and `/api/kenderaan/WXY1234/bayar-cukai` red (**401**). Click a red sampler → **Sampler result** / **Request** / **Response data** tabs to investigate.*
@@ -166,17 +259,79 @@
 
 ### Steps
 1. **File → Save As** → `hari-2/test-plans/latihan-03-boleh-main-balik.jmx`.
+
+   ![JMeter File menu: Save Test Plan as](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-13-menu-file.png)
+   ***File → Save Test Plan as** → `latihan-03-boleh-main-balik.jmx`.*
+
 2. **Correlate `csrf`:** open the login JSON Extractor → Names `token;csrf`, JSON Path `$.token;$.csrf`, Match No. `1;1`, Default `TOKEN_TAK_JUMPA;CSRF_TAK_JUMPA`. In the payment body, change the `csrf` value to `${csrf}`.
+
+   ![JSON Extractor token;csrf](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-01-json-extractor-token-csrf.png)
+   *Login JSON Extractor: Names `token;csrf`, JSON Path `$.token;$.csrf`, Match No. `1;1`, Default `TOKEN_TAK_JUMPA;CSRF_TAK_JUMPA`.*
+
+   ![Pay body: csrf ${csrf}](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-02-body-bayar-csrf-var.png)
+   *Pay sampler body: `"csrf":"${csrf}"`.*
+
 3. **Parameterisation:** **Right-click Thread Group → Add → Config Element → CSV Data Set Config**: Filename `../data/pengguna.csv`, Variable Names `no_kp,kata_laluan`, Ignore first line `True`, Recycle on EOF `True`, Sharing mode `All threads`. Login body → `{ "no_kp": "${no_kp}", "kata_laluan": "${kata_laluan}" }`; the list sampler's `no_kp` parameter → `${no_kp}`.
+
+   ![CSV Data Set Config pengguna.csv no_kp,kata_laluan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-03-csv-data-set-config.png)
+   ***CSV Data Set Config** under the Thread Group: `../data/pengguna.csv`, `no_kp,kata_laluan`, Ignore first line `True`, Recycle on EOF `True`, Sharing mode `All threads`.*
+
+   ![Login body using ${no_kp} and ${kata_laluan}](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-04-body-log-masuk-csv.png)
+   *Login body: `{ "no_kp": "${no_kp}", "kata_laluan": "${kata_laluan}" }`.*
+
+   ![List sampler: no_kp parameter ${no_kp}](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-05-parameter-no-kp.png)
+   *List sampler, **Parameters** tab: `no_kp` = `${no_kp}`.*
+
 4. **Chained correlation:** **Right-click the list sampler → Add → Post Processors → JSON Extractor** (`Ekstrak kenderaan pertama`): Names `no_pendaftaran;amaun`, Paths `$.kenderaan[0].no_pendaftaran;$.kenderaan[0].amaun_cukai`, Match No. `1;1`, Default `NONE;0`. Change the quote path → `/api/kenderaan/${no_pendaftaran}/cukai`, the payment path → `/api/kenderaan/${no_pendaftaran}/bayar-cukai`, the payment body → `{ "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }`.
+
+   ![JSON Extractor Ekstrak kenderaan pertama](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-06-ekstrak-kenderaan-pertama.png)
+   *`Ekstrak kenderaan pertama` under the list sampler: `no_pendaftaran;amaun`, `$.kenderaan[0].no_pendaftaran;$.kenderaan[0].amaun_cukai`, `1;1`, `NONE;0`.*
+
+   ![Pay sampler: path ${no_pendaftaran} and body ${amaun}](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-07-bayar-path-body-berantai.png)
+   *Pay sampler: Path `/api/kenderaan/${no_pendaftaran}/bayar-cukai`, body `{ "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }`.*
+
 5. **Names:** rename the samplers `1. POST /api/log-masuk`, `2. GET /api/kenderaan`, `3. GET /api/kenderaan/${no_pendaftaran}/cukai`, `4. POST /api/kenderaan/${no_pendaftaran}/bayar-cukai`.
+
+   ![Samplers renamed 1. to 4.](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-08-nama-sampler-1-4.png)
+   *After renaming: `1. POST /api/log-masuk`, `2. GET /api/kenderaan`, `3. GET …/${no_pendaftaran}/cukai`, `4. POST …/${no_pendaftaran}/bayar-cukai`.*
+
 6. **Transaction Controller:** **Right-click Thread Group → Add → Logic Controller → Transaction Controller** `Pembaharuan Cukai Jalan`. Drag the Recording Controller (or all four samplers) **into it**. Leave *Generate parent sample* and *Include duration of timer…* **unticked**.
+
+   ![Transaction Controller Pembaharuan Cukai Jalan containing the Recording Controller](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-09-transaction-controller-pembaharuan.png)
+   *Transaction Controller `Pembaharuan Cukai Jalan` — the Recording Controller has been dragged inside; both checkboxes unticked.*
+
 7. **Think time:** delete the recorded Constant Timer (one under the first sampler of each group, values such as `6012`). **Right-click Transaction Controller `Pembaharuan Cukai Jalan` → Add → Timer → Uniform Random Timer** (`Think Time (1-3s)`): Random Delay Maximum `2000`, Constant Delay Offset `1000`. The timer becomes a child of that TC, level with the samplers (same as `05`) — not under `T01…T04` and not a child of a sampler. Scope = all 4 samplers in the TC → 4 pauses per iteration (under the Thread Group gives the same effect here, because every sampler is inside the TC).
+
+   ![Uniform Random Timer Think Time as a Transaction Controller child](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-10-uniform-random-timer-tc.png)
+   *`Think Time (1-3s)` (Uniform Random Timer, `2000` / `1000`) — a direct child of `Pembaharuan Cukai Jalan`, level with the Recording Controller; the recorded Constant Timers are deleted.*
+
 8. **Assertion:** **Right-click the payment sampler → Add → Assertions → Response Assertion**: Text Response, Substring, pattern `BERJAYA`.
+
+   ![Response Assertion Substring BERJAYA](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-11-response-assertion-berjaya.png)
+   ***Response Assertion** under the pay sampler: Text Response, Substring, `BERJAYA`.*
+
 9. **(Recommended) If Controller:** **Right-click Transaction Controller `Pembaharuan Cukai Jalan` → Add → Logic Controller → If Controller** `Jika ada kenderaan`, Condition `${__groovy(vars.get("no_pendaftaran") != "NONE" && vars.get("token") != "TOKEN_TAK_JUMPA")}`; drag samplers 3 & 4 into it.
+
+   ![If Controller Jika ada kenderaan with __groovy](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-12-if-controller-jika-ada-kenderaan.png)
+   *If Controller `Jika ada kenderaan` (Interpret Condition as Variable Expression ticked) — steps 3 & 4 (`T03_SemakCukai`, `T04_BayarCukai`) dragged inside.*
+
 10. **Functional test first:** Thread Group 1 user, 1 loop, View Results Tree enabled. Start → all green, the payment Request contains the real token/csrf.
+
+    ![View Results Tree functional test all green, pay Request body](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-13-vrt-bayar-csrf-sebenar.png)
+    *Functional test 1 user × 1 loop: all green; the pay Request sends the real `csrf` + `amaun` from the extractor. (this capture used our own mock instance on port 3917 and proxy 18888 so it would not disturb the class — you use 3000 / 8888)*
+
 11. **Small run:** Thread Group `10` users, Ramp-up `10`, Loop Count `2`. **Disable** View Results Tree. **Add → Listener → Summary Report** and **Aggregate Report**. Start.
+
+    ![Thread Group 10 users ramp-up 10 loop 2](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-14-thread-group-10-10-2.png)
+    *Thread Group: `10` users, Ramp-up `10`, Loop Count `2`.*
+
+    ![Summary Report small run](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-15-summary-report.png)
+    *Summary Report after the small run (View Results Tree disabled — greyed out in the tree).*
+
 12. Note from the Aggregate Report: # Samples for the `Pembaharuan Cukai Jalan` row and the total samples of the 4 steps; Average, 95% Line of the transaction row; Error %.
+
+    ![Aggregate Report: Pembaharuan Cukai Jalan row 20 samples](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab3-16-aggregate-report.png)
+    *Aggregate Report: `Pembaharuan Cukai Jalan` = 20 samples (10 users × 2 loops), transaction Average/95% Line, Error % 0. The sampler 3 & 4 labels split per vehicle because the names contain `${no_pendaftaran}`.*
 
 > Compare with [`test-plans/05-transaksi-penuh.jmx`](../test-plans/05-transaksi-penuh.jmx) (verified: 80 HTTP samples + 20 transaction rows, 0% errors; transaction ≈ 440 ms).
 
