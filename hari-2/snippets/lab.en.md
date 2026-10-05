@@ -51,6 +51,18 @@
 9. After step 4 shows `"status":"BERJAYA"`, click **Stop** ⏹ and **File → Save**.
 10. Expand the **Recording Controller**: note the name of each Transaction Controller and sampler. Open the `T02` Header Manager — copy the first 8 characters of the `Authorization` value. Open the `T04` sampler body — find `csrf`.
 
+![Mock eJPJ portal: login form](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-01-portal-log-masuk.png)
+*The flow being recorded (browser version): <http://localhost:3000/portal> → **Log Masuk** form (POST `/portal/log-masuk`). With the browser proxy set to `localhost:8888`, every click becomes a sampler.*
+
+![eJPJ portal: My Vehicles list](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-02-portal-senarai-kenderaan.png)
+*After login → **Kenderaan Saya** (GET `/portal/kenderaan`, needs the `SESI_EJPJ` session cookie). Click **Bayar cukai** for WXY1234.*
+
+![eJPJ portal: tax payment form with hidden csrf field](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-03-portal-borang-bayar-csrf.png)
+*The **Bayar Cukai Jalan** form: the red box shows the hidden `csrf` and `amaun` fields (as seen in DevTools → Elements). `csrf` is a dynamic value — you correlate it in Lab 3.*
+
+![eJPJ portal: payment receipt with status BERJAYA](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab1-04-portal-resit-berjaya.png)
+*Final step: the receipt shows **Status: BERJAYA**. This is the text used by the Response Assertion.*
+
 ![HTTP(S) Test Script Recorder: proksi port 8888, Target Controller Recording Controller](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-29-gui-recorder-settings.png)
 *HTTP(S) Test Script Recorder: proxy on port 8888, requests recorded into the Recording Controller. (The original template shows "Add separators between groups" — change Grouping as in step 4.)*
 
@@ -112,6 +124,12 @@
    # summary = 3 ... Err: 2 (66.67%)
    ```
 8. Save the plan (**File → Save**) — it becomes the starting point for Lab 3.
+
+![View Results Tree: log-masuk green, kenderaan and bayar-cukai red](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-01-vrt-401-merah.png)
+*Replay after the SUT restart: **View Results Tree** — `/api/log-masuk` green (200), `/api/kenderaan` and `/api/kenderaan/WXY1234/bayar-cukai` red (**401**). Click a red sampler → **Sampler result** / **Request** / **Response data** tabs to investigate.*
+
+![Replay HTML dashboard: Statistics and Errors 401/Unauthorized](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab2-02-dashboard-statistics-errors-401.png)
+*The same replay in non-GUI mode (`-e -o`): **Statistics** shows Error % 66.67% (2 of 3), **Errors** = `401/Unauthorized` × 2 — matching `summary = 3 ... Err: 2 (66.67%)`.*
 
 ### ✅ Checkpoint
 - [ ] Playback without a restart shows 4 × 200 and you can explain why it is a "false pass"
@@ -399,6 +417,12 @@
 5. **Check against lab data:** use R1 from Lab 5 — do 50 users × (R + 4 s) give the expected Transactions/s?
 6. Fill in section 5 (transaction mix), 8 (baseline → load → stress → spike → soak schedule with `-J` configuration), 9 (entry/exit/suspension criteria), 10 (monitoring), 11 (at least 3 risks) and 12 (authorisation & stop procedure).
 
+![Test plan template: workload model and Little's Law](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab6-01-pelan-model-beban-littles-law.png)
+*Filled example in `templat-pelan-ujian.md` §4.1–4.2: V = 36,000/hour → X = 10 transactions/s → **N = 10 × (2 + 58) = 600** concurrent users. Fill the ✍️ column with your scenario's numbers.*
+
+![Test plan template: pacing and Appendix A](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab6-02-pelan-pacing-lampiran-a.png)
+*§4.3 pacing (Constant Throughput Timer = X × 60 samples/minute) and **Appendix A** — the Little's Law worksheet you fill in step 4.*
+
 ### ✅ Checkpoint
 - [ ] At least 4 NFRs written with transaction, load, percentile metric, threshold and duration
 - [ ] Little's Law calculation complete: V → X → N, hits/s rate, and pacing setting
@@ -436,6 +460,12 @@
 2. Close with one sentence: *"Before the real test, we need written authorisation from …"*
 3. Present (another pair asks **one** question: "How do you know …?").
 4. Note one piece of feedback you received.
+
+![Report template: executive summary and results against NFRs](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab7-01-laporan-ringkasan-nfr.png)
+*Presentation material: `templat-laporan-ujian.md` B1 (executive summary — one sentence + 3 key points) and B3 (results against NFRs with the dashboard source).*
+
+![Report template: finding D2 evidence impact cause recommendation](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-lab7-02-laporan-dapatan-d2.png)
+*Example for the "one finding" slot: **D2** — Evidence (numbers + dashboard section) → Impact → Cause → Recommendation.*
 
 ### ✅ Checkpoint
 - [ ] Presentation ≤ 3 minutes covering the NFR, the N calculation, run types and one finding
