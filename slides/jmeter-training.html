@@ -464,7 +464,7 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
     <div class="tile m-pass"><div class="sq">SLA</div><div><b>Peak scenario</b><span>07-beban-puncak-cukai.jmx</span></div></div>
   </div>
   <div class="org"><i></i><span>A course for <b>JPJ</b> officers · target <code>localhost:3000</code> only · synthetic data</span></div>
-  <aside class="notes"><p>Selamat datang. Perkenalkan diri, dan minta peserta perkenalkan unit masing-masing serta pengalaman test sistem (functional atau performance).</p><p>Tekankan dari awal: semua test kita target mock lokal <code>http://localhost:3000</code> — bukan portal JPJ sebenar. Tekan <b>?</b> untuk keyboard shortcuts, <b>S</b> untuk nota ni, <b>O</b> untuk overview.</p></aside>
+  <aside class="notes"><p>Selamat datang semua ke kursus <b>Performance Testing with Apache JMeter</b>. Saya akan jadi trainer anda untuk dua hari ni — 21 Sep dan 5 Oct. Dalam bilik ni ada pegawai IT, tester dan developer, dengan pengalaman yang berbeza-beza. Itu bagus, kita boleh belajar sesama sendiri.</p><p>Hari 1 kita belajar asas JMeter dan load testing, daripada fail <code>01</code> sampai <code>04</code>. Hari 2 kita record, buat report dan rancang test sebenar — sampai ke senario puncak Hari Harga Cukai Jalan Naik dengan SLA gate.</p><p>Satu perkara saya nak tegaskan dari awal: semua test kita halakan ke mock lokal <code>http://localhost:3000</code> sahaja. Bukan portal JPJ sebenar. Data semua rekaan.</p></aside>
 </section>
 
 <section class="slide">
@@ -484,7 +484,7 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
     <div class="kpi m-pass"><i>Exercises</i><b>15</b><span>each with a ✅ checkpoint</span></div>
     <div class="kpi m-jpj"><i>Reference test plans</i><b>11</b><span><code>.jmx</code> — the “answer key”</span></div>
   </div>
-  <aside class="notes"><p>Slaid ni jawab soalan "apa yang saya dapat?". Baca enam kad tu cepat-cepat — setiap satu ialah blok kemahiran yang mereka akan praktis sendiri.</p><p>Soalan pembuka: "Siapa pernah alami portal kerajaan slow pada hari terakhir deadline?" — itulah masalah yang performance testing cuba elakkan.</p></aside>
+  <aside class="notes"><p>Apa yang anda bawa balik selepas dua hari ni? Ada enam blok kemahiran. Pertama, faham performance testing — Load, Stress, Spike, Soak, Scalability — dan syarat etika sebelum kita jana beban. Kedua, bina Test Plan sendiri dalam GUI: Thread Group, HTTP Request, Assertion, Timer dan CSV Data Set.</p><p>Ketiga, record dan correlate — guna HTTP(S) Test Script Recorder, lepas tu JSON Extractor untuk <code>token</code> dan <code>csrf</code>. Keempat, replay dengan betul. Kelima, baca report: APDEX, percentile, throughput, latency. Keenam, rancang performance test dengan NFR yang boleh diukur, Little's Law dan SLA.</p><p>Cuba fikir: siapa pernah alami portal kerajaan slow pada hari terakhir deadline? Itulah masalah yang performance testing cuba elakkan. Semua ni ada 8 sesi dan 15 latihan, setiap satu dengan checkpoint.</p></aside>
 </section>
 
 <section class="slide">
@@ -511,7 +511,7 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
     <div class="blk s h2"><i>3.45 – 5.00</i><div><b>S4</b><span>Planning a performance test</span></div></div>
   </div>
   <div class="callout info sm mt16"><span class="i">📝</span><div>The <b>Borang penilaian</b> (course evaluation form) on pelatih.my opens at <b>2.00 pm on Day 2</b>. Every session ends with a <b>session quiz</b> — that is the evidence of your progress.</div></div>
-  <aside class="notes"><p>Hari 1 dan Hari 2 jaraknya dua minggu — sebab tu Hari 2 mula dengan recap 10 minit. Masa ikut jadual dalam <code>hari-1/README.md</code> dan <code>hari-2/README.md</code>.</p><p>Setiap sesi: ±30% konsep &amp; demo, ±70% lab. Ingatkan pasal borang penilaian pukul 2.00 petang Hari 2.</p></aside>
+  <aside class="notes"><p>Ni agenda kita. Dua hari, lapan sesi, satu senario puncak. Hari 1, Isnin 21 Sep, fokus asas JMeter: pengenalan dan setup, anatomi Test Plan, assertion, timer dan CSV, dan akhir sekali recording.</p><p>Hari 2, Isnin 5 Oct: record dan replay, jadikan recording tu boleh replay, report dan terminologi, dan last sekali perancangan performance test. Sebab Hari 1 dan Hari 2 jaraknya dua minggu, Hari 2 kita mula dengan recap pendek dulu.</p><p>Setiap sesi lebih kurang 30% konsep dan demo, 70% lab — maksudnya anda banyak buat sendiri. Setiap sesi habis dengan kuiz sesi, dan itulah bukti kemajuan anda. Borang penilaian kursus di pelatih.my buka pukul 2.00 petang Hari 2.</p></aside>
 </section>
 
 <section class="slide">
@@ -531,7 +531,7 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
       <div class="callout tip sm"><span class="i">💡</span><div>Functional testing: <i>“does it work?”</i> · Performance testing: <i>“does it <b>hold up</b> when many people arrive at once?”</i></div></div>
     </div>
   </div>
-  <aside class="notes"><p>Kandungan pembuka (load testing → tools → JMeter → kenapa JMeter) diadaptasi daripada video pengenalan Simplilearn "JMeter Load Testing — Tutorial For Beginners".</p><p>Tanya: "Apa jadi pada pengalaman anda bila portal slow pada hari terakhir?" Kaitkan dengan reputasi jabatan — kegagalan pada hari puncak dilihat seluruh negara.</p></aside>
+  <aside class="notes"><p>Okay, kita mula dengan konsep. Apa itu load testing? Load testing ialah satu kategori performance testing yang tengok macam mana sistem berprestasi dalam keadaan dunia sebenar. Kita naikkan bilangan pengguna serentak — 10, 100, 1,000 virtual users — dan tengok sistem tu buat senario macam log masuk, check, bayar.</p><p>Jawapan yang kita cari: berapa kapasiti maksimum, dan berapa ramai pengguna sebelum sistem jadi slow atau gagal?</p><p>Bayangkan hari terakhir sebelum harga cukai jalan naik. Beribu-ribu rakyat log masuk serentak. Portal boleh tahan ke tak? Kalau gagal pada hari puncak, satu negara nampak — reputasi jabatan terjejas.</p><p>Beza dia senang: functional testing tanya "berfungsi ke?". Performance testing tanya "tahan ke bila ramai orang datang serentak?"</p></aside>
 </section>
 
 <section class="slide">
@@ -546,7 +546,7 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
     <div class="card top m-n sm"><span class="k">CLOUD</span><h3>LoadNinja</h3><p>Cloud-based, uses real browsers.</p></div>
   </div>
   <div class="callout tip mt24"><span class="i">✅</span><div>We chose <b>JMeter</b>: free, runs anywhere Java runs, <code>.jmx</code> files can be stored in Git, and it fits CI/CD.</div></div>
-  <aside class="notes"><p>Tujuan slaid ni bukan perbandingan mendalam — cukup peserta tahu JMeter bukan satu-satunya pilihan, dan konsep (threads, ramp-up, percentile, correlation) boleh dibawa ke tools lain.</p><p>Tanya: "Unit anda pernah guna load-testing tool? Yang mana?"</p></aside>
+  <aside class="notes"><p>JMeter bukan satu-satunya tool untuk load testing. Ada WebLOAD yang guna scripting JavaScript, LoadUI daripada SmartBear yang rapat dengan SoapUI, LoadRunner yang enterprise dan lesen dia mahal, NeoLoad yang fokus pada automation dan CI, dan LoadNinja yang berasaskan cloud dengan browser sebenar.</p><p>Kita pilih JMeter sebab percuma, boleh run di mana-mana ada Java, fail <code>.jmx</code> boleh simpan dalam Git, dan sesuai untuk CI/CD.</p><p>Yang penting, konsep yang anda belajar di sini — threads, ramp-up, percentile, correlation — semua boleh bawa ke tool lain. Kalau unit anda dah guna tool lain sebelum ni, ilmu ni tetap terpakai.</p></aside>
 </section>
 
 <section class="slide">
@@ -567,7 +567,7 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
       <div class="card side m-violet sm"><h3>Large community</h3><p>Extensive documentation &amp; plugin ecosystem.</p></div>
     </div>
   </div>
-  <aside class="notes"><p>Kursus ni guna JMeter 5.6.x. Tekankan "bukan browser": response time yang JMeter ukur ialah masa server + network, bukan masa browser ambil untuk paint page.</p><p>Soalan semak: "Kalau JMeter tak run JavaScript, macam mana nak test SPA?" — jawapan: dia test API yang SPA tu panggil.</p></aside>
+  <aside class="notes"><p>Apa itu Apache JMeter? Ia software open-source sepenuhnya, dibina atas Java, untuk load testing dan ukur prestasi. Asalnya untuk web application, tapi sekarang boleh test API, database, FTP, JMS dan banyak lagi. Kursus ni guna JMeter 5.6.x.</p><p>Satu perkara penting: <b>JMeter bukan browser</b>. Dia tak run JavaScript page. Dia hantar HTTP request — macam 1,000 client serentak. Maksudnya response time yang JMeter ukur ialah masa server dan network, bukan masa browser lukis page.</p><p>Jadi kalau sistem tu SPA, macam mana nak test? Jawapannya: kita test API yang SPA tu panggil.</p><p>Kelebihan JMeter: percuma, banyak jenis test dalam satu tool, cross-platform, boleh extend guna Groovy dan plugin, ada recording, dan komuniti besar.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -589,7 +589,7 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
     <div class="card flat sm"><span class="k">&nbsp;</span><p><code>850303035700</code> BMT3030, PKL909</p></div>
   </div>
   <p class="xsmall muted mt8 mb0">The token is sent as <code>Authorization: Bearer &lt;token&gt;</code>; <code>csrf</code> is sent in the <b>JSON body</b>. Any non-empty password is accepted.</p>
-  <aside class="notes"><p>Jadual ni ialah kontrak SUT — sama macam dokumentasi API sebenar. Baris yang di-highlight (<code>/api/log-masuk</code>, login) ialah kunci kursus: ia pulangkan <code>token</code> dan <code>csrf</code> yang bertukar setiap kali login — inilah yang kita correlate pada Hari 2.</p><p>SUT ni Node.js tanpa dependency (<code>sut/server.js</code>), data in-memory, semua rekaan — bukan data JPJ.</p></aside>
+  <aside class="notes"><p>Ni sistem yang kita test — Portal eJPJ mock di <code>http://localhost:3000</code>. Anggap jadual ni macam kontrak API, sama macam dokumentasi API sebenar.</p><p>Ada endpoint mudah macam <code>/api/health</code>, check cukai kenderaan, dan semak saman. Yang paling penting ialah <code>POST /api/log-masuk</code>. Login ni pulangkan <code>token</code> dan <code>csrf</code>, dan nilai tu bertukar setiap kali login. Inilah yang kita akan correlate pada Hari 2.</p><p>Endpoint yang ada label token, macam senarai kenderaan, akan bagi 401 kalau tak ada token yang sah. Bayar cukai pula perlukan token dan csrf, dan lebih kurang 1% akan gagal dengan 500 — sengaja, supaya kita nampak error dalam report.</p><p>SUT ni Node.js tanpa dependency, data dalam memory. Pengguna sintetik, semua rekaan — bukan data JPJ.</p></aside>
 </section>
 
 <section class="slide">
@@ -615,7 +615,7 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
     </div>
   </div>
   <div class="mnemo mt16"><span class="tag">HABIT</span><p>Before <b>Start ▶</b>: open <b>HTTP Request Defaults</b> — Server = <code>localhost</code>, Port = <code>3000</code>. Every time, every plan.</p></div>
-  <aside class="notes"><p>Ini slaid paling penting dalam kursus. Dalam organisasi kerajaan: dapatkan kelulusan bertulis daripada pemilik sistem <b>dan</b> pasukan infrastruktur/keselamatan, maklumkan NOC/SOC sebelum run, dan tetapkan siapa yang boleh tekan "Stop".</p><p>Soalan kuiz S1: rakan sekerja cadang "test sekejap" portal JPJ sebenar dengan 50 threads. Jawapan: tolak. Saiz beban atau waktu tak ubah status undang-undang.</p></aside>
+  <aside class="notes"><p>Ini slaid paling penting dalam kursus ni. Rule nombor satu: localhost sahaja.</p><p>JMeter ialah penjana beban. Dari sudut server, 200 thread JMeter nampak sama macam 200 penyerang. Load test tanpa kebenaran bertulis dikira serangan DoS — walaupun niat anda baik, walaupun anda pegawai JPJ.</p><p>Yang dibenarkan: mock kursus ni, staging milik organisasi dengan kebenaran bertulis yang nyatakan skop, host, masa dan tahap beban, dan data sintetik sahaja. Yang dilarang: portal JPJ sebenar, "try sekejap" pada production, dan IC atau nombor pendaftaran rakyat sebenar dalam CSV.</p><p>Dalam organisasi kerajaan, kita kena dapat kelulusan pemilik sistem dan pasukan infrastruktur atau keselamatan, maklumkan NOC/SOC, dan tetapkan siapa boleh tekan Stop. Cuba fikir: kalau kawan ajak test portal sebenar dengan 50 threads, apa jawapan anda? Tolak. Saiz beban atau waktu tak ubah status undang-undang.</p></aside>
 </section>
 
 <section class="slide">
@@ -638,7 +638,7 @@ Portal eJPJ (TIRUAN) berjalan di  http://localhost:3000
       <div class="callout info sm"><span class="i">🧭</span><div>When stuck, check in this order: Terminal A log → View Results Tree (<b>Request</b> &amp; <b>Response data</b>) → Debug Sampler → <code>jmeter.log</code>.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Bina budaya awal-awal: ramalan tak dimarkah — ia latih intuisi. Bila ramalan salah, itulah pembelajaran paling bernilai.</p><p>Jangan masuk konsep baru sampai ≥ 80% kelas lepas checkpoint. Peserta yang tertinggal: buka reference plan, faham, teruskan.</p></aside>
+  <aside class="notes"><p>Macam mana lab kita berjalan? Ada empat langkah: Predict, Start, Checkpoint, dan kuiz sesi.</p><p>Pertama, ramal dulu. Berapa samples? Berapa Error %? Throughput naik ke turun? Tulis, baru tekan Start. Ramalan ni tak dimarkah — ia latih intuisi. Bila ramalan anda salah, itulah pembelajaran paling bernilai.</p><p>Kedua, bina sendiri. Plan dalam <code>test-plans/</code> tu answer key — buka lepas checkpoint, atau kalau stuck lebih 10 minit. Tak salah buka, faham, kemudian teruskan.</p><p>Ketiga, tanda checkpoint dengan jujur, sebab LMS tak nampak run dalam laptop anda. Keempat, kuiz sesi — itulah bukti yang dinilai.</p><p>Sentiasa buka dua window: Terminal A untuk SUT, <code>cd sut &amp;&amp; node server.js</code>, jangan tutup. Terminal B atau JMeter GUI untuk latihan.</p></aside>
 </section>
 
 
@@ -656,7 +656,7 @@ Portal eJPJ (TIRUAN) berjalan di  http://localhost:3000
   </div>
   <div class="dayrail"><span class="now"></span><span></span><em>output: 01-hello-jpj → 04-rakaman-mentah.jmx</em></div>
   <div class="daynum"><small>DAY</small>01</div>
-  <aside class="notes"><p>Hari 1 bina asas: daripada satu request ke <code>/api/health</code> sampai load test 20 users dengan assertions, timers dan CSV — dan berakhir dengan recording yang <b>sengaja gagal</b> masa replay.</p><p>Kegagalan recording tu (401) ialah jambatan ke Hari 2. Jangan "betulkan" <code>04-rakaman-mentah.jmx</code> — memang sengaja rosak.</p></aside>
+  <aside class="notes"><p>Okay, kita masuk Hari 1: Asas Apache JMeter dan Load Testing. Hari ni kita bina asas, daripada satu request ke <code>/api/health</code> sampai load test 20 users dengan assertion, timer dan CSV.</p><p>Hari ni ada empat sesi, dan output kita daripada <code>01-hello-jpj</code> sampai <code>04-rakaman-mentah.jmx</code>.</p><p>Hari ni berakhir dengan recording yang <b>sengaja gagal</b> masa replay — anda akan nampak 401. Itu bukan silap. Kegagalan tu jambatan ke Hari 2, dan kita akan betulkan dia nanti.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -674,7 +674,7 @@ Portal eJPJ (TIRUAN) berjalan di  http://localhost:3000
     <tr><td><b>O8</b></td><td><b>Parameterise</b> requests with CSV Data Set &amp; <code>${…}</code></td><td>S3</td><td>Exercise 3: a different registration number per request</td></tr>
     <tr><td><b>O9</b></td><td><b>Record</b> a flow &amp; <b>explain</b> why replay fails (401)</td><td>S4</td><td>Exercise 6: 200 / 401 / 401 · HTML report ~67% errors</td></tr>
   </table>
-  <aside class="notes"><p>Baca objektif dengan kuat. Setiap objektif ada kata kerja yang boleh diperhati dan bukti dalam lab.</p><p>Minta peserta tanda objektif bila checkpoint dia pass. Hujung hari, kita semak senarai ni sekali lagi.</p></aside>
+  <aside class="notes"><p>Ni objektif Hari 1. Setiap objektif ada kata kerja yang boleh diperhati, dan ada bukti dalam lab.</p><p>Sesi 1: anda boleh bezakan 5 jenis performance test, nyatakan syarat etika, install Java dan JMeter, dan run SUT — buktinya <code>jmeter -v</code> tunjuk 5.6.x dan <code>/api/health</code> bagi <code>"status":"ok"</code>.</p><p>Sesi 2: bina Test Plan pertama, set threads, ramp-up dan loop, dan ramal bilangan samples — contohnya 20 × 5 = 100. Faham scope ikut kedudukan elemen, dan baca Average, Median, percentile, Throughput dan Error %.</p><p>Sesi 3: assertion, timer dan parameterisation dengan CSV. Bila checkpoint anda pass, tanda objektif tu. Hujung hari nanti kita semak senarai ni sekali lagi.</p></aside>
 </section>
 
 <!-- ---------- Day 1 · S1 ---------- -->
@@ -691,7 +691,7 @@ Portal eJPJ (TIRUAN) berjalan di  http://localhost:3000
   <div class="labline"><b>LAB</b> Exercise 0 — Setup · <b>QUIZ</b> S1</div>
   <div class="dayrail"><span class="now"></span><span></span><span></span><span></span><em>Day 1 · S1 / S4</em></div>
   <div class="daynum"><small>SESSION</small>S1</div>
-  <aside class="notes"><p>Sesi ni separuh konsep, separuh installation. Mulakan installation Java/JMeter seawal mungkin — download boleh lambat dalam bilik latihan.</p><p>Sasaran hujung sesi: setiap peserta ada <code>jmeter -v</code> berfungsi dan <code>/api/health</code> pulangkan <code>"status":"ok"</code>.</p></aside>
+  <aside class="notes"><p>Sesi 1: Pengenalan Performance Testing dan Setup, pukul 9.00 sampai 10.30.</p><p>Sesi ni separuh konsep, separuh installation. Kita belajar apa dan kenapa performance testing, 5 jenis test, dan etika. Lepas tu kita install Java dan JMeter, termasuk PATH untuk Windows, kenal GUI dan non-GUI, run SUT dan kenal interface.</p><p>Sasaran hujung sesi: setiap orang ada <code>jmeter -v</code> yang berfungsi, dan <code>/api/health</code> pulangkan <code>"status":"ok"</code>. Kalau download lambat, kita mula installation awal.</p></aside>
 </section>
 
 <section class="slide">
@@ -710,7 +710,7 @@ Portal eJPJ (TIRUAN) berjalan di  http://localhost:3000
     <tr><td><b>Error %</b></td><td>Percentage of failed samples — HTTP 4xx/5xx, network, <b>or a failed assertion</b></td><td>Summary / Aggregate Report</td></tr>
     <tr><td><b>Concurrency</b></td><td>Number of virtual users active at the same time</td><td>Thread Group (threads)</td></tr>
   </table>
-  <aside class="notes"><p>Performance testing ukur sejauh mana sistem laju, stabil dan boleh scale bawah beban — bukan sama ada ia berfungsi. Hari 1 fokus pada Load + Scenario + baca Metrics asas; Criteria (SLA) diliputi secara mendalam pada Hari 2.</p><p>Tanya: "Kalau portal ambil 3 saat untuk satu user, dah gagal ke?" Jawapan: bergantung pada kriteria bertulis — tanpa NFR, tak ada siapa boleh kata pass atau fail.</p></aside>
+  <aside class="notes"><p>Setiap performance test ada empat komponen. Load — berapa ramai? Iaitu pengguna serentak dan corak ketibaan, ramp-up. Scenario — buat apa? Turutan request yang tiru pengguna sebenar. Metrics — apa yang diukur? Response time, throughput, error rate. Criteria — bila kira pass? Iaitu SLA atau NFR, threshold yang ditulis.</p><p>Response time ialah masa daripada hantar request sampai terima response penuh, dalam ms. Throughput ialah bilangan request siap setiap second. Error % ialah peratus sample gagal — 4xx, 5xx, network, atau assertion gagal. Concurrency ialah bilangan virtual user aktif serentak.</p><p>Soalan untuk anda: kalau portal ambil 3 second untuk satu user, dah gagal ke? Jawapannya: bergantung pada kriteria bertulis. Tanpa NFR, tak ada siapa boleh kata pass atau fail. Hari ni kita fokus Load, Scenario dan Metrics; Criteria kita dalami pada Hari 2.</p></aside>
 </section>
 
 <section class="slide">
@@ -728,7 +728,7 @@ Portal eJPJ (TIRUAN) berjalan di  http://localhost:3000
     <div class="callout warn sm"><span class="i">⚡</span><div><b>Spike:</b> the last night before prices go up — 10× traffic within 5 minutes.</div></div>
     <div class="callout info sm"><span class="i">🕒</span><div><b>Soak:</b> the portal stays up for 72 hours over a long holiday without a restart.</div></div>
   </div>
-  <aside class="notes"><p>Lukis bentuk beban atas whiteboard: paksi X masa, paksi Y users. Setiap jenis test jawab soalan yang berbeza.</p><p>Soalan kuiz S1: "Trafik naik 10× dalam beberapa minit — jenis test apa?" → Spike. Kursus ni fokus pada Load &amp; Stress, dengan senario puncak (spike) pada Hari 2 (plan 07).</p></aside>
+  <aside class="notes"><p>Ada lima jenis performance test, dan setiap satu jawab soalan berbeza. Bayangkan graf: paksi X masa, paksi Y bilangan users.</p><p><b>Load</b> — beban dijangka. Contoh: 1,000 pembaharuan cukai jalan sejam pada hari biasa. <b>Stress</b> — tambah users sampai sistem pecah, untuk cari di mana dia gagal. <b>Spike</b> — lonjakan tiba-tiba, contohnya malam terakhir sebelum harga naik, trafik 10× dalam 5 minit. Soalannya: boleh pulih ke tak?</p><p><b>Soak</b> — beban sederhana untuk tempoh lama, contohnya portal hidup 72 jam masa cuti panjang tanpa restart, untuk kesan memory leak. <b>Scalability</b> — beban sama, banding konfigurasi atau resource berbeza.</p><p>Jadi kalau trafik naik 10× dalam beberapa minit, itu Spike. Kursus ni fokus Load dan Stress, dengan senario puncak pada Hari 2.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -759,7 +759,7 @@ jmeter --version      # confirm JMeter is present</pre></div>
       <div class="callout info sm"><span class="i">☕</span><div>“Java not found”? Set <code>JAVA_HOME</code> to the JDK folder and add <code>%JAVA_HOME%\bin</code> to PATH. Confirm: <code>java -version</code>.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Latihan 0. Peserta Windows biasanya download zip secara manual — terus ke slaid seterusnya untuk PATH. Peserta macOS paling senang dengan Homebrew.</p><p>Check masa mereka install: siapa dah nampak versi 5.6.x? Pasangkan sesiapa yang ada masalah dengan rakan sebelah.</p></aside>
+  <aside class="notes"><p>Sekarang kita install. Kita perlukan Java — JDK 11 ke atas, tapi saya cadangkan 17 atau 21 LTS — dan JMeter 5.6.x.</p><p>Mula dengan <code>java --version</code> untuk check Java dah ada. Pengguna macOS paling senang guna Homebrew: <code>brew install openjdk@21</code> dan <code>brew install jmeter</code>. Windows guna winget, Linux guna apt. Lepas tu <code>jmeter --version</code>.</p><p>Cara manual: download fail .zip daripada jmeter.apache.org, unzip ke path pendek macam <code>C:\apache-jmeter-5.6.3</code>, dan launch <code>bin/jmeter</code> atau <code>bin\jmeter.bat</code>.</p><p>Elakkan folder yang ada space atau simbol pelik, macam Program Files, dan jangan run terus dari dalam zip. Kalau keluar "Java not found", set <code>JAVA_HOME</code> dan tambah ke PATH. Kalau ada masalah, minta tolong kawan sebelah.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -783,7 +783,7 @@ jmeter -v</pre></div>
       <div class="callout warn sm"><span class="i">🧯</span><div><i>“'jmeter' is not recognized”</i> after adding PATH? The old terminal still holds the old PATH — open a new terminal.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Ini soalan kuiz S1 #4: PATH dah ditambah tapi terminal yang sama masih gagal — sebab terminal lama simpan salinan PATH lama. User variables dah cukup, tak perlu admin rights.</p><p>Demo cue: tunjuk window Environment Variables secara live atas projektor kalau ramai peserta Windows.</p></aside>
+  <aside class="notes"><p>Untuk pengguna Windows: macam mana nak run <code>jmeter</code> dari mana-mana folder? Kita tambah ke PATH.</p><p>Unzip ke lokasi tetap, <code>C:\apache-jmeter-5.6.3</code>. Buka Start, cari "environment variables", masuk Environment Variables. Bawah User variables, pilih Path, Edit, New, paste <code>C:\apache-jmeter-5.6.3\bin</code>, OK semua window. User variables dah cukup — tak perlu admin rights.</p><p>Penting: tutup dan buka semula terminal. Terminal lama simpan salinan PATH lama, jadi kalau anda dah tambah PATH tapi masih keluar "'jmeter' is not recognized", itulah sebabnya. Lepas buka baru, <code>jmeter -v</code> patut tunjuk 5.6.x.</p><p>Kalau suka PowerShell, ada satu command untuk buat benda sama. Semua command kursus sama di Windows, cuma guna backslash.</p></aside>
 </section>
 
 <section class="slide">
@@ -803,7 +803,7 @@ jmeter -v</pre></div>
     </table>
     <div class="mnemo"><span class="tag">RULE</span><p>Build in the <b>GUI</b>, run load in <b>non-GUI</b>. If the GUI is struggling, what you are measuring is <b>JMeter</b> — not the SUT.</p></div>
   </div>
-  <aside class="notes"><p>Soalan kuiz S1 #3: kenapa run beban sebenar dalam non-GUI? Sebab JVM yang sibuk lukis GUI dan simpan results dalam memory jadi bottleneck — angka tu jadi angka JMeter.</p><p>Hari ni kita bina dalam GUI; beban non-GUI sebenar datang pada Hari 2 S3. Tapi kita akan cuba <code>jmeter -n</code> sekali petang ni (recording S4).</p></aside>
+  <aside class="notes"><p>JMeter ada dua mod. GUI mode untuk bina dan debug — tambah elemen, guna View Results Tree, check logic dengan 1 hingga 5 users. Tapi GUI ni berat, sebab memory dan CPU habis untuk lukis GUI.</p><p>Non-GUI mode, <code>jmeter -n</code>, untuk beban sebenar. Guna resource jauh kurang, boleh run lebih banyak threads, dan result masuk fail <code>.jtl</code>. Sesuai untuk server dan CI/CD.</p><p>Flag dia: <code>-n</code> non-GUI, <code>-t</code> Test Plan, <code>-l</code> fail result, <code>-e -o</code> jana HTML dashboard — folder tu mesti kosong atau belum wujud.</p><p>Kenapa run beban dalam non-GUI? Sebab kalau JVM sibuk lukis GUI dan simpan result dalam memory, dia jadi bottleneck — angka yang anda ukur jadi angka JMeter, bukan SUT. Rule dia: bina dalam GUI, run beban dalam non-GUI.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -834,7 +834,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
       <div class="callout tip sm"><span class="i">🌐</span><div>Open <code>http://localhost:3000</code> in a browser — the info page lists every endpoint.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Checkpoint Latihan 0: <code>/api/health</code> pulangkan <code>{"status":"ok",…}</code>. Kalau port 3000 dah digunakan, guna <code>PORT=3001</code> — tapi ingat tukar HTTP Request Defaults sekali.</p><p>Env vars latency tu digunakan dalam S3 (Kes 5) untuk tunjuk kesan server slow pada percentiles.</p></aside>
+  <aside class="notes"><p>Sekarang kita run Portal eJPJ mock. Biarkan dia terbuka sepanjang hari. Dalam Terminal A: <code>cd sut</code>, kemudian <code>node server.js</code>. Perlu Node.js 18 ke atas, tak perlu npm install.</p><p>Dari terminal lain, check dengan <code>curl -s http://localhost:3000/api/health</code>. Kalau keluar <code>{"status":"ok",…}</code>, maksudnya SUT dah jalan.</p><p>Ada beberapa env var. <code>PORT</code> default 3000. <code>LATENCY_MIN / MAX</code> 40 hingga 180 ms latency tiruan. <code>ERROR_RATE</code> 0.01, maksudnya lebih kurang 1% bayaran cukai gagal dengan 500. Dalam Sesi 3 nanti kita guna latency tinggi, 300 hingga 900 ms, untuk tengok kesan server slow pada percentile.</p><p>Kalau port 3000 dah digunakan, guna <code>PORT=3001</code> — tapi ingat tukar HTTP Request Defaults sekali. Anda juga boleh buka <code>http://localhost:3000</code> dalam browser untuk tengok senarai endpoint.</p></aside>
 </section>
 
 <section class="slide">
@@ -850,7 +850,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
       <div class="callout tip sm"><span class="i">🧹</span><div><b>Clear All</b> before a new run. <b>Stop</b> = immediately; <b>Shutdown</b> = wait for current samples to finish.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Demo cue: buka JMeter, tunjuk empat kawasan. Setiap Test Plan disimpan sebagai satu fail <code>.jmx</code> (XML) — boleh disimpan dalam Git.</p><p>Tanya: "Kat mana anda nak tengok kalau JMeter tak jumpa fail CSV?" Jawapan: ikon log ⚠️ / <code>jmeter.log</code>.</p></aside>
+  <aside class="notes"><p>Jom kenal interface JMeter. Ada empat kawasan. Atas sekali, menu dan toolbar — Open, Save fail <code>.jmx</code>, Start, Stop, Clear. Kiri, test tree — struktur Test Plan, klik kanan untuk Add elemen. Kanan, panel konfigurasi — setting untuk elemen yang dipilih. Dan atas kanan, ikon Log ⚠️ untuk error dan warning, iaitu <code>jmeter.log</code>.</p><p>Setiap Test Plan disimpan sebagai satu fail <code>.jmx</code>, format XML, jadi boleh simpan dalam Git.</p><p>Soalan: kalau JMeter tak jumpa fail CSV, di mana anda nak tengok? Jawapannya: ikon log ⚠️ atau <code>jmeter.log</code>. Kalau ada benda pelik, buka log dulu.</p><p>Tips: Clear All sebelum run baru. Stop berhenti serta-merta; Shutdown tunggu sample semasa habis dulu.</p></aside>
 </section>
 
 <!-- ---------- Day 1 · S2 ---------- -->
@@ -867,7 +867,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
   <div class="labline"><b>LAB</b> Exercise 1 — First Test Plan · <b>QUIZ</b> S2</div>
   <div class="dayrail"><span class="on"></span><span class="now"></span><span></span><span></span><em>Day 1 · S2 / S4</em></div>
   <div class="daynum"><small>SESSION</small>S2</div>
-  <aside class="notes"><p>Sesi paling berat dengan konsep hari ni. Matlamat: peserta faham pokok elemen dan <b>scope ikut kedudukan</b> — punca bug paling biasa untuk beginner.</p><p>Output: setara dengan <code>01-hello-jpj.jmx</code>, kemudian Thread Group 20 / 10 / 5.</p></aside>
+  <aside class="notes"><p>Sesi 2: Anatomi Test Plan, Thread Group dan Listeners, pukul 10.45 sampai 1.00.</p><p>Ini sesi paling padat dengan konsep hari ni. Kita akan belajar pokok elemen, dan satu konsep yang sangat penting: <b>scope ikut kedudukan</b>. Ini punca bug paling biasa untuk beginner.</p><p>Kita akan bina Test Plan pertama, set threads, ramp-up dan loop, guna HTTP Request Defaults dan Header Manager, dan baca result dalam View Results Tree, Summary dan Aggregate Report. Hasilnya setara dengan <code>01-hello-jpj.jmx</code>, kemudian Thread Group 20 / 10 / 5.</p></aside>
 </section>
 
 <section class="slide">
@@ -905,7 +905,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
       <tr><td><b>Listener</b></td><td>Collects &amp; displays results</td><td>View Results Tree, Summary</td></tr>
     </table>
   </div>
-  <aside class="notes"><p>Tunjuk pokok ni dalam GUI. Warna jalur kiri setiap elemen = kategorinya. Perhatikan Assertion dan Extractor ialah <b>anak</b> kepada HTTP Request — ia hanya beri kesan pada sampler tu.</p><p>Tanya: "Kalau saya pindah Response Assertion ke bawah Thread Group, sampler mana yang di-check?" → setiap sampler dalam Thread Group.</p></aside>
+  <aside class="notes"><p>Test Plan dalam JMeter ialah satu tree, macam pokok. Dan kedudukan elemen dalam tree tu yang tentukan scope dia.</p><p>Atas sekali Test Plan. Bawah dia Thread Group — populasi virtual user. Bawah Thread Group ada config element macam HTTP Request Defaults dan Header Manager, sampler macam HTTP Request yang hantar request, timer untuk pause, dan listener untuk kumpul result.</p><p>Perhatikan Response Assertion dan JSON Extractor ialah <b>anak</b> kepada HTTP Request. Maksudnya, dia hanya beri kesan pada sampler tu sahaja. Dalam GUI, warna jalur kiri setiap elemen tunjuk kategori dia.</p><p>Cuba fikir: kalau saya pindahkan Response Assertion ke bawah Thread Group, sampler mana yang kena check? Jawapannya: setiap sampler dalam Thread Group tu.</p></aside>
 </section>
 
 <section class="slide">
@@ -925,7 +925,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
     <div class="card side m-jpj"><h3>Two surprises for beginners</h3><p>(1) <b>Timers run before</b> the sampler. (2) A timer under a Thread Group with 3 samplers pauses <b>3 times</b> per iteration — once for each sampler in its scope.</p></div>
   </div>
   <div class="callout danger sm mt16"><span class="i">🐞</span><div>Misplaced elements are the most common source of bugs. The visual order in the tree does <b>not</b> change the execution order — except among elements of the same type.</div></div>
-  <aside class="notes"><p>Objektif O5. Contoh semak kendiri: Constant Timer 300 ms bawah Thread Group dengan 3 HTTP Requests → lebih kurang 900 ms pause setiap iteration. Kalau nak pause sekali je, jadikan timer tu anak kepada satu sampler.</p><p>Soalan kuiz S2 #2: assertion yang jadi anak sampler A — sampler B (adik-beradik) tak di-check.</p></aside>
+  <aside class="notes"><p>Ni susunan JMeter execute elemen untuk setiap sampler: Config dulu, lepas tu Pre-Processor, kemudian Timer, baru Sampler hantar request, lepas tu Post-Processor macam Extractor, Assertion untuk pass atau fail, dan last sekali Listener rekod result.</p><p>Scope ikut kedudukan: Config, Timer, Assertion dan Listener beri kesan pada semua sampler di level yang sama atau lebih dalam. Letak bawah Thread Group, kena semua sampler. Letak sebagai anak satu sampler, kena sampler tu sahaja.</p><p>Dua benda yang selalu buat beginner terkejut. Satu, timer run sebelum sampler. Dua, Constant Timer 300 ms bawah Thread Group yang ada 3 HTTP Request akan pause 3 kali setiap iteration — lebih kurang 900 ms. Kalau nak pause sekali je, jadikan timer tu anak kepada satu sampler.</p><p>Begitu juga assertion yang jadi anak sampler A — sampler B di sebelah dia tak di-check.</p></aside>
 </section>
 
 <section class="slide">
@@ -945,7 +945,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
       <div class="callout info sm"><span class="i">🗂️</span><div>Finished reference: <code>hari-1/test-plans/01-hello-jpj.jmx</code></div></div>
     </div>
   </div>
-  <aside class="notes"><p>Latihan 1. Demo live langkah demi langkah — peserta ikut sama. Checkpoint: View Results Tree hijau, code 200, body <code>{"status":"ok",…}</code>.</p><p>Soalan kuiz S2 #4: alamat SUT bertukar dan plan ada 15 samplers — tukar HTTP Request Defaults sekali je.</p></aside>
+  <aside class="notes"><p>Jom kita bina Test Plan pertama: satu user, ke <code>/api/health</code>. Ikut sama-sama dengan saya.</p><p>Klik kanan Test Plan, Add, Threads, Thread Group: Threads 1, Ramp-up 1, Loop 1. Lepas tu bawah Thread Group, tambah HTTP Request Defaults: protocol http, server localhost, port 3000. Kemudian tambah HTTP Request: GET, path <code>/api/health</code> — biarkan server dan port kosong, sebab dia warisi daripada Defaults. Tambah View Results Tree, save <code>.jmx</code>, dan tekan Start.</p><p>Kalau berjaya, View Results Tree hijau, code 200, dan body <code>{"status":"ok",…}</code>.</p><p>Kenapa guna HTTP Request Defaults? Sebab alamat SUT ada di satu tempat sahaja. Kalau plan anda ada 15 sampler dan alamat bertukar, tukar sekali je — dan check sekali dari sudut etika. Plan siap ada dalam <code>hari-1/test-plans/01-hello-jpj.jmx</code>.</p></aside>
 </section>
 
 <section class="slide">
@@ -964,7 +964,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
     </div>
     <figure class="shot"><img src="img/03-thread-group.png" alt="JMeter Thread Group panel: Number of Threads, Ramp-up period and Loop Count"><figcaption>Thread Group — Number of Threads · Ramp-up period · Loop Count</figcaption></figure>
   </div>
-  <aside class="notes"><p>Objektif O4. 20 threads dengan ramp-up 10 s = satu thread baru setiap 0.5 s (2 users/saat). Tukar Thread Group ke <b>20 / 10 / 5</b> untuk langkah seterusnya.</p><p>Tanya: "Kenapa tak lancar kesemua 20 users pada saat 0?" Jawapan: tak realistik dan sistem belum warm up.</p></aside>
+  <aside class="notes"><p>Thread Group ialah model beban anda. Ada tiga field utama. Number of Threads — bilangan virtual user serentak, contoh 20. Ramp-Up Period — berapa saat untuk lancar semua thread, contoh 10. Loop Count — berapa kali setiap thread ulang senario, contoh 5.</p><p>Jadi 20 threads dengan ramp-up 10 s, maksudnya satu thread baru setiap 0.5 s, atau 2 users setiap second.</p><p>Kenapa tak lancar semua 20 users serentak pada second pertama? Sebab tak realistik, dan sistem belum warm up. Ramp-up 0 buat kejutan yang tak realistik — kecuali memang anda buat spike test.</p><p>Ada juga setting "Action after Sampler error": Continue, Start Next Thread Loop, atau Stop. Dan untuk test ikut masa, kita guna thread lifetime pada Hari 2. Sekarang, tukar Thread Group anda ke <b>20 / 10 / 5</b>.</p></aside>
 </section>
 
 <section class="slide">
@@ -979,7 +979,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
     <tr><td>50</td><td>20</td><td>1</td><td>1</td><td><b>50</b></td><td>0.4 s</td></tr>
   </table>
   <div class="callout danger sm mt16"><span class="i">⚠️</span><div><b>“20 threads = 20 concurrent requests all the time”</b> — not necessarily. If threads finish their loops before the last thread is launched, actual concurrency is much lower. See <i>Active Threads Over Time</i> in the HTML report (Day 2).</div></div>
-  <aside class="notes"><p>Minta setiap peserta tulis ramalan untuk baris yang di-highlight sebelum Start, kemudian sahkan dengan <code># Samples</code> dalam Summary Report. Ini checkpoint Latihan 2.</p><p>Semak kendiri: 50 threads, ramp-up 25 s, loop 4, dua samplers → 400 samples, satu thread setiap 0.5 s.</p></aside>
+  <aside class="notes"><p>Sebelum tekan Start, kira dulu. Formula dia: # Samples sama dengan Threads darab Loop Count darab bilangan sampler. Ramp-up hanya ubah kadar pelancaran, bukan jumlah.</p><p>Contoh: 1 thread, 1 loop, 2 sampler — 2 samples. 20 threads, loop 5, satu sampler — 100 samples, satu thread baru setiap 0.5 s. 10 threads, loop 10 — pun 100. 50 threads, ramp-up 20, loop 1 — 50 samples, satu thread setiap 0.4 s.</p><p>Tulis ramalan anda, kemudian sahkan dengan <code># Samples</code> dalam Summary Report.</p><p>Cuba satu lagi: 50 threads, ramp-up 25 s, loop 4, dua sampler. Jawapannya 400 samples, satu thread setiap 0.5 s.</p><p>Hati-hati: 20 threads tak semestinya 20 request serentak sepanjang masa. Kalau thread awal dah habis loop sebelum thread terakhir dilancar, concurrency sebenar jauh lebih rendah. Kita tengok ni dalam Active Threads Over Time pada Hari 2.</p></aside>
 </section>
 
 <section class="slide">
@@ -1009,7 +1009,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
       <div class="callout info sm"><span class="i">ℹ️</span><div>The eJPJ API uses a <b>token</b>, not cookies — a Header Manager is enough.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Tambah Header Manager bawah Thread Group: Name <code>Accept</code>, Value <code>application/json</code>. Ini pun ada dalam <code>02-cukai-beban.jmx</code>.</p><p>Soalan kuiz hari #2: Header Manager yang jadi anak <code>POST log-masuk</code> — adakah <code>GET kenderaan</code> (adik-beradiknya) hantar header tu? Tak.</p></aside>
+  <aside class="notes"><p>Sekarang kita tambah HTTP Header Manager. Letak bawah Thread Group: Name <code>Accept</code>, Value <code>application/json</code>. Ini pun ada dalam <code>02-cukai-beban.jmx</code>.</p><p>Header Manager boleh bertingkat, dan JMeter gabungkan dua-dua untuk sampler tu. Contoh di slaid: Header Manager bawah Thread Group bagi <code>Accept</code>. Satu lagi Header Manager jadi anak <code>POST /api/log-masuk</code>, bagi <code>Content-Type</code>. Jadi POST log-masuk hantar dua-dua header, tapi GET kenderaan di sebelah dia hantar <code>Accept</code> sahaja. Corak ni anda akan nampak dalam recording nanti.</p><p>Config element lain: HTTP Request Defaults untuk protocol, server, port; Cookie Manager untuk session berasaskan cookie; Cache Manager untuk tiru cache browser. API eJPJ guna token, bukan cookie — jadi Header Manager dah cukup.</p></aside>
 </section>
 
 <section class="slide">
@@ -1024,7 +1024,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
     </div>
     <figure class="shot"><img src="img/06-summary-report.png" alt="JMeter Summary Report: # Samples, Average, Min, Max, Error % and Throughput for each label"><figcaption>Summary Report — # Samples, Average, Min/Max, Error %, Throughput for each label</figcaption></figure>
   </div>
-  <aside class="notes"><p>Tambah ketiga-tiganya bawah Thread Group. Run 20 / 10 / 5 dan perhati: # Samples = 100, Average, Throughput, Error %.</p><p>Soalan kuiz S2 #3: pengurus minta 95th percentile — Aggregate Report tunjuk; Summary Report tak.</p></aside>
+  <aside class="notes"><p>Listener ialah tempat kita baca result. Ada tiga yang kita guna hari ni.</p><p>View Results Tree tunjuk setiap request dan response penuh. Bagus untuk debug dengan 1 atau 2 user, tapi sangat berat. Summary Report tunjuk # samples, Average, Min, Max, Std. Dev., Error % dan Throughput — ringan. Aggregate Report macam Summary, tapi tambah Median dan 90, 95, 99% Line.</p><p>Jadi kalau pengurus minta 95th percentile, mana nak tengok? Aggregate Report. Summary Report tak ada.</p><p>Tambah ketiga-tiga bawah Thread Group, run 20 / 10 / 5, dan perhati: # Samples patut 100.</p><p>Satu amaran: jangan guna GUI listener masa load test sebenar. View Results Tree simpan setiap response dalam RAM. Beban sebenar kita run non-GUI dengan fail <code>.jtl</code>, pada Hari 2.</p></aside>
 </section>
 
 <section class="slide">
@@ -1051,7 +1051,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
       <div class="callout tip sm"><span class="i">📏</span><div><b>“95th percentile = 800 ms”</b> → 95% of requests finish in ≤ 800 ms, 5% are worse. <b>SLAs are written in percentiles</b>, not averages.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Objektif O6. Average sorok ekor yang slow. Max dan percentile tinggi dedahkan pengalaman user yang paling teruk.</p><p>Semak kendiri #3: Average 210 ms, 95% Line 1,850 ms, SLA "95% siap dalam 1 saat" → <b>fail</b>. Report percentile, bukan average.</p></aside>
+  <aside class="notes"><p>Average boleh menipu. Sebab tu kita kena baca percentile.</p><p>Tengok contoh ni: 99 request ambil 100 ms, satu request ambil 10,000 ms. Average lebih kurang 199 ms — nampak okay! Tapi Max 10,000 ms, maksudnya user ke-100 tunggu 10 s. Average sorok ekor yang slow.</p><p>Median maksudnya 50% sample siap dalam masa ni atau kurang. 90, 95, 99% Line pula percentile. Kalau 95th percentile 800 ms, maksudnya 95% request siap dalam 800 ms atau kurang, dan 5% lebih teruk. Std. Dev. tinggi bermakna tak konsisten. Throughput — check unit dia, per second atau per minute.</p><p>Contoh: Average 210 ms, 95% Line 1,850 ms, SLA kata "95% siap dalam 1 second". Pass atau fail? <b>Fail</b>. SLA ditulis dalam percentile, bukan average. Jadi report percentile.</p></aside>
 </section>
 
 <!-- ---------- Day 1 · S3 ---------- -->
@@ -1068,7 +1068,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
   <div class="labline"><b>LAB</b> Exercises 2–5 · Challenge 7 ⭐ · <b>QUIZ</b> S3</div>
   <div class="dayrail"><span class="on"></span><span class="on"></span><span class="now"></span><span></span><em>Day 1 · S3 / S4</em></div>
   <div class="daynum"><small>SESSION</small>S3</div>
-  <aside class="notes"><p>Lepas lunch — buka dengan demo run yang "nampak macam pass" tapi sebenarnya pulangkan response yang salah, untuk tarik balik perhatian.</p><p>Hasil: setara dengan <code>02-cukai-beban.jmx</code> dan <code>03-csv-berparameter.jmx</code>.</p></aside>
+  <aside class="notes"><p>Okay, selamat kembali lepas lunch. Sesi 3: Assertions, Timers dan CSV Data Set, pukul 2.00 sampai 3.30.</p><p>Soalan untuk mula: kalau test run nampak pass, semua hijau, betul ke sistem bagi jawapan yang betul? Belum tentu. Itulah yang kita belajar sesi ni.</p><p>Kita akan guna Response Assertion dan Duration Assertion, Constant, Uniform dan Gaussian Timer — dan beza think time dengan throughput — dan CSV Data Set Config dengan sharing mode dan recycle. Lepas tu ada lima kes senario JPJ. Hasilnya setara dengan <code>02-cukai-beban.jmx</code> dan <code>03-csv-berparameter.jmx</code>.</p></aside>
 </section>
 
 <section class="slide">
@@ -1093,7 +1093,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
       <div class="callout warn sm"><span class="i">💸</span><div>Assertions cost CPU on every sample. Prefer Substring / simple JSON Assertions.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Rujukan: <code>02-cukai-beban.jmx</code> — "Respons mengandungi 'amaun'", "Tempoh &lt; 2000ms", "Think Time 300ms", Header Manager <code>Accept: application/json</code>, Summary + Aggregate Report.</p><p>Soalan kuiz S3 #1: HTTP 200 dengan body <code>{"ralat":"Sistem sibuk"}</code> (sistem sibuk) dan tak ada assertion → dikira sebagai <b>pass</b>. Sebab tu assertion wajib.</p></aside>
+  <aside class="notes"><p>Response code 200 tak semestinya betul. Bayangkan server pulangkan HTTP 200 dengan body <code>{"ralat":"Sistem sibuk"}</code>. Kalau tak ada assertion, JMeter kira itu <b>pass</b>. Sebab tu assertion wajib.</p><p>Response Assertion kita letak sebagai anak HTTP Request. Field to Test: Text Response, rule Substring, pattern <code>amaun</code>. Substring ialah teks biasa tanpa regex — paling selamat. Ada juga Contains dan Matches untuk regex, Equals untuk padanan tepat, dan Not untuk terbalikkan. Untuk negative test, contohnya anda memang nak 404, guna Response Code dengan Ignore Status.</p><p>Duration Assertion pula: 2000 ms. Sample lebih 2 s ditanda gagal walaupun code 200.</p><p>Konsepnya: tanpa assertion, cuma error network atau HTTP dikira. Dengan assertion, kandungan salah atau terlalu slow pun masuk Error %. Tapi assertion guna CPU untuk setiap sample, jadi pilih yang ringkas.</p></aside>
 </section>
 
 <section class="slide">
@@ -1110,7 +1110,7 @@ LATENCY_MIN=300 LATENCY_MAX=900 node server.js</pre></div>
     <div class="kpi m-pass"><i>20 threads · 300 ms timer</i><b>~50 req/s</b><span>20 ÷ (0.1 + 0.3) s</span></div>
     <div class="callout warn sm"><span class="i">⏱️</span><div>Timer time is <b>not counted</b> in response time. Average does not rise — what drops is <b>throughput</b>.</div></div>
   </div>
-  <aside class="notes"><p>Thread Group → Add → Timer → Constant Timer, Delay 300. Throughput tanpa think time tak realistik dan bagi beban tiruan pada sistem.</p><p>Soalan kuiz S3 #2: tambah Constant Timer 1000 ms pada 20 threads → throughput turun, Average tak naik ~1000 ms.</p></aside>
+  <aside class="notes"><p>Timer bagi think time — masa user berfikir antara klik — dan itu yang buat beban realistik. Tanpa think time, throughput tak realistik dan bagi beban tiruan pada sistem.</p><p>Ada tiga jenis. Constant Timer — pause tetap, contoh 300 ms. Uniform Random Timer — offset 500 tambah random max 1000, jadi 0.5 hingga 1.5 s, macam dalam plan 03. Gaussian Random Timer — offset 1000 ± deviation 300 ms, paling realistik.</p><p>Anggaran mudah: throughput lebih kurang threads bahagi response time tambah think time. 20 threads tanpa timer, lebih kurang 200 req/s. Tambah timer 300 ms, turun ke lebih kurang 50 req/s.</p><p>Jadi kalau saya tambah Constant Timer 1000 ms pada 20 threads, apa jadi? Throughput turun. Average tak naik 1000 ms, sebab masa timer tak dikira dalam response time.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1141,7 +1141,7 @@ PKL909,Perodua Axia 1.0</pre></div>
       <div class="callout info sm"><span class="i">🗂️</span><div>Reference: <code>03-csv-berparameter.jmx</code> — 10 users × 10 loops + Uniform Random Timer 0.5–1.5 s. Confirm the different numbers in View Results Tree.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Latihan 3. Hantar <code>WXY1234</code> seribu kali tak realistik — cache gembira, angka palsu.</p><p>Soalan kuiz S3 #3: <code>../data/kenderaan.csv</code> adalah relatif kepada lokasi <code>.jmx</code>. Sebab tu plan boleh run dari mana-mana folder asalkan susunan <code>test-plans/</code> + <code>data/</code> dikekalkan.</p></aside>
+  <aside class="notes"><p>Kalau kita hantar <code>WXY1234</code> seribu kali, itu tak realistik — cache gembira, angka palsu. Jadi kita guna CSV Data Set Config untuk parameterisation.</p><p>Fail <code>hari-1/data/kenderaan.csv</code> ada nombor pendaftaran dan model — semua sintetik. Dalam HTTP Request, path jadi <code>/api/kenderaan/${no_pendaftaran}/cukai</code>. <code>${nama}</code> tu variable JMeter. Sumber dia boleh CSV, User Defined Variables, Extractor pada Hari 2, atau function macam <code>${__Random(1,100)}</code>.</p><p>Setting: Filename <code>../data/kenderaan.csv</code> — relatif kepada lokasi fail <code>.jmx</code>. Sebab tu plan boleh run dari mana-mana folder asalkan susunan <code>test-plans/</code> dan <code>data/</code> kekal. Variable Names tanpa space. Ignore first line True, Recycle on EOF True, Stop thread on EOF False, Sharing mode All threads.</p><p>Plan rujukan <code>03-csv-berparameter.jmx</code>: 10 users × 10 loops dengan Uniform Random Timer. Dalam View Results Tree, anda patut nampak nombor yang berbeza-beza.</p></aside>
 </section>
 
 <section class="slide">
@@ -1159,7 +1159,7 @@ PKL909,Perodua Axia 1.0</pre></div>
     <div class="card side m-fail sm"><h3>Spaces in names</h3><p><code>no_pendaftaran, model</code> → variable <code>␣model</code> (with a space).</p></div>
   </div>
   <div class="callout warn mt16"><span class="i">🧪</span><div><b>Exercise 4 — learn from failure:</b> add a fake row <code>ABC0000,Kereta Hantu</code> → the endpoint returns <span class="st bad">404</span>, the <code>amaun</code> Response Assertion fails, <b>Error % rises</b>.</div></div>
-  <aside class="notes"><p>Soalan kuiz S3 #4: satu request ke <code>/api/kenderaan/no_pendaftaran/cukai</code> dapat 404 → Ignore first line = False.</p><p>Semak kendiri #4: rakan salin <code>03-csv-berparameter.jmx</code> ke Desktop — <code>../data/</code> tak wujud, jadi JMeter hantar teks literal <code>${no_pendaftaran}</code>. Check log untuk "File not found".</p></aside>
+  <aside class="notes"><p>Sekarang CSV lanjutan. Apa jadi bila data habis? Recycle True, Stop thread False — balik ke baris pertama. Sesuai untuk data rujukan macam sebut harga cukai, dan itu pilihan kita. Recycle False, Stop thread True — thread berhenti bila data habis; sesuai kalau setiap baris guna sekali, macam akaun unik. Recycle False, Stop False — variable jadi <code>&lt;EOF&gt;</code>, biasanya itu bug.</p><p>Sharing mode All threads maksudnya satu queue dikongsi semua thread.</p><p>Dua silap biasa. Kalau Ignore first line False, iteration pertama hantar <code>/api/kenderaan/no_pendaftaran/cukai</code> dan dapat 404. Kalau ada space dalam nama variable, <code>model</code> jadi variable dengan space depan.</p><p>Satu lagi: kalau kawan salin <code>03-csv-berparameter.jmx</code> ke Desktop, <code>../data/</code> tak wujud, dan JMeter hantar teks literal <code>${no_pendaftaran}</code>. Check log untuk "File not found". Dalam Latihan 4, kita tambah baris palsu <code>ABC0000</code> — dapat 404, assertion gagal, Error % naik. Kita belajar daripada kegagalan.</p></aside>
 </section>
 
 <section class="slide">
@@ -1173,7 +1173,7 @@ PKL909,Perodua Axia 1.0</pre></div>
     <div class="card top m-fail sm"><span class="k">CASE 5</span><h3>Slow server</h3><p><code>LATENCY_MIN=300 LATENCY_MAX=900</code>. Is throughput or percentile hit harder?</p></div>
   </div>
   <div class="callout tip mt24"><span class="i">⭐</span><div><b>Combined challenge (Exercise 7):</b> Defaults + Header Manager + CSV + 2 samplers (tax &amp; summons), each with a Response Assertion, Constant Timer, Summary + Aggregate Report. Run <b>25 users × 8 loops</b> — report Error %, Average, 95th percentile to the class.</div></div>
-  <aside class="notes"><p>Agihkan kes kepada setiap pasangan — setiap pasangan report satu angka kepada kelas. Kes 5 ialah Latihan 5: stop SUT dan restart dengan latency tinggi.</p><p>Jawapan Kes 5: percentile paling teruk terkesan — user rasa ekor yang slow tu.</p></aside>
+  <aside class="notes"><p>Ni lima kes senario JPJ, guna tool Hari 1 sahaja. Setiap pasangan ambil satu kes dan report satu angka kepada kelas.</p><p>Kes 1: kesihatan sistem — <code>/api/health</code>, 50 users, ramp 20 s. Throughput stabil? Error % sifar? Kes 2: beban semakan cukai — CSV, 30 × 10, dengan Response Assertion. Berapa 95th percentile? Kes 3: semakan saman dengan <code>no_kp=900202025600</code>, 20 users. Kes 4: kesan think time — Kes 2 tanpa timer, kemudian dengan Constant Timer 1000 ms. Apa berubah?</p><p>Kes 5: server slow — restart SUT dengan <code>LATENCY_MIN=300 LATENCY_MAX=900</code>. Mana lebih teruk kena, throughput atau percentile? Jawapannya percentile — user rasa ekor yang slow tu.</p><p>Untuk yang laju, ada cabaran gabungan Latihan 7: Defaults, Header Manager, CSV, dua sampler dengan assertion, Constant Timer, Summary dan Aggregate. Run 25 users × 8 loops, dan report Error %, Average dan 95th percentile.</p></aside>
 </section>
 
 <!-- ---------- Day 1 · S4 ---------- -->
@@ -1190,7 +1190,7 @@ PKL909,Perodua Axia 1.0</pre></div>
   <div class="labline"><b>LAB</b> Exercise 6 — Record &amp; play back · <b>QUIZ</b> S4 · Day quiz</div>
   <div class="dayrail"><span class="on"></span><span class="on"></span><span class="on"></span><span class="now"></span><em>Day 1 · S4 / S4</em></div>
   <div class="daynum"><small>SESSION</small>S4</div>
-  <aside class="notes"><p>Sesi terakhir Hari 1 berakhir dengan "kegagalan yang dirancang". Biar peserta rasa geram dengan 401 tu — ia jadi motivasi untuk Hari 2.</p><p>Panduan penuh: <code>hari-1/snippets/rakaman-e2e.md</code> dan <code>rakaman-https-setup.md</code>.</p></aside>
+  <aside class="notes"><p>Sesi 4, sesi terakhir hari ni: Recording Test Plan dengan HTTP(S) Test Script Recorder, pukul 3.45 sampai 5.00.</p><p>Kita akan set proxy 8888 dan Firefox, sijil CA untuk HTTPS, record satu flow, dan replay. Saya beritahu awal: replay tu akan gagal — 200, 401, 401. Itu memang dirancang.</p><p>Bila anda nampak 401 tu dan rasa geram, bagus. Itu motivasi untuk Hari 2, di mana kita belajar correlation untuk betulkan dia. Panduan penuh ada dalam <code>hari-1/snippets/rakaman-e2e.md</code> dan <code>rakaman-https-setup.md</code>.</p></aside>
 </section>
 
 <section class="slide">
@@ -1216,7 +1216,7 @@ PKL909,Perodua Axia 1.0</pre></div>
       <div class="callout info sm"><span class="i">🦊</span><div><b>Why Firefox?</b> It has its <b>own</b> proxy settings — no need to change the OS-wide proxy, which affects other applications.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Recording berguna untuk flow panjang supaya tak perlu taip setiap sampler. Tapi recording ialah <b>titik mula</b>, bukan produk siap.</p><p>Soalan kuiz S4 #1: port proxy recorder = 8888. Port 3000 ialah SUT.</p></aside>
+  <aside class="notes"><p>Macam mana recorder berfungsi? Browser — Firefox atau curl — hantar trafik melalui proxy <code>localhost:8888</code>. Itu JMeter, dengan HTTP(S) Test Script Recorder. JMeter rekod setiap request, hantar ke SUT di <code>localhost:3000</code>, dan jana sampler dalam Recording Controller bawah Thread Group.</p><p>Ingat beza port: 8888 ialah proxy recorder, 3000 ialah SUT.</p><p>Setup dia: tambah HTTP(S) Test Script Recorder bawah Non-Test Elements, port default 8888. Tambah Recording Controller bawah Thread Group, dan set Target Controller recorder ke situ. Dalam Requests Filtering, exclude static asset macam css, js dan gambar. Cara cepat: buka <code>test-plans/rakam-template.jmx</code> — semua dah siap.</p><p>Kenapa Firefox? Sebab dia ada setting proxy sendiri, tak perlu ubah proxy seluruh OS. Dan ingat: recording ialah <b>titik mula</b>, bukan produk siap.</p></aside>
 </section>
 
 <section class="slide">
@@ -1243,7 +1243,7 @@ PKL909,Perodua Axia 1.0</pre></div>
       <div class="callout info sm"><span class="i">ℹ️</span><div>Our SUT is <code>http://</code> — the certificate steps are <b>not needed</b> today. HTTPS: <code>rakam-https-template.jmx</code>.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Soalan kuiz S4 #2: tak ada sampler keluar → "No proxy for". Kuiz S4 #4: "cert not owner" kat Windows → Current User.</p><p>Etika: record hanya sistem yang anda miliki atau ada kebenaran bertulis. Sijil MITM mesti dibuang lepas guna.</p></aside>
+  <aside class="notes"><p>Sekarang set Firefox. Settings, cari "proxy", Network Settings. Manual proxy: <code>localhost</code>, port <code>8888</code>, dan tanda "Also use this proxy for HTTPS". Lepas tu kosongkan kotak "No proxy for" — buang localhost dan 127.0.0.1. Kalau tak, trafik localhost terus lepas proxy.</p><p>Kalau recorder dah start, Firefox dah set proxy, tapi tak ada sampler keluar — hampir pasti localhost masih dalam "No proxy for".</p><p>Untuk HTTPS, JMeter buat MITM dengan sijil <code>bin/ApacheJMeterTemporaryRootCA.crt</code>, dijana bila recorder start, sah 7 hari. Dalam Firefox, import di Certificates, Authorities, dan tanda Trust. Di Windows untuk Chrome atau Edge, install ke Current User. Kalau keluar "cert not owner", maksudnya anda pilih Local Machine tanpa admin — pilih Current User.</p><p>Lepas recording, pulihkan setting proxy. Dari segi etika: record hanya sistem milik anda atau yang ada kebenaran bertulis, dan buang sijil MITM tu lepas guna.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1272,7 +1272,7 @@ netstat -ano | findstr :8888            # Windows</pre></div>
       <li><div><b>Add View Results Tree → Run</b><span>Play back… and watch for <span class="st bad">401</span></span></div></li>
     </ol>
   </div>
-  <aside class="notes"><p>Latihan 6. Pilihan curl berguna untuk POST dan kalau Firefox buat hal. Tunjuk Header Manager yang dijana secara automatik — recorder salin apa saja yang dia nampak, termasuk token.</p><p>Tanya: "Token tu session siapa? Esok masih valid ke?"</p></aside>
+  <aside class="notes"><p>Jom kita record flow log masuk dan senarai kenderaan. Langkah dia: tekan Start pada recorder — JMeter mula dengar di port 8888. Buat flow tu, sama ada guna Firefox ke <code>http://localhost:3000</code>, atau guna <code>curl -x</code> untuk POST. Lepas tu tekan Stop, dan sampler akan muncul dalam Recording Controller.</p><p>Pilihan curl ni berguna untuk POST, dan juga kalau Firefox buat hal. Untuk pastikan proxy dah hidup, guna <code>lsof</code> di macOS atau Linux, atau <code>netstat</code> di Windows.</p><p>Sekarang buka sampler <code>/api/kenderaan</code>. Tengok Header Manager anak dia: <code>Authorization: Bearer TOKEN_PALSU</code> — hard-coded. Recorder salin apa saja yang dia nampak, termasuk token.</p><p>Soalan untuk anda fikir: token tu session siapa? Esok masih valid ke? Tambah View Results Tree, run, dan tengok apa jadi.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1296,7 +1296,7 @@ jmeter -n -t hari-1/test-plans/04-rakaman-mentah.jmx \
       <div class="callout tip sm"><span class="i">🌉</span><div>Fixing this = <b>correlation</b> (Day 2). Fixed version: <code>hari-2/test-plans/04-korelasi-log-masuk.jmx</code>.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Plan ni <b>sengaja rosak</b> — jangan betulkan. Ia buktikan kenapa correlation diperlukan. Recorder (ProxyControl) dalam fail tu di-disable supaya run non-GUI abaikan dia.</p><p>Soalan kuiz S4 #3: kenapa 401? Header Authorization mengandungi token yang dirakam, yang dah expired.</p></aside>
+  <aside class="notes"><p>Ni buktinya: recording tak correlate secara automatik. Tengok tiga langkah. Pertama, <code>POST /api/log-masuk</code> dapat 200 — server keluarkan token baru, tapi tak ada siapa tangkap. Kedua, <code>GET /api/kenderaan</code> dapat 401, sebab dia hantar token lama yang hard-coded. Ketiga, bayar-cukai pun 401 — ditolak sebelum csrf sempat di-check, dan assertion BERJAYA gagal.</p><p>Kenapa 401? Sebab header Authorization mengandungi token yang dirakam, dan token tu dah expired. Recorder hard-code token dan csrf rakaman lama.</p><p>Plan <code>04-rakaman-mentah.jmx</code> ni <b>sengaja rosak</b>. Jangan betulkan — ia buktikan kenapa kita perlukan correlation. Cara betulkan dia, itulah topik Hari 2. Versi yang dah dibaiki ada dalam <code>hari-2/test-plans/04-korelasi-log-masuk.jmx</code>.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1327,7 +1327,7 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
       <li><span><b>Correlate</b> <code>token</code> &amp; <code>csrf</code> — Day 2</span></li>
     </ul>
   </div>
-  <aside class="notes"><p>Windows: <code>start</code> ganti <code>open</code>. Recording 1 user × 1 loop → report yang nipis; untuk report yang bermakna guna <code>hari-2/run/run-nogui.sh</code> (Hari 2).</p><p>Tanya: "Selain token, apa lagi dalam recording yang mungkin bertukar setiap session?" (timestamps, transaction IDs, view-state).</p></aside>
+  <aside class="notes"><p>Kita boleh jana HTML report terus daripada recording, guna <code>-e -o</code>. Ingat, folder output mesti kosong atau belum wujud. Atau jana kemudian daripada fail <code>.jtl</code> yang dah ada, guna <code>jmeter -g</code>. Di Windows, guna <code>start</code> ganti <code>open</code>.</p><p>Bandingkan: recording mentah <code>04-rakaman-mentah</code>, Error % lebih kurang 67% — 2 daripada 3 gagal dengan 401. Versi correlated <code>05-transaksi-penuh</code>, 0% — sebab JSON Extractor tangkap token dan csrf.</p><p>Lepas record, ada senarai kemas: buang sampler static asset dan analytics, tukar nama sampler, ganti host dan port dengan HTTP Request Defaults, tambah timer sebab recording tak ada think time, ganti data tetap dengan CSV, dan correlate token dan csrf.</p><p>Fikir: selain token, apa lagi dalam recording yang mungkin bertukar setiap session? Contohnya timestamp, transaction ID, view-state.</p></aside>
 </section>
 
 <section class="slide">
@@ -1348,7 +1348,7 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
       <div class="callout info sm"><span class="i">🎓</span><div>Submit <b>Quiz S4</b> and the <b>Day quiz — Day 1 self-assessment</b>.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Semak objektif O1–O9 dengan angkat tangan. Soalan kuiz hari #1: benda pertama nak buat sebelum tekan Start pada <code>.jmx</code> daripada rakan → check host/port dalam HTTP Request Defaults.</p><p>Hari 2 dua minggu lagi — minta peserta simpan folder repo kursus dan jangan delete plan latihan mereka.</p></aside>
+  <aside class="notes"><p>Okay, kita rumuskan Hari 1. Hari ni anda dah boleh run <code>jmeter -v</code> dari mana-mana folder, dan SUT di <code>localhost:3000</code>. Anda dah bina <code>01-hello-jpj.jmx</code>, Test Plan pertama dengan code 200. <code>02-cukai-beban.jmx</code> dengan 20 / 10 / 5, assertion, timer dan report. <code>03-csv-berparameter.jmx</code> dengan CSV. Dan <code>04-rakaman-mentah.jmx</code> — 200, 401, 401, lebih kurang 67% error.</p><p>Tiga konsep untuk ingat: scope ikut kedudukan, threads darab loops, dan percentile lebih penting daripada average.</p><p>Soalan: benda pertama anda buat sebelum tekan Start pada <code>.jmx</code> daripada kawan? Check host dan port dalam HTTP Request Defaults.</p><p>Hari 2 pada Isnin 5 Oct: recording, report dan perancangan. Pastikan <code>jmeter -v</code> dan <code>node --version</code> berfungsi, simpan folder repo, ingat dua 401 tu, dan bawa nota Throughput, Average dan 95% Line daripada Latihan 2 dan 5. Jangan lupa hantar Kuiz S4 dan kuiz hari.</p></aside>
 </section>
 
 
@@ -1366,7 +1366,7 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
   </div>
   <div class="dayrail"><span class="on"></span><span class="now"></span><em>outcomes: replayable plan · report + 3 findings · test plan</em></div>
   <div class="daynum"><small>DAY</small>02</div>
-  <aside class="notes"><p>Hari ni kita ikut kitaran kerja seorang performance test engineer dari awal sampai hujung: rancang user journey → record → main balik → jadikan boleh di-replay → run → generate report → baca setiap angka → tulis dapatan → rancang test sebenar.</p><p>Cakap awal-awal: fokus penganjur ialah <b>reporting</b> (setiap bahagian dashboard + istilah) dan <b>cara merancang</b> test — itu petang ni. Borang penilaian kursus ("Borang penilaian") dibuka pukul 2.00 petang. Soalan pembuka: "Siapa pernah diminta 'buat performance report' — apa yang anda serahkan?"</p></aside>
+  <aside class="notes"><p>Selamat datang ke Hari 2: Record dan Replay, Performance Report, dan Perancangan Test.</p><p>Hari ni kita ikut kitaran kerja seorang performance test engineer dari awal sampai hujung: rancang user journey, record, replay, jadikan boleh replay, run, jana report, baca setiap angka, tulis dapatan, dan rancang test sebenar — sampai ke senario Hari Harga Cukai Jalan Naik.</p><p>Fokus utama hari ni ialah <b>reporting</b> — setiap bahagian dashboard dan istilah — dan <b>cara merancang</b> test. Itu petang nanti. Borang penilaian kursus buka pukul 2.00 petang.</p><p>Soalan pembuka: siapa pernah diminta "buat performance report"? Apa yang anda serahkan? Hujung hari ni, anda patut boleh serahkan sesuatu yang jauh lebih kukuh.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1384,7 +1384,7 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
     <tr><td><b>O8</b></td><td><b>Plan</b> a test: NFRs, Little's Law, run types, criteria, authorisation</td><td>S4</td><td>Exercise 6: <code>templat-pelan-ujian.md</code> + N &amp; pacing calculation</td></tr>
     <tr><td><b>O9</b></td><td><b>Present</b> a plan &amp; one finding in 3 minutes</td><td>S4</td><td>Exercise 7: mini-presentation in pairs</td></tr>
   </table>
-  <aside class="notes"><p>Baca objektif dengan kuat. Setiap objektif ada kata kerja yang boleh diperhati dan bukti dalam lab — progress dalam pelatih.my = kuiz hujung setiap sesi.</p><p>Tekankan O6–O8: itulah yang bezakan "boleh tekan Start" dengan "boleh pertahankan keputusan depan pengurusan". Kita ulang senarai ni masa penutup.</p></aside>
+  <aside class="notes"><p>Ni objektif Hari 2. Setiap satu ada kata kerja yang boleh diperhati dan bukti dalam lab. Progress anda dalam pelatih.my ialah kuiz hujung setiap sesi.</p><p>Sesi 1: rancang journey 4 langkah dan record ke dalam Transaction Controller yang bernama, dan diagnos replay yang gagal — bezakan 401 sebab token dengan 403 sebab csrf. Sesi 2: betulkan recording — correlate token dan csrf, guna CSV <code>pengguna.csv</code> — sampai dapat plan setara <code>05-transaksi-penuh.jmx</code>, dengan Error % hampir sifar.</p><p>Sesi 3: jana HTML dashboard dan tafsir setiap bahagian dengan istilah yang betul. Sesi 4: rancang test.</p><p>Objektif O6 hingga O8 tu yang paling penting. Itulah yang bezakan orang yang "boleh tekan Start" dengan orang yang "boleh pertahankan keputusan depan pengurusan". Hujung hari kita ulang senarai ni.</p></aside>
 </section>
 
 <section class="slide">
@@ -1417,7 +1417,7 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
       <div class="callout info sm"><span class="i">💻</span><div>In class, <code>07</code> runs with <code>-Jpengguna=50 -Jrampup=10 -Jtempoh=60</code> (≈ 1 minute). The 300 × 300 s default is for more powerful machines.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Tunjuk kitaran ni sekali sekarang dan rujuk balik sepanjang hari — setiap sesi ialah satu atau dua kotak. Terminal A kekal running sepanjang hari; check <code>http://localhost:3000/api/health</code>.</p><p>Soalan: "Daripada enam kotak ni, yang mana pengurusan anda betul-betul baca?" (Jawapan: report &amp; dapatan — kotak S3.) Peringatan: simpan plan latihan dalam <code>hari-2/test-plans/</code> supaya <code>../data/pengguna.csv</code> boleh resolve.</p></aside>
+  <aside class="notes"><p>Hari ni ialah satu kitaran penuh kerja performance engineer. Sesi 1: rancang dan record, T01 hingga T04, guna proxy 8888, kemudian replay — 200, 401, 200, 401. Sesi 2: kemas — correlation, CSV, assertion. Sesi 3: jana report daripada <code>.jtl</code> ke dashboard, tafsir dan tulis dapatan. Sesi 4: test plan — NFR dan Little's Law. Setiap sesi ialah satu atau dua kotak ni, dan kita akan rujuk balik sepanjang hari.</p><p>Daripada enam kotak ni, yang mana pengurusan betul-betul baca? Jawapannya: report dan dapatan — kotak Sesi 3.</p><p>Jadual ni senarai plan yang kita guna hari ni, daripada <code>rakam-template.jmx</code> sampai <code>07-beban-puncak-cukai.jmx</code> dengan 300 users untuk senario puncak.</p><p>Terminal A kekal running sepanjang hari, dan check <code>http://localhost:3000/api/health</code>. Simpan plan latihan dalam <code>hari-2/test-plans/</code> supaya <code>../data/pengguna.csv</code> boleh resolve.</p></aside>
 </section>
 
 <!-- ---------- Day 2 · S1 ---------- -->
@@ -1434,7 +1434,7 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
   <div class="labline"><b>LAB</b> Exercise 1 — Record · Exercise 2 — Playback &amp; diagnosis · <b>QUIZ</b> S1</div>
   <div class="dayrail"><span class="now"></span><span></span><span></span><span></span><em>Day 2 · S1 / S4</em></div>
   <div class="daynum"><small>SESSION</small>S1</div>
-  <aside class="notes"><p>Mesej utama S1: <b>"Recording tu titik mula, bukan produk siap"</b> dan <b>"Hijau ≠ betul"</b>. Nisbah ~40% demo/penerangan.</p><p>Dua momen kunci: (1) main balik tanpa restart = semua hijau → restart → 200/401/200/401; (2) correlate token je → 403. Recap ni juga check installation — JMeter/Java/Node yang rosak mesti dikesan sekarang.</p></aside>
+  <aside class="notes"><p>Sesi 1: Record dan Replay, pukul 9.00 sampai 10.30.</p><p>Kita mula dengan recap Hari 1, yang juga jadi check installation — kalau JMeter, Java atau Node ada masalah, kita nak tahu sekarang. Lepas tu kita rancang journey T01_LogMasuk sampai T04_BayarCukai, record guna <code>rakam-template.jmx</code>, dan replay.</p><p>Dua mesej utama sesi ni. Pertama: <b>recording ialah titik mula, bukan produk siap</b>. Kedua: <b>hijau tak semestinya betul</b>. Anda akan nampak sendiri kenapa — termasuk beza 401 dengan 403, dan perangkap "false pass".</p></aside>
 </section>
 
 <section class="slide">
@@ -1455,7 +1455,7 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
     </table>
   </div>
   <div class="mnemo mt24"><span class="tag">CLASS RULE</span><p>Every plan you open — check the target first: <code>localhost:3000</code>. That is today's first ethical habit.</p></div>
-  <aside class="notes"><p>Hari 1 diajar pada 21 Sep — dua minggu lepas. Semua orang run SUT, buka <code>04-rakaman-mentah.jmx</code>, check HTTP Request Defaults <b>sama-sama</b> atas skrin, Start: 1 hijau, 2 merah.</p><p>Tanya soalan lisan secara rawak; jangan lebih 10 minit. Soalan 401 tu jambatannya: "Hari ni kita record semula dengan betul — dan betulkan kegagalan ni."</p></aside>
+  <aside class="notes"><p>Hari 1 kita buat pada 21 Sep, dua minggu lepas. Jadi kita panaskan badan dulu: recording Hari 1 masih gagal.</p><p>Semua orang, run SUT dalam Terminal A dengan <code>node sut/server.js</code> — jangan tutup sepanjang hari. Buka <code>hari-1/test-plans/04-rakaman-mentah.jmx</code>. Sebelum Start, check HTTP Request Defaults: localhost, 3000, http. Tekan Start, buka View Results Tree. Anda patut nampak log-masuk hijau, kenderaan dan bayar-cukai merah.</p><p>Soalan cepat. Port proxy recorder? 8888 — SUT 3000. Kenapa replay gagal dengan 401? Token dalam Authorization nilai lama. Untuk SLA, average atau percentile? Percentile. Kenapa tak guna View Results Tree masa load? Sebab dia simpan setiap response dalam RAM, dan load generator tercekik.</p><p>Peraturan kelas: setiap plan yang anda buka, check target dulu — <code>localhost:3000</code>. Hari ni kita record semula dengan betul, dan betulkan kegagalan ni.</p></aside>
 </section>
 
 <section class="slide">
@@ -1472,7 +1472,7 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
     <div class="callout info"><span class="i">🖱️</span><div><b>One user action = one transaction.</b> One click on a real portal can generate 10–50 requests. Users feel <b>the time of that click</b> — so group them in a <b>Transaction Controller</b>.</div></div>
     <div class="callout tip"><span class="i">🏷️</span><div><b>Naming convention:</b> step number + business action (<code>T03_SemakCukai</code>) — easy to sort, and it will appear as the <b>label</b> in every report today.</div></div>
   </div>
-  <aside class="notes"><p>Lukis jadual ni atas whiteboard dan bulatkan data dinamik bersama kelas. Dalam SUT kita, setiap tindakan kebetulan cuma satu request.</p><p>Tanya: <i>"Satu klik 'Bayar' pada portal sebenar — berapa HTTP requests?"</i> (HTML, API, gambar, analytics — berpuluh-puluh.) Sebab tu nama transaksi dirancang <b>sebelum</b> Start.</p></aside>
+  <aside class="notes"><p>Sebelum record, kita rancang dulu atas kertas. Journey 4 langkah. Satu: log masuk dengan No. KP — <code>T01_LogMasuk</code>, response bagi token dan csrf. Dua: tengok senarai kenderaan — <code>T02_SenaraiKenderaan</code>, perlukan header Authorization Bearer token. Tiga: semak cukai — <code>T03_SemakCukai</code>, dengan no_pendaftaran, amaun dan tempoh_bulan. Empat: bayar cukai — <code>T04_BayarCukai</code>, perlukan token dalam header dan csrf dalam body.</p><p>Data dinamik tu yang kita kena perhati — token, csrf, amaun.</p><p>Cuba fikir: satu klik "Bayar" pada portal sebenar, berapa HTTP request? HTML, API, gambar, analytics — berpuluh-puluh, 10 hingga 50. Tapi user rasa masa satu klik tu. Sebab tu satu tindakan user sama dengan satu transaction, dan kita kumpul dalam Transaction Controller. Dalam SUT kita, setiap tindakan kebetulan cuma satu request.</p><p>Nama transaction: nombor langkah tambah tindakan bisnes, macam <code>T03_SemakCukai</code>. Senang susun, dan dia akan jadi label dalam setiap report hari ni.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1495,7 +1495,7 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
       <div class="callout tip sm"><span class="i">🎯</span><div>Add <b>HTTP Request Defaults</b> (<code>localhost</code>/<code>3000</code>) first — samplers are recorded with empty Server/Port.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Demo §1.3: File → Open <code>hari-1/test-plans/rakam-template.jmx</code> → <b>Save As</b> <code>hari-2/test-plans/latihan-01-rakaman.jmx</code> (fail asal kekal tak berubah; path CSV resolve dalam S2). Template asal guna <i>Add separators between groups</i> — tukar ke Transaction Controllers.</p><p>HTTPS? SUT kita <code>http://</code>, jadi tak perlu sijil CA (rujuk <code>rakaman-https-setup.md</code>). Tanya: "Kenapa kita buang Google Analytics daripada recording?" — ia third-party, bukan beban kita, dan bukan sistem kita.</p></aside>
+  <aside class="notes"><p>Kita guna <code>rakam-template.jmx</code>. Buka fail tu, dan Save As ke <code>hari-2/test-plans/latihan-01-rakaman.jmx</code>, supaya fail asal tak berubah dan path CSV boleh resolve nanti.</p><p>Setting recorder: Port 8888 — SUT tetap 3000. Target Controller: Recording Controller bawah Thread Group. Grouping: "Put each group in a new transaction controller" — satu klik, satu Transaction Controller. Kalau medan "Create new transaction after request" kosong, default dia 5000 ms — maksudnya gap 5 s atau lebih jadi group baru, jadi tunggu lebih 5 s antara langkah. Capture HTTP Headers ditanda.</p><p>URL Patterns to Exclude: static asset, ditambah Google Analytics dan Google Tag Manager. Kenapa buang analytics? Sebab itu third-party — bukan beban kita, dan bukan sistem kita. Include biarkan kosong.</p><p>Untuk think time sebenar, ada Constant Timer <code>${T}</code> sebagai anak recorder. SUT kita <code>http://</code>, jadi tak perlu sijil CA.</p></aside>
 </section>
 
 <section class="slide">
@@ -1509,7 +1509,7 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
       <div class="callout tip sm"><span class="i">🔍</span><div>Click the screenshot to zoom.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Tunjuk: medan <b>Port</b> (8888), drop-down <b>Target Controller</b> (Recording Controller), kemudian drop-down <b>Grouping</b> — template masih tulis "Add separators between groups"; tukar macam slaid sebelum ni.</p><p>Lepas tu butang <b>Start</b> kat atas. Tanya: "Kalau Target Controller tulis Use Recording Controller tapi tak ada satu pun, sampler pergi mana?"</p></aside>
+  <aside class="notes"><p>Ni rupa recorder dalam JMeter. Tengok medan Port — 8888. Itu proxy yang Firefox atau curl bercakap dengan. SUT sendiri kekal di 3000.</p><p>Lepas tu drop-down Target Controller — set ke Recording Controller. Kemudian drop-down Grouping. Template masih tulis "Add separators between groups" — tukar ke "Put each group in a new transaction controller" sebelum Start. Butang Start ada di atas.</p><p>Soalan: kalau Target Controller tulis "Use Recording Controller" tapi tak ada Recording Controller langsung dalam plan, sampler pergi mana? Fikir sekejap — sebab tu kita pastikan Recording Controller wujud dulu.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1552,7 +1552,7 @@ curl -s -x $P -H "Authorization: Bearer $TOKEN" \
       <div class="callout warn sm"><span class="i">⚠️</span><div><code>curl: (7) Failed to connect … 8888</code> = recorder not <b>Started</b> yet. No samplers = forgot <code>-x $P</code>.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Kenapa curl? SUT ni API (POST JSON) dan page <code>localhost:3000</code> tak ada borang login. Untuk aplikasi web sebenar: Firefox → proxy <code>localhost:8888</code> (Hari 1 §4.3). Sahkan proxy: <code>lsof -iTCP:8888 -sTCP:LISTEN -n -P</code> / <code>netstat -ano | findstr :8888</code>.</p><p>Lepas Stop: tunjuk Header Manager T02 (<code>Bearer</code> literal) dan body T04 (<code>csrf</code> literal). Nota: JMeter 5.6 simpan header <code>Authorization: Bearer</code>; header <code>Cookie</code> sentiasa dibuang — app berasaskan cookie perlukan HTTP Cookie Manager. Latihan 1 = 20 minit; masalah biasa: semua dalam satu group (tak tunggu 5 s).</p></aside>
+  <aside class="notes"><p>Sekarang kita jana trafik melalui proxy. Kenapa curl? Sebab SUT kita ialah API — POST JSON — dan page <code>localhost:3000</code> tak ada borang login. Untuk aplikasi web sebenar, anda guna Firefox dengan proxy <code>localhost:8888</code>, macam Hari 1.</p><p>Script ni set dua variable: <code>P</code> untuk proxy JMeter, <code>B</code> untuk SUT. T01 log masuk, dan kita ambil TOKEN dan CSRF daripada response. Lepas tu <code>sleep 6</code> — kena tunggu lebih 5 s antara langkah supaya setiap langkah jadi group sendiri. Masalah paling biasa: semua masuk satu group sebab tak tunggu 5 s. Kemudian T02 senarai kenderaan, T03 semak cukai, T04 bayar cukai — dan response patut ada <code>"status":"BERJAYA"</code>.</p><p>Lepas Stop, tengok Header Manager T02: <code>Bearer</code> dengan nilai literal. Body T04 pun ada <code>csrf</code> literal. JMeter 5.6 simpan header Authorization, tapi header Cookie sentiasa dibuang — app berasaskan cookie perlukan HTTP Cookie Manager.</p></aside>
 </section>
 
 <section class="slide">
@@ -1575,7 +1575,7 @@ summary = 3 … <span class="e">Err: 2 (66.67%)</span></div>
       <div class="callout danger"><span class="i">🪤</span><div><b>False pass:</b> replay <b>without</b> a restart → possibly 4 × <span class="st ok">200</span>. 300 virtual users would share <b>one</b> session &amp; one <code>csrf</code> — and fail tomorrow morning. <b>Green ≠ correct.</b></div></div>
     </div>
   </div>
-  <aside class="notes"><p>Momen kunci #1. Demo: Start tanpa restart → semua hijau. Tanya: <i>"Dah sedia untuk 300 users?"</i> — biar mereka jawab. Kemudian Ctrl+C, <code>node sut/server.js</code>, Clear All, Start → 200/401/200/401.</p><p>Skrip analogi: "Anda rakam video masuk bank guna kad akses semalam. Hari ni guard tak nak buka pintu — kad tu dah dibatalkan. Kalau bank lupa batalkan, pintu terbuka dan anda ingat video anda 'jadi' — itu false pass." Tanya kenapa T03 hijau → keperluan assertion.</p></aside>
+  <aside class="notes"><p>Sekarang replay. Tapi sebelum Start, kita expire session yang dirakam dulu.</p><p>Kenapa? Kalau replay terus tanpa restart SUT, mungkin semua 4 hijau. Nampak macam dah siap, kan? Dah sedia untuk 300 users? Belum. 300 virtual user akan kongsi satu session dan satu csrf — dan esok pagi gagal. Itu <b>false pass</b>. Hijau tak semestinya betul.</p><p>Mock kita simpan session dalam memory. Jadi Ctrl+C dalam Terminal A, run semula <code>node sut/server.js</code>, Clear All, Start. Sekarang: T01 200 — token baru keluar, tapi tak ada siapa tangkap. T02 401 — token rakaman dah tak wujud. T03 200 — semak cukai tak perlu token, jadi lulus walaupun script rosak. T04 401 — token lama ditolak sebelum csrf di-check.</p><p>Analogi: anda rakam video masuk bank guna kad akses semalam. Hari ni guard tak buka pintu sebab kad tu dah dibatalkan. Kalau bank lupa batalkan, pintu terbuka dan anda ingat video anda "jadi" — itulah false pass. Dan kenapa T03 hijau? Sebab tu kita perlukan assertion.</p></aside>
 </section>
 
 <section class="slide">
@@ -1604,7 +1604,7 @@ summary = 3 … <span class="e">Err: 2 (66.67%)</span></div>
 {"ralat":"Token CSRF tidak sah — sila log masuk semula"}</div>
     </div>
   </div>
-  <aside class="notes"><p>Momen kunci #2: correlate token je → bayaran bertukar daripada 401 → <b>403</b>. <i>"401 = siapa anda; 403 = request ni sah ke."</i> Server sahkan identiti dulu, kemudian integriti borang.</p><p>Tanya: "Dalam sistem JPJ sebenar, apa lagi nilai dinamik yang ada?" (session cookies, view-state, payment nonces, ID transaksi FPX — <b>bincang je</b>). Checkpoint + Kuiz S1. Jambatan: "Lepas rehat kita betulkan recording ni sampai boleh di-replay oleh 10, 50, 300 users."</p></aside>
+  <aside class="notes"><p>Macam mana nak diagnos? Dalam View Results Tree, baca tiga tab ikut turutan. Sampler result: response code 401 Unauthorized. Request: apa yang betul-betul dihantar — Bearer token rakaman, bukan token baru daripada T01. Response data: <code>{"ralat":"Token tidak sah atau tamat tempoh"}</code>.</p><p>Beza code dalam SUT kita: 401 maksudnya "siapa anda?" — token tak ada atau tak sah; betulkan dengan extract token. 403 maksudnya "request ni sah ke?" — token okay, csrf salah; betulkan dengan extract csrf. 404 maksudnya path atau kenderaan tak wujud — check extractor atau CSV.</p><p>Eksperimen: correlate token sahaja, guna JSON Extractor <code>$.token</code>, biar csrf. Hasilnya T02 jadi 200, tapi bayaran bertukar daripada 401 ke <b>403</b>. Server sahkan identiti dulu, baru integriti borang.</p><p>Ingat: replay ialah functional test dulu — 1 user, 1 loop, 0 error — sebelum ada beban. Load atas script rosak cuma ukur berapa laju page error. Dalam sistem sebenar, ada juga nilai dinamik lain macam session cookie, view-state, ID transaksi FPX. Lepas rehat, kita betulkan recording ni sampai boleh replay oleh 10, 50, 300 users.</p></aside>
 </section>
 
 <!-- ---------- Day 2 · S2 ---------- -->
@@ -1621,7 +1621,7 @@ summary = 3 … <span class="e">Err: 2 (66.67%)</span></div>
   <div class="labline"><b>LAB</b> Exercise 3 — Make the recording replayable · <b>QUIZ</b> S2</div>
   <div class="dayrail"><span class="on"></span><span class="now"></span><span></span><span></span><em>Day 2 · S2 / S4</em></div>
   <div class="daynum"><small>SESSION</small>S2</div>
-  <aside class="notes"><p>Correlation diajar sebagai <b>alat</b> untuk jadikan recording boleh di-replay — bukan topik sendiri. Peserta yang tak ada recording sendiri: <code>04-rakaman-mentah.jmx</code> → Save As ke dalam <code>hari-2/test-plans/</code>.</p><p>Momen kunci #3 (12.20 tengah hari): Aggregate Report 80 + 20, transaksi ≈ 440 ms walaupun think time 1–3 s. ⭐ ForEach/JSR223 hanya kalau kelas dah ke depan — Latihan 3 lebih penting.</p></aside>
+  <aside class="notes"><p>Sesi 2: Jadikan Recording Boleh Replay, pukul 10.45 sampai 1.00. Hasilnya setara dengan <code>05-transaksi-penuh.jmx</code>.</p><p>Dalam sesi ni, correlation ialah <b>alat</b> untuk jadikan recording boleh replay — bukan topik yang berdiri sendiri. Kita guna senarai semak 10 poin, faham beza parameterisation dan correlation, correlate token dan csrf, rangkai no_pendaftaran dan amaun, dan guna CSV <code>pengguna.csv</code>. Lepas tu nama sampler, Transaction Controller, think time, assertion, dan report.</p><p>Kalau anda tak ada recording sendiri, tak apa — buka <code>04-rakaman-mentah.jmx</code> dan Save As ke dalam <code>hari-2/test-plans/</code>.</p><p>Nanti dalam Aggregate Report anda akan nampak 80 tambah 20 baris, dan transaction lebih kurang 440 ms walaupun think time 1 hingga 3 s. Kita bincang kenapa bila sampai situ.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1652,7 +1652,7 @@ summary = 3 … <span class="e">Err: 2 (66.67%)</span></div>
       <div class="callout info sm"><span class="i">🔑</span><div>Answer key: <code>05-transaksi-penuh.jmx</code> — open it in another tab.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Tunjuk setiap poin pada recording atas skrin (10 minit, termasuk §2.2). Kedua-dua jenis data diperlukan: <code>pengguna.csv</code> bagi <b>siapa</b> yang login; extractor bagi <b>session</b> user tu.</p><p>Kuiz S2 soalan #1: nilai yang mesti di-correlate (bukan CSV) = <code>token</code> dan <code>csrf</code>. Tanya: "<code>tempoh_bulan = 12</code> — parameter, correlation, atau constant?" (constant dalam plan 05; daripada quote dalam plan 07).</p></aside>
+  <aside class="notes"><p>Ni senarai semak 10 poin untuk kemaskan recording. Satu, host dan port berulang — guna HTTP Request Defaults. Dua, nama macam <code>/api/log-masuk-1</code> — tukar ke nama bermakna, sebab itulah label dalam report. Tiga, token dan csrf hard-coded — correlation dengan JSON Extractor. Empat, satu user je, <code>800101015500</code> — parameterisation dengan CSV.</p><p>Lima, kenderaan <code>WXY1234</code> hard-coded — chained correlation, ambil daripada response. Enam, <code>"amaun": 90</code> hard-coded — ambil daripada response. Tujuh, timer <code>${T}</code> ikut gap anda — tukar ke Uniform Random Timer. Lapan, 200 dengan mesej error dikira pass — Response Assertion BERJAYA. Sembilan, group setiap langkah — Transaction Controller. Sepuluh, User-Agent curl — pilihan.</p><p>Beza parameterisation dan correlation: parameter datang daripada anda, contoh <code>no_kp</code>, dan anda tahu nilai dia awal. Correlation datang daripada server, contoh <code>token</code> dan <code>csrf</code>, dan tak diketahui awal. Dua-dua diperlukan: <code>pengguna.csv</code> bagi <b>siapa</b> yang login, extractor bagi <b>session</b> user tu.</p><p>Soalan: <code>tempoh_bulan = 12</code> — parameter, correlation atau constant? Dalam plan 05 dia constant; dalam plan 07, dia datang daripada quote.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1688,7 +1688,10 @@ summary = 3 … <span class="e">Err: 2 (66.67%)</span></div>
       <div class="callout info sm"><span class="i">🧵</span><div><code>${token}</code> is per-thread: 300 virtual users = 300 different tokens.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Live build §2.3 (taip perlahan-lahan): klik kanan sampler login → Add → Post Processors → JSON Extractor. Bilangan Names = bilangan Paths, dipisahkan dengan <code>;</code> — kesilapan biasa: koma atau space.</p><p>Soalan: "Kenapa default <code>TOKEN_TAK_JUMPA</code> (token tak jumpa), bukan kosong?" — kegagalan terus nampak dalam tab Request. Kuiz S2 #2: extractor bawah Thread Group overwrite token lepas setiap sampler.</p></aside>
+  <aside class="notes"><p>Sekarang kita buat correlation untuk <code>token</code> dan <code>csrf</code>. Idea dia mudah: kita tangkap nilai tu masa test tengah run, lepas tu guna dalam request seterusnya.</p>
+<p>Alirannya macam ni. Login, iaitu <code>POST /api/log-masuk</code>, pulangkan token dan csrf. JSON Extractor ambil dua-dua nilai tu dengan <code>$.token;$.csrf</code>. Token masuk dalam header <code>Bearer ${token}</code> untuk senarai dan bayar. Csrf pula masuk dalam body bayaran.</p>
+<p>Satu perkara penting: bilangan Names mesti sama dengan bilangan Paths, dan dipisahkan dengan semicolon. Ramai tersilap guna koma atau letak space.</p>
+<p>Kenapa default kita letak <code>TOKEN_TAK_JUMPA</code>, bukan kosong? Sebab kalau extraction gagal, perkataan tu terus nampak dalam tab Request. Senang kita kesan. Dan ingat scope: extractor ni mesti jadi child kepada sampler login. Kalau letak bawah Thread Group, dia run lepas setiap sampler dan overwrite token dengan default.</p></aside>
 </section>
 
 <section class="slide">
@@ -1702,7 +1705,10 @@ summary = 3 … <span class="e">Err: 2 (66.67%)</span></div>
       <div class="callout tip sm"><span class="i">🌳</span><div>Tree: more than one row looks highlighted — ignore it; the right-hand panel is the selected element.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Tunjuk medan yang dipisahkan dengan semicolon: satu extractor, dua variables, turutan sama dalam setiap medan. Kemudian <b>Default Values</b> — default yang "bising" lebih senang debug daripada yang kosong.</p><p>Nota untuk trainer: pokok tu tunjuk satu baris highlight tambahan (kesan capture); panel kanan yang penting.</p></aside>
+  <aside class="notes"><p>Ni rupa JSON Extractor dalam GUI. Satu element, tapi dua variables.</p>
+<p>Tengok panel kanan. Names <code>token;csrf</code>, JSON Path <code>$.token;$.csrf</code>, Match No. <code>1;1</code>. Turutan dalam setiap medan mesti sama — yang pertama untuk token, yang kedua untuk csrf.</p>
+<p>Lepas tu Default Values: <code>TOKEN_TAK_JUMPA;CSRF_TAK_JUMPA</code>. Kalau anda nampak teks ni dalam request, maksudnya extraction gagal. Default yang "bising" macam ni jauh lebih senang debug berbanding default kosong.</p>
+<p>Dalam pokok tu nampak macam ada lebih dari satu baris highlight. Abaikan. Yang penting panel kanan — itulah element yang dipilih.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1738,7 +1744,10 @@ Body 4 : { "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }</pre></div
       <div class="callout warn sm"><span class="i">📂</span><div>The CSV path is <b>relative to the <code>.jmx</code> file</b> — save in <code>hari-2/test-plans/</code>, otherwise <code>${no_kp}</code> is sent literally.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Recording bekukan <code>WXY1234</code> dan <code>90</code> — user lain tak miliki <code>WXY1234</code>. Lepas CSV, label kenderaan jadi <code>WXY1234</code>, <code>JQK7788</code>, <code>BMT3030</code> (kenderaan pertama setiap user).</p><p>Masalah biasa Latihan 3: path <code>/api/kenderaan/NONE/cukai</code> → 404 = extractor bukan anak kepada sampler senarai. Tanya: "Kenapa 404 lebih baik daripada bayaran ke kenderaan orang lain?" — kegagalan yang jelas senang di-debug.</p></aside>
+  <aside class="notes"><p>Sekarang kita sambung correlation ke langkah seterusnya, dan masukkan CSV.</p>
+<p>Recording tadi bekukan <code>WXY1234</code> dan amaun <code>90</code>. Masalahnya, user lain tak miliki kenderaan <code>WXY1234</code>. Jadi kita letak JSON Extractor sebagai child kepada <code>2. GET /api/kenderaan</code>, ambil kenderaan pertama: <code>no_pendaftaran</code> dan <code>amaun</code>. Default kita <code>NONE</code> dan <code>0</code>.</p>
+<p>Lepas tu path sampler 3 dan 4 guna <code>${no_pendaftaran}</code>, dan body bayaran guna <code>${csrf}</code> dan <code>${amaun}</code>. Untuk user pula, kita guna CSV Data Set Config dengan <code>../data/pengguna.csv</code>. Lepas CSV, kita akan nampak kenderaan <code>WXY1234</code>, <code>JQK7788</code> dan <code>BMT3030</code> — kenderaan pertama setiap user.</p>
+<p>Kalau anda nampak path <code>/api/kenderaan/NONE/cukai</code> dan dapat 404, maksudnya extractor bukan child kepada sampler senarai. Kenapa 404 lebih baik daripada bayar kenderaan orang lain? Sebab kegagalan yang jelas senang kita debug.</p></aside>
 </section>
 
 <section class="slide">
@@ -1773,7 +1782,10 @@ Body 4 : { "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }</pre></div
       <div class="callout warn sm"><span class="i">🏷️</span><div>Dynamic label <code>…/${no_pendaftaran}/…</code> = one row <b>per vehicle</b>. For management reports: static names, or read the <b>transaction</b> row.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Demo §2.6–2.7: rename samplers, tambah Transaction Controller <code>Pembaharuan Cukai Jalan</code> (pembaharuan cukai jalan), drag samplers <b>masuk ke dalamnya</b> (bukan bawahnya). Tunjuk Generate parent sample dua-dua cara.</p><p>Tanya: <i>"Timer bawah TC dengan 4 samplers — berapa kali pause?"</i> (4 → purata 8 s; Kuiz S2 #3). Kita guna semula fakta ni dalam Little's Law (S4). Timer <code>${T}</code> yang dirakam = think time <b>anda</b>, sama untuk semua threads → users bergerak serentak macam kawad.</p></aside>
+  <aside class="notes"><p>Ni struktur akhir, sama macam <code>05-transaksi-penuh.jmx</code>. Thread Group 10 users, ramp-up 10 s, loop 2.</p>
+<p>Kita rename samplers supaya ada nombor langkah, dan kita masukkan semua dalam Transaction Controller <code>Pembaharuan Cukai Jalan</code>. Ingat — samplers kena masuk <b>ke dalam</b> controller, bukan di bawahnya.</p>
+<p>Generate parent sample tak di-tick: report tunjuk baris transaksi dan setiap sampler, jadi kita boleh cari langkah yang slow. Kalau di-tick, samplers jadi sub-samples, report tunjuk baris transaksi je. Include duration of timer pun tak di-tick, sebab kita nak ukur masa sistem, bukan masa user berfikir.</p>
+<p>Soalan: timer bawah Transaction Controller dengan 4 samplers — berapa kali dia pause? Jawapannya 4 kali, purata 8 s. Fakta ni kita guna semula dalam Little's Law nanti. Dan timer <code>${T}</code> yang dirakam tu think time anda sendiri — sama untuk semua threads, jadi users bergerak serentak macam kawad. Sebab tu kita tukar ke Uniform Random Timer.</p></aside>
 </section>
 
 <section class="slide">
@@ -1787,7 +1799,10 @@ Body 4 : { "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }</pre></div
       <div class="callout tip sm"><span class="i">🌳</span><div>Extra highlighted tree rows are a capture artefact — the right-hand panel is the selected element.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Tunjuk dua checkbox dalam panel kanan (dua-dua off), dan samplers <b>dalam</b> controller pada pokok. Pokok tu tunjuk satu baris highlight tambahan daripada capture — abaikan.</p><p>Tanya: "Kalau kita tick Include duration of timer, apa jadi pada baris transaksi?" (+ ~8 s think time). Baris report yang terhasil ada pada slaid screenshot Statistics S3.</p></aside>
+  <aside class="notes"><p>Ni Transaction Controller "Pembaharuan Cukai Jalan" dalam GUI.</p>
+<p>Dalam panel kanan ada dua checkbox, dan dua-dua tak di-tick. Generate parent sample off — report tunjuk baris transaksi dan setiap langkah. Include duration of timer off — think time tak dikira.</p>
+<p>Dalam pokok pula, nampak samplers berada <b>dalam</b> controller. Baris highlight tambahan tu cuma kesan masa capture, abaikan.</p>
+<p>Kalau kita tick Include duration of timer, apa jadi pada baris transaksi? Dia akan naik lebih kurang 8 s, sebab think time masuk sekali. Baris report hasilnya kita akan tengok dalam screenshot Statistics masa S3.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1816,7 +1831,10 @@ Body 4 : { "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }</pre></div
       <div class="callout warn sm"><span class="i">⚙️</span><div>For the 10 × 2 run: <b>Disable</b> View Results Tree. An occasional 500 on a payment = the SUT's 1% <code>ERROR_RATE</code> — intentional.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Functional test dulu (1 × 1, VRT enabled, semua hijau), baru 10 × 2. Demo pukul 12.20 tengah hari: run <code>05</code> — 80 HTTP samples + 20 baris transaksi; transaksi ≈ 440 ms walaupun think time 1–3 s. <b>Momen kunci #3.</b></p><p><i>"Masa transaksi = masa sistem; think time beri kesan pada throughput, bukan response time."</i> — jambatan ke Little's Law. Kuiz S2 #4: Average ≈ 440 ms sebab <i>Include duration of timer</i> tak di-tick. If Controller elakkan bayaran palsu yang cemarkan Error %.</p></aside>
+  <aside class="notes"><p>Sekarang kita tambah assertion dan mula run.</p>
+<p>Response Assertion <code>BERJAYA</code> diletak sebagai child kepada sampler bayar. Kenapa perlu? Tanpa assertion, HTTP 200 dikira pass — walaupun body kata <code>{"status":"GAGAL"}</code>. If Controller "Jika ada kenderaan" pula pastikan kita tak buat bayaran palsu bila tak ada kenderaan atau token tak jumpa, supaya Error % tak tercemar.</p>
+<p>Turutannya: functional test dulu, 1 × 1, semua hijau. Baru kita run 10 × 2. Hasilnya 80 HTTP samples — 10 × 2 × 4 — dan 20 baris transaksi. Masa transaksi lebih kurang 440 ms, walaupun think time 1–3 s.</p>
+<p>Kenapa? Sebab Include duration of timer tak di-tick. Masa transaksi ialah masa sistem. Think time beri kesan pada throughput, bukan response time. Ingat ayat ni — ia jambatan kita ke Little's Law.</p></aside>
 </section>
 
 <section class="slide">
@@ -1836,7 +1854,10 @@ Body 4 : { "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }</pre></div
     <div class="card top m-violet sm"><span class="k">JSR223 · GROOVY</span><h3>☑ Cache compiled script</h3><p>Inside scripts use <code>vars.get("token")</code> — not <code>${token}</code>. Example: <code>snippets/jsr223-groovy.groovy</code>.</p></div>
     <div class="card top m-h1 sm"><span class="k">FUNCTIONS</span><h3><code>${__P(pengguna,50)}</code></h3><p>Property from <code>-J</code> · <code>${__UUID}</code> · <code>${__Random(1,1000)}</code> · <code>${__time(yyyy-MM-dd)}</code></p></div>
   </div>
-  <aside class="notes"><p>Tengok sekilas je (12.35–12.50 tengah hari) — <b>atau</b> masa kejar Latihan 3 kalau kelas ketinggalan. <code>800101015500</code> ada 2 kenderaan, <code>900202025600</code> ada 1, <code>850303035700</code> ada 2 → 5 bayaran; 16 samples = 3 × 2 + 5 × 2.</p><p><code>__P</code> penting petang ni: plan <code>07</code> dipandu oleh <code>-Jpengguna/-Jrampup/-Jtempoh/-Jsla_ms</code>. Checkpoint + Kuiz S2. Jambatan: <i>"Lepas lunch kita berhenti tengok GUI dan mula baca report macam pengurusan baca."</i></p></aside>
+  <aside class="notes"><p>Slaid ni pilihan, kita tengok sekilas je. Ni untuk bila element asas tak cukup.</p>
+<p>Kalau satu user ada banyak kenderaan, kita guna JSON Extractor dengan Match No. <code>-1</code> untuk ambil semua, kemudian ForEach Controller loop setiap satu. Dalam plan <code>08</code>, 3 users ada 5 kenderaan — 5 bayaran, 16 HTTP samples, 0 error. Hati-hati: kalau kotak "Add _ before number" tak di-tick, ForEach cari <code>no_pendaftaran1</code>, jadi 0 iteration — tak ada error, tapi tak ada bayaran langsung.</p>
+<p>JSR223 Groovy pula untuk logik custom. Dalam script, guna <code>vars.get("token")</code>, bukan <code>${token}</code>.</p>
+<p>Yang paling penting untuk petang ni ialah <code>${__P(pengguna,50)}</code> — ambil property daripada <code>-J</code>. Plan <code>07</code> dikawal dengan cara ni. Lepas lunch, kita berhenti tengok GUI dan mula baca report macam pengurusan baca.</p></aside>
 </section>
 
 <!-- ---------- Day 2 · S3 ---------- -->
@@ -1853,7 +1874,9 @@ Body 4 : { "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }</pre></div
   <div class="labline"><b>LAB</b> Exercise 4 — Dashboard worksheet · Exercise 5 — <code>07</code> + SLA → 3 findings · Exercise 8 — Multi-site report · <b>QUIZ</b> S3</div>
   <div class="dayrail"><span class="on"></span><span class="on"></span><span class="now"></span><span></span><em>Day 2 · S3 / S4</em></div>
   <div class="daynum"><small>SESSION</small>S3</div>
-  <aside class="notes"><p>Umumkan sekarang: borang penilaian kursus ("Borang penilaian") dalam pelatih.my dah dibuka (2.00 petang). Mesej utama: <b>"Report tu produk anda"</b> — pengurusan tak baca <code>.jmx</code>; mereka baca keputusan.</p><p>Sesi paling banyak penerangan (~55%). Buka report backup R1/R2/R3 dalam tab browser sebelum mula. Tenaga: <i>"Siapa pernah diminta 'buat report' daripada screenshot?"</i></p></aside>
+  <aside class="notes"><p>Selamat kembali. Sesi 3: Reports dan Terminology.</p>
+<p>Sebelum mula, borang penilaian kursus dalam pelatih.my dah dibuka pukul 2.00 petang ni.</p>
+<p>Mesej utama sesi ni: <b>report tu produk anda</b>. Pengurusan tak baca fail <code>.jmx</code>. Mereka baca keputusan. Siapa pernah diminta "buat report" daripada screenshot? Petang ni kita belajar cara yang betul — daripada <code>.jtl</code> ke HTML dashboard, baca setiap bahagian, faham istilahnya, dan tulis tiga dapatan daripada run puncak.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1897,7 +1920,9 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
       <div class="callout danger sm"><span class="i">🚫</span><div>GUI listeners off during load — they process every sample inside the JVM generating the load. Analysis happens <b>afterwards</b>.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Demo pukul 2.05 petang: <code>mkdir -p hasil</code> → run <code>05</code> dengan <code>-e -o</code> → buka <code>index.html</code>. Kemudian <code>-g</code> ke folder baru dengan granularity 5 s. Run <code>-g</code> sekali lagi ke folder yang sama → <code>folder is not empty</code> (sengaja). Kalau terlupa <code>mkdir</code>: error <i>parent folder is not writable</i> — JMeter check ni <b>sebelum</b> test bermula.</p><p>Kuiz S3 #3: graf dengan 1–2 titik → generate semula dengan <code>-g … -Jjmeter.reportgenerator.overall_granularity=5000</code>, bukan run 1 jam. Summary/Aggregate Report ok untuk run GUI kecil; Simple Data Writer hanya kalau perlu fail tambahan.</p></aside>
+  <aside class="notes"><p>Ni aliran dari run sampai ke report. Plan <code>.jmx</code> yang boleh di-replay, dengan View Results Tree disabled. Run non-GUI dengan <code>-n -t</code>, hasil mentah masuk <code>.jtl</code> — satu baris untuk setiap sample. Lepas tu jadi HTML dashboard.</p>
+<p>Ada dua cara buat dashboard. <code>-e -o</code> buat terus masa run. <code>-g -o</code> buat kemudian daripada <code>.jtl</code> yang dah ada. Dua perkara biasa tersilap: folder induk untuk <code>-o</code> mesti wujud dulu — sebab tu <code>mkdir -p hasil</code>. Dan folder output mesti kosong; kalau tak, JMeter kata <code>folder is not empty</code>.</p>
+<p>Kalau graf anda cuma ada satu atau dua titik, jangan run semula sejam. Generate semula dengan <code>-g</code> dan <code>-Jjmeter.reportgenerator.overall_granularity=5000</code>. Default dia <code>60000</code>, iaitu satu titik setiap minit. APDEX pula guna threshold <code>500</code> dan <code>1500</code> ms secara default.</p></aside>
 </section>
 
 <section class="slide">
@@ -1933,7 +1958,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
       </ol>
     </div>
   </div>
-  <aside class="notes"><p>Tour dashboard (2.15–2.35 petang) guna report backup R1. Menu kiri: Dashboard, Charts (Over Time · Throughput · Response Times), Customs Graphs. <i>Filter for display</i> yang berisi = report tak lengkap.</p><p>Jangan terangkan setiap graf panjang lebar — satu soalan setiap graf. Soalan: "Kalau anda cuma ada 30 saat, bahagian mana anda buka dulu?" (Statistics, baris transaksi.) Worksheet Latihan 4 ikut peta ni — 14 baris.</p></aside>
+  <aside class="notes"><p>Ni peta dashboard — apa yang ada dalam <code>index.html</code>, dan turutan untuk baca.</p>
+<p>Bahagian Dashboard ada enam blok: Test and Report information, APDEX, Requests Summary, Statistics, Errors, dan Top 5 Errors by sampler. Lepas tu Charts dibahagi tiga kumpulan: Over Time dengan 6 graf, Throughput dengan 6 graf, dan Response Times dengan 4 graf.</p>
+<p>Mula dengan Test and Report information: run ni betul dan lengkap ke? Kalau <b>Filter for display</b> ada isi, atau test berhenti awal, itu amaran.</p>
+<p>Kalau anda cuma ada 30 saat, bahagian mana anda buka dulu? Statistics — baris transaksi. Di situ ada p95 dan Error %. Worksheet Latihan 4 ikut peta ni, 14 baris semuanya.</p></aside>
 </section>
 
 <section class="slide">
@@ -1965,7 +1993,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
       </dl>
     </div>
   </div>
-  <aside class="notes"><p>Tulis formula atas papan. Contoh lisan: 10 samples — 7 ≤ 500 ms, 2 antara 500–1500 ms, 1 gagal → (7 + 2/2) ÷ 10 = 0.80.</p><p>Kuiz S3 #2: sample 120 ms yang gagal dengan HTTP 500 = <b>Frustrated</b>. Tanya: <i>"Kenapa APDEX transaksi 0.86 sedangkan setiap langkah ~1.0?"</i> — transaksi 4 langkah ≈ 450 ms kadang-kadang lebih T = 500 ms. Siapa pilih T/F? Pemilik sistem, bersama NFR — bukan tester seorang diri.</p></aside>
+  <aside class="notes"><p>APDEX ialah skor kepuasan, dari 0 hingga 1. Formulanya: Satisfied tambah separuh Tolerating, bahagi jumlah samples.</p>
+<p>Satisfied maksudnya siap dalam T, iaitu 500 ms. Tolerating antara T dan F, iaitu 1500 ms — dikira separuh. Frustrated ialah lebih daripada F, <b>atau gagal</b>. Contoh: 10 samples, 7 bawah 500 ms, 2 antara 500 dan 1500 ms, 1 gagal. Jadi 7 tambah 1, bahagi 10, dapat 0.80.</p>
+<p>Sample 120 ms yang gagal dengan HTTP 500 — apa kategorinya? Frustrated. Laju tak membantu kalau gagal. Dalam run R1, <code>bayar-cukai BMT3030</code> ada 196 samples, 3 gagal, APDEX 193 ÷ 196 = 0.985.</p>
+<p>Kenapa APDEX transaksi cuma 0.862 hingga 0.875 sedangkan setiap langkah hampir 1.0? Sebab transaksi 4 langkah ambil lebih kurang 450 ms, kadang-kadang lebih T 500 ms. Sistem sihat, tapi threshold sama. Dan siapa pilih T dan F? Pemilik sistem, bersama NFR — bukan tester seorang diri.</p></aside>
 </section>
 
 <section class="slide">
@@ -1976,7 +2007,9 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <figure class="shot fit" style="--mh:350px"><img src="img/h2-14-apdex-sla-breach.png" alt="APDEX table of the SLA-breach run with lower scores on the bayar-cukai labels"><figcaption>Same test with <code>-Jsla_ms=150</code>: APDEX drops on the <code>bayar-cukai</code> labels</figcaption></figure>
   </div>
   <div class="callout tip sm mt16"><span class="i">👀</span><div>Read the <b>Total</b> row first, then sort by APDEX ascending — the worst label is your first finding.</div></div>
-  <aside class="notes"><p>Kiri: tunjuk tiga blok dari atas ke bawah — Test and Report information (start/end, supaya boleh check tempoh), APDEX (T = 500 ms, F = 1.5 s, Total 0.972), pie Requests Summary.</p><p>Kanan: plan sama, SLA lebih ketat — label bayar-cukai (bayar) jatuh. Tanya: "Server jadi lebih slow ke?" Tak — threshold yang berubah.</p></aside>
+  <aside class="notes"><p>Ni skrin pertama dashboard. Sebelah kiri, run puncak yang sihat. Dari atas: Test and Report information — check start dan end, supaya tempoh betul. Lepas tu APDEX, T 500 ms, F 1.5 s, Total 0.972. Kemudian pie Requests Summary.</p>
+<p>Sebelah kanan, test yang sama tapi dengan <code>-Jsla_ms=150</code>. APDEX untuk label bayar-cukai jatuh.</p>
+<p>Server jadi lebih slow ke? Tak. Threshold yang berubah. Cara baca: tengok baris Total dulu, kemudian sort APDEX menaik. Label paling teruk itulah dapatan pertama anda.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -1996,7 +2029,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <tr><td><b>Received / Sent</b></td><td>Network (KB/sec)</td><td>Bandwidth — a sudden rise = large responses / unnecessary resources</td><td>—</td><td><code>…KBytesPerSec</code></td></tr>
   </table>
   <p class="xsmall muted mt8 mb0">R1 Total: 2432 samples · 0.25% errors · 41.29/s. 630 logins but 598 transactions — iterations not finished when the 60 s ended produce no transaction sample.</p>
-  <aside class="notes"><p>Lajur dikumpul bawah empat tajuk: Executions, Response Times (ms), Throughput, Network (KB/sec). Baca baris transaksi dulu, kemudian langkah paling slow. <code>statistics.json</code> ialah data sama untuk mesin — kita guna untuk CI gate (S4 ⭐).</p><p>Kuiz hari #2: Total = HTTP samples je (plan 05: Total 80; 20 baris transaksi tu berasingan). Tanya: "Kenapa 630 login tapi cuma 598 transaksi?" — Thread Group tak ada ramp-down; iteration yang separuh siap tak dikira.</p></aside>
+  <aside class="notes"><p>Ni jadual paling penting: Statistics. Lajurnya dikumpul bawah empat tajuk — Executions, Response Times dalam ms, Throughput, dan Network dalam KB/sec.</p>
+<p>Kita tengok baris transaksi R1. #Samples 598. FAIL 6. Error % 1.00% — banding dengan NFR, kurang daripada 1%. Average 446 ms, Median 446 ms, Max 693 ms. Ingat, Max cuma satu sample, bukan SLA.</p>
+<p>Baris Total pula kira HTTP samples je — 2432. Dalam plan 05, Total 80, dan 20 baris transaksi tu berasingan.</p>
+<p>Soalan: kenapa ada 630 login tapi cuma 598 transaksi? Sebab Thread Group tak ada ramp-down. Iteration yang separuh siap bila test tamat tak dikira sebagai transaksi. Data yang sama ada dalam <code>statistics.json</code> untuk mesin — kita akan guna untuk CI gate nanti.</p></aside>
 </section>
 
 <section class="slide">
@@ -2007,7 +2043,9 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <figure class="shot fit" style="--mh:330px"><img src="img/h2-24-transaction-statistics-05.png" alt="Dashboard Statistics for plan 05: four request rows plus the Pembaharuan Cukai Jalan transaction row, average 449 ms"><figcaption>Plan 05: the Transaction Controller row ≈ sum of the 4 steps (449 ms)</figcaption></figure>
   </div>
   <div class="callout warn sm mt16"><span class="i">⚠️</span><div>Order: <b>p90 / p95 / p99</b> and <b>Error %</b> → <b>Transactions/s</b>. Average and Max alone never decide PASS/FAIL.</div></div>
-  <aside class="notes"><p>Kiri (klik untuk zoom): lalu setiap lajur sekali, kemudian baris <b>Total</b> — Error % 0.25 % (500 sintetik) — kemudian lajur 95th pct. Banding dengan NFR atas papan.</p><p>Kanan: plan 05 daripada S2 — baris terakhir <b>Pembaharuan Cukai Jalan</b> purata ≈ 449 ms = empat langkah dicampur; think time tak termasuk.</p></aside>
+  <aside class="notes"><p>Ni jadual Statistics daripada run sebenar. Sebelah kiri, run puncak — 50 users, 60 s. Tengok baris Total: Error % 0.25%, iaitu 500 sintetik daripada mock. Lepas tu lajur 95th pct, dan banding dengan NFR.</p>
+<p>Sebelah kanan, plan 05 daripada S2. Baris terakhir, <b>Pembaharuan Cukai Jalan</b>, purata lebih kurang 449 ms — itu empat langkah dicampur. Think time tak termasuk.</p>
+<p>Turutan baca: p90, p95, p99 dan Error % dulu, kemudian Transactions/s. Average dan Max seorang diri tak pernah tentukan PASS atau FAIL.</p></aside>
 </section>
 
 <section class="slide">
@@ -2045,7 +2083,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
       <div class="callout tip sm"><span class="i">📏</span><div>Small gap Median → 99th (446 → 644) = tight distribution. Big gap = <b>long tail</b> — investigate.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Skrip: <i>"Kalau 100 rakyat perbaharui cukai jalan dan average 300 ms, kita tak tahu apa-apa pasal rakyat yang paling slow. p95 583 ms maksudnya: 95 orang siap dalam 0.6 saat, 5 orang ambil masa lebih lama. NFR yang baik lindungi 5 orang tu."</i></p><p>Kuiz S3 #1: 95th pct = 583 ms → 95% transaksi ≤ 583 ms. Salah faham biasa: "Max tu SLA" — Max cuma satu sample. Semak kendiri #4: Average 350 ms tapi p95 2900 ms vs NFR p95 &lt; 1500 ms → <b>fail</b>.</p></aside>
+  <aside class="notes"><p>Average boleh menipu. Sebab tu NFR ditulis dalam percentile.</p>
+<p>Contoh: 99 requests ambil 100 ms, 1 request ambil 10,000 ms. Average lebih kurang 199 ms — nampak "OK!". Tapi 99th pct 10,000 ms. Ada seorang rakyat yang tunggu 10 saat.</p>
+<p>Kalau 100 rakyat perbaharui cukai jalan dan average 300 ms, kita tak tahu apa-apa pasal rakyat yang paling slow. Dalam R1, p95 transaksi 583 ms. Maksudnya 95 orang siap dalam 0.6 saat, 5 orang ambil masa lebih lama. NFR yang baik lindungi 5 orang tu.</p>
+<p>p95 bukan average, dan bukan yang paling slow. Salah faham biasa: "Max tu SLA". Max cuma satu sample. Tengok juga jurang Median ke 99th — 446 ke 644 ms, kecil, maksudnya taburan ketat. Jurang besar bermaksud ada long tail yang kena siasat. Contoh: Average 350 ms tapi p95 2900 ms, dan NFR p95 kurang 1500 ms — itu <b>fail</b>.</p></aside>
 </section>
 
 <section class="slide">
@@ -2074,7 +2115,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
       <div class="callout info sm"><span class="i">🔍</span><div>Failed samples in the <code>.jtl</code>: column <code>failureMessage</code> = assertion message; <code>timeStamp</code> = when — to match against server logs.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Tunjuk dalam report R2: Errors penuh dengan baris <i>The operation lasted too long…</i> — "jadual ni group ikut teks; campurkan." Kemudian Top 5 Errors by sampler: langkah bayar je.</p><p>Tanya: "Requests Summary FAIL 5.37% tapi Error % transaksi 21.75% — kenapa beza?" (Pie kira semua HTTP samples — login/senarai tak ada Duration Assertion; transaksi gagal kalau <b>mana-mana</b> langkahnya gagal.)</p></aside>
+  <aside class="notes"><p>Tiga bahagian ni jawab: apa yang gagal, berapa banyak, dan di langkah mana.</p>
+<p>Jadual Errors tunjuk jenis error, bilangan, peratus dalam errors, dan peratus dalam semua samples. Contoh: <code>401/Unauthorized</code> 2, 100%, 66.67% — itu replay <code>04-rakaman-mentah</code>. <code>500/Internal Server Error</code> ialah server error, lebih kurang 1% daripada bayaran. Dan "The operation lasted too long" ialah Duration Assertion yang gagal — HTTP code masih 200.</p>
+<p>Jadual ni group ikut teks mesej. Mesej Duration Assertion ada nilai ms, jadi setiap nilai jadi satu baris. Dalam R2 ada lebih kurang 30 baris. Campurkan, atau terus baca Top 5 Errors by sampler — di situ nampak langkah bayar je.</p>
+<p>Soalan: Requests Summary tunjuk FAIL 5.37%, tapi Error % transaksi 21.75%. Kenapa beza? Pie kira semua HTTP samples, dan login dengan senarai tak ada Duration Assertion. Transaksi pula gagal kalau <b>mana-mana</b> langkahnya gagal.</p></aside>
 </section>
 
 <section class="slide">
@@ -2085,7 +2129,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <figure class="shot fit" style="--mh:330px"><img src="img/h2-25-top5-errors-by-sampler.png" alt="Top 5 Errors by sampler: only the three bayar-cukai POST requests fail, 43 to 52 errors each"><figcaption>Top 5 Errors by sampler: only the 3 <code>bayar-cukai</code> POSTs fail</figcaption></figure>
   </div>
   <div class="callout tip sm mt16"><span class="i">🎯</span><div><b>Errors</b> tells you <i>what</i>; <b>Top 5 by sampler</b> tells you <i>where</i>. SLA breaches from a Duration Assertion count as errors.</div></div>
-  <aside class="notes"><p>Kiri: tunjuk kegagalan yang sama (“took longer than 150 ms”) jadi banyak baris sebab setiap mesej ada ms yang tepat — group dalam kepala. Perhatikan baris 500/Internal Server Error yang berasingan.</p><p>Kanan: jawapan kepada "langkah mana?" — POST bayar je. Itulah dapatannya.</p></aside>
+  <aside class="notes"><p>Ni screenshot run yang langgar SLA, dengan <code>-Jsla_ms=150</code>.</p>
+<p>Sebelah kiri, jadual Errors. Kegagalan yang sama — "took longer than 150 ms" — jadi banyak baris, sebab setiap mesej ada nilai ms yang tepat. Kita kena group dalam kepala. Perhatikan juga baris <code>500/Internal Server Error</code> yang berasingan.</p>
+<p>Sebelah kanan, Top 5 Errors by sampler. Jawapan kepada "langkah mana?" — tiga POST bayar-cukai je. Itulah dapatannya.</p>
+<p>Ringkasnya: Errors beritahu <b>apa</b>, Top 5 by sampler beritahu <b>di mana</b>. Dan SLA yang dilanggar melalui Duration Assertion dikira sebagai error.</p></aside>
 </section>
 
 <section class="slide">
@@ -2122,7 +2169,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
       <div class="callout warn sm"><span class="i">🌐</span><div>JMeter is <b>not a browser</b>: response time excludes rendering and JavaScript.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Lukis bar ni atas papan. Latency diukur dari sejurus sebelum hantar sampai bahagian <b>pertama</b> response — ia <b>termasuk</b> connect time (JMeter tak tolak). Elapsed berjalan sampai byte <b>terakhir</b>.</p><p>Salah faham biasa: "Latency = response time". Worksheet Latihan 4 baris 14: ambil satu sample login daripada <code>.jtl</code> — masa server atau transfer? Graf berkaitan: Latencies Over Time, Connect Time Over Time.</p></aside>
+  <aside class="notes"><p>Dalam satu sample sebenarnya ada tiga stopwatch.</p>
+<p>Pertama, Connect — masa buka sambungan. Kedua, Latency — dari sejurus sebelum hantar sampai bahagian <b>pertama</b> response balik. Latency ni <b>termasuk</b> connect; JMeter tak tolak. Ketiga, response time atau elapsed — berjalan sampai byte <b>terakhir</b>.</p>
+<p>Tengok satu baris <code>.jtl</code> ni: login, elapsed 141, Latency 140, Connect 10. Response kecil, jadi hampir semua 141 ms tu masa server memproses.</p>
+<p>Cara baca: latency hampir sama dengan response time — masa habis di server, jadi profile code atau DB. Latency kecil tapi response time besar — response besar atau network, tengok saiz dan compression. Connect naik — sambungan habis atau tak ada keep-alive. Salah faham biasa: "Latency sama dengan response time." Tak semestinya.</p></aside>
 </section>
 
 <section class="slide">
@@ -2135,7 +2185,9 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
       <div class="callout tip sm"><span class="i">🔀</span><div>Latency ≈ response time → the server is thinking. A big gap → large payload or slow network.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Tunjuk paksi-y (ms) dan legend label. Pada mock kita response sangat kecil, jadi latency ≈ elapsed time. Dalam production, jurang besar antara dua garis tu menunjuk kepada saiz payload atau network, bukan server.</p></aside>
+  <aside class="notes"><p>Ni graf Latencies Over Time — masa sampai byte pertama balik. Paksi-y dalam ms, dan setiap label ada garis sendiri.</p>
+<p>Banding dengan Response Times Over Time. Pada mock kita, response sangat kecil, jadi latency hampir sama dengan elapsed time. Maksudnya server yang sedang "berfikir".</p>
+<p>Dalam production, kalau ada jurang besar antara dua garis ni, puncanya biasanya saiz payload atau network — bukan server.</p></aside>
 </section>
 
 <section class="slide">
@@ -2154,7 +2206,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <div class="callout warn sm"><span class="i">⏱️</span><div>Interval = <code>overall_granularity</code> (default <b>60 s</b>). A 60 s run = 1–2 points! Regenerate with <code>-Jjmeter.reportgenerator.overall_granularity=5000</code>.</div></div>
     <div class="callout info sm"><span class="i">📈</span><div>R1 (5 s granularity): HTTP sample 95th pct flat at <b>172–181 ms</b> per interval; transaction row <b>430–470 ms</b> throughout the steady phase.</div></div>
   </div>
-  <aside class="notes"><p>Momen kunci #4: tunjuk report R1 pada granularity 60 s (satu titik) sebelah report 5 s. "Graf tu tak rosak — granularity yang kasar."</p><p>Satu soalan setiap graf; jangan baca jadual. Tanya: "Active Threads Over Time tunjuk 50 threads pada saat ke-10 — apa jadi masa saat 0–10?" (ramp-up). "Kenapa Percentiles Over Time cuma tunjuk sample yang berjaya?" — sample gagal (cth. 401 yang laju) akan tarik nilai ke bawah.</p></aside>
+  <aside class="notes"><p>Kumpulan Over Time jawab satu soalan: sistem stabil ke sepanjang test?</p>
+<p>Response Times Over Time — garis yang naik perlahan-lahan tanda degradation atau memory leak. Response Time Percentiles Over Time — adakah p95 dan p99 melebar masa puncak? Active Threads Over Time — load model jalan macam dirancang ke? Kalau threads jatuh awal, itu masalah test atau generator. Bytes Throughput — network jadi had ke? Latencies dan Connect Time — server atau sambungan.</p>
+<p>Kalau graf anda cuma ada satu titik, graf tu tak rosak. Granularity yang kasar — 60 s. Generate semula dengan 5 s, baru nampak bentuknya.</p>
+<p>Active Threads tunjuk 50 threads pada saat ke-10. Apa jadi masa saat 0 hingga 10? Ramp-up. Dan kenapa Percentiles Over Time cuma ambil sample yang berjaya? Sebab sample gagal, contohnya 401 yang laju, akan tarik nilai ke bawah.</p></aside>
 </section>
 
 <section class="slide">
@@ -2165,7 +2220,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <figure class="shot fit" style="--mh:300px"><img src="img/h2-16-active-threads-over-time.png" alt="Active Threads Over Time: ramp-up from 0 to 50 in 10 s, hold, ramp-down"><figcaption>Active Threads Over Time — 0 → 50 in 10 s, hold, ramp-down</figcaption></figure>
   </div>
   <div class="callout tip sm mt16"><span class="i">✅</span><div>First check <b>Active Threads</b>: did the load model really run? Then read response time <b>against</b> that load — flat lines = stable.</div></div>
-  <aside class="notes"><p>Kanan dulu: sahkan ramp-up (10 s) dan hold. Kemudian kiri: garis kekal rata sepanjang hold = stabil. Garis transaksi lebih tinggi sebab ia jumlah semua langkah.</p><p>Tanya: "Kalau garis response naik sedangkan threads kekal rata, apa anda syak?" (degradation — memory leak, queue bertimbun).</p></aside>
+  <aside class="notes"><p>Ni graf Over Time daripada run puncak.</p>
+<p>Kita tengok sebelah kanan dulu: Active Threads. Naik 0 ke 50 dalam 10 s, kekal, lepas tu ramp-down. Jadi load model memang jalan macam dirancang.</p>
+<p>Lepas tu sebelah kiri: Response Times Over Time. Garis transaksi lebih kurang 450 ms, di atas requests lebih kurang 110 ms — sebab transaksi ialah jumlah semua langkah. Garis kekal rata sepanjang hold, maksudnya stabil.</p>
+<p>Kalau garis response naik sedangkan threads kekal rata, apa kita syak? Degradation — contohnya memory leak atau queue yang bertimbun.</p></aside>
 </section>
 
 <section class="slide">
@@ -2185,7 +2243,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <div class="kpi m-violet"><i>TPS · R1 transaction</i><b>10.46</b><span>renewals per second</span></div>
     <div class="kpi m-jpj"><i>Ratio</i><b>≈ 4 : 1</b><span>1 transaction = 4 hits</span></div>
   </div>
-  <aside class="notes"><p>Semak kendiri #3: Hits Per Second = HTTP requests yang dihantar; Transactions Per Second = samples siap ikut label (termasuk baris Transaction Controller); Total Transactions Per Second = jumlah keseluruhan. Salah faham biasa: "Hits/s = TPS".</p><p>Kuiz hari #3: Error % R2 ialah 21.75% tapi Codes Per Second tunjuk <code>200</code> je (+ sikit <code>500</code>) — Duration Assertion tak ubah HTTP code. Tengok siri <code>-failure</code> dalam Transactions Per Second. Worksheet baris 10: kenapa ≈ 4 : 1?</p></aside>
+  <aside class="notes"><p>Kumpulan Throughput jawab: berapa banyak kerja dibuat, dan bila mula gagal.</p>
+<p>Hits Per Second ialah HTTP requests yang JMeter hantar. Transactions Per Second ialah samples yang siap ikut label, termasuk baris Transaction Controller, dengan siri <code>-success</code> dan <code>-failure</code>. Total Transactions Per Second ialah jumlah keseluruhan. Salah faham biasa: "Hits/s sama dengan TPS." Tak sama.</p>
+<p>Codes Per Second tunjuk response ikut HTTP code. Tapi hati-hati: dalam R2, Error % transaksi 21.75%, tapi Codes Per Second tunjuk <code>200</code> je, dan sikit <code>500</code>. Kenapa? Duration Assertion tak ubah HTTP code. Untuk nampak kegagalan tu, tengok siri <code>-failure</code> dalam Transactions Per Second.</p>
+<p>Response Time Vs Request pula — kalau lengkung naik mendadak bila kadar request naik, itulah knee point.</p></aside>
 </section>
 
 <section class="slide">
@@ -2196,7 +2257,9 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <figure class="shot fit" style="--mh:300px"><img src="img/h2-22-slow-total-tps.png" alt="Total Transactions Per Second on the slow run: rises with ramp-up to about 150 to 160 per second, then plateaus"><figcaption>Total TPS (200 users, slow server): climbs with ramp-up, then levels off</figcaption></figure>
   </div>
   <div class="callout info sm mt16"><span class="i">📈</span><div>TPS that levels off when users <b>stop growing</b> is normal. TPS that levels off while users <b>keep growing</b> = the system has hit its limit.</div></div>
-  <aside class="notes"><p>Kiri: setiap label ada siri success dan failure — cari mana-mana garis failure yang atas sifar. Kanan: run slow dengan 200 users — TPS naik masa ramp-up 40 s dan mendatar pada ~150–160/s tepat bila bilangan users berhenti bertambah. Itu <b>bukan</b> saturation.</p></aside>
+  <aside class="notes"><p>Sebelah kiri, Transactions Per Second ikut label. Setiap label ada siri success dan failure. Cari mana-mana garis failure yang atas sifar.</p>
+<p>Sebelah kanan, run slow dengan 200 users. Total TPS naik masa ramp-up 40 s, kemudian mendatar pada lebih kurang 150–160/s — tepat bila bilangan users berhenti bertambah. Itu <b>bukan</b> saturation.</p>
+<p>Peraturannya: TPS mendatar bila users berhenti bertambah — normal. TPS mendatar sedangkan users masih bertambah — itu tanda sistem dah sampai had.</p></aside>
 </section>
 
 <section class="slide">
@@ -2223,7 +2286,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     </div>
   </div>
   <div class="callout tip mt16"><span class="i">🧭</span><div>Response Time Percentiles = the graph version of the 90th/95th/99th pct columns. A flat curve that spikes at the end = long tail (the “average lies” slide).</div></div>
-  <aside class="notes"><p>Worksheet baris 12–13: Response Time Overview (kiraan setiap bar) dan Response Time Distribution (julat paling biasa). Bar Overview guna threshold APDEX T/F — kalau anda tukar <code>apdex_satisfied_threshold</code>, bar pun berubah.</p><p>Tanya: "Distribution tunjuk dua puncak — 100 ms dan 900 ms. Apa hipotesis anda?" (dua code path: cache hit vs miss, atau endpoint lain bawah label yang sama.) Bar pada slaid ni sekadar ilustrasi.</p></aside>
+  <aside class="notes"><p>Kumpulan Response Times tunjuk bentuk penuh taburan.</p>
+<p>Response Time Percentiles — pada percentile mana masa melonjak? Ni versi graf untuk lajur 90th, 95th dan 99th pct. Response Time Overview — 4 bar: bawah 500 ms, 500 hingga 1,500 ms, lebih 1,500 ms, dan requests yang error. Threshold bar ni ikut APDEX T dan F, jadi kalau anda tukar <code>apdex_satisfied_threshold</code>, bar pun berubah. Ini graf paling senang untuk pengurusan: "X% requests siap dalam 0.5 s, Y% gagal." Bar dalam slaid ni sekadar ilustrasi, bukan angka run.</p>
+<p>Time Vs Threads — response time berubah ke bila concurrency naik? Response Time Distribution — bucket 100 ms.</p>
+<p>Kalau Distribution tunjuk dua puncak, satu pada 100 ms dan satu pada 900 ms, apa hipotesis kita? Dua code path — contohnya cache hit dan cache miss — atau endpoint lain di bawah label yang sama.</p></aside>
 </section>
 
 <section class="slide">
@@ -2234,7 +2300,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <figure class="shot fit" style="--mh:300px"><img src="img/h2-19-response-time-distribution.png" alt="Response Time Distribution histogram with sample counts per time bucket"><figcaption>Response Time Distribution — samples per time bucket</figcaption></figure>
   </div>
   <div class="callout tip sm mt16"><span class="i">📐</span><div>Percentile curve answers <i>“how slow for 95 % of users?”</i> · Distribution answers <i>“is there a second hump?”</i> (two populations).</div></div>
-  <aside class="notes"><p>Kiri: letak jari pada 95 di paksi-x dan naik ke lengkung transaksi — itulah p95 dalam jadual Statistics. Tunjuk ekor dekat p99. Kanan: satu bonggol utama; bonggol kedua bermakna ada dua jenis response (cth. cache hit vs miss).</p></aside>
+  <aside class="notes"><p>Ni dua graf tu daripada run sebenar.</p>
+<p>Sebelah kiri, Response Time Percentiles. Cari 95 di paksi-x, naik ke lengkung transaksi — itulah p95 yang sama dalam jadual Statistics. Perhatikan ekor yang naik dekat p99.</p>
+<p>Sebelah kanan, Response Time Distribution. Ada satu bonggol utama. Kalau ada bonggol kedua, maksudnya ada dua jenis response, contohnya cache hit dan miss.</p>
+<p>Ringkasnya: lengkung percentile jawab "berapa slow untuk 95% users?" Distribution jawab "ada bonggol kedua ke?"</p></aside>
 </section>
 
 <section class="slide">
@@ -2266,7 +2335,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
       <tr><td>Errors only during ramp-up</td><td>Warm-up (cold start)</td><td>Exclude that period — state it</td></tr>
     </table>
   </div>
-  <aside class="notes"><p><b>Knee point</b> = beban di mana response time mula naik mendadak — "selamat sampai ~N users". <b>Bottleneck</b> = komponen yang hadkan kapasiti (DB, payment service, network). Graf berkaitan: Total Transactions Per Second + Response Times Over Time + Active Threads Over Time, atau terus Response Time Vs Request.</p><p>Kuiz S3 #4: threads 50 → 150, TPS rata, RT naik → saturated. Tanya: "Macam mana anda tahu SUT yang saturated, bukan JMeter?" — monitor CPU load generator (&lt; ~80%).</p></aside>
+  <aside class="notes"><p>Sekarang kita belajar kenal saturation — hubungan antara throughput dan response time.</p>
+<p>Bila threads naik dan throughput naik sama-sama, response time rata — sihat, bawah kapasiti. Bila threads naik tapi throughput mendatar dan response time naik — saturated, requests mula beratur. Titik di mana response time mula naik mendadak itulah <b>knee point</b>. Kita boleh kata "selamat sampai lebih kurang N users". Komponen yang hadkan kapasiti — DB, payment service, network — itulah <b>bottleneck</b>.</p>
+<p>Corak lain: errors mula selepas N threads — itu had kapasiti. Response time naik perlahan bawah beban tetap — degradation, buat soak test. Errors rata tak kira beban — error fungsian atau sintetik.</p>
+<p>Macam mana kita tahu yang saturated tu SUT, bukan JMeter? Monitor CPU load generator, pastikan bawah lebih kurang 80%. Satu lagi: mock kita guna latency rawak, jadi dia tak saturate. Atas laptop, biasanya CPU laptop yang jadi had.</p></aside>
 </section>
 
 <section class="slide">
@@ -2277,7 +2349,9 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <figure class="shot fit" style="--mh:300px"><img src="img/h2-23-slow-time-vs-threads.png" alt="Time Vs Threads from 1 to 200 active threads: response time stays flat"><figcaption>Time Vs Threads: <b>flat</b> from 1 → 200 threads = not saturated</figcaption></figure>
   </div>
   <div class="callout warn sm mt16"><span class="i">⚠️</span><div>This is the <b>healthy reference</b>. Our mock does not queue, so it never saturates. A real bottleneck shows response time <b>rising</b> with threads while TPS stops growing.</div></div>
-  <aside class="notes"><p>Jujur: ni capture sebenar, tapi mock tambah delay rawak tanpa queueing, jadi tak ada knee. Guna carta kanan sebagai gambaran "sihat" dan lukis bentuk saturated (lengkung naik) atas papan di sebelahnya.</p><p>Tanya: "Slow tapi rata — itu masalah kapasiti atau masalah per-request?" (per-request: server slow walaupun untuk satu user.)</p></aside>
+  <aside class="notes"><p>Ni capture sebenar: server slow, 200 users. Setiap garis naik ke atas, dan transaksi lebih kurang 2.4 s.</p>
+<p>Tapi tengok Time Vs Threads — rata dari 1 hingga 200 threads. Maksudnya tak saturated. Saya nak jujur di sini: mock kita tambah delay rawak tanpa queueing, jadi tak akan ada knee. Jadi anggap carta ni sebagai gambaran sihat. Bottleneck sebenar akan tunjuk response time naik bila threads naik, sementara TPS berhenti bertambah.</p>
+<p>Soalan: slow tapi rata — itu masalah kapasiti atau masalah per-request? Masalah per-request. Server slow walaupun untuk satu user.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -2297,7 +2371,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <tr><td><b>Error %</b></td><td>Failed samples ÷ total × 100 (HTTP code, network, assertion)</td><td>1.00% of transactions</td></tr>
     <tr><td><b>APDEX</b></td><td>(Satisfied + Tolerating/2) ÷ total; failed = Frustrated</td><td>0.971 (Total R1)</td></tr>
   </table>
-  <aside class="notes"><p>Glosari ni ialah <b>rujukan</b> — jangan baca setiap baris. Pilih 8 (2.50–3.00 petang): response time / latency / connect, throughput / hits / TPS, percentile vs average, APDEX.</p><p>Tanya secara rawak: "Apa beza throughput dengan TPS?" "Latency termasuk connect — ya atau tak?" (ya). Definisi ni sepadan dengan glosari rasmi JMeter (<code>jmeter.apache.org/usermanual/glossary.html</code>).</p></aside>
+  <aside class="notes"><p>Ni glosari bahagian pertama — istilah masa dan statistik, ikut cara JMeter ukur. Anggap ni rujukan; kita fokus pada yang paling penting.</p>
+<p>Response time atau elapsed: dari sejurus sebelum request dihantar sampai byte terakhir response. Tak termasuk render atau JavaScript. Contoh login, 141 ms. Latency: sampai bahagian pertama response — dan ya, latency <b>termasuk</b> connect. Connect time termasuk SSL/TLS handshake: 10 ms kali pertama, lebih kurang 1 ms dengan keep-alive.</p>
+<p>Apa beza throughput dengan TPS? Throughput ialah bilangan requests bahagi jumlah masa — R1 Total 41.29/s. Hits/s ialah HTTP requests yang dihantar — 4 hits untuk setiap pembaharuan. TPS untuk Transaction Controller ialah transaksi bisnes sesaat — 10.46 pembaharuan sesaat.</p>
+<p>Percentile: p95 583 ms maksudnya 95% samples kurang atau sama dengan nilai tu. Error % kira HTTP code, network dan assertion. APDEX Total R1 ialah 0.971. Definisi ni sepadan dengan glosari rasmi JMeter.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -2327,7 +2404,10 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
       <tr><td><b>Workload model</b></td><td>Who does what, how often, how many · 70% pay, 30% check</td></tr>
     </table>
   </div>
-  <aside class="notes"><p>Sebelah kiri = istilah load model (kita guna dalam Little's Law, S4). Sebelah kanan = istilah keputusan (SLA/SLO/NFR, baseline). Tekankan: NFR dinilai pada <b>steady state</b>, bukan masa ramp-up.</p><p>Tanya: "600 concurrent users maksudnya 600 klik sesaat ke?" (Tak — kebanyakan sedang berfikir/membaca. Itulah beza concurrent users dengan throughput.) Jambatan ke slaid seterusnya: satu run seorang diri tak ada makna — kena banding.</p></aside>
+  <aside class="notes"><p>Bahagian kedua glosari: istilah load model, kapasiti dan keperluan.</p>
+<p>Satu thread ialah satu virtual user yang ulang script. Concurrent users pula ialah users dalam sesi pada satu masa, termasuk yang sedang berfikir. Jadi, 600 concurrent users maksudnya 600 klik sesaat ke? Tak. Kebanyakan mereka sedang baca atau berfikir. Itulah beza concurrent users dengan throughput.</p>
+<p>Ramp-up 10 s maksudnya satu thread setiap 0.2 s. Steady state ialah beban stabil lepas ramp-up — di sinilah NFR dinilai, bukan masa ramp-up. Thread Group standard tak ada ramp-down, sebab tu 630 login tapi 598 transaksi.</p>
+<p>Sebelah kanan pula istilah keputusan. SLA ialah janji kontrak, contohnya "99.5% availability; p95 kurang 3 s". SLO ialah sasaran dalaman yang lebih ketat, contohnya p95 kurang 2 s. NFR ialah apa yang kita test. Dan ingat: satu run seorang diri tak ada makna — kita kena banding.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -2371,7 +2451,10 @@ jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx \
       <ul class="list xs bad"><li><b>Not</b> Codes Per Second — the HTTP code stays <code>200</code></li></ul>
     </div>
   </div>
-  <aside class="notes"><p>Lancar R1 &amp; R2 (≈ 1 minit setiap satu) dan terangkan Duration Assertion sambil tunggu. Tambah <code>-Jjmeter.reportgenerator.overall_granularity=5000</code> (Latihan 5). Default plan: 300 users, ramp 30 s, 300 s — terlalu berat untuk kelas.</p><p>Masalah biasa: <code>-J sla_ms=150</code> dengan space → Error % R2 sama dengan R1. Plan <code>07</code> ambil <code>amaun</code> (jumlah) + <code>tempoh_bulan</code> (tempoh dalam bulan) daripada quote. Tanya: "Kenapa Duration Assertion cuma pada langkah bayaran?" — NFR biasanya untuk transaksi kritikal; tukar ikut plan.</p></aside>
+  <aside class="notes"><p>Sekarang senario puncak: <code>07-beban-puncak-cukai.jmx</code> — hari harga cukai jalan naik, semua orang serbu nak perbaharui.</p>
+<p>Strukturnya sama macam plan 05, tapi ada Duration Assertion "SLA Bayaran" pada langkah bayar, dengan <code>${__P(sla_ms,2000)}</code>. Think time pula lebih pendek, 0.5 hingga 1.5 s. Plan ni ambil <code>amaun</code> dan <code>tempoh_bulan</code> daripada quote.</p>
+<p>Kita run dua kali dengan sistem yang sama. R1 dengan SLA 2000 ms, R2 dengan SLA 150 ms. Default plan ni 300 users — terlalu berat untuk kelas, jadi kita guna <code>-Jpengguna=50</code>. Hati-hati: kalau tulis <code>-J sla_ms=150</code> dengan space, nilai tak masuk dan R2 jadi sama macam R1.</p>
+<p>Pelanggaran SLA akan nampak dalam Error %, FAIL dalam Requests Summary, Errors dan Top 5, dan siri <code>-failure</code>. Tapi bukan dalam Codes Per Second — HTTP code kekal 200. Kenapa Duration Assertion pada langkah bayaran je? Sebab NFR biasanya untuk transaksi kritikal.</p></aside>
 </section>
 
 <section class="slide">
@@ -2384,7 +2467,9 @@ jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx \
       <div class="callout warn sm"><span class="i">📌</span><div>Error % now mixes real 500s with SLA breaches — say which is which in the finding.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Banding dengan slaid Statistics tadi (0.25 %). Tunjuk baris bayar-cukai (21–26 %) dan baris transaksi (23.47 %): satu langkah slow gagalkan keseluruhan transaksi bisnes.</p><p>Latihan 5 F3 = betul-betul perbandingan ni, dengan angka kelas sendiri.</p></aside>
+  <aside class="notes"><p>Ni run yang sama, tapi SLA lebih ketat: <code>-Jsla_ms=150</code>. Response yang slow sekarang jadi Error %.</p>
+<p>Banding dengan Statistics tadi, Error % Total 0.25%. Sekarang Total 5.78%, baris bayar-cukai 21 hingga 26%, dan baris transaksi 23.47%. Satu langkah yang slow dah cukup untuk gagalkan keseluruhan transaksi bisnes.</p>
+<p>Ingat, yang berubah cuma threshold. Tak ada perubahan script, tak ada perubahan server. Dan sekarang Error % campur 500 sebenar dengan pelanggaran SLA — jadi dalam dapatan, kita kena sebut mana satu yang mana.</p></aside>
 </section>
 
 <section class="slide">
@@ -2404,7 +2489,9 @@ jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx \
 <pre class="code xs" data-lang="sh">PORT=3001 LATENCY_MIN=500 LATENCY_MAX=1500 node sut/server.js
 jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx -Jport=3001 \
   -Jpengguna=50 -Jrampup=10 -Jtempoh=60 -l hasil/r07-perlahan.jtl -e -o hasil/laporan07-perlahan</pre></div>
-  <aside class="notes"><p>Momen kunci #5: R2 — Error % 1% → 22% tanpa sebarang perubahan pada sistem. <i>"Satu-satunya yang berubah ialah definisi 'cukup laju'."</i> Baseline juga buktikan ~1% error 500 memang wujud pada mana-mana beban (<code>ERROR_RATE</code> 1%).</p><p>R3 pilihan (kalau ada masa): throughput turun ~45%. Stop mock 3001 lepas tu. Windows PowerShell: <code>$env:PORT=3001; $env:LATENCY_MIN=500; $env:LATENCY_MAX=1500; node sut/server.js</code>. Kuiz hari #4: 10.46 → 5.78 trans/s = Little's Law (N tetap, R naik → X turun).</p></aside>
+  <aside class="notes"><p>Satu run seorang diri tak ada makna. Kita kena banding dengan baseline — R1, R2, R3.</p>
+<p>R1 baseline: 10.46 transaksi sesaat, p95 583 ms, Error % 1.00%, APDEX 0.971. R2: sistem sama, cuma SLA 150 ms. Response time hampir sama — p95 572 ms — tapi Error % melonjak dari 1% ke 21.75%. Satu-satunya yang berubah ialah definisi "cukup laju". Sebab tu NFR mesti dipersetujui <b>sebelum</b> test. Baseline juga tunjuk lebih kurang 1% error 500 memang wujud pada mana-mana beban.</p>
+<p>R3: users sama, 50, tapi server lebih slow, 500 hingga 1500 ms. Throughput turun 45%, dari 10.46 ke 5.78. p95 jadi 4969 ms, APDEX 0.401. Kenapa throughput turun? Ini closed model — setiap user tunggu response sebelum teruskan. N tetap, R naik, jadi X turun. Itulah Little's Law, yang kita akan belajar dalam S4.</p></aside>
 </section>
 
 <section class="slide">
@@ -2423,7 +2510,10 @@ jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx -Jport=3001 \
     <tr><td>“The graph went up.”</td><td>“On the slow mock, throughput dropped <b>45%</b> (10.46 → 5.78 trans/s) at the same 50 users; p95 <b>4969 ms</b> violates the NFR.”</td></tr>
   </table>
   <div class="callout info sm mt16"><span class="i">📝</span><div>Exercise 5: three findings with <b>your</b> figures — F1 response time vs NFR · F2 500 errors &amp; Error % · F3 effect of the SLA threshold. Full example (D1–D4, R1/R2/R3) in section <b>B</b> of the template. Start the report with the <b>decision</b>, not a graph.</div></div>
-  <aside class="notes"><p>Tunjuk bahagian B templat: ringkasan eksekutif R1 = <b>CONDITIONAL PASS</b> — p95 583 ms ✅ tapi Error % 1.00% duduk tepat pada had NFR &lt; 1%. Setiap dapatan berakhir dengan "jadi…".</p><p>Masalah biasa: dapatan yang tulis "sistem OK" tanpa angka. Tanya: "Kalau p95 pass tapi Error % 2%, apa anda report kepada pengurusan?" Checkpoint + kuiz S3 sebelum rehat.</p></aside>
+  <aside class="notes"><p>Sekarang macam mana nak tulis dapatan. Satu dapatan ada empat bahagian: Evidence, Impact, Cause, Recommendation.</p>
+<p>Evidence ialah angka dan bahagian dashboard. Impact ialah kesan pada user atau bisnes. Cause ialah hipotesis — dan cakap terus terang kalau belum disahkan dengan server metrics. Recommendation ialah tindakan, siapa owner, dan severity.</p>
+<p>Banding yang lemah dengan yang kuat. "Sistem agak slow" — lemah. "Pada 50 users, 10.5 trans/s, p95 Pembaharuan Cukai Jalan 583 ms, NFR 2000 ms, pass" — kuat. "Ada error" — lemah. "6 bayaran, 1.00% transaksi, gagal dengan 500, bertaburan sepanjang test, bukan berkaitan beban" — kuat.</p>
+<p>Dalam templat, ringkasan eksekutif R1 ialah <b>CONDITIONAL PASS</b>: p95 583 ms pass, tapi Error % 1.00% duduk tepat pada had. Mula report dengan keputusan, bukan graf. Kalau p95 pass tapi Error % 2%, apa kita report kepada pengurusan? Tak pass — Error % langgar NFR.</p></aside>
 </section>
 
 <!-- ---------- Day 2 · S3 — Multi-site agents ---------- -->
@@ -2447,7 +2537,10 @@ jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx -Jport=3001 \
     <div class="card top m-fail sm"><span class="k">USERS = THREADS × AGENTS</span><h3>Each agent runs the WHOLE Thread Group</h3><p>Our lab run: <code>-Gpengguna=10</code> × 2 agents = <b>20</b> users, not 10. Divide first.</p></div>
     <div class="card top m-violet sm"><span class="k">SAMPLES STREAM BACK</span><h3>One combined <code>.jtl</code></h3><p>Sampler names contain <code>[${__P(site)}]</code>, so every row says <b>where</b> it came from.</p></div>
   </div>
-  <aside class="notes"><p>Kenapa multi-site: rakyat guna eJPJ dari KL, Pulau Pinang, Kuching — response time termasuk laluan network mereka. Satu agent setiap site ukur apa yang user di site tu alami; controller gabungkan semua ke dalam satu report.</p><p>Demo cue: buka <code>09-berbilang-lokasi.jmx</code> dan tunjuk nama sampler <code>[${__P(site,LOKAL)}] 1. POST /api/log-masuk</code>. Tanya: <i>"Dua agents, Thread Group = 50 users — berapa users yang hentam server?"</i> (100 — setiap agent run keseluruhan Thread Group.)</p></aside>
+  <aside class="notes"><p>Sekarang kita tengok multi-site agents, guna <code>09-berbilang-lokasi.jmx</code>.</p>
+<p>Kenapa perlu? Rakyat guna eJPJ dari KL, Pulau Pinang, Kuching. Response time yang mereka rasa termasuk laluan network mereka. Jadi kita letak satu agent setiap site, dan setiap agent jana beban dari network sendiri. Controller cuma atur dan terima hasil — dia sendiri tak hantar beban. Semua sample masuk satu fail <code>semua.jtl</code>, jadi satu dashboard.</p>
+<p>Nama sampler ada prefix <code>[${__P(site)}]</code>, jadi setiap baris beritahu dari mana datangnya.</p>
+<p>Satu perangkap penting. Dua agents, Thread Group 50 users — berapa users yang hentam server? 100. Setiap agent run keseluruhan Thread Group. Dalam lab kita, <code>-Gpengguna=10</code> kali 2 agents jadi 20 users, bukan 10. Bahagi dulu.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -2488,7 +2581,10 @@ jmeter -n -t ../test-plans/09-berbilang-lokasi.jmx \
       <div class="callout info sm"><span class="i">🧱</span><div>Firewall: agent <code>server_port</code> (1099) + fixed <code>server.rmi.localport</code>; controller callback <code>client.rmi.localport</code>. Multi-NIC/NAT: <code>-Djava.rmi.server.hostname=&lt;agent IP&gt;</code>.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Demo cue: <code>cd hari-2/run &amp;&amp; ./run-berbilang-lokasi.sh</code> (~45 s) mulakan dua-dua mock, dua-dua agents (port 1099 / 1100), controller dengan <code>-R</code>, kemudian pecahkan JTL ikut site. Homebrew tak letak <code>jmeter-server</code> dalam PATH: guna <code>$(brew --prefix jmeter)/libexec/bin/jmeter-server</code>, atau yang setara <code>jmeter -s -Dserver_port=1099 …</code> (Windows: <code>%JMETER_HOME%\bin\jmeter-server.bat</code>). Bagi <code>-j</code> kepada <code>jmeter-server</code> akan gagal dengan <i>Duplicate options for -j</i> — sebab tu satu folder setiap agent. Kedua-dua "site" run atas satu laptop: jarak PENANG <b>disimulasi</b> dengan mock yang lebih slow. Windows: <code>run-berbilang-lokasi.bat</code> ada tapi belum di-test — demo atas Mac/Linux.</p><p>Kesilapan biasa: <code>-Jsite=KL</code> pada <b>controller</b> — setiap agent masih label diri sebagai <code>LOKAL</code>, sebab <code>-J</code> pada controller tak pernah keluar dari controller. Tanya: <i>"Bilangan users letak kat mana — <code>-G</code> atau <code>-J</code>? Nama site pula?"</i></p></aside>
+  <aside class="notes"><p>Ni cara run dia: mulakan agents dulu, baru controller.</p>
+<p>Kita ada dua mock "site". Port 3000 untuk KL. Port 3001 untuk PENANG, dengan latency tambahan 300 hingga 900 ms. Kedua-dua site sebenarnya run atas satu laptop — jarak PENANG cuma disimulasi dengan mock yang lebih slow. Setiap agent ada folder sendiri, sebab script <code>jmeter-server</code> dah tetapkan <code>-j jmeter-server.log</code>.</p>
+<p>Lepas tu controller run dengan <code>-R 127.0.0.1:1099,127.0.0.1:1100</code>, dan hasilnya satu run, satu report.</p>
+<p>Yang penting ialah beza flag. <code>-G</code> pada controller pergi ke semua agents dengan nilai sama — sesuai untuk load model, macam pengguna dan gelung. <code>-J</code> pada agent untuk agent tu je — sesuai untuk site dan port. <code>-J</code> pada controller kekal dalam controller. Jadi kalau anda letak <code>-Jsite=KL</code> pada controller, setiap agent masih label diri sebagai <code>LOKAL</code>. Bilangan users guna <code>-G</code>; nama site guna <code>-J</code> pada agent.</p></aside>
 </section>
 
 <section class="slide">
@@ -2513,7 +2609,10 @@ jmeter -n -t ../test-plans/09-berbilang-lokasi.jmx \
       <div class="card side m-jpj sm"><span class="k">RESPONSE TIME</span><h3>Differs by network distance</h3><p>Same server, same script — the far site pays the extra round trips in <b>every</b> request (Latency and Connect too).</p></div>
     </div>
   </div>
-  <aside class="notes"><p>Demo cue: buka report gabungan <code>hari-2/run/laporan/gabungan/index.html</code>. Statistics → cari <code>Pembaharuan</code> → dua baris transaksi sebelah-menyebelah. Kemudian Charts → Over Time → Active Threads.</p><p>Tanya: <i>"Baris Total kata p95 ok — boleh ke kita kata semua site ok?"</i> (Tak: Total campur semua site; site jauh yang kecil boleh tersorok dalam site dekat yang besar.)</p></aside>
+  <aside class="notes"><p>Ni dashboard gabungan. Dashboard yang sama, tapi ada beberapa perbezaan bila ada beberapa site.</p>
+<p>Dalam Statistics, setiap site ada baris sendiri untuk setiap langkah. Login KL: average 121 ms, p95 180 ms. Login PENANG: average 621 ms, p95 896 ms. Transaksi KL p95 640 ms, transaksi PENANG p95 3000 ms. Guna kotak search dalam jadual — taip <code>[PENANG]</code> untuk tengok satu site.</p>
+<p>Active Threads Over Time pula ada satu siri untuk setiap agent, dengan prefix host:port — 10 threads setiap satu, jumlah 20 users.</p>
+<p>Baris Total tunjuk average 363 ms dan p95 873 ms. Boleh ke kita kata semua site ok berdasarkan Total? Tak. Total campur semua site. Site jauh yang kecil boleh tersorok dalam site dekat yang besar. Jangan sebut Total seorang diri.</p></aside>
 </section>
 
 <section class="slide">
@@ -2532,7 +2631,10 @@ jmeter -n -t ../test-plans/09-berbilang-lokasi.jmx \
     <div class="card side m-fail sm"><span class="k">FINDING 1 · PENANG ≈ 5× SLOWER</span><h3>Transaction avg 2430 ms (p95 3000) vs KL 476 ms (p95 640)</h3><p>Every HTTP step ~570–670 ms vs ~110–130 ms, and <b>0% errors</b> at both sites → latency on the path to the site, not an application failure. Check PENANG's network/WAN route before blaming the server.</p></div>
     <div class="card side m-jpj sm"><span class="k">FINDING 2 · THE BLEND HIDES A SITE</span><h3>Combined avg 363 ms looks “OK”</h3><p>NFR p95 ≤ 800 ms per step: KL <b>PASS</b> (175–180 ms), PENANG <b>FAIL</b> (886–896 ms). Always report per site, never the blended average alone.</p></div>
   </div>
-  <aside class="notes"><p>Angka sebenar daripada run yang dah disahkan — <code>node laporan-lokasi.js banding laporan KL PENANG</code> cetak jadual ni daripada <code>statistics.json</code> setiap site. Baris Total tak termasuk baris Transaction Controller, jadi 240 = HTTP samples je. Jujur dengan kelas: "jarak" PENANG ialah mock yang lebih slow (<code>LATENCY_MIN=300 LATENCY_MAX=900</code>); dalam production ia latency WAN sebenar.</p><p>Tanya: <i>"PENANG lebih slow sebab server lebih slow ke?"</i> — Tak: server sama; bezanya laluan antara site dengan server. Itu cadangan <b>network / CDN / lokasi hosting</b>, bukan fix kod.</p></aside>
+  <aside class="notes"><p>Sekarang kita banding KL dengan PENANG. Script sama, server sama, tapi pengalaman user berbeza.</p>
+<p>Transaksi KL: average 476 ms, p95 640 ms. Transaksi PENANG: average 2430 ms, p95 3000 ms. Lebih kurang 5 kali lebih slow. Error % kedua-dua site 0%. Jadi ini bukan kegagalan aplikasi — ini latency pada laluan ke site tu.</p>
+<p>Dapatan kedua: gabungan menyorok satu site. Average gabungan 363 ms nampak "OK". Tapi kalau NFR p95 kurang atau sama 800 ms setiap langkah, KL pass dengan 175 hingga 180 ms, PENANG fail dengan 886 hingga 896 ms. Sentiasa report ikut site.</p>
+<p>Saya nak jujur: "jarak" PENANG di sini ialah mock yang lebih slow. Dalam production, itu latency WAN sebenar. Jadi PENANG lebih slow sebab server lebih slow ke? Tak — server sama. Bezanya laluan antara site dengan server. Cadangannya ialah network, CDN atau lokasi hosting, bukan betulkan kod.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -2565,7 +2667,10 @@ jmeter -g hasil/semua.jtl -o laporan/KL-f \
 #  -Jjmeter.reportgenerator.exporter.html.series_filter='^\\[KL\\]'</pre></div>
     </div>
   </div>
-  <aside class="notes"><p>Option B ialah apa yang kebanyakan organisasi betul-betul buat bila site berada dalam network berbeza: tak perlu ubah firewall, setiap site simpan JTL sendiri sebagai bukti. Prefix label tu yang buat hasil merge boleh dibaca.</p><p>Demo cue: <code>./run-berbilang-lokasi.sh gabung</code> = mod 2 — dua-dua site run secara lokal serentak, kemudian merge + report gabungan dan per-site. Helper tu tolak merge JTL yang header-nya berbeza. Gotcha yang dah disahkan: <code>series_filter='^\[KL\].*'</code> jadi <code>^[KL].*</code> dalam browser dan tak match apa-apa — gandakan backslash. Dalam mod merge, Active Threads Over Time cuma tunjuk <b>satu</b> siri (<code>Pengguna Pembaharuan Cukai</code>) — tak ada prefix host:port tanpa RMI, jadi site bercampur; guna label <code>[SITE]</code>. Tanya: <i>"Kenapa header mesti muncul sekali je?"</i> (Baris header kedua jadi baris sample palsu / parse error.)</p></aside>
+  <aside class="notes"><p>Ada dua cara untuk dapat report multi-site.</p>
+<p>Cara A, live distributed dengan <code>-R</code>. Satu run, satu <code>.jtl</code>, semua mula serentak. Tapi perlukan port RMI terbuka antara site.</p>
+<p>Cara B, setiap site run sendiri dengan <code>jmeter -n</code> biasa pada masa yang dipersetujui, kemudian salin JTL balik dan merge, lepas tu <code>-g</code>. Ini yang kebanyakan organisasi betul-betul buat bila site dalam network berbeza — tak perlu ubah firewall, dan setiap site simpan JTL sendiri sebagai bukti. Prefix label itulah yang buat hasil merge boleh dibaca.</p>
+<p>Bila merge, pastikan semua JTL ada lajur yang sama, dan header muncul sekali je. Kenapa? Sebab baris header kedua akan jadi sample palsu atau parse error. Satu lagi: dalam mod merge, Active Threads cuma tunjuk satu siri, jadi site bercampur — guna label <code>[SITE]</code>. Dan kalau guna <code>series_filter</code>, gandakan backslash, kalau tak ia tak match apa-apa.</p></aside>
 </section>
 
 <section class="slide">
@@ -2586,7 +2691,11 @@ jmeter -g hasil/semua.jtl -o laporan/KL-f \
       <div class="callout danger sm"><span class="i">🚫</span><div>Agents generate real load from <b>every</b> site: written authorisation must name every source network, not just the target.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Baca checklist sebagai soalan: "Dah check NTP? CSV ada kat setiap agent?" Clock skew paling licik — report nampak ok, tapi ramp-up satu site nampak teranjak dalam Active Threads Over Time. Dalam run yang kita sahkan, console summariser tunjuk results sampai secara berkelompok (85 samples, kemudian 155) — itu <code>StrippedBatch</code> yang batch samples pada agents.</p><p>Lab 8 (~15 minit) kemudian kuiz S3. Tanya: <i>"Dua agents guna baris pengguna.csv yang sama — apa yang tak kena?"</i> (Rakyat yang sama login dua kali serentak: session tak realistik, mungkin konflik pada bayaran.)</p></aside>
+  <aside class="notes"><p>Sebelum percaya report multi-site, check senarai ni.</p>
+<p>Dah check NTP pada setiap agent? Jam yang tak sama buat graf Over Time senget. Ini paling licik — report nampak ok, tapi ramp-up satu site nampak teranjak. CSV ada pada setiap agent, dengan path sama? Dan data dah dibahagi supaya site tak login sebagai user yang sama?</p>
+<p>Kalau dua agents guna baris <code>pengguna.csv</code> yang sama, apa yang tak kena? Rakyat yang sama login dua kali serentak. Session tak realistik, dan mungkin konflik pada bayaran.</p>
+<p>Lain-lain: controller boleh jadi bottleneck, jadi kekalkan mod <code>StrippedBatch</code> dan jangan guna GUI listeners. Port RMI terbuka dua hala. Versi JMeter dan Java sama. Dan jangan penuhkan link yang anda sedang ukur dengan hantar results.</p>
+<p>Paling penting: agents jana beban sebenar dari setiap site. Kebenaran bertulis mesti namakan setiap network sumber, bukan target je.</p></aside>
 </section>
 
 <!-- ---------- Day 2 · S4 ---------- -->
@@ -2603,7 +2712,9 @@ jmeter -g hasil/semua.jtl -o laporan/KL-f \
   <div class="labline"><b>LAB</b> Exercise 6 — Plan + Little's Law · Exercise 7 — Mini presentation · <b>QUIZ</b> S4 · Day quiz</div>
   <div class="dayrail"><span class="on"></span><span class="on"></span><span class="on"></span><span class="now"></span><em>Day 2 · S4 / S4</em></div>
   <div class="daynum"><small>SESSION</small>S4</div>
-  <aside class="notes"><p>Mesej utama: <b>"Bilangan users dikira, bukan diteka"</b> dan <b>"Hanya target yang ada kebenaran bertulis"</b>. Masa rehat, tulis <code>N = X × (R + Z)</code> dan angka R1 (10.46/s, 0.446 s, 4 s) atas papan.</p><p>Masa ketat (75 minit): Latihan 6 = 20 minit, Latihan 7 = 12 minit. <b>Jangan</b> potong penutup + borang penilaian. Kalau lewat: skip ⭐ CI/distributed/Grafana.</p></aside>
+  <aside class="notes"><p>Sesi 4, sesi terakhir: Merancang Performance Test.</p>
+<p>Dua mesej utama. Pertama: <b>bilangan users dikira, bukan diteka</b> — dengan formula <code>N = X × (R + Z)</code>. Kedua: test hanya pada target yang ada <b>kebenaran bertulis</b>.</p>
+<p>Kita akan lalu lifecycle test, NFR yang boleh diukur, load model dan Little's Law, pacing, jenis-jenis run, kriteria, monitoring dan risiko. Lepas tu anda isi templat plan dan buat pembentangan ringkas.</p></aside>
 </section>
 
 <section class="slide">
@@ -2630,7 +2741,10 @@ jmeter -g hasil/semua.jtl -o laporan/KL-f \
     <tr><td>7. Analyse</td><td>NFRs pass? Where is the limit? Why?</td><td>Findings</td><td>S3 ✅</td></tr>
     <tr><td>8. Report</td><td>What is the decision &amp; action?</td><td>Test report</td><td>S3 ✅</td></tr>
   </table>
-  <aside class="notes"><p>Kaitkan setiap fasa dengan apa yang mereka dah buat hari ni — fasa 3, 4, 6, 7, 8 dah siap. Petang ni kita isi fasa 1, 2 dan 5 — yang <b>sepatutnya</b> dibuat dulu.</p><p>Tanya: "Dalam projek anda, siapa yang tentukan apa itu 'cukup laju'?" Anak panah balik (8 → 6): betulkan dan run semula — banding dengan baseline.</p></aside>
+  <aside class="notes"><p>Ni lifecycle performance test, lapan fasa. Berita baiknya, anda dah buat separuh.</p>
+<p>Fasa 3, script — kita dah buat dalam S1 dan S2. Fasa 4, data CSV — S2. Fasa 6, execute — S3. Fasa 7 dan 8, analyse dan report — S3. Petang ni kita isi fasa 1, 2 dan 5: keperluan dan NFR, load model, dan environment serta monitoring. Ironinya, inilah fasa yang <b>sepatutnya</b> dibuat dulu.</p>
+<p>Soalan untuk anda fikir: dalam projek anda, siapa yang tentukan apa itu "cukup laju"?</p>
+<p>Perhatikan anak panah balik dari fasa 8 ke fasa 6. Lepas report, kita betulkan, run semula, dan banding dengan baseline.</p></aside>
 </section>
 
 <section class="slide">
@@ -2650,7 +2764,10 @@ jmeter -g hasil/semua.jtl -o laporan/KL-f \
     <div class="card top m-violet sm"><span class="k">SLO</span><h3>Internal target</h3><p>Operations — stricter than the SLA.</p></div>
     <div class="card top m-pass sm hot"><span class="k">NFR · WHAT WE TEST</span><h3>Before go-live</h3><p>JMeter: <b>Duration Assertion</b> (per sample) + <b>percentile</b> in the report.</p></div>
   </div>
-  <aside class="notes"><p>Tulis semula "portal mesti laju" bersama kelas jadi NFR SMART atas papan — transaksi + beban + metrik (percentile) + threshold + tempoh. Seksyen 3 templat plan ada NFR-01 hingga NFR-06 sebagai contoh.</p><p>Kuiz S4 #4: NFR terbaik = "Pada 10 transaksi/s selama 30 minit, transaksi Pembaharuan Cukai Jalan p95 ≤ 2000 ms dan Error % &lt; 1%". Tanya JPJ: "Siapa patut sign off NFR ni?" (pemilik sistem).</p></aside>
+  <aside class="notes"><p>Dari keperluan ke NFR. NFR yang boleh di-test mesti SMART: Specific — transaksi mana. Measurable — metrik dan percentile. Achievable. Relevant kepada bisnes. Time-bound — beban selama berapa lama.</p>
+<p>Contoh. "Portal mesti laju" — tak boleh di-test. Versi SMART: "Pada 10 transaksi/s selama 30 minit, transaksi Pembaharuan Cukai Jalan p95 ≤ 2000 ms, Error % kurang 1%." Ada transaksi, beban, percentile, threshold dan tempoh.</p>
+<p>"Boleh tampung ramai users" jadi "Sokong 600 concurrent users dengan CPU application server kurang 75%." "Tak ada error" jadi "Error % kurang 1% setiap transaksi; tak ada 5xx berterusan lebih 1 minit."</p>
+<p>SLA paling longgar — janji kepada user. SLO sasaran dalaman yang lebih ketat. NFR ialah apa yang kita test sebelum go-live. Dan siapa patut sign off NFR ni? Pemilik sistem.</p></aside>
 </section>
 
 <section class="slide">
@@ -2681,7 +2798,10 @@ R3:  X = 5.78    R = 3.954 s   Z = 4.0 s
       <div class="callout warn sm"><span class="i">🧮</span><div>Quiz: 18,000/hour, R = 2 s, Z = 28 s → X = 5 → N = <b>150</b>. Units: everything in <b>seconds</b>.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Momen kunci #6: <i>"Little's Law boleh bantu anda check report orang lain dalam 30 saat."</i> R1 dan R3: N sama (≈ 46), R naik, X turun — sebab tu throughput R3 jatuh 45%.</p><p>Salah faham biasa: "bilangan user = user berdaftar" — tak, <b>concurrent</b> users = X × (R + Z). Masalah lab: N terlalu kecil sebab lupa Z; N berjuta-juta sebab campur minit/saat. Semak kendiri #5: 50 ÷ 4.45 ≈ 11.2 trans/s dijangka.</p></aside>
+  <aside class="notes"><p>Bilangan users dikira, bukan diteka. Formulanya Little's Law: <code>N = X × (R + Z)</code>. N concurrent users, X throughput dalam transaksi sesaat, R response time, Z think time setiap iteration. Semua dalam saat.</p>
+<p>Contoh eJPJ — ini andaian latihan, bukan data rasmi. Waktu puncak, 36,000 pembaharuan sejam. Bahagi 3,600, dapat X = 10 transaksi/s, iaitu 40 requests/s. R kita ambil 2 s, had NFR. Z = 58 s. Jadi N = 10 × (2 + 58) = 600 concurrent users. Salah faham biasa: bilangan users sama dengan users berdaftar. Bukan — ini concurrent users.</p>
+<p>Kita dah sahkan dalam lab. R1: 10.46 × 4.446 ≈ 46.5. R3: 5.78 × 7.954 ≈ 46.0. Average active threads ≈ 45.8. N sama, R naik, X turun — sebab tu throughput R3 jatuh 45%.</p>
+<p>Little's Law boleh bantu anda check report orang lain dalam 30 saat. Kalau X × (R + Z) tak sama dengan average active threads, mungkin timer tak jalan, threads mati awal, atau generator overload. Contoh: 18,000 sejam, R 2 s, Z 28 s — X = 5, N = 150.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -2707,7 +2827,10 @@ R3:  X = 5.78    R = 3.954 s   Z = 4.0 s
       <div class="callout info sm"><span class="i">🗃️</span><div><b>Data:</b> enough <b>unique</b> test accounts (≈ N), synthetic, resettable. Reusing the same data = “false caching” (results too good).</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Kuiz S4 #2: 10 transaksi/s dengan CTT = Target <code>600</code> (samples <b>seminit</b>), <i>all active threads in current thread group (shared)</i>, anak kepada sampler login. Salah faham: "CTT 10 = 10/s" — unitnya seminit, jadi throughput jadi jauh lebih rendah.</p><p>Pacing berguna bila anda ada lebih threads daripada yang perlu atau nak kadar tetap (≈ open model dengan Precise Throughput Timer). Campuran 70/30 tu contoh dalam seksyen 5 templat.</p></aside>
+  <aside class="notes"><p>Sekarang pacing — macam mana nak kawal kadar.</p>
+<p>Constant Throughput Timer: Target throughput dalam samples <b>seminit</b>. Untuk 10 transaksi/s, kita letak <code>600</code>, pilih all active threads in current thread group (shared). Salah faham biasa: letak 10 dan ingat itu 10/s — sebenarnya 10 seminit. Precise Throughput Timer pula: 10 setiap tempoh 1 s, untuk 1800 s.</p>
+<p>Timer ni kira samples yang dia pengaruhi. Jadi letak sebagai child kepada sampler pertama, <code>1. POST /api/log-masuk</code>, untuk kawal kadar transaksi. Kita dah sahkan: CTT 300 sebagai child login, 50 users, login jadi 5.39/s — lebih kurang 300 seminit — walaupun 50 users boleh capai lebih kurang 10/s.</p>
+<p>Ingat, timer cuma boleh perlahankan. Kalau N kurang daripada X × (R + Z), sasaran tak tercapai — tambah threads. Untuk campuran transaksi, contohnya 70% pembaharuan, 7/s, dan 30% semak je, 3/s — guna Throughput Controller atau Thread Group berasingan. Dan sediakan akaun test sintetik yang cukup, lebih kurang N.</p></aside>
 </section>
 
 <section class="slide">
@@ -2722,7 +2845,10 @@ R3:  X = 5.78    R = 3.954 s   Z = 4.0 s
     <div class="card sm m-violet"><span class="k">6 · SOAK</span><svg class="shape" viewBox="0 0 160 46" preserveAspectRatio="none"><line x1="0" y1="44" x2="160" y2="44"/><path d="M2 42 L14 22 L158 22"/></svg><h3>Stable over the long term?</h3><p><code>-Jpengguna=35 -Jtempoh=1800</code> (real: hours)</p></div>
   </div>
   <div class="callout tip mt16"><span class="i">🧭</span><div><b>Always baseline first.</b> Without a baseline, you can't tell whether 1% errors are caused by load — or already exist at 1 user (our SUT's <code>ERROR_RATE</code> 1%).</div></div>
-  <aside class="notes"><p>Yang di-report: smoke = 0 error functional; baseline = angka rujukan untuk semua run; load = PASS/FAIL ikut NFR; stress = N maksimum sebelum NFR dilanggar; spike = error masa lonjakan + masa recovery; soak = trend RT &amp; memory. Seksyen 8 templat ada konfigurasi sistem sebenar (cth. load 600 users, ramp 10 minit, hold 30 minit).</p><p>Kuiz S4 #3: kenapa baseline dulu → untuk asingkan kesan beban daripada isu sedia ada. Tanya: "Test mana paling berisiko untuk sistem yang dikongsi?" (stress/spike — perlukan time window dan prosedur stop.)</p></aside>
+  <aside class="notes"><p>Jenis run, dan turutannya: smoke, baseline, load, stress, spike, soak.</p>
+<p>Smoke: script dan environment jalan ke? Plan 05, 10 × 2, 0 error functional. Baseline: beban rendah, 5 users — angka rujukan untuk semua run lain. Load: beban puncak dijangka, 50 users — PASS atau FAIL ikut NFR. Stress: naik berperingkat 50, 100, 150 — cari knee point, N maksimum sebelum NFR dilanggar. Spike: 150 users dengan ramp-up 1 s — ada error masa lonjakan, dan berapa lama nak recover? Soak: 35 users untuk 1800 s, dalam dunia sebenar berjam-jam — tengok trend response time dan memory.</p>
+<p>Kenapa baseline dulu? Tanpa baseline, kita tak tahu 1% error tu disebabkan beban, atau memang dah ada pada 1 user. SUT kita ada <code>ERROR_RATE</code> 1%.</p>
+<p>Test mana paling berisiko untuk sistem yang dikongsi? Stress dan spike. Dua-dua perlukan time window dan prosedur stop.</p></aside>
 </section>
 
 <section class="slide">
@@ -2752,7 +2878,10 @@ R3:  X = 5.78    R = 3.954 s   Z = 4.0 s
       <div class="callout info sm"><span class="i">🔍</span><div>Without server metrics, a report only answers <b>what</b> — not <b>why</b>.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Seksyen templat 9 (kriteria), 10 (monitoring), 11 (risiko). Lapisan monitoring: setiap lapisan ada <b>owner</b> yang jelas — kalau tak ada siapa monitor server, jangan mula.</p><p>Tanya: "Kalau Error % melonjak ke 15% pada minit ke-3, siapa tekan Stop — dan macam mana dia tahu?" Kriteria penggantungan ditulis <b>sebelum</b> run supaya tak ada perdebatan masa insiden.</p></aside>
+  <aside class="notes"><p>Bila nak mula, bila nak berhenti, dan siapa monitor.</p>
+<p>Entry criteria: script pass smoke, data sedia, environment dibekukan, monitoring aktif, ada kebenaran bertulis, NOC dan SOC dimaklumkan. Exit criteria: semua run siap, dianalisis berbanding NFR, report dihantar. Gantung test kalau Error % lebih 10% selama 2 minit, CPU load generator lebih 80%, atau pemilik sistem minta berhenti.</p>
+<p>Kalau Error % melonjak ke 15% pada minit ke-3, siapa tekan Stop, dan macam mana dia tahu? Sebab tu kriteria ni ditulis <b>sebelum</b> run — supaya tak ada perdebatan masa insiden.</p>
+<p>Setiap lapisan monitoring ada owner. Load generator dan JMeter — tester. Application server — pasukan aplikasi. Database — DBA. Kalau tak ada siapa monitor server, jangan mula. Tanpa server metrics, report cuma jawab "apa", bukan "kenapa". Dan untuk pihak ketiga macam payment gateway, guna stub — jangan sekali-kali jadikan mereka target.</p></aside>
 </section>
 
 <section class="slide">
@@ -2767,7 +2896,11 @@ R3:  X = 5.78    R = 3.954 s   Z = 4.0 s
     <tr><td>Designated staging environment; synthetic data</td><td>“Use a VPN so it isn't detected”</td></tr>
   </table>
   <div class="mnemo mt16"><span class="tag">JPJ REFLEX</span><p><i>“Who signed the authorisation for this test?”</i> — before anyone presses Start. In class: <code>localhost:3000</code> only, and <b>not</b> a colleague's IP.</p></div>
-  <aside class="notes"><p>Klien kita JPJ — mereka mesti balik dengan refleks ni. Kuiz hari #5: satu pasukan nak test portal JPJ sebenar dengan <code>07</code> pada 50 users → kebenaran bertulis + staging + skop + time window + prosedur stop; tanpa semua ni, hanya <code>localhost</code>/mock.</p><p>Seksyen 12 templat. Tanya: <i>"Siapa dalam organisasi anda yang sign off kebenaran load test?"</i> Kalau tak ada siapa tahu — itulah dapatan pertama mereka.</p></aside>
+  <aside class="notes"><p>Sebelum sesiapa tekan Start: siapa yang sign off?</p>
+<p>Load test sistem orang lain tanpa kebenaran sama dengan serangan DoS, dan melanggar undang-undang. Saiz beban tak relevan.</p>
+<p>Sebelum test sistem sebenar, wajib ada: kebenaran bertulis daripada pemilik sistem dan ketua infrastruktur atau keselamatan. Skop yang jelas — host, URL, endpoints, beban maksimum, time window. NOC dan SOC dimaklumkan, ada contact person dan prosedur STOP. Environment staging yang ditetapkan, dengan data sintetik.</p>
+<p>Alasan-alasan ni tak boleh diterima: "beban kecil je", "malam, tak ada siapa perasan", "saya kerja kat jabatan ni", atau "guna VPN supaya tak dikesan".</p>
+<p>Refleks JPJ: "Siapa yang sign kebenaran untuk test ni?" — tanya sebelum sesiapa tekan Start. Contoh: satu pasukan nak test portal JPJ sebenar dengan plan 07 pada 50 users. Mereka perlukan kebenaran bertulis, staging, skop, time window dan prosedur stop. Tanpa semua tu, hanya <code>localhost</code> dan mock. Dalam kelas ni, <code>localhost:3000</code> je — bukan IP rakan sebelah. Dalam organisasi anda, siapa yang sign off kebenaran load test? Kalau tak ada siapa tahu, itulah dapatan pertama anda.</p></aside>
 </section>
 
 <section class="slide">
@@ -2795,7 +2928,10 @@ R3:  X = 5.78    R = 3.954 s   Z = 4.0 s
       <div class="callout tip sm"><span class="i">⏱️</span><div>Maximum 45 s per part · one key figure per part. Other pairs ask <b>one</b> question: <i>“How do you know …?”</i></div></div>
     </div>
   </div>
-  <aside class="notes"><p>Latihan 6 (4.18–4.38 petang): pastikan setiap pasangan ada kiraan N dalam saat. Kalau lewat: seksyen 3 (NFR) + Lampiran A + 12 (kebenaran) je. Check dengan data lab: 50 users × (R + 4 s) bagi TPS yang dijangka ke?</p><p>Latihan 7 (4.38–4.50 petang): 3–4 pasangan sukarela; kalau masa singkat, 2. Nilai secara formatif. Cadangan soalan: "Macam mana anda tahu Z = 58 s?" — daripada analytics/log sistem sebenar, bukan teka.</p></aside>
+  <aside class="notes"><p>Sekarang bengkel. Latihan 6: isi plan. Latihan 7: bentang dalam 3 minit.</p>
+<p>Templat <code>templat-pelan-ujian.md</code> ada 14 seksyen, dan contoh eJPJ dah diisi. Antaranya NFR dalam seksyen 3, load model dan Little's Law dalam seksyen 4, kebenaran dan etika dalam seksyen 12, dan worksheet Little's Law dalam Lampiran A.</p>
+<p>Untuk Latihan 6, buat secara berpasangan. Pilih satu senario: cukai jalan, bayar saman pada hari terakhir diskaun, atau sistem dalaman — konsep je. Sekurang-kurangnya 4 NFR, kira V ke X ke N, hits/s, dan CTT = X × 60. Pastikan kiraan N dalam saat.</p>
+<p>Untuk Latihan 7, setiap pasangan bentang NFR utama, kiraan N, jenis run, dan satu dapatan daripada S3. Maksimum 45 s setiap bahagian, satu angka utama setiap bahagian. Ayat penutup wajib: "Sebelum test sebenar, kami perlukan kebenaran bertulis daripada …". Pasangan lain boleh tanya satu soalan, contohnya "Macam mana anda tahu Z = 58 s?" Jawapan yang baik: daripada analytics atau log sistem sebenar, bukan teka.</p></aside>
 </section>
 
 <section class="slide codey">
@@ -2815,7 +2951,10 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
       <div class="card top m-pass sm"><span class="k">GRAFANA</span><h3>Backend Listener → InfluxDB</h3><p><code>InfluxdbBackendListenerClient</code>. Grafana = <b>live</b> monitoring; HTML dashboard = post-mortem <b>afterwards</b>.</p></div>
     </div>
   </div>
-  <aside class="notes"><p>Konsep je — tak ada demo (4.50–4.53 petang). Skip kalau lewat. ⭐ Cabaran Latihan 7: run blok ni pada <code>laporan07-sla2000</code> dan <code>laporan07-sla150</code>, tunjuk <code>echo $?</code>.</p><p>Salah faham biasa: "distributed bahagikan threads antara workers" — setiap worker run keseluruhan Thread Group. Tanya: "Untuk soak 4 jam, anda monitor guna apa?" (Backend Listener + Grafana secara live; HTML dashboard selepas tu.)</p></aside>
+  <aside class="notes"><p>Slaid ni sekilas pandang je — bila plan dah jadi rutin.</p>
+<p>Pertama, SLA gate dalam CI. <code>jmeter -n</code> keluar dengan code 0 walaupun samples gagal. Jadi kita baca <code>statistics.json</code>, ambil p95 dan error, dan gagalkan pipeline kalau langgar. Untuk R1: p95 583 ms, error 1.0033% — FAIL, tepat atas had, sebab 500 sintetik. Alternatif lain: Taurus passfail atau Jenkins Performance plugin.</p>
+<p>Kedua, distributed. Salah faham biasa: distributed bahagikan threads antara workers. Tak — setiap worker run keseluruhan Thread Group. <code>-Gpengguna=100</code> dengan 2 workers jadi 200. CSV mesti ada pada setiap worker.</p>
+<p>Ketiga, Grafana melalui Backend Listener ke InfluxDB. Untuk soak 4 jam, kita monitor secara live guna Grafana; HTML dashboard untuk post-mortem selepas tu.</p></aside>
 </section>
 
 
@@ -2833,7 +2972,10 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
     <div class="card sm"><h3>🗺️ Plan tests</h3><p>SMART NFRs, Little's Law, pacing, run types, criteria, authorisation.</p></div>
   </div>
   <div class="org"><i></i><span>And always: <b>written authorisation</b> before generating load</span></div>
-  <aside class="notes"><p>Baca enam kemahiran tu dan minta peserta nilai diri sendiri secara senyap (1–5) untuk setiap satu. Kemahiran dengan skor paling rendah = fokus praktis mereka lepas kursus.</p><p>Semak objektif Hari 2 O1–O9 dengan angkat tangan. Skrip: <i>"Hari 1 anda belajar jana beban. Hari 2 anda belajar jana beban yang <b>betul</b>, baca apa yang ia beritahu, dan rancang supaya keputusannya boleh dipercayai."</i></p></aside>
+  <aside class="notes"><p>Dua hari dengan JMeter. Sekarang anda boleh test — dan pertahankan keputusannya.</p>
+<p>Enam kemahiran. Bina Test Plan. Record dan replay, termasuk diagnose 401 dan 403, dan faham "hijau tak semestinya betul". Buat plan boleh di-replay — correlation token dan csrf, CSV, Transaction Controller, think time, assertions. Jana dan baca report — setiap bahagian dashboard, APDEX, percentile, latency. Tulis dapatan — Evidence, Impact, Cause, Recommendation. Dan rancang test — NFR SMART, Little's Law, pacing, jenis run, kriteria, kebenaran.</p>
+<p>Cuba nilai diri sendiri dalam kepala, 1 hingga 5, untuk setiap satu. Yang paling rendah — itulah fokus praktis anda lepas kursus.</p>
+<p>Hari 1 anda belajar jana beban. Hari 2 anda belajar jana beban yang <b>betul</b>, baca apa yang ia beritahu, dan rancang supaya keputusannya boleh dipercayai. Dan sentiasa: kebenaran bertulis sebelum jana beban.</p></aside>
 </section>
 
 <section class="slide">
@@ -2859,7 +3001,10 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
     <tr><td>Timer, CSV Data Set</td><td>Interpretation, baseline, written findings</td></tr>
     <tr><td>HTTP(S) Test Script Recorder recording</td><td>Test plan: NFRs, Little's Law, pacing, run types, authorisation</td></tr>
   </table>
-  <aside class="notes"><p>Ceritakan semula perjalanan: recording yang gagal pada Hari 1 dirakam semula, dikemaskan, di-run, dibaca, dan akhirnya dirancang sebagai test sebenar. Setiap sesi tambah satu lapisan.</p><p>Tanya: "Apa satu perkara yang anda akan ubah dalam cara pasukan anda report performance lepas kursus ni?"</p></aside>
+  <aside class="notes"><p>Kita imbas balik perjalanan dua hari ni.</p>
+<p>Hari 1: install Java, JMeter dan SUT. Bina Test Plan dan Thread Group. Validate dengan Assertion, Timer, CSV. Lepas tu record — dan replay gagal dengan 401.</p>
+<p>Hari 2: kita rakam semula dan nampak 200, 401, 200, 401. Kemaskan dengan correlation, CSV dan Transaction Controller. Jana report, baca dashboard, tulis dapatan. Dan akhir sekali, rancang test dengan NFR dan Little's Law.</p>
+<p>Recording yang gagal pada Hari 1 tu akhirnya dirakam semula, dikemaskan, di-run, dibaca, dan dirancang sebagai test sebenar. Setiap sesi tambah satu lapisan. Soalan untuk anda: apa satu perkara yang anda akan ubah dalam cara pasukan anda report performance lepas kursus ni?</p></aside>
 </section>
 
 <section class="slide">
@@ -2873,7 +3018,10 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
     <div class="card top m-fail sm"><span class="ico">📝</span><h3>Before any real system</h3><p>Written authorisation, staging, a time window, the infra team monitoring alongside.</p></div>
     <div class="card top m-jpj sm"><span class="ico">📚</span><h3>Official documentation</h3><p>Generating Report Dashboard · Glossary · Best Practices — <code>jmeter.apache.org/usermanual</code>.</p></div>
   </div>
-  <aside class="notes"><p>Cadangkan setiap peserta pilih SATU laluan dan tetapkan projek kecil dalam 30 hari — contohnya test plan (templat) untuk salah satu sistem unit mereka, dibincang dengan pemilik sistem sebelum sebarang run.</p><p>Repo kursus kekal sebagai rujukan: README setiap hari, lab, reference plans, templat plan &amp; report.</p></aside>
+  <aside class="notes"><p>Lepas kursus ni, ke mana kita pergi?</p>
+<p>Ulang apa yang kita buat hari ni di rumah: <code>node sut/server.js</code>, record, kemaskan, run 07, report — semua tanpa internet. Record flow web sebenar pada sistem staging yang anda ada kebenaran, guna Firefox dan proxy 8888. Tengok berapa requests untuk satu klik, dan tambah HTTP Cookie Manager.</p>
+<p>Guna templat <code>templat-pelan-ujian.md</code> dan <code>templat-laporan-ujian.md</code> untuk projek sebenar pertama anda. Kalau nak pergi lebih jauh: <code>apdex_per_transaction</code>, SLA gate dalam CI, Backend Listener dan Grafana. Dokumentasi rasmi ada di jmeter.apache.org/usermanual.</p>
+<p>Cadangan saya: pilih SATU laluan, dan tetapkan projek kecil dalam 30 hari. Contohnya test plan untuk salah satu sistem unit anda, dibincang dengan pemilik sistem sebelum sebarang run. Dan sebelum sentuh sistem sebenar: kebenaran bertulis, staging, time window, dan pasukan infra monitor sekali. Repo kursus kekal sebagai rujukan.</p></aside>
 </section>
 
 <section class="slide">
@@ -2891,7 +3039,10 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
       <div class="callout tip"><span class="i">💬</span><div>Honest feedback helps us improve the course for the next JPJ cohort — especially: pace, labs, and relevance to your work.</div></div>
     </div>
   </div>
-  <aside class="notes"><p>Bagi 3 minit dalam kelas untuk isi borang — jangan tinggal untuk "nanti". Kadar respons jauh lebih tinggi berbanding "isi kat rumah".</p><p>Sijil penyertaan dikeluarkan oleh penganjur bila kehadiran dan borang penilaian disahkan — jangan janji tarikh yang anda tak kawal. Kalau peserta tak nampak menu Borang penilaian, catat nama dan maklumkan penganjur.</p></aside>
+  <aside class="notes"><p>Sebelum balik, satu perkara: borang penilaian kursus.</p>
+<p>Buka pelatih.my, log masuk dengan akaun peserta, pergi ke menu "Borang penilaian". Borang ni dah dibuka sejak 2.00 petang tadi. Saya bagi 3 minit sekarang untuk isi — lebih baik isi sekarang daripada "nanti kat rumah".</p>
+<p>Jangan lupa hantar kuiz Sesi 4 dan kuiz hari juga. Itu yang lengkapkan checkpoint lab dan item penilaian kendiri Hari 2.</p>
+<p>Sijil penyertaan diuruskan oleh penganjur selepas kursus, bila kehadiran dan borang penilaian disahkan. Kalau anda tak nampak menu Borang penilaian, beritahu saya, saya akan maklumkan penganjur. Maklum balas yang jujur bantu kami perbaiki kursus untuk kumpulan JPJ seterusnya — terutamanya pasal pace, lab, dan kaitan dengan kerja anda.</p></aside>
 </section>
 
 <section class="slide dark cover">
@@ -2906,7 +3057,9 @@ awk -v p="$P95" -v e="$ERR" 'BEGIN { exit !(p &lt; 2000 &amp;&amp; e &lt; 1) }' 
   </div>
   <p class="mt24" style="font-size:17px;color:#A9BAD6">Questions? · Borang penilaian (pelatih.my) · Certificates</p>
   <div class="org"><i></i> Performance Testing with Apache JMeter · Jabatan Pengangkutan Jalan Malaysia (JPJ) · 21 Sep &amp; 5 Oct 2026</div>
-  <aside class="notes"><p>Mesej etika terakhir: <i>"Repo ni, SUT ni, templat ni — bawa balik. Tapi sebelum JMeter dihalakan ke sistem JPJ sebenar: kebenaran bertulis, staging, time window, dan pasukan infra monitor bersama."</i></p><p>Terima kasih kepada peserta dan penganjur. Soalan terbuka terakhir: "Apa satu perkara yang anda akan guna di tempat kerja minggu depan?"</p></aside>
+  <aside class="notes"><p>Terima kasih semua. Dua hari: dari satu user pada <code>/api/health</code>, ke recording yang boleh di-replay, report yang anda boleh terangkan baris demi baris, dan test plan yang anda boleh pertahankan.</p>
+<p>Repo ni, SUT ni, templat ni — bawa balik. Tapi sebelum JMeter dihalakan ke sistem JPJ sebenar: kebenaran bertulis, staging, time window, dan pasukan infra monitor bersama.</p>
+<p>Terima kasih juga kepada penganjur. Soalan terakhir untuk semua: apa satu perkara yang anda akan guna di tempat kerja minggu depan?</p></aside>
 </section>
 
 
