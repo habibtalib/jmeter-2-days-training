@@ -19,7 +19,7 @@
 | Fokus (permintaan penganjur) | **Rakam & main balik untuk menghasilkan laporan**, **penerangan laporan & istilah**, dan **cara merancang ujian**. Korelasi diajar sebagai alat untuk menjadikan rakaman boleh dimain balik — bukan topik berdiri sendiri. Logic controller lanjutan, JSR223, CI, distributed, Grafana = ⭐ sekilas. |
 | Nisbah | S1 ~40% demo/penerangan · S2 ~35% · S3 ~55% (dashboard & istilah) · S4 ~45% · selebihnya lab |
 | Bahan | Projektor dua panel: Terminal A (log SUT) + JMeter GUI / pelayar (dashboard). Papan putih: perjalanan pengguna 4 langkah, jadual 401/403, formula APDEX, Little's Law. |
-| Momen kunci | (1) S1: main balik tanpa restart = **semua hijau** → restart → 200/401/200/401; (2) S1: token sahaja dikorelasi → **403**; (3) S2: Aggregate Report 80 + 20, transaksi ≈ 440 ms walaupun think time 1–3 s; (4) S3: graf Over Time 1 titik → jana semula `-g` dengan butiran 5 s; (5) S3: SLA 150 ms → Error % 1% → 22% tanpa sistem berubah; (6) S4: Little's Law meramal 46 pengguna daripada laporan |
+| Momen kunci | (1) S1: main balik tanpa restart = **semua hijau** → restart → 200/401/200/401; (2) S1: token sahaja dikorelasi → **403**; (3) S2: Aggregate Report 80 + 20, transaksi ≈ 440 ms walaupun think time 1–3 s; (4) S3: graf Over Time 1 titik → jana semula `-g` dengan butiran 5 s; (5) S3: SLA 150 ms → Error % 1% → 22% tanpa sistem berubah; (6) S4: Little's Law meramal 46 pengguna daripada laporan; (7) S3 §3.9: purata gabungan 363 ms menyembunyikan PENANG p95 ≈ 890 ms |
 | Hasil wajib hujung hari | ≥ 85% peserta: Latihan 3 (plan boleh dimain balik) + Latihan 4 (lembaran kerja dashboard) + Latihan 6 (pelan dengan pengiraan N) + Kuiz hari dihantar |
 | Kemajuan dalam pelatih.my | JMeter berjalan di laptop peserta — LMS tidak nampak. Item terakhir setiap ✅ Checkpoint ditanda apabila **Kuiz S1–S4** lulus; "Isi penilaian kendiri Hari 2" ditanda oleh **Kuiz hari**. Ingatkan peserta menghantar kuiz di hujung setiap sesi. |
 
@@ -34,6 +34,7 @@
 | `07` R3 (mock perlahan port 3001, 500–1500 ms) | Total 22.78/s; transaksi **5.78/s**, Avg 3954, p95 **4969**; APDEX Total 0.401 |
 | Little's Law | R1: 10.46 × (0.446 + 4.0) ≈ 46.5 · R3: 5.78 × (3.954 + 4.0) ≈ 46.0 · purata thread aktif ≈ 45.8 (ramp-up 10 s) |
 | Constant Throughput Timer 300/min (shared, current TG) sebagai anak log masuk | log masuk 5.39/s ≈ 323/min |
+| `09` teragih (`run-berbilang-lokasi.sh`, 10 × 3 setiap ejen, 2 ejen) | Gabungan 240 sampel HTTP, 0% ralat, Avg 363, p95 873, 6.90/s; transaksi KL Avg 476 / p95 640; PENANG Avg 2430 / p95 3000; langkah p95 KL 175–180, PENANG 886–896; Active Threads: 2 siri (`127.0.0.1:1099-…`, `127.0.0.1:1100-…`) |
 
 > Angka peserta akan berbeza sedikit (latensi mock rawak 40–180 ms, `ERROR_RATE` 1%). Tekankan **corak**, bukan nilai tepat.
 
@@ -147,16 +148,32 @@ Ingatkan: **jangan tutup Terminal A**. Jurulatih: buka laporan sandaran R1/R2/R3
 | Masa | Minit | Aktiviti | Nota |
 |------|------:|----------|------|
 | 2.00–2.05 | 5 | Tenaga: *"Siapa pernah diminta 'buat laporan' daripada tangkap layar?"* Maklumkan borang penilaian sudah dibuka. | |
-| 2.05–2.15 | 10 | 🎬 §3.1: `mkdir -p hasil` → `jmeter -n -t …05… -l … -e -o …` → buka `index.html`. Kemudian `-g` ke folder baharu dengan `overall_granularity=5000`. Tunjuk ralat `folder is not empty`. Anatomi `.jtl` (buka dalam editor). | Jika lupa `mkdir`: ralat `parent folder is not writable` — tunjuk sebagai pengajaran. |
-| 2.15–2.35 | 20 | 🎬 **Lawatan dashboard** (§3.2–3.3) menggunakan laporan sandaran R1: Test and Report information → APDEX (formula di papan; kenapa transaksi 0.862; gagal = Frustrated) → Requests Summary → Statistics (4 kumpulan lajur; Total ≠ transaksi) → Errors → Top 5 → Over Time (6 graf) → Throughput (5 graf: Hits vs TPS vs Total TPS; Codes/s) → Response Times (4 graf). | **Momen kunci #4.** Tunjuk laporan butiran 60 s (1 titik) vs 5 s. Jangan baca setiap graf panjang lebar — satu soalan setiap graf (lajur "Soalan" dalam README). |
-| 2.35–2.50 | 15 | **Latihan 4** — lembaran kerja 14 baris. | Pasangan pantas → bandingkan `statistics.json` dengan jadual. |
-| 2.50–3.00 | 10 | §3.5 glosari (pilih 8: response time / latency / connect, throughput / hits / TPS, percentile vs average, APDEX, saturation) + §3.6 jadual corak. Contoh "average menipu" di papan. | Glosari ialah rujukan — jangan baca semua 30 baris. |
-| 3.00–3.05 | 5 | 🎬 §3.7: lancarkan R1 & R2 (60 s setiap satu) — terangkan Duration Assertion semasa menunggu. | Peserta mula Latihan 5 serentak. |
-| 3.05–3.25 | 20 | **Latihan 5** — larian + jadual perbandingan + 3 dapatan. Tunjuk contoh bahagian B `templat-laporan-ujian.md`. | **Momen kunci #5:** R2 — Error % 1% → 22% tanpa sistem berubah. *"Yang berubah hanya definisi 'cukup laju'."* |
+| 2.05–2.13 | 8 | 🎬 §3.1: `mkdir -p hasil` → `jmeter -n -t …05… -l … -e -o …` → buka `index.html`. Kemudian `-g` ke folder baharu dengan `overall_granularity=5000`. Tunjuk ralat `folder is not empty`. Anatomi `.jtl` (buka dalam editor). | Jika lupa `mkdir`: ralat `parent folder is not writable` — tunjuk sebagai pengajaran. |
+| 2.13–2.25 | 12 | 🎬 **Lawatan dashboard** (§3.2–3.3, **dipendekkan**) menggunakan laporan sandaran R1: Test and Report information → APDEX (formula di papan; gagal = Frustrated) → Statistics (Total ≠ transaksi) → Errors/Top 5 → **3 graf sahaja**: Active Threads, Response Times Over Time, Total TPS (+ Codes/s untuk R2). Graf lain = rujukan README §3.3 / Latihan 4. | **Momen kunci #4.** Tunjuk laporan butiran 60 s (1 titik) vs 5 s. Satu soalan setiap graf. |
+| 2.25–2.38 | 13 | **Latihan 4** — lembaran kerja (pasangan pantas lengkapkan 14 baris; lain-lain sekurang-kurangnya 8). | Pasangan pantas → bandingkan `statistics.json` dengan jadual. |
+| 2.38–2.45 | 7 | §3.5 glosari (pilih 6: response time / latency, throughput / TPS, percentile vs average, APDEX, saturation) + §3.6 jadual corak. Contoh "average menipu" di papan. | Glosari ialah rujukan — jangan baca semua baris. |
+| 2.45–2.48 | 3 | 🎬 §3.7: lancarkan R1 & R2 (60 s setiap satu) — terangkan Duration Assertion semasa menunggu. | Peserta mula Latihan 5 serentak. |
+| 2.48–3.05 | 17 | **Latihan 5** — larian + jadual perbandingan + **2** dapatan dalam kelas (dapatan ke-3 kerja rumah). Tunjuk contoh bahagian B `templat-laporan-ujian.md`. | **Momen kunci #5:** R2 — Error % 1% → 22% tanpa sistem berubah. *"Yang berubah hanya definisi 'cukup laju'."* |
+| 3.05–3.12 | 7 | 🎬 **§3.9 Laporan berbilang lokasi** — demo `./run-berbilang-lokasi.sh` (skrip di bawah). | **Momen kunci #7:** purata gabungan 363 ms "OK" — PENANG p95 ≈ 890 ms gagal. |
+| 3.12–3.25 | 13 | **Latihan 8** — jalankan skrip, buka 3 laporan, isi lembaran perbandingan, 2 dapatan lokasi. | Peserta lambat: guna laporan jurulatih (kongsi skrin) dan isi lembaran sahaja. Pastikan SUT Terminal A dihentikan dahulu (port 3000). |
 | 3.25–3.30 | 5 | Checkpoint + **Kuiz S3**. | |
 
 **Skrip ringkas (percentile):**
 > *"Jika 100 rakyat memperbaharui cukai dan purata 300 ms, kita tidak tahu apa-apa tentang rakyat yang paling lambat. p95 583 ms bermaksud: 95 orang selesai dalam 0.6 saat, 5 orang lebih lama. NFR yang baik melindungi 5 orang itu."*
+
+**🎬 Skrip demo §3.9 (7 minit) — laporan berbilang lokasi:**
+
+Sebelum kelas: jalankan sekali `cd hari-2/run && ./run-berbilang-lokasi.sh` untuk memanaskan JVM dan menyimpan laporan sandaran. Semasa demo: **hentikan SUT Terminal A** (skrip guna port 3000/3001/1099/1100/4001/4002).
+
+1. *(1 min)* Papan putih: controller + 2 ejen (KL 1099, PENANG 1100). *"JPJ meletakkan penjana beban di beberapa negeri — satu ujian, dua lokasi. Ejen menjana beban; controller hanya mengumpul."*
+2. *(2 min)* `./run-berbilang-lokasi.sh` (≈ 45 s). Semasa berjalan, tunjuk dalam skrip: `-Jsite=KL` pada ejen (setempat) vs `-Gpengguna=10` pada controller (semua ejen) → **10 × 2 = 20 pengguna**. Tunjuk `summary +` yang datang berlonggok: *"sample sender StrippedBatch — sampel dihantar balik berkelompok."*
+3. *(2 min)* `laporan/gabungan`: Statistics — baris `[KL]` & `[PENANG]`; Active Threads Over Time — **dua siri** `127.0.0.1:1099-…` dan `127.0.0.1:1100-…` (bukti kedua-dua ejen berjalan). Total: purata 363 ms.
+4. *(2 min)* Jadual perbandingan di konsol + `laporan/PENANG`: transaksi KL 476 ms vs PENANG 2430 ms; p95 langkah 180 vs 890 ms; ralat 0% kedua-dua.
+
+**Mesej utama:** *"Satu ujian, banyak lokasi → satu laporan gabungan untuk beban & throughput, tetapi keputusan NFR mesti **per lokasi**. Purata gabungan menyembunyikan lokasi yang gagal. Labelkan sampel dengan lokasi (`[${__P(site)}]`) supaya anda boleh memecahkannya kemudian."*
+
+**Soalan dijangka — *"Kenapa masa PENANG lebih tinggi?"***
+> Dalam demo: kerana kita sengaja memberi mock PENANG latensi 300–900 ms (`LATENCY_MIN/MAX`) untuk meniru laluan rangkaian jauh; mock KL 40–180 ms. Aplikasi dan beban sama (10 pengguna setiap ejen), ralat 0% di kedua-dua → perbezaan ialah **kependaman**, bukan kapasiti pelayan. Di dunia sebenar, masa respons yang diukur oleh ejen = rangkaian (RTT, DNS, TLS, laluan WAN/ISP) **+** pelayan. Jika semua ejen menyasarkan pelayan yang **sama** dan hanya satu lokasi lambat → syak rangkaian/laluan lokasi itu (bandingkan `Connect` dan `Latency` dalam JTL; traceroute). Jika semua lokasi lambat bersama apabila beban naik → syak pelayan. Juga semak ejen itu sendiri (CPU penuh, jam tidak segerak) sebelum membuat kesimpulan.
 
 **Soalan untuk ditanya:**
 - "Kenapa APDEX transaksi 0.86 tetapi setiap langkah 1.0?" (transaksi 4 langkah ≈ 450 ms dinilai dengan T = 500 ms yang sama)
@@ -194,7 +211,7 @@ Jurulatih: tulis di papan formula `N = X × (R + Z)` dan angka R1 (10.46/s, 0.44
 | 4.10–4.18 | 8 | §4.4–4.7: campuran transaksi, baseline → load → stress → spike → soak, kriteria masuk/keluar/gantung, pemantauan, risiko, **kebenaran bertulis**. | Tanya JPJ: *"Siapa dalam organisasi anda yang menandatangani kebenaran ujian beban?"* |
 | 4.18–4.38 | 20 | **Latihan 6** — isi templat pelan (pasangan). | Pastikan setiap pasangan mempunyai pengiraan N yang betul unit (saat). |
 | 4.38–4.50 | 12 | **Latihan 7** — pembentangan mini, 3–4 pasangan × 3 minit. | Pilih sukarelawan; jika masa singkat, 2 pasangan. Satu soalan "Bagaimana anda tahu…?" setiap pasangan. |
-| 4.50–4.53 | 3 | ⭐ §4.9 sekilas: CI (`jmeter -n` keluar 0 walaupun gagal → gerbang `statistics.json`), distributed (setiap worker = seluruh Thread Group, `-G`), Grafana (semasa vs selepas). | Konsep sahaja — tiada demo. |
+| 4.50–4.53 | 3 | ⭐ §4.9 sekilas: CI (`jmeter -n` keluar 0 walaupun gagal → gerbang `statistics.json`), distributed (sudah didemo di §3.9 — hanya ulang: setiap worker = seluruh Thread Group, `-G`), Grafana (semasa vs selepas). | Konsep sahaja — tiada demo. |
 | 4.53–5.00 | 7 | **Penutup** (lihat di bawah). | **Jangan** potong penutup + borang penilaian. |
 
 **Penutup — skrip (7 minit):**

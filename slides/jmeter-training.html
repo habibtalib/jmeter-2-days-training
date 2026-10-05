@@ -341,6 +341,8 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
 .shot{margin:0;border-radius:12px;overflow:hidden;border:1px solid var(--line-2);box-shadow:var(--shadow);background:#fff;min-width:0}
 .shot img{display:block;width:100%;height:auto}
 .shot{cursor:zoom-in}
+.shot.fit img{max-height:var(--mh,420px);width:auto;max-width:100%;margin:0 auto}
+.shots2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
 .lightbox{position:fixed;inset:0;z-index:65;background:rgba(4,10,26,.95);display:none;place-items:center;padding:2vh 2vw;cursor:zoom-out}
 .lightbox.open{display:grid}
 .lightbox img{max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
@@ -1485,6 +1487,20 @@ jmeter -g /tmp/rec.jtl -o /tmp/laporan-rakaman/</pre></div>
   <aside class="notes"><p>Demo §1.3: File → Open <code>hari-1/test-plans/rakam-template.jmx</code> → <b>Save As</b> <code>hari-2/test-plans/latihan-01-rakaman.jmx</code> (the original file stays unchanged; the CSV path resolves in S2). The original template uses <i>Add separators between groups</i> — switch to Transaction Controllers.</p><p>HTTPS? Our SUT is <code>http://</code>, so no CA certificate is needed (see <code>rakaman-https-setup.md</code>). Ask: "Why do we remove Google Analytics from the recording?" — it is third-party, not our load, and not our system.</p></aside>
 </section>
 
+<section class="slide">
+  <div class="eyebrow">Day 2 · S1 — Screenshot <span class="xy">rakam-template.jmx</span></div>
+  <h2 class="wide">The recorder in JMeter — what you will see</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.45fr) minmax(0,.55fr)">
+    <figure class="shot fit" style="--mh:430px"><img src="img/h2-29-gui-recorder-settings.png" alt="JMeter HTTP(S) Test Script Recorder: port 8888, Target Controller set to the Recording Controller, grouping and naming options"><figcaption>HTTP(S) Test Script Recorder · port <code>8888</code> · Target Controller = Recording Controller</figcaption></figure>
+    <div class="stack tight">
+      <div class="callout info sm"><span class="i">🔌</span><div><b>Port 8888</b> = the proxy Firefox talks to. The SUT itself stays on <code>3000</code>.</div></div>
+      <div class="callout warn sm"><span class="i">🗂️</span><div><b>Grouping</b>: the template shows <i>Add separators between groups</i> — switch it to <b>Put each group in a new transaction controller</b> before Start.</div></div>
+      <div class="callout tip sm"><span class="i">🔍</span><div>Click the screenshot to zoom.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Point at: the <b>Port</b> field (8888), the <b>Target Controller</b> drop-down (Recording Controller), then the <b>Grouping</b> drop-down — the template still says "Add separators between groups"; change it as on the previous slide.</p><p>Then the <b>Start</b> button at the top. Ask: "If Target Controller says Use Recording Controller but there is none, where do samplers go?"</p></aside>
+</section>
+
 <section class="slide codey">
   <div class="eyebrow">Day 2 · S1 — Record (Exercise 1)</div>
   <h2>Generate traffic through the proxy — wait &gt; 5 s between steps</h2>
@@ -1664,6 +1680,20 @@ summary = 3 … <span class="e">Err: 2 (66.67%)</span></div>
   <aside class="notes"><p>Live build §2.3 (type slowly): right-click the login sampler → Add → Post Processors → JSON Extractor. Number of Names = number of Paths, separated by <code>;</code> — common mistake: commas or spaces.</p><p>Question: "Why default <code>TOKEN_TAK_JUMPA</code> (token not found), not empty?" — the failure is visible immediately in the Request tab. S2 Quiz #2: an extractor under the Thread Group overwrites the token after every sampler.</p></aside>
 </section>
 
+<section class="slide">
+  <div class="eyebrow">Day 2 · S2 — Screenshot <span class="xy">05-transaksi-penuh.jmx</span></div>
+  <h2 class="wide">JSON Extractor in the GUI: two variables in one element</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.6fr) minmax(0,.4fr)">
+    <figure class="shot fit" style="--mh:380px"><img src="img/h2-27-gui-json-extractor-05.png" alt="JMeter GUI with the JSON Extractor Ekstrak token + csrf: names token;csrf, JSON paths $.token;$.csrf, defaults TOKEN_TAK_JUMPA;CSRF_TAK_JUMPA"><figcaption>JSON Extractor “Ekstrak token + csrf” — read the right-hand panel</figcaption></figure>
+    <div class="stack tight">
+      <div class="callout info sm"><span class="i">🧩</span><div><b>Names</b> <code>token;csrf</code> · <b>JSON Path</b> <code>$.token;$.csrf</code> · <b>Match No.</b> <code>1;1</code></div></div>
+      <div class="callout warn sm"><span class="i">🚩</span><div><b>Default Values</b> <code>TOKEN_TAK_JUMPA;CSRF_TAK_JUMPA</code> — if you see this text in a request, the extraction failed.</div></div>
+      <div class="callout tip sm"><span class="i">🌳</span><div>Tree: more than one row looks highlighted — ignore it; the right-hand panel is the selected element.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Point at the semicolon-separated fields: one extractor, two variables, same order in every field. Then the <b>Default Values</b> — a loud default is easier to debug than an empty one.</p><p>Note for the trainer: the tree shows an extra highlighted row (capture artefact); the right-hand panel is what matters.</p></aside>
+</section>
+
 <section class="slide codey">
   <div class="eyebrow">Day 2 · S2 — Chained correlation &amp; CSV</div>
   <h2>Vehicle &amp; amount from the response · users from <code>pengguna.csv</code></h2>
@@ -1735,6 +1765,20 @@ Body 4 : { "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }</pre></div
   <aside class="notes"><p>Demo §2.6–2.7: rename the samplers, add Transaction Controller <code>Pembaharuan Cukai Jalan</code> (road tax renewal), drag the samplers <b>into it</b> (not below it). Show Generate parent sample both ways.</p><p>Ask: <i>"A timer under a TC with 4 samplers — how many pauses?"</i> (4 → 8 s average; S2 Quiz #3). We reuse this fact in Little's Law (S4). The recorded <code>${T}</code> timer = <b>your</b> think time, identical for all threads → users move in lockstep.</p></aside>
 </section>
 
+<section class="slide">
+  <div class="eyebrow">Day 2 · S2 — Screenshot <span class="xy">05-transaksi-penuh.jmx</span></div>
+  <h2 class="wide">Transaction Controller in the GUI</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.6fr) minmax(0,.4fr)">
+    <figure class="shot fit" style="--mh:380px"><img src="img/h2-28-gui-transaction-controller-05.png" alt="JMeter GUI: Transaction Controller Pembaharuan Cukai Jalan with Generate parent sample and Include duration of timer both unchecked"><figcaption>Transaction Controller “Pembaharuan Cukai Jalan” — read the right-hand panel</figcaption></figure>
+    <div class="stack tight">
+      <div class="callout info sm"><span class="i">☐</span><div><b>Generate parent sample</b> unchecked → transaction row <b>and</b> every step in the report.</div></div>
+      <div class="callout info sm"><span class="i">☐</span><div><b>Include duration of timer…</b> unchecked → think time is <b>not</b> counted.</div></div>
+      <div class="callout tip sm"><span class="i">🌳</span><div>Extra highlighted tree rows are a capture artefact — the right-hand panel is the selected element.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Point at the two checkboxes in the right-hand panel (both off), and the samplers <b>inside</b> the controller in the tree. The tree shows an extra highlighted row from the capture — ignore it.</p><p>Ask: "If we tick Include duration of timer, what happens to the transaction row?" (+ ~8 s of think time). The resulting report row is on the S3 Statistics screenshot slide.</p></aside>
+</section>
+
 <section class="slide codey">
   <div class="eyebrow">Day 2 · S2 — Assertions, runs &amp; listeners</div>
   <h2>Assertion → 1 × 1 → 10 × 2 → Summary &amp; Aggregate Report</h2>
@@ -1795,7 +1839,7 @@ Body 4 : { "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }</pre></div
     <li>Every JMeter 5.6 dashboard section · glossary of terms · interpretation patterns · baseline</li>
     <li>Peak scenario <code>07</code> + <code>-Jsla_ms</code> → three written findings</li>
   </ul>
-  <div class="labline"><b>LAB</b> Exercise 4 — Dashboard worksheet · Exercise 5 — <code>07</code> + SLA → 3 findings · <b>QUIZ</b> S3</div>
+  <div class="labline"><b>LAB</b> Exercise 4 — Dashboard worksheet · Exercise 5 — <code>07</code> + SLA → 3 findings · Exercise 8 — Multi-site report · <b>QUIZ</b> S3</div>
   <div class="dayrail"><span class="on"></span><span class="on"></span><span class="now"></span><span></span><em>Day 2 · S3 / S4</em></div>
   <div class="daynum"><small>SESSION</small>S3</div>
   <aside class="notes"><p>Announce now: the course evaluation form ("Borang penilaian") in pelatih.my is open (2.00 pm). Core message: <b>"The report is your product"</b> — management doesn't read <code>.jmx</code>; they read decisions.</p><p>The most explanation-heavy session (~55%). Open the backup reports R1/R2/R3 in browser tabs before starting. Energy: <i>"Who has ever been asked to 'make a report' from screenshots?"</i></p></aside>
@@ -1913,6 +1957,17 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
   <aside class="notes"><p>Write the formula on the board. Verbal example: 10 samples — 7 ≤ 500 ms, 2 between 500–1500 ms, 1 failed → (7 + 2/2) ÷ 10 = 0.80.</p><p>S3 Quiz #2: a 120 ms sample that failed with HTTP 500 = <b>Frustrated</b>. Ask: <i>"Why is the transaction APDEX 0.86 when every step is ~1.0?"</i> — the 4-step transaction ≈ 450 ms sometimes exceeds T = 500 ms. Who chooses T/F? The system owner, together with the NFRs — not the tester alone.</p></aside>
 </section>
 
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Screenshots</div>
+  <h2 class="wide">First dashboard screen: APDEX healthy vs breached</h2>
+  <div class="shots2">
+    <figure class="shot fit" style="--mh:350px"><img src="img/h2-10-dashboard-info-apdex.png" alt="Dashboard top: Test and Report information, APDEX table with T=500 ms and F=1.5 s, total 0.972, Requests Summary pie"><figcaption>Peak run: run info · APDEX per label (Total 0.972) · pass/fail pie</figcaption></figure>
+    <figure class="shot fit" style="--mh:350px"><img src="img/h2-14-apdex-sla-breach.png" alt="APDEX table of the SLA-breach run with lower scores on the bayar-cukai labels"><figcaption>Same test with <code>-Jsla_ms=150</code>: APDEX drops on the <code>bayar-cukai</code> labels</figcaption></figure>
+  </div>
+  <div class="callout tip sm mt16"><span class="i">👀</span><div>Read the <b>Total</b> row first, then sort by APDEX ascending — the worst label is your first finding.</div></div>
+  <aside class="notes"><p>Left: show the three blocks top to bottom — Test and Report information (start/end, so you can check the duration), APDEX (T = 500 ms, F = 1.5 s, Total 0.972), Requests Summary pie.</p><p>Right: same plan, tighter SLA — the bayar-cukai (pay) labels fall. Ask: "Did the server get slower?" No — the threshold changed.</p></aside>
+</section>
+
 <section class="slide codey">
   <div class="eyebrow">Day 2 · S3 — (d) Statistics</div>
   <h2>The Statistics table — every column, with the R1 transaction row</h2>
@@ -1931,6 +1986,17 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
   </table>
   <p class="xsmall muted mt8 mb0">R1 Total: 2432 samples · 0.25% errors · 41.29/s. 630 logins but 598 transactions — iterations not finished when the 60 s ended produce no transaction sample.</p>
   <aside class="notes"><p>Columns are grouped under four headings: Executions, Response Times (ms), Throughput, Network (KB/sec). Read the transaction row first, then the slowest step. <code>statistics.json</code> is the same data for machines — we use it for the CI gate (S4 ⭐).</p><p>Day quiz #2: Total = HTTP samples only (plan 05: Total 80; the 20 transaction rows are separate). Ask: "Why 630 logins but only 598 transactions?" — the Thread Group has no ramp-down; half-finished iterations are not counted.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Screenshots</div>
+  <h2 class="wide">The Statistics table from real runs</h2>
+  <div class="shots2">
+    <figure class="shot fit" style="--mh:330px"><img src="img/h2-12-statistics-table.png" alt="Dashboard Statistics table for the peak run: samples, FAIL, Error %, average, min, max, median, p90, p95, p99, transactions per second, KB/s"><figcaption>Peak run (50 users, 60 s): read p90/p95/p99 and Error % first, then throughput</figcaption></figure>
+    <figure class="shot fit" style="--mh:330px"><img src="img/h2-24-transaction-statistics-05.png" alt="Dashboard Statistics for plan 05: four request rows plus the Pembaharuan Cukai Jalan transaction row, average 449 ms"><figcaption>Plan 05: the Transaction Controller row ≈ sum of the 4 steps (449 ms)</figcaption></figure>
+  </div>
+  <div class="callout warn sm mt16"><span class="i">⚠️</span><div>Order: <b>p90 / p95 / p99</b> and <b>Error %</b> → <b>Transactions/s</b>. Average and Max alone never decide PASS/FAIL.</div></div>
+  <aside class="notes"><p>Left (click to zoom): walk the columns once, then the <b>Total</b> row — Error % 0.25 % (synthetic 500s) — then the 95th pct column. Compare with the NFR on the board.</p><p>Right: plan 05 from S2 — the last row <b>Pembaharuan Cukai Jalan</b> averages ≈ 449 ms = the four steps added up; think time is excluded.</p></aside>
 </section>
 
 <section class="slide">
@@ -2001,6 +2067,17 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
 </section>
 
 <section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Screenshots <span class="xy">-Jsla_ms=150</span></div>
+  <h2 class="wide">Errors and Top 5 Errors by sampler — a real SLA-breach run</h2>
+  <div class="shots2">
+    <figure class="shot fit" style="--mh:330px"><img src="img/h2-13-errors-table.png" alt="Errors table: Duration Assertion messages each with the exact milliseconds, plus a 500 Internal Server Error row"><figcaption>Errors: one row per message — Duration Assertion breaches split by ms</figcaption></figure>
+    <figure class="shot fit" style="--mh:330px"><img src="img/h2-25-top5-errors-by-sampler.png" alt="Top 5 Errors by sampler: only the three bayar-cukai POST requests fail, 43 to 52 errors each"><figcaption>Top 5 Errors by sampler: only the 3 <code>bayar-cukai</code> POSTs fail</figcaption></figure>
+  </div>
+  <div class="callout tip sm mt16"><span class="i">🎯</span><div><b>Errors</b> tells you <i>what</i>; <b>Top 5 by sampler</b> tells you <i>where</i>. SLA breaches from a Duration Assertion count as errors.</div></div>
+  <aside class="notes"><p>Left: show that the same failure (“took longer than 150 ms”) becomes many rows because each message contains the exact ms — group them mentally. Note the separate 500/Internal Server Error row.</p><p>Right: the answer to "which step?" — only the pay POSTs. That is the finding.</p></aside>
+</section>
+
+<section class="slide">
   <div class="eyebrow">Day 2 · S3 — Timing: connect, latency, response time</div>
   <h2 class="wide">Three stopwatches in one sample</h2>
   <div class="tbar" style="grid-template-columns:1.1fr 3fr 2.2fr">
@@ -2038,6 +2115,19 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
 </section>
 
 <section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Screenshot</div>
+  <h2 class="wide">Latencies Over Time: time to the first byte</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.5fr) minmax(0,.5fr)">
+    <figure class="shot fit" style="--mh:420px"><img src="img/h2-20-latencies-over-time.png" alt="Latencies Over Time chart per label: time to first byte over the run"><figcaption>Latencies Over Time — compare with Response Times Over Time</figcaption></figure>
+    <div class="stack tight">
+      <div class="callout info sm"><span class="i">⏱️</span><div><b>Latency</b> = request sent → <b>first byte</b> back.</div></div>
+      <div class="callout tip sm"><span class="i">🔀</span><div>Latency ≈ response time → the server is thinking. A big gap → large payload or slow network.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Point at the y-axis (ms) and the label legend. On our mock the responses are tiny, so latency ≈ elapsed time. In production a big gap between the two lines points to payload size or network, not the server.</p></aside>
+</section>
+
+<section class="slide">
   <div class="eyebrow">Day 2 · S3 — Charts → Over Time</div>
   <h2 class="wide">Over Time: is the system stable throughout the test?</h2>
   <table class="t xs">
@@ -2054,6 +2144,17 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <div class="callout info sm"><span class="i">📈</span><div>R1 (5 s granularity): HTTP sample 95th pct flat at <b>172–181 ms</b> per interval; transaction row <b>430–470 ms</b> throughout the steady phase.</div></div>
   </div>
   <aside class="notes"><p>Key moment #4: show the R1 report at 60 s granularity (one point) next to the 5 s report. "The graph isn't broken — the granularity is coarse."</p><p>One question per graph; don't read the table. Ask: "Active Threads Over Time shows 50 threads at second 10 — what happened during seconds 0–10?" (ramp-up). "Why does Percentiles Over Time only show successful samples?" — failed samples (e.g. fast 401s) would skew it downward.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Screenshots</div>
+  <h2 class="wide">Over Time charts from the peak run</h2>
+  <div class="shots2">
+    <figure class="shot fit" style="--mh:300px"><img src="img/h2-15-response-times-over-time.png" alt="Response Times Over Time per label: the transaction line at about 450 ms sits above the individual requests at about 110 ms"><figcaption>Response Times Over Time — transaction line (~450 ms) above its requests (~110 ms)</figcaption></figure>
+    <figure class="shot fit" style="--mh:300px"><img src="img/h2-16-active-threads-over-time.png" alt="Active Threads Over Time: ramp-up from 0 to 50 in 10 s, hold, ramp-down"><figcaption>Active Threads Over Time — 0 → 50 in 10 s, hold, ramp-down</figcaption></figure>
+  </div>
+  <div class="callout tip sm mt16"><span class="i">✅</span><div>First check <b>Active Threads</b>: did the load model really run? Then read response time <b>against</b> that load — flat lines = stable.</div></div>
+  <aside class="notes"><p>Right first: confirm the ramp-up (10 s) and the hold. Then left: lines stay flat through the hold = stable. The transaction line is higher because it is the sum of the steps.</p><p>Ask: "If the response line climbed while threads stayed flat, what would you suspect?" (degradation — memory leak, queue build-up).</p></aside>
 </section>
 
 <section class="slide">
@@ -2074,6 +2175,17 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     <div class="kpi m-jpj"><i>Ratio</i><b>≈ 4 : 1</b><span>1 transaction = 4 hits</span></div>
   </div>
   <aside class="notes"><p>Self-check #3: Hits Per Second = HTTP requests sent; Transactions Per Second = completed samples per label (including Transaction Controller rows); Total Transactions Per Second = overall total. Common misconception: "Hits/s = TPS".</p><p>Day quiz #3: R2 Error % is 21.75% but Codes Per Second shows only <code>200</code> (+ a few <code>500</code>) — a Duration Assertion does not change the HTTP code. Look at the <code>-failure</code> series in Transactions Per Second. Worksheet row 10: why ≈ 4 : 1?</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Screenshots</div>
+  <h2 class="wide">Throughput charts: per label, and total under ramp-up</h2>
+  <div class="shots2">
+    <figure class="shot fit" style="--mh:300px"><img src="img/h2-17-transactions-per-second.png" alt="Transactions Per Second per label with success and failure series"><figcaption>Transactions Per Second per label (success / failure)</figcaption></figure>
+    <figure class="shot fit" style="--mh:300px"><img src="img/h2-22-slow-total-tps.png" alt="Total Transactions Per Second on the slow run: rises with ramp-up to about 150 to 160 per second, then plateaus"><figcaption>Total TPS (200 users, slow server): climbs with ramp-up, then levels off</figcaption></figure>
+  </div>
+  <div class="callout info sm mt16"><span class="i">📈</span><div>TPS that levels off when users <b>stop growing</b> is normal. TPS that levels off while users <b>keep growing</b> = the system has hit its limit.</div></div>
+  <aside class="notes"><p>Left: each label has success and failure series — look for any failure line above zero. Right: the slow run with 200 users — TPS climbs during the 40 s ramp-up and plateaus at ~150–160/s exactly when the user count stops growing. That is <b>not</b> saturation.</p></aside>
 </section>
 
 <section class="slide">
@@ -2101,6 +2213,17 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
   </div>
   <div class="callout tip mt16"><span class="i">🧭</span><div>Response Time Percentiles = the graph version of the 90th/95th/99th pct columns. A flat curve that spikes at the end = long tail (the “average lies” slide).</div></div>
   <aside class="notes"><p>Worksheet rows 12–13: Response Time Overview (count per bar) and Response Time Distribution (most common range). The Overview bars use the APDEX T/F thresholds — if you change <code>apdex_satisfied_threshold</code>, the bars change.</p><p>Ask: "Distribution shows two peaks — 100 ms and 900 ms. What is your hypothesis?" (two code paths: cache hit vs miss, or a different endpoint under the same label). The bars on this slide are illustrative only.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Screenshots</div>
+  <h2 class="wide">Percentiles and Distribution from a real run</h2>
+  <div class="shots2">
+    <figure class="shot fit" style="--mh:300px"><img src="img/h2-18-response-time-percentiles.png" alt="Response Time Percentiles curve from 0 to 100th percentile per label"><figcaption>Response Time Percentiles — read p90/p95 on the x-axis; the tail rises near p99</figcaption></figure>
+    <figure class="shot fit" style="--mh:300px"><img src="img/h2-19-response-time-distribution.png" alt="Response Time Distribution histogram with sample counts per time bucket"><figcaption>Response Time Distribution — samples per time bucket</figcaption></figure>
+  </div>
+  <div class="callout tip sm mt16"><span class="i">📐</span><div>Percentile curve answers <i>“how slow for 95 % of users?”</i> · Distribution answers <i>“is there a second hump?”</i> (two populations).</div></div>
+  <aside class="notes"><p>Left: put a finger on 95 on the x-axis and go up to the transaction curve — that is the p95 in the Statistics table. Point at the tail near p99. Right: one main hump; a second hump would mean two kinds of response (e.g. cache hit vs miss).</p></aside>
 </section>
 
 <section class="slide">
@@ -2133,6 +2256,17 @@ jmeter -g hasil/r05.jtl -o hasil/laporan05-5s \
     </table>
   </div>
   <aside class="notes"><p><b>Knee point</b> = the load at which response time starts rising steeply — "safe up to ~N users". <b>Bottleneck</b> = the component that limits capacity (DB, payment service, network). Related graphs: Total Transactions Per Second + Response Times Over Time + Active Threads Over Time, or Response Time Vs Request directly.</p><p>S3 quiz #4: threads 50 → 150, TPS flat, RT rising → saturated. Ask: "How do you know the SUT is saturated, not JMeter?" — monitor the load generator CPU (&lt; ~80%).</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Screenshots <span class="xy">200 users · slow server</span></div>
+  <h2 class="wide">Slower server, more users — but not saturated</h2>
+  <div class="shots2">
+    <figure class="shot fit" style="--mh:300px"><img src="img/h2-21-slow-response-times-over-time.png" alt="Response Times Over Time on the slow mock: 300 to 900 ms per request, transaction about 2.4 s"><figcaption>Slow server: every line shifts up; the transaction ≈ 2.4 s</figcaption></figure>
+    <figure class="shot fit" style="--mh:300px"><img src="img/h2-23-slow-time-vs-threads.png" alt="Time Vs Threads from 1 to 200 active threads: response time stays flat"><figcaption>Time Vs Threads: <b>flat</b> from 1 → 200 threads = not saturated</figcaption></figure>
+  </div>
+  <div class="callout warn sm mt16"><span class="i">⚠️</span><div>This is the <b>healthy reference</b>. Our mock does not queue, so it never saturates. A real bottleneck shows response time <b>rising</b> with threads while TPS stops growing.</div></div>
+  <aside class="notes"><p>Be honest: these are real captures, but the mock adds a random delay with no queueing, so there is no knee. Use the right chart as the "healthy" picture and draw the saturated shape (rising curve) on the board next to it.</p><p>Ask: "Slow but flat — is that a capacity problem or a per-request problem?" (per-request: the server is slow even for one user).</p></aside>
 </section>
 
 <section class="slide codey">
@@ -2230,6 +2364,19 @@ jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx \
 </section>
 
 <section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Screenshot <span class="xy">-Jsla_ms=150</span></div>
+  <h2 class="wide">Same run, tighter SLA: slow responses become Error %</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.5fr) minmax(0,.5fr)">
+    <figure class="shot fit" style="--mh:430px"><img src="img/h2-26-statistics-sla-breach.png" alt="Statistics of the SLA-breach run: total 5.78 % error, bayar-cukai 21 to 26 %, transaction 23.47 %"><figcaption>Statistics with <code>-Jsla_ms=150</code> — Total 5.78 %, bayar-cukai 21–26 %, transaction 23.47 %</figcaption></figure>
+    <div class="stack tight">
+      <div class="callout info sm"><span class="i">🎚️</span><div>Only the <b>threshold</b> changed (<code>-Jsla_ms=150</code>) — no script change, no server change.</div></div>
+      <div class="callout warn sm"><span class="i">📌</span><div>Error % now mixes real 500s with SLA breaches — say which is which in the finding.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Compare with the earlier Statistics slide (0.25 %). Point at the bayar-cukai rows (21–26 %) and the transaction row (23.47 %): one slow step fails the whole business transaction.</p><p>Exercise 5 F3 = exactly this comparison, with the class's own numbers.</p></aside>
+</section>
+
+<section class="slide">
   <div class="eyebrow">Day 2 · S3 — Compare against the baseline</div>
   <h2 class="wide">One run means nothing — R1 vs R2 vs R3</h2>
   <table class="t sm">
@@ -2266,6 +2413,169 @@ jmeter -n -t hari-2/test-plans/07-beban-puncak-cukai.jmx -Jport=3001 \
   </table>
   <div class="callout info sm mt16"><span class="i">📝</span><div>Exercise 5: three findings with <b>your</b> figures — F1 response time vs NFR · F2 500 errors &amp; Error % · F3 effect of the SLA threshold. Full example (D1–D4, R1/R2/R3) in section <b>B</b> of the template. Start the report with the <b>decision</b>, not a graph.</div></div>
   <aside class="notes"><p>Show section B of the template: R1 executive summary = <b>CONDITIONAL PASS</b> — p95 583 ms ✅ but Error % 1.00% sits exactly on the NFR limit of &lt; 1%. Every finding ends with "so…".</p><p>Common issue: findings that say "system OK" with no figures. Ask: "If p95 passes but Error % is 2%, what do you report to management?" Checkpoint + S3 quiz before the break.</p></aside>
+</section>
+
+<!-- ---------- Day 2 · S3 — Multi-site agents ---------- -->
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Multi-site agents <span class="xy">09-berbilang-lokasi.jmx</span></div>
+  <h2 class="wide">One controller, agents at several sites, one result file</h2>
+  <div class="flow sm" style="align-items:center">
+    <div class="node hot" style="flex:1"><span class="k">CONTROLLER · jmeter -n -R</span><b>Sends the <code>.jmx</code> + <code>-G</code> props</b><span>Collects every sample → <code>semua.jtl</code> → dashboard</span></div>
+    <div class="arr">⇄</div>
+    <div class="stack tight" style="flex:1.15;gap:8px">
+      <div class="node"><span class="k">AGENT · KL</span><b><code>jmeter-server -Jsite=KL</code></b><span>labels <code>[KL] …</code></span></div>
+      <div class="node"><span class="k">AGENT · PENANG</span><b><code>jmeter-server -Jsite=PENANG</code></b><span>labels <code>[PENANG] …</code></span></div>
+      <div class="node" style="opacity:.6"><span class="k">AGENT · KUCHING (optional)</span><b><code>jmeter-server -Jsite=KUCHING</code></b><span>add a host to <code>-R</code></span></div>
+    </div>
+    <div class="arr">→</div>
+    <div class="node warn" style="flex:.9"><span class="k">SYSTEM UNDER TEST</span><b>Portal eJPJ (mock)</b><span>each agent generates its <b>own</b> load from its own network</span></div>
+  </div>
+  <div class="grid c3 mt16" style="gap:12px">
+    <div class="card top m-h1 sm"><span class="k">-R host1,host2</span><h3>Which agents run</h3><p>The controller only orchestrates and receives results — it sends <b>no</b> load itself.</p></div>
+    <div class="card top m-fail sm"><span class="k">USERS = THREADS × AGENTS</span><h3>Each agent runs the WHOLE Thread Group</h3><p>Our lab run: <code>-Gpengguna=10</code> × 2 agents = <b>20</b> users, not 10. Divide first.</p></div>
+    <div class="card top m-violet sm"><span class="k">SAMPLES STREAM BACK</span><h3>One combined <code>.jtl</code></h3><p>Sampler names contain <code>[${__P(site)}]</code>, so every row says <b>where</b> it came from.</p></div>
+  </div>
+  <aside class="notes"><p>Why multi-site: citizens use eJPJ from KL, Penang, Kuching — response time includes their network path. One agent per site measures what users at that site experience; the controller merges everything into one report.</p><p>Demo cue: open <code>09-berbilang-lokasi.jmx</code> and show a sampler name <code>[${__P(site,LOKAL)}] 1. POST /api/log-masuk</code>. Ask: <i>"Two agents, Thread Group = 50 users — how many users hit the server?"</i> (100 — each agent runs the entire Thread Group.)</p></aside>
+</section>
+
+<section class="slide codey">
+  <div class="eyebrow">Day 2 · S3 — Multi-site agents · running it</div>
+  <h2>Start the agents, then the controller</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)">
+    <div class="stack tight">
+      <div class="codewrap"><div class="codebar">each site · agent (Terminal per site)<span class="lang alt">sh</span></div>
+<pre class="code xs" data-lang="sh"># two mock "sites" — PENANG = far (+300–900 ms)
+PORT=3000 node sut/server.js
+PORT=3001 LATENCY_MIN=300 LATENCY_MAX=900 node sut/server.js
+# agent KL — own folder (the script hard-codes -j jmeter-server.log)
+cd hasil/ejen-KL &amp;&amp; SERVER_PORT=1099 jmeter-server \
+  -Jserver.rmi.ssl.disable=true -Jserver.rmi.localport=4001 \
+  -Djava.rmi.server.hostname=127.0.0.1 \
+  -Jsite=KL -Jport=3000 -Jdata_dir=&lt;abs&gt;/hari-2/data
+# agent PENANG
+cd hasil/ejen-PENANG &amp;&amp; SERVER_PORT=1100 jmeter-server \
+  -Jserver.rmi.ssl.disable=true -Jserver.rmi.localport=4002 \
+  -Djava.rmi.server.hostname=127.0.0.1 \
+  -Jsite=PENANG -Jport=3001 -Jdata_dir=&lt;abs&gt;/hari-2/data</pre></div>
+      <div class="codewrap"><div class="codebar">controller · one run, one report<span class="lang alt">sh</span></div>
+<pre class="code xs" data-lang="sh">cd hari-2/run
+jmeter -n -t ../test-plans/09-berbilang-lokasi.jmx \
+  -R 127.0.0.1:1099,127.0.0.1:1100 -Jserver.rmi.ssl.disable=true \
+  -Gpengguna=10 -Grampup=5 -Ggelung=3 \
+  -l hasil/semua.jtl -e -o laporan/gabungan</pre></div>
+    </div>
+    <div class="stack tight">
+      <table class="t xs">
+        <tr><th style="width:120px">Flag</th><th>Reaches</th></tr>
+        <tr class="hot"><td><code>-G</code> (controller)</td><td><b>All</b> agents, same value — load model (<code>pengguna</code>, <code>gelung</code>)</td></tr>
+        <tr class="hot"><td><code>-J</code> (agent)</td><td><b>That agent only</b> — per-site values (<code>site</code>, <code>port</code>)</td></tr>
+        <tr><td><code>-J</code> (controller)</td><td>Controller only — e.g. report generator props</td></tr>
+        <tr><td><code>-R a,b</code></td><td>Remote agents (<code>host[:port]</code>, default 1099)</td></tr>
+      </table>
+      <div class="callout warn sm"><span class="i">🔐</span><div><b>RMI over SSL</b> is on by default: create <code>rmi_keystore.jks</code> (<code>bin/create-rmi-keystore.sh</code>) and copy it to every machine — or <code>server.rmi.ssl.disable=true</code> on <b>all</b> sides, trusted lab only.</div></div>
+      <div class="callout info sm"><span class="i">🧱</span><div>Firewall: agent <code>server_port</code> (1099) + fixed <code>server.rmi.localport</code>; controller callback <code>client.rmi.localport</code>. Multi-NIC/NAT: <code>-Djava.rmi.server.hostname=&lt;agent IP&gt;</code>.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Demo cue: <code>cd hari-2/run &amp;&amp; ./run-berbilang-lokasi.sh</code> (~45 s) starts both mocks, both agents (ports 1099 / 1100), the controller with <code>-R</code>, then splits the JTL per site. Homebrew does not put <code>jmeter-server</code> on the PATH: use <code>$(brew --prefix jmeter)/libexec/bin/jmeter-server</code>, or the equivalent <code>jmeter -s -Dserver_port=1099 …</code> (Windows: <code>%JMETER_HOME%\bin\jmeter-server.bat</code>). Passing <code>-j</code> to <code>jmeter-server</code> fails with <i>Duplicate options for -j</i> — hence one folder per agent. Both "sites" run on one laptop: PENANG's distance is <b>simulated</b> by a slower mock. Windows: <code>run-berbilang-lokasi.bat</code> exists but is untested — demo on Mac/Linux.</p><p>Common mistake: <code>-Jsite=KL</code> on the <b>controller</b> — every agent still labels itself <code>LOKAL</code>, because <code>-J</code> on the controller never leaves the controller. Ask: <i>"Where do you put the number of users — <code>-G</code> or <code>-J</code>? And the site name?"</i></p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Multi-site agents · combined dashboard</div>
+  <h2 class="wide">Same dashboard — what changes with several sites</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)">
+    <div class="stack tight">
+      <p class="rlabel mb0">Statistics · one row per site per step</p>
+      <table class="t xs">
+        <tr><th>Label</th><th style="width:80px">#Samples</th><th style="width:70px">Error %</th><th style="width:75px">Average</th><th style="width:75px">95th pct</th></tr>
+        <tr><td><code>[KL] 1. POST /api/log-masuk</code></td><td>30</td><td>0.00%</td><td>121</td><td>180</td></tr>
+        <tr><td><code>[PENANG] 1. POST /api/log-masuk</code></td><td>30</td><td>0.00%</td><td>621</td><td class="x">896</td></tr>
+        <tr class="hot"><td><code>[KL] Pembaharuan Cukai Jalan</code></td><td>30</td><td>0.00%</td><td>476</td><td>640</td></tr>
+        <tr class="hot"><td><code>[PENANG] Pembaharuan Cukai Jalan</code></td><td>30</td><td>0.00%</td><td>2430</td><td class="x">3000</td></tr>
+        <tr><td><b>Total</b> (HTTP samples, both sites)</td><td>240</td><td>0.00%</td><td>363</td><td>873</td></tr>
+      </table>
+      <div class="callout tip sm"><span class="i">🔎</span><div>Use the table's search box: type <code>[PENANG]</code> to see one site. The <b>Total</b> row mixes all sites — never quote it alone.</div></div>
+    </div>
+    <div class="stack tight">
+      <div class="card side m-h1 sm"><span class="k">LABELS</span><h3>Per-site rows everywhere</h3><p>Statistics, Errors / Top 5, Response Times Over Time and Transactions Per Second all split by <code>[SITE]</code> prefix.</p></div>
+      <div class="card side m-violet sm"><span class="k">ACTIVE THREADS OVER TIME</span><h3>One series per agent</h3><p><code>127.0.0.1:1099-Pengguna Pembaharuan Cukai</code> and <code>127.0.0.1:1100-…</code> — the JTL <code>threadName</code> is prefixed with the agent's host:port. 10 threads each = 20 users.</p></div>
+      <div class="card side m-jpj sm"><span class="k">RESPONSE TIME</span><h3>Differs by network distance</h3><p>Same server, same script — the far site pays the extra round trips in <b>every</b> request (Latency and Connect too).</p></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Demo cue: open the combined report <code>hari-2/run/laporan/gabungan/index.html</code>. Statistics → search <code>Pembaharuan</code> → two transaction rows side by side. Then Charts → Over Time → Active Threads.</p><p>Ask: <i>"The Total row says p95 is fine — can we say all sites are fine?"</i> (No: Total mixes sites; a small far site can hide inside a big near site.)</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Multi-site agents · per-site comparison</div>
+  <h2 class="wide">KL vs PENANG — same script, same server, different users' experience</h2>
+  <table class="t sm">
+    <tr><th style="width:120px">Site</th><th>Rows</th><th style="width:90px">Samples</th><th style="width:90px">Error %</th><th style="width:110px">Avg (ms)</th><th style="width:110px">p95 (ms)</th><th style="width:80px">TPS</th></tr>
+    <tr class="hot"><td><b>KL</b></td><td>Pembaharuan Cukai Jalan (transaction)</td><td>30</td><td>0.00%</td><td>476</td><td>640</td><td>1.30</td></tr>
+    <tr><td><b>KL</b></td><td>HTTP samples (Total)</td><td>120</td><td>0.00%</td><td>119</td><td>178</td><td>4.04</td></tr>
+    <tr class="hot"><td><b>PENANG</b></td><td>Pembaharuan Cukai Jalan (transaction)</td><td>30</td><td>0.00%</td><td class="x">2430</td><td class="x">3000</td><td>1.06</td></tr>
+    <tr><td><b>PENANG</b></td><td>HTTP samples (Total)</td><td>120</td><td>0.00%</td><td class="x">607</td><td class="x">892</td><td>3.51</td></tr>
+    <tr><td><b>Combined</b></td><td>Dashboard Total — both sites blended</td><td>240</td><td>0.00%</td><td>363</td><td>873</td><td>6.90</td></tr>
+  </table>
+  <p class="xsmall muted mt8 mb0">Verified class run, JMeter 5.6.3 (5 Oct 2026): 10 users × 3 loops per agent × 2 agents = 20 users. PENANG = mock with +300–900 ms latency to simulate distance. Per-step p95: KL 175–180 ms · PENANG 886–896 ms.</p>
+  <div class="grid c2 mt16" style="gap:16px">
+    <div class="card side m-fail sm"><span class="k">FINDING 1 · PENANG ≈ 5× SLOWER</span><h3>Transaction avg 2430 ms (p95 3000) vs KL 476 ms (p95 640)</h3><p>Every HTTP step ~570–670 ms vs ~110–130 ms, and <b>0% errors</b> at both sites → latency on the path to the site, not an application failure. Check PENANG's network/WAN route before blaming the server.</p></div>
+    <div class="card side m-jpj sm"><span class="k">FINDING 2 · THE BLEND HIDES A SITE</span><h3>Combined avg 363 ms looks “OK”</h3><p>NFR p95 ≤ 800 ms per step: KL <b>PASS</b> (175–180 ms), PENANG <b>FAIL</b> (886–896 ms). Always report per site, never the blended average alone.</p></div>
+  </div>
+  <aside class="notes"><p>Real figures from the verified run — <code>node laporan-lokasi.js banding laporan KL PENANG</code> prints this table from the per-site <code>statistics.json</code>. The Total rows exclude Transaction Controller rows, so 240 = HTTP samples only. Be honest with the class: PENANG's "distance" is a slower mock (<code>LATENCY_MIN=300 LATENCY_MAX=900</code>); in production it is real WAN latency.</p><p>Ask: <i>"Is PENANG slower because the server is slower?"</i> — No: same server; the difference is the path between the site and the server. That is a <b>network / CDN / hosting-location</b> recommendation, not a code fix.</p></aside>
+</section>
+
+<section class="slide codey">
+  <div class="eyebrow">Day 2 · S3 — Multi-site agents · two ways to the report</div>
+  <h2>Live distributed run — or each site runs alone and you merge</h2>
+  <div class="split" style="grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)">
+    <div class="stack tight">
+      <div class="card top m-h1 sm"><span class="k">A · LIVE DISTRIBUTED (-R)</span><h3>One run, one <code>.jtl</code></h3><p>Same start time everywhere · needs RMI ports open between sites · controller receives all samples.</p></div>
+      <div class="card top m-violet sm"><span class="k">B · SEPARATE RUNS + MERGE</span><h3>No RMI between sites</h3><p>Each site runs plain <code>jmeter -n</code> at an agreed time · copy JTLs back · merge · <code>-g</code>.</p></div>
+      <div class="callout warn sm"><span class="i">⚠️</span><div>Merge only JTLs with the <b>same columns</b> (same <code>jmeter.properties</code> save settings) — keep <b>one</b> header row.</div></div>
+    </div>
+    <div class="stack tight">
+      <div class="codewrap"><div class="codebar">B · merge per-site JTLs → one report<span class="lang alt">sh</span></div>
+<pre class="code xs" data-lang="sh"># at each site, at the agreed time — plain non-GUI, no -R
+jmeter -n -t ../test-plans/09-berbilang-lokasi.jmx \
+  -Jsite=KL -Jport=3000 -l hasil/KL.jtl
+jmeter -n -t ../test-plans/09-berbilang-lokasi.jmx \
+  -Jsite=PENANG -Jport=3001 -l hasil/PENANG.jtl
+# centrally: one header, rows sorted by timeStamp → one report
+node laporan-lokasi.js gabung hasil/gabung.jtl hasil/KL.jtl hasil/PENANG.jtl
+jmeter -g hasil/gabung.jtl -o laporan/gabung</pre></div>
+      <div class="codewrap"><div class="codebar">one site only · filter by label prefix<span class="lang alt">sh</span></div>
+<pre class="code xs" data-lang="sh"># split by [SITE] prefix → one report per site
+node laporan-lokasi.js pisah hasil/semua.jtl hasil KL PENANG
+jmeter -g hasil/KL.jtl -o laporan/KL
+# or let JMeter filter statistics + graphs (Total = KL only)
+jmeter -g hasil/semua.jtl -o laporan/KL-f \
+  -Jjmeter.reportgenerator.sample_filter='^\[KL\].*'
+# graphs only: series_filter needs DOUBLED backslashes
+#  -Jjmeter.reportgenerator.exporter.html.series_filter='^\\[KL\\]'</pre></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Option B is what most organisations actually do when sites are on different networks: no firewall changes, each site keeps its own JTL as evidence. The label prefix is what makes the merge readable.</p><p>Demo cue: <code>./run-berbilang-lokasi.sh gabung</code> = mode 2 — both sites run locally at the same time, then merge + combined and per-site reports. The helper refuses to merge JTLs whose headers differ. Verified gotcha: <code>series_filter='^\[KL\].*'</code> becomes <code>^[KL].*</code> in the browser and matches nothing — double the backslashes. In merge mode Active Threads Over Time shows only <b>one</b> series (<code>Pengguna Pembaharuan Cukai</code>) — no host:port prefix without RMI, so the sites blend; use the <code>[SITE]</code> labels. Ask: <i>"Why must the header appear only once?"</i> (A second header line becomes a bogus sample row / parse error.)</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Multi-site agents · pitfalls</div>
+  <h2 class="wide">Before you trust a multi-site report</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)">
+    <ul class="checks xs">
+      <li><span><b>Clock sync (NTP)</b> on every agent — timestamps from different clocks skew the Over Time graphs</span></li>
+      <li><span><b>CSV on every agent</b> (same path) — and <b>split the data</b> so sites don't log in as the same user</span></li>
+      <li><span><b>Controller bottleneck</b> — it receives every sample; keep the sample sender mode <code>StrippedBatch</code> (default), no GUI listeners</span></li>
+      <li><span><b>Firewall / RMI ports</b> open both ways · SSL keystore on all, or SSL off on all</span></li>
+      <li><span><b>Same JMeter &amp; Java versions</b> (and plugins) on controller and agents</span></li>
+      <li><span><b>Results bandwidth</b> — samples travel site → controller during the test; don't saturate the link you are measuring</span></li>
+      <li><span><b>Matching JTL headers</b> before merging · <b>users = threads × agents</b> stated in the report</span></li>
+    </ul>
+    <div class="stack tight">
+      <div class="card top m-pass"><span class="k">LAB 8 · QUIZ S3</span><h3>Lab 8 — Multi-site report</h3><p>Run <code>hari-2/run/run-berbilang-lokasi.sh</code> → two sites (KL, PENANG) → combined dashboard → per-site table (samples, Error %, avg, p95, TPS) → <b>two findings</b> in Evidence → Impact → Cause → Recommendation form.</p></div>
+      <div class="callout danger sm"><span class="i">🚫</span><div>Agents generate real load from <b>every</b> site: written authorisation must name every source network, not just the target.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p>Read the checklist as questions: "Did you check NTP? Is the CSV on every agent?" Clock skew is the sneakiest — the report looks fine, but one site's ramp-up appears shifted in Active Threads Over Time. In our verified run the console summariser showed results arriving in bursts (85 samples, then 155) — that is <code>StrippedBatch</code> batching samples on the agents.</p><p>Lab 8 (~15 minutes) then the S3 quiz. Ask: <i>"Two agents use the same pengguna.csv rows — what goes wrong?"</i> (Same citizens log in twice at once: unrealistic sessions, possible conflicts on payment.)</p></aside>
 </section>
 
 <!-- ---------- Day 2 · S4 ---------- -->

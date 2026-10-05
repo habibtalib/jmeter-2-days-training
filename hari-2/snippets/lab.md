@@ -17,6 +17,7 @@
 | 5 — Senario puncak `07` + SLA → 3 dapatan | S3 | `07-beban-puncak-cukai.jmx`, `templat-laporan-ujian.md` | Dua laporan + tiga dapatan bertulis |
 | 6 — Rancang ujian + Little's Law | S4 | `templat-pelan-ujian.md` | Pelan diisi + pengiraan N & pacing |
 | 7 — Pembentangan mini | S4 | Pelan (Lat. 6) + laporan (Lat. 5) | Pembentangan 3 minit |
+| 8 — Laporan berbilang lokasi (ejen teragih) | S3 | `09-berbilang-lokasi.jmx`, `run/run-berbilang-lokasi.sh` | Laporan gabungan + per lokasi, jadual perbandingan, 2 dapatan |
 
 ---
 
@@ -49,6 +50,9 @@
 8. Sebelum setiap langkah, taip nama transaksi (`T01_LogMasuk`, `T02_SenaraiKenderaan`, `T03_SemakCukai`, `T04_BayarCukai`) dalam medan prefix/transaction name pada tetingkap *Recorder: Transactions Control*. Kemudian jalankan blok curl langkah itu daripada README §1.4 — **tunggu > 5 s** antara blok.
 9. Selepas langkah 4 memaparkan `"status":"BERJAYA"`, klik **Stop** ⏹ dan **File → Save**.
 10. Kembangkan **Recording Controller**: catat nama setiap Transaction Controller dan sampler. Buka Header Manager `T02` — salin 8 aksara pertama nilai `Authorization`. Buka badan sampler `T04` — cari `csrf`.
+
+![HTTP(S) Test Script Recorder: proksi port 8888, Target Controller Recording Controller](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-29-gui-recorder-settings.png)
+*HTTP(S) Test Script Recorder: proksi port 8888, permintaan dirakam ke dalam Recording Controller. (Templat asal menunjukkan “Add separators between groups” — tukar Grouping seperti langkah 4.)*
 
 ### ✅ Checkpoint
 - [ ] Jadual perancangan 4 langkah (tindakan, permintaan, nama transaksi, data dinamik) ditulis sebelum merakam
@@ -157,6 +161,15 @@
 
 > Bandingkan dengan [`test-plans/05-transaksi-penuh.jmx`](../test-plans/05-transaksi-penuh.jmx) (disahkan: 80 sampel HTTP + 20 baris transaksi, 0% ralat; transaksi ≈ 440 ms).
 
+![JSON Extractor Ekstrak token + csrf dalam plan 05](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-27-gui-json-extractor-05.png)
+*JSON Extractor menangkap token dan csrf daripada respons log masuk (langkah 2). Baca panel kanan — baris pokok yang turut berwarna ialah kesan tangkapan skrin.*
+
+![Transaction Controller Pembaharuan Cukai Jalan dalam plan 05](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-28-gui-transaction-controller-05.png)
+*Transaction Controller menghimpunkan langkah pembaharuan menjadi satu transaksi yang boleh diukur (langkah 6) — kedua-dua pilihan tidak ditanda.*
+
+![Jadual Statistics plan 05 dengan baris transaksi Pembaharuan Cukai Jalan](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-24-transaction-statistics-05.png)
+*Transaction Controller menambah satu baris tahap perniagaan: masa keseluruhan pembaharuan (≈ 449 ms = jumlah 4 langkah; think time tidak dikira).*
+
 ### ✅ Checkpoint
 - [ ] `token`, `csrf`, `no_pendaftaran` dan `amaun` diekstrak pada masa larian — tiada nilai rakaman tinggal dalam header/badan/path
 - [ ] CSV `pengguna.csv` memberikan 3 `no_kp` berbeza (lihat Request atau label kenderaan berbeza: `WXY1234`, `JQK7788`, `BMT3030`)
@@ -236,6 +249,32 @@
 
 6. Buka `hasil/laporan05/statistics.json` dalam editor; cari `pct2ResTime` bagi `Pembaharuan Cukai Jalan` dan pastikan ia sama dengan **95th pct** dalam jadual.
 
+**Rujukan visual lembaran kerja** (contoh sebenar daripada larian puncak `07`, 50 pengguna — angka anda untuk `05` akan berbeza; bentuk skrinnya sama):
+
+![Dashboard: Test and Report information, APDEX dan Requests Summary](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-10-dashboard-info-apdex.png)
+*#1–#3 — Skrin pertama dashboard HTML: maklumat larian, APDEX setiap label dan pecahan lulus/gagal.*
+
+![Jadual Statistics larian puncak](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-12-statistics-table.png)
+*#4–#6 — Jadual Statistics: baca p90/p95/p99 dan Error % dahulu, kemudian throughput.*
+
+![Active Threads Over Time: ramp-up 0 ke 50 dalam 10 s](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-16-active-threads-over-time.png)
+*#8 — Active Threads Over Time: sahkan model beban (ramp-up, tahan) benar-benar berlaku.*
+
+![Response Times Over Time setiap label](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-15-response-times-over-time.png)
+*#9 — Response Times Over Time: garis transaksi berada di atas permintaan individu. (Percentiles Over Time dibaca dengan cara yang sama — stabil atau naik?)*
+
+![Transactions Per Second setiap label](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-17-transactions-per-second.png)
+*#10–#11 — Transactions Per Second bagi setiap label (siri success / failure).*
+
+![Lengkung Response Time Percentiles](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-18-response-time-percentiles.png)
+*#12 — Lengkung persentil: baca p90/p95 pada paksi-x. Ekor transaksi naik berhampiran p99.*
+
+![Response Time Distribution](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-19-response-time-distribution.png)
+*#13 — Response Time Distribution: bilangan sampel dalam setiap julat masa.*
+
+![Latencies Over Time](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-20-latencies-over-time.png)
+*#14 — Latencies Over Time: masa ke bait pertama, berbanding masa respons penuh.*
+
 ### ✅ Checkpoint
 - [ ] `hasil/laporan05/index.html` dijana dengan `-e -o` dan dibuka
 - [ ] Dashboard kedua dijana dengan `-g … -o` dan `overall_granularity=5000`; anda boleh menerangkan beza bilangan titik graf
@@ -301,6 +340,20 @@
 5. Dalam R2, buka **Errors**: berapa baris `The operation lasted too long…`? Kenapa banyak? Buka **Top 5 Errors by sampler** dan **Charts → Throughput → Codes Per Second** — adakah kod `200` sahaja? Kenapa?
 6. **Little's Law cepat:** dengan Transactions/s R1, R ≈ Average transaksi (s), Z ≈ 4 s → kira X × (R + Z). Bandingkan dengan Active Threads Over Time.
 7. Salin bahagian **A** `templat-laporan-ujian.md` ke `hasil/laporan-pasangan-<nama>.md` dan tulis **tiga dapatan** menggunakan angka **anda** (cadangan: D1 masa respons vs NFR, D2 ralat 500 & Error %, D3 kesan ambang SLA).
+
+**Rujukan visual R2 (SLA 150 ms)** — larian sebenar kami:
+
+![Statistics larian SLA 150 ms](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-26-statistics-sla-breach.png)
+*SLA lebih ketat (150 ms) menukar respons perlahan menjadi Error %, tanpa ubah kod.*
+
+![APDEX larian SLA 150 ms](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-14-apdex-sla-breach.png)
+*Skor APDEX jatuh bagi label yang gagal SLA.*
+
+![Jadual Errors larian SLA 150 ms](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-13-errors-table.png)
+*Jadual Errors: pelanggaran SLA oleh Duration Assertion dikira sebagai ralat. Satu baris bagi setiap mesej, jadi ralat yang sama terpecah (langkah 5).*
+
+![Top 5 Errors by sampler larian SLA 150 ms](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-25-top5-errors-by-sampler.png)
+*Top 5 Errors by sampler: menunjukkan permintaan mana yang melanggar SLA — hanya 3 POST `bayar-cukai`.*
 
 ### ✅ Checkpoint
 - [ ] Dua laporan `07` dijana (`laporan07-sla2000`, `laporan07-sla150`) dengan butiran 5 s
@@ -404,6 +457,74 @@
 
 ---
 
+## Latihan 8 — Laporan berbilang lokasi (ejen teragih)
+
+**Sesi:** S3
+
+### 🎯 Objektif
+- Menjalankan satu ujian teragih (1 controller + 2 ejen `jmeter-server` mewakili lokasi KL dan PENANG) dan menjana **satu laporan gabungan** (O5)
+- Menjana **laporan per lokasi** daripada larian yang sama dengan memecah JTL ikut awalan label `[LOKASI]` (O5)
+- Membandingkan lokasi (sampel, Error %, purata, p90/p95, TPS) dan menulis **dua dapatan lokasi** (O6, O7)
+
+### Prasyarat
+- Latihan 4 selesai; README §3.9 dibaca
+- Java + JMeter 5.6.x (`jmeter --version`) dan Node.js (`node --version`)
+- Port **3000, 3001, 1099, 1100, 4001, 4002** bebas — **hentikan SUT Terminal A dahulu** (skrip memulakan SUT sendiri pada 3000 dan 3001)
+- Plan rujukan: [`../test-plans/09-berbilang-lokasi.jmx`](../test-plans/09-berbilang-lokasi.jmx); skrip: [`../run/run-berbilang-lokasi.sh`](../run/run-berbilang-lokasi.sh) (Windows: `run-berbilang-lokasi.bat`)
+
+### Langkah
+1. **Jalankan skrip** (≈ 45 s; outputnya dibersihkan setiap larian):
+   ```bash
+   cd hari-2/run
+   ./run-berbilang-lokasi.sh            # Windows: run-berbilang-lokasi.bat
+   ```
+   Perhatikan konsol: 2 SUT → 2 ejen (`OK Ejen KL mendengar pada port 1099`) → `Configuring remote engine` × 2 → `summary` (berlonggok — sample sender StrippedBatch) → pecah JTL → jadual perbandingan.
+2. **Buka laporan gabungan** `hari-2/run/laporan/gabungan/index.html`:
+   - **Statistics:** berapa baris `[KL] …` dan `[PENANG] …`? Berapa sampel dalam baris **Total**, dan adakah baris transaksi dikira di dalamnya?
+   - **Charts → Over Time → Active Threads Over Time:** berapa siri? Apakah namanya? (petunjuk: `host:port` ejen)
+3. **Buka laporan per lokasi** `laporan/KL/index.html` dan `laporan/PENANG/index.html`. Bandingkan APDEX dan graf Response Times Over Time.
+4. **Isi lembaran perbandingan** (salin dari konsol langkah 6 skrip, atau baca setiap `statistics.json`):
+
+   | Lokasi | Label | Sampel | Ralat % | Purata ms | p90 ms | p95 ms | TPS |
+   |--------|-------|-------:|--------:|----------:|-------:|-------:|----:|
+   | KL | Pembaharuan Cukai Jalan (transaksi) | | | | | | |
+   | KL | TOTAL (sampel HTTP) | | | | | | |
+   | PENANG | Pembaharuan Cukai Jalan (transaksi) | | | | | | |
+   | PENANG | TOTAL (sampel HTTP) | | | | | | |
+   | Gabungan | Total (laporan `gabungan`) | | | | | | |
+
+   (Rujukan larian kami: transaksi KL 476 ms / p95 640 ms; PENANG 2430 ms / p95 3000 ms; Total gabungan 240 sampel, purata 363 ms, p95 873 ms, 6.90 TPS, 0% ralat.)
+5. **Tulis dua dapatan lokasi** dalam bahagian "Perbandingan lokasi" [`templat-laporan-ujian.md`](./templat-laporan-ujian.md) (Bukti → Kesan → Punca → Cadangan). Satu dapatan mesti menjawab: *adakah purata gabungan memberi gambaran yang betul?*
+
+![Active Threads Over Time satu lokasi](https://raw.githubusercontent.com/habibtalib/jmeter-2-days-training/main/slides/img/h2-16-active-threads-over-time.png)
+*Active Threads Over Time bagi satu larian (satu siri). Dalam laporan `gabungan`, graf yang sama memaparkan **satu siri bagi setiap ejen** (`host:port`) — bandingkan bentuk ramp-up setiap lokasi (langkah 2).*
+
+### ✅ Checkpoint
+- [ ] Skrip selesai tanpa ralat; `laporan/gabungan`, `laporan/KL` dan `laporan/PENANG` wujud
+- [ ] Anda menunjukkan dua siri Active Threads (satu per ejen) dan baris Statistics per lokasi dalam laporan gabungan
+- [ ] Anda boleh menerangkan jumlah pengguna = threads × bilangan ejen, dan beza `-G` (semua ejen) dengan `-J` (setempat)
+- [ ] Lembaran perbandingan diisi dan dua dapatan lokasi ditulis dengan angka anda
+- [ ] Lulus **Kuiz S3** (sekurang-kurangnya separuh betul) (Kuiz S3)
+
+### 🧯 Masalah lazim
+
+| Gejala | Punca | Penyelesaian |
+|--------|-------|--------------|
+| `Connection refused` / `Failed to configure 127.0.0.1:1099` | Ejen belum mendengar, port 1099 disekat firewall, atau `server.rmi.localport` tidak dibuka | Semak `hasil/ejen-KL/jmeter-server.log` dan `hasil/konsol-ejen-KL.log`; buka 1099 **dan** 4001 (dan 1100/4002); pada mesin sebenar tetapkan `-Djava.rmi.server.hostname=<IP ejen>` |
+| `rmi_keystore.jks (No such file or directory)` | SSL RMI aktif (lalai) tanpa keystore | Makmal: `-Jserver.rmi.ssl.disable=true` pada controller **dan** ejen. Produksi: `bin/create-rmi-keystore.sh`, salin ke semua mesin |
+| `Cannot start. <host> is a loopback address.` | Ejen tanpa `java.rmi.server.hostname` | Tambah `-Djava.rmi.server.hostname=127.0.0.1` (atau IP ejen) |
+| Controller `summary = 0`; log ejen `Could not read file header line for file …/pengguna.csv` | CSV tiada pada **ejen** (laluan dibaca pada ejen, bukan controller) | Salin `hari-2/data/` ke setiap ejen dan tetapkan `-Jdata_dir=<laluan>` |
+| `jmeter-server: command not found` (macOS Homebrew) | Homebrew hanya memautkan `jmeter` | Skrip mencari sendiri (`$JMETER_BIN`, `$JMETER_HOME/bin`, PATH, `$(brew --prefix jmeter)/libexec/bin`); manual: guna laluan penuh itu atau `jmeter -s` |
+| `RALAT: port 3001 sudah digunakan` | Mock perlahan R3 (Latihan 5 Cabaran) atau SUT lain masih berjalan | `lsof -i :3001` (Windows: `netstat -ano \| findstr :3001`) dan hentikan proses itu |
+| Graf "over time" tergeser / Mod `gabung` nampak berselerak | Jam mesin ejen tidak segerak (NTP) atau zon waktu berbeza | Segerakkan NTP pada semua mesin sebelum ujian; nyatakan dalam laporan |
+
+### ⭐ Cabaran
+1. Jalankan `./run-berbilang-lokasi.sh gabung` (setiap lokasi jalan sendiri → `laporan-lokasi.js gabung` → `jmeter -g`). Apa yang berbeza dalam Active Threads Over Time berbanding mod teragih?
+2. Jana laporan KL **tanpa** memecah JTL: `jmeter -g hasil/semua.jtl -o laporan/KL-tapis -Jjmeter.reportgenerator.sample_filter='^\[KL\].*'`. Bandingkan Total dengan `laporan/KL`. Kemudian cuba `series_filter='^\[KL\].*'` — kenapa graf kosong? (README §3.9)
+3. `PENGGUNA=20 GELUNG=5 ./run-berbilang-lokasi.sh` — berapa jumlah pengguna? Adakah jurang KL vs PENANG berubah?
+
+---
+
 ## Semakan kendiri
 
 - [ ] Saya boleh merancang perjalanan pengguna dan merakamnya ke dalam Transaction Controller bernama, tanpa aset statik
@@ -412,5 +533,6 @@
 - [ ] Saya boleh menjana HTML dashboard dengan `-e -o` dan `-g`, dan melaras butiran graf
 - [ ] Saya boleh menerangkan setiap bahagian dashboard dan istilahnya (percentile, throughput, latency, APDEX, Error %)
 - [ ] Saya boleh menulis dapatan dengan bukti, kesan, punca dan cadangan
+- [ ] Saya boleh menjana laporan gabungan dan per lokasi daripada ujian teragih (controller + ejen) dan membandingkan lokasi
 - [ ] Saya boleh mengira pengguna serentak dengan Little's Law dan merancang jenis larian
 - [ ] Isi penilaian kendiri Hari 2 (Kuiz hari)
