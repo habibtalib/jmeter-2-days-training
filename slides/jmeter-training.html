@@ -486,7 +486,7 @@ table.t{width:100%;border-collapse:separate;border-spacing:0;background:var(--su
   <div class="grid c4 mt16" style="gap:14px">
     <div class="kpi m-h1"><i>Days</i><b>2</b><span>21 Sep &amp; 5 Oct 2026</span></div>
     <div class="kpi m-violet"><i>Sessions</i><b>8</b><span>S1–S4 each day</span></div>
-    <div class="kpi m-pass"><i>Exercises</i><b>15</b><span>each with a ✅ checkpoint</span></div>
+    <div class="kpi m-pass"><i>Exercises</i><b>16</b><span>each with a ✅ checkpoint</span></div>
     <div class="kpi m-jpj"><i>Reference test plans</i><b>11</b><span><code>.jmx</code> — the “answer key”</span></div>
   </div>
   <aside class="notes"><p><b>Lepas dua hari, anda bawa balik enam blok kemahiran.</b></p><ul><li>Faham performance testing: Load, Stress, Spike, Soak, Scalability — dan <b>etika</b>.</li><li>Bina Test Plan dalam GUI: Thread Group, HTTP Request, Assertion, Timer, CSV.</li><li>Record dan correlate <code>token</code> dan <code>csrf</code> guna <b>JSON Extractor</b>.</li><li>Replay dengan betul, dan baca report: APDEX, <b>percentile</b>, throughput, latency.</li><li>Rancang test dengan NFR boleh diukur, Little's Law dan SLA.</li></ul><p><b>Soalan:</b> Siapa pernah alami portal kerajaan slow pada hari deadline? Itulah masalah yang performance testing cuba elakkan.</p></aside>
@@ -1855,7 +1855,7 @@ Body 4 : { "csrf": "${csrf}", "tempoh_bulan": 12, "amaun": ${amaun} }</pre></div
     <li>Every JMeter 5.6 dashboard section · glossary of terms · interpretation patterns · baseline</li>
     <li>Peak scenario <code>07</code> + <code>-Jsla_ms</code> → three written findings</li>
   </ul>
-  <div class="labline"><b>LAB</b> Exercise 4 — Dashboard worksheet · Exercise 5 — <code>07</code> + SLA → 3 findings · Exercise 8 — Multi-site report · <b>QUIZ</b> S3</div>
+  <div class="labline"><b>LAB</b> Exercise 4 — Dashboard worksheet · Exercise 5 — <code>07</code> + SLA → 3 findings · Exercise 8 — Multi-site report · Exercise 9 — Server CPU + chatbot p95/p99 · <b>QUIZ</b> S3</div>
   <div class="dayrail"><span class="on"></span><span class="on"></span><span class="now"></span><span></span><em>Day 2 · S3 / S4</em></div>
   <div class="daynum"><small>SESSION</small>S3</div>
   <aside class="notes"><p><b>Sesi 3: report tu produk anda.</b></p><ul><li>Borang penilaian dalam pelatih.my dah buka <b>2.00 petang</b>.</li><li>Pengurusan tak baca <code>.jmx</code> — mereka baca <b>keputusan</b>.</li><li>Dari <code>.jtl</code> ke HTML dashboard, faham istilah, tulis <b>tiga dapatan</b> run puncak.</li></ul></aside>
@@ -2592,6 +2592,225 @@ jmeter -g hasil/semua.jtl -o laporan/KL-f \
     </div>
   </div>
   <aside class="notes"><p><b>Check senarai ni sebelum percaya report multi-site.</b></p><ul><li><b>NTP</b> setiap agent — jam tak sama buat graf Over Time senget.</li><li>CSV ada pada setiap agent, <b>path sama</b>, data dibahagi.</li><li>Controller boleh jadi bottleneck: kekal <code>StrippedBatch</code>, tak ada GUI listeners.</li><li>RMI dua hala; versi <b>JMeter dan Java</b> sama.</li><li>Kebenaran bertulis namakan <b>setiap network sumber</b>, bukan target je.</li></ul><p><b>Soalan:</b> Dua agents guna baris <code>pengguna.csv</code> sama? Rakyat sama login dua kali serentak — tak realistik, mungkin konflik bayaran.</p></aside>
+</section>
+
+<!-- ---------- Day 2 · S3 — Server CPU (PerfMon), chatbot example, p95/p99 ---------- -->
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Server metrics</div>
+  <h2 class="wide">Response time says <i>what</i> — server metrics say <i>why</i></h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)">
+    <div class="stack tight">
+      <div class="card side m-fail sm"><span class="k">JMETER ALONE</span><h3>“Chatbot p95 rose from 1067 to 3024 ms”</h3><p>The client-side stopwatch shows the symptom. It cannot tell whether the server ran out of CPU, waited on a database, or waited on an external API.</p></div>
+      <div class="card side m-pass sm"><span class="k">JMETER + SERVER METRICS</span><h3>“…while server CPU averaged 95 %”</h3><p>Same time axis, two sides of the story: users and response time from JMeter, CPU and memory from the machine under test.</p></div>
+      <div class="callout warn sm"><span class="i">🖥️</span><div>Monitor <b>two</b> machines: the server under test <b>and</b> the load generator. A busy generator makes its own stopwatch late.</div></div>
+    </div>
+    <div class="stack tight">
+      <table class="t xs">
+        <tr><th style="width:140px">Metric</th><th>What it answers</th></tr>
+        <tr class="hot"><td><b>CPU %</b></td><td>Is the server busy computing? Near 100 % = requests queue for the CPU</td></tr>
+        <tr><td><b>Memory</b></td><td>Keeps growing and never drops = leak → soak test</td></tr>
+        <tr><td><b>Disk / Network I/O</b></td><td>Waiting on storage or bandwidth?</td></tr>
+        <tr><td><b>Generator CPU</b></td><td>Is the test itself still valid? Keep it below ~80 %</td></tr>
+      </table>
+      <p class="xsmall muted mb0">Numbers from the chatbot reference run (plan <code>10b</code>, 40 users): 1–10 users vs 31–40 users.</p>
+    </div>
+  </div>
+  <aside class="notes"><p><b>Response time beritahu apa yang jadi; server metrics beritahu kenapa.</b></p><ul><li>JMeter cuma nampak <b>simptom</b> dari sisi client.</li><li>p95 chatbot naik dari 1067 ke <b>3024 ms</b> — tapi kenapa?</li><li>CPU server purata <b>95%</b> pada paksi masa sama — itu puncanya.</li><li>Monitor <b>dua mesin</b>: server yang diuji dan load generator.</li></ul></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — PerfMon architecture <span class="xy">jpgc-perfmon · ServerAgent 2.2.3</span></div>
+  <h2 class="wide">PerfMon: a listener in JMeter, an agent on the server</h2>
+  <div class="flow sm" style="align-items:center">
+    <div class="node hot" style="flex:1.1"><span class="k">LOAD GENERATOR · JMETER</span><b>Test plan + PerfMon Metrics Collector</b><span>sends the load <b>and</b> asks the agent for metrics every second</span></div>
+    <div class="arr">⇄</div>
+    <div class="node warn" style="flex:1"><span class="k">SERVER UNDER TEST · TCP 4444</span><b>ServerAgent</b><span>small Java process — reads CPU / memory / disk / network of <b>its own</b> machine</span></div>
+  </div>
+  <div class="flow sm mt16">
+    <div class="node"><span class="k">-l keputusan.jtl</span><b>Results file</b><span>one row per sample → HTML dashboard</span></div>
+    <div class="arr">+</div>
+    <div class="node good"><span class="k">listener Filename</span><b><code>perfmon.jtl</code></b><span>one row per metric reading, label <code>localhost CPU</code> — a <b>separate</b> file</span></div>
+    <div class="arr">→</div>
+    <div class="node"><span class="k">JMeterPluginsCMD · GUI</span><b>PNG / CSV graphs</b><span>CPU over time, beside JMeter's own graphs</span></div>
+  </div>
+  <div class="grid c2 mt16" style="gap:14px">
+    <div class="callout info sm"><span class="i">🧩</span><div>Plugins from <b>jmeter-plugins.org</b> via Plugins Manager — not built into JMeter. Plan <code>10b</code> will not even open without <code>jpgc-perfmon</code>.</div></div>
+    <div class="callout warn sm"><span class="i">📊</span><div>The HTML dashboard has <b>no</b> PerfMon chart. Never write metrics into the <code>-l</code> file: CPU rows become fake “requests” and corrupt p95/p99.</div></div>
+  </div>
+  <aside class="notes"><p><b>PerfMon ada dua bahagian: listener dalam JMeter, agent atas server.</b></p><ul><li><b>ServerAgent</b> run atas server yang diuji, dengar TCP <b>4444</b>.</li><li>Listener <b>PerfMon Metrics Collector</b> tanya agent setiap saat.</li><li>Metrics masuk <code>perfmon.jtl</code> — fail <b>berasingan</b> daripada results.</li><li>HTML dashboard <b>tak ada</b> carta PerfMon; buat graf berasingan.</li></ul><p><b>Contoh:</b> Kalau CPU masuk fail <code>-l</code>, baris <code>localhost CPU</code> jadi "request" dengan response time CPU × 1000 — p95 jadi rosak.</p></aside>
+</section>
+
+<section class="slide codey">
+  <div class="eyebrow">Day 2 · S3 — PerfMon setup <span class="xy">10b-chatbot-perfmon.jmx</span></div>
+  <h2>Setup in four steps — then export the graphs</h2>
+  <div class="split" style="grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr)">
+    <div class="stack tight">
+      <ol class="steps tight">
+        <li><div><b>Install the plugins</b><span>Options → Plugins Manager → <b>PerfMon</b> (<code>jpgc-perfmon</code>) + <code>jpgc-cmd</code> + <code>jpgc-graphs-basic</code> → Apply Changes and Restart.</span></div></li>
+        <li><div><b>Start ServerAgent on the server</b><span><code>startAgent.sh --udp-port 0 --tcp-port 4444</code> → wait for <code>JP@GC Agent v2.2.3 started</code>.</span></div></li>
+        <li><div><b>Add the listener</b><span>Test Plan → Add → Listener → <b>jp@gc - PerfMon Metrics Collector</b> → rows <code>CPU</code> + <code>Memory usedperc</code> · Filename <code>perfmon.jtl</code>.</span></div></li>
+        <li><div><b>Run non-GUI, then export</b><span>The listener writes its file without the GUI; <code>JMeterPluginsCMD</code> turns it into PNG.</span></div></li>
+      </ol>
+      <div class="callout warn sm"><span class="i">🍎</span><div><b>Apple Silicon:</b> SIGAR inside ServerAgent has no arm64 build — run the agent with an <b>x86_64 Java</b> (Rosetta), or CPU comes back empty.</div></div>
+    </div>
+    <div class="stack tight">
+      <div class="codewrap"><div class="codebar">server · agent (Terminal C)<span class="lang alt">sh</span></div>
+<pre class="code xs" data-lang="sh">cd ServerAgent-2.2.3
+./startAgent.sh --udp-port 0 --tcp-port 4444   # Windows: startAgent.bat
+telnet localhost 4444      # type: test  →  Yep</pre></div>
+      <div class="codewrap"><div class="codebar">load generator · hari-2/run<span class="lang alt">sh</span></div>
+<pre class="code xs" data-lang="sh">./run-chatbot-perfmon.sh          # does all of the below
+# --- by hand ---
+mkdir -p hasil
+jmeter -n -t ../test-plans/10b-chatbot-perfmon.jmx \
+  -Jpengguna=40 -Jrampup=120 -Jtempoh=180 \
+  -Jagent_host=localhost -Jagent_port=4444 \
+  -Jperfmon_jtl=hasil/perfmon.jtl \
+  -l hasil/keputusan.jtl -e -o hasil/laporan
+JMeterPluginsCMD.sh --generate-png hasil/cpu-perfmon.png \
+  --input-jtl hasil/perfmon.jtl --plugin-type PerfMon
+# same on keputusan.jtl: --plugin-type ResponseTimesOverTime
+#                        --plugin-type ThreadsStateOverTime</pre></div>
+    </div>
+  </div>
+  <aside class="notes"><p><b>Empat langkah setup, kemudian export graf.</b></p><ul><li>Plugins Manager: pasang <b>PerfMon</b>, <code>jpgc-cmd</code>, <code>jpgc-graphs-basic</code>, restart JMeter.</li><li>Start ServerAgent atas server — port <b>4444</b>; uji dengan <code>test</code> → <code>Yep</code>.</li><li>Listener: <b>CPU</b> dan <b>Memory usedperc</b>, filename <code>perfmon.jtl</code>.</li><li>Run <b>non-GUI</b>; <code>JMeterPluginsCMD</code> buat PNG CPU, response time, threads.</li><li>Mac Apple Silicon: ServerAgent perlu <b>Java x86_64</b>, kalau tak CPU kosong.</li></ul></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Chatbot example <span class="xy">40 users · ramp-up 120 s · 180 s</span></div>
+  <h2 class="wide">Chatbot under load — threads, CPU, response time</h2>
+  <div class="split" style="grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr)">
+    <figure class="shot fit" style="--mh:470px"><img src="img/h2-30-cpu-threads-rt-bertindan.png" alt="Three stacked charts on the same time axis: active threads rise 0 to 40 over 120 s then hold; server CPU climbs from about 12 to 100 percent; average response time about 700 to 900 ms, then rising after 13:16:20"><figcaption>Threads · CPU (+ Memory) · Response Times — same clock</figcaption></figure>
+    <div class="stack tight">
+      <table class="t xs">
+        <tr><th>Users</th><th style="width:72px">CPU avg</th><th style="width:72px">CPU max</th><th style="width:76px">Requests/s</th><th style="width:66px">p50 ms</th><th style="width:66px">p95 ms</th><th style="width:66px">p99 ms</th></tr>
+        <tr><td>1–10</td><td>26 %</td><td>53 %</td><td>2.4</td><td>714</td><td>1067</td><td>3536</td></tr>
+        <tr><td>11–20</td><td>53 %</td><td>74 %</td><td>6.6</td><td>761</td><td>1048</td><td>5007</td></tr>
+        <tr><td>21–30</td><td>73 %</td><td>96 %</td><td>10.4</td><td>780</td><td>1121</td><td>5962</td></tr>
+        <tr class="hot"><td>31–40 (+ hold)</td><td class="x">95 %</td><td class="x">100 %</td><td>14.0</td><td>987</td><td class="x">3024</td><td>6343</td></tr>
+      </table>
+      <div class="card side m-fail sm"><span class="k">KNEE POINT · t ≈ 80 s · ~31 USERS</span><h3>CPU stays ≥ 80 % — p95 jumps 1027 → 3567 ms</h3><p>From t ≈ 110 s (40 users, CPU 94–100 %) p95 stays high. Requests/s grows only to 14 — without saturation 40 users should give ≈ 16.7/s (Little's Law).</p></div>
+      <div class="callout info sm"><span class="i">🧠</span><div>p99 is 3.5–6.3 s at <b>every</b> level: those are the ~2.5 % long chatbot answers (long tail), not a load effect.</div></div>
+      <p class="xsmall muted mb0">Reference run 5 Oct 2026, JMeter 5.6.3 · 1877 samples · SUT + JMeter + ServerAgent on one 14-core laptop.</p>
+    </div>
+  </div>
+  <aside class="notes"><p><b>Baca tiga graf atas jam yang sama untuk cari knee point.</b></p><ul><li>Threads naik linear ke <b>40</b> dalam 120 s, kemudian kekal.</li><li>CPU naik ikut users; kekal <b>≥ 80%</b> dari kira-kira 31 users (t ≈ 80 s).</li><li>Pada saat sama p95 lompat dari 1027 ke <b>3567 ms</b>.</li><li>Throughput cuma <b>14/s</b> — response naik, throughput mendatar = saturated.</li><li>p99 tinggi di setiap tahap — itu <b>jawapan panjang</b>, bukan kesan beban.</li></ul><p><b>Contoh:</b> Bottleneck di sini ialah CPU server; kapasiti selamat lebih kurang 30 users bagi satu server.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Reading the three together</div>
+  <h2 class="wide">Same rising response time — different causes</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr)">
+    <table class="t xs">
+      <tr><th style="width:150px">Server CPU</th><th style="width:120px">Response time</th><th>Interpretation</th><th style="width:150px">Next step</th></tr>
+      <tr><td>Rises in step with threads</td><td>Flat</td><td><span class="st ok">Healthy</span> capacity left</td><td>Increase load</td></tr>
+      <tr class="hot"><td><b>High</b> (≈ 90–100 %)</td><td>Rises, throughput flat</td><td><span class="st bad">Saturated</span> — requests queue for the CPU</td><td>Profile code · add CPU · scale out</td></tr>
+      <tr><td><b>Low</b> (&lt; 60 %)</td><td>Rises</td><td><span class="st warn">Waiting</span> on something else: DB, thread pool, locks, network, an <b>external LLM API</b></td><td>Monitor that dependency (agent on the DB, JMX)</td></tr>
+      <tr><td><b>Generator</b> CPU ≥ 80 %</td><td>Anything</td><td><span class="st bad">Test invalid</span> — JMeter is choking</td><td>Fewer threads per machine · more generators</td></tr>
+      <tr><td>High <b>before</b> the test</td><td>—</td><td>Other processes on the server</td><td>Idle baseline first</td></tr>
+    </table>
+    <div class="stack tight">
+      <figure class="shot fit" style="--mh:210px"><img src="img/h2-30-perfmon-cpu-memory.png" alt="PerfMon export: localhost CPU climbs from about 12 to 100 percent during ramp-up; localhost Memory usedperc flat at about 94 percent"><figcaption><code>--plugin-type PerfMon</code>: CPU (red) · Memory usedperc (blue)</figcaption></figure>
+      <div class="callout warn sm"><span class="i">🧮</span><div>Memory flat at <b>~94 %</b> is the <b>whole laptop</b> (macOS counts cache) — not a leak. Compare with a baseline taken <b>before</b> the test.</div></div>
+      <div class="callout info sm"><span class="i">💻</span><div>In class SUT + JMeter + agent share <b>one laptop</b>: “server CPU” includes JMeter. Say so in the report.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p><b>Response time naik yang sama boleh ada punca berbeza — CPU yang beritahu.</b></p><ul><li>CPU <b>tinggi</b> + response naik + throughput mendatar = server saturated.</li><li>CPU <b>rendah</b> + response naik = server <b>menunggu</b> — DB, thread pool, atau LLM API luar.</li><li>CPU <b>load generator</b> ≥ 80% = keputusan tak boleh dipercayai.</li><li>Memory 94% rata = memory <b>seluruh laptop</b>, bukan leak.</li></ul><p><b>Contoh:</b> Chatbot sebenar yang panggil LLM API luar — CPU server rendah tapi p95 naik; bottleneck di API, bukan server kita.</p></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — p95 vs p99 for a chatbot</div>
+  <h2 class="wide">p95 vs p99: “how long do my users wait?”</h2>
+  <figure class="shot fit" style="--mh:200px"><img src="img/h2-30-chatbot-statistics-p95-p99.png" alt="Dashboard Statistics for the chatbot: 1877 samples, 93 failures, 4.95 percent errors, average 1069 ms, median 902, 90th pct 1374.6, 95th pct 1665, 99th pct 6076.2, max 9220 ms, 10.35 transactions per second"><figcaption>Dashboard Statistics — <code>Tanya Chatbot - POST /api/chatbot</code>, 1877 samples</figcaption></figure>
+  <div class="split mt16" style="grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr)">
+    <div class="grid c3" style="gap:12px">
+      <div class="kpi m-n"><i>Average</i><b>1069 ms</b><span>Nobody “gets” the average — it hides the tail</span></div>
+      <div class="kpi m-h1"><i>p95</i><b>1665 ms</b><span>95 of 100 questions answered within 1.7 s</span></div>
+      <div class="kpi m-fail"><i>p99</i><b>6076 ms</b><span>1 in 100 questions waits more than 6 s</span></div>
+    </div>
+    <figure class="shot fit" style="--mh:190px"><img src="img/h2-30-chatbot-response-time-percentiles.png" alt="Response Time Percentiles curve: flat at about 0.4 to 1.5 s up to about the 95th percentile, then a near-vertical tail to about 9 s"><figcaption>Flat to ~p95, then the <b>long tail</b> to 9.2 s</figcaption></figure>
+  </div>
+  <aside class="notes"><p><b>p95 dan p99 jawab soalan "berapa lama user saya tunggu".</b></p><ul><li>p95 <b>1665 ms</b>: 95 daripada 100 soalan dijawab dalam 1.7 saat.</li><li>p99 <b>6076 ms</b>: satu dalam setiap 100 soalan tunggu <b>lebih 6 saat</b>.</li><li>Average 1069 ms <b>menyorok</b> ekor panjang tu.</li><li>Chatbot ada jawapan panjang — ekor tu pengalaman <b>sebenar</b> sebahagian users.</li></ul><p><b>Contoh:</b> 1000 soalan sejam, p99 6 s — lebih kurang 10 orang tunggu lebih 6 saat setiap jam.</p></aside>
+</section>
+
+<section class="slide codey">
+  <div class="eyebrow">Day 2 · S3 — Percentile settings &amp; sample size</div>
+  <h2>Choose the percentiles — and collect enough samples</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+    <div class="stack tight">
+      <div class="codewrap"><div class="codebar">user.properties — or -J when regenerating<span class="lang alt">properties</span></div>
+<pre class="code xs" data-lang="properties"># Aggregate Report + dashboard Statistics columns
+aggregate_rpt_pct1=90
+aggregate_rpt_pct2=95
+aggregate_rpt_pct3=99
+# e.g. jmeter -g hasil/keputusan.jtl -o hasil/laporan-p999 \
+#        -Jaggregate_rpt_pct1=75 -Jaggregate_rpt_pct3=99.9</pre></div>
+      <table class="t xs">
+        <tr><th style="width:190px">Where</th><th>What you see</th></tr>
+        <tr><td>Aggregate Report</td><td>90% / 95% / 99% Line</td></tr>
+        <tr><td>Dashboard → Statistics</td><td>90th / 95th / 99th pct — same properties</td></tr>
+        <tr><td>Response Time Percentiles</td><td>Full p0 → p100 curve per label</td></tr>
+        <tr class="hot"><td>Response Time Percentiles <b>Over Time</b></td><td><b>Successful</b> samples only</td></tr>
+      </table>
+    </div>
+    <div class="stack tight">
+      <div class="card side m-violet sm"><span class="k">SAMPLE SIZE · PER TRANSACTION</span><h3>p95 ≥ 200 samples · p99 ≥ 1,000</h3><p>≈ 10 samples above the percentile. Our 1877 → p99 trustworthy. A 106-sample run: <b>p99.9 = Max</b> (4484 ms) — just one request.</p></div>
+      <figure class="shot fit" style="--mh:150px"><img src="img/h2-30-chatbot-percentiles-over-time.png" alt="Response Time Percentiles Over Time for successful responses: the maximum line stays near 3 s because slower samples failed the 3000 ms Duration Assertion"><figcaption>Percentiles Over Time caps near <b>3 s</b> …</figcaption></figure>
+      <div class="callout warn sm"><span class="i">⚠️</span><div>… while Statistics says p99 <b>6076 ms</b>. Answers &gt; 3000 ms failed the Duration Assertion (SLA) and are left out of that chart.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p><b>Pilih percentile yang betul, dan pastikan sample cukup.</b></p><ul><li><code>aggregate_rpt_pct1/2/3</code> tetapkan lajur <b>Aggregate Report dan Statistics</b>.</li><li>Ubah property, kemudian jana semula dengan <code>-g</code>.</li><li>p99 perlukan lebih kurang <b>1000 samples</b> setiap transaksi; kita ada 1877.</li><li>106 samples: p99.9 = Max — cuma <b>satu</b> request.</li><li>Percentiles Over Time kira sample <b>berjaya</b> je — sebab tu dia berhenti dekat 3 s.</li></ul></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Finding &amp; NFR</div>
+  <h2 class="wide">Write the NFR with p95 <i>and</i> p99 — and CPU as the cause</h2>
+  <div class="mnemo"><span class="tag">NFR</span><p>Chatbot <code>POST /api/chatbot</code>: <b>p95 ≤ 2 s</b> and <b>p99 ≤ 8 s</b> at <b>30</b> concurrent users (think time 1–2 s), Error % &lt; 1 % (excluding SLA breaches), server CPU avg &lt; 75 %.</p></div>
+  <div class="split mt16" style="grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)">
+    <div class="stack tight">
+      <table class="t xs">
+        <tr><th>Load level</th><th style="width:92px">p95</th><th style="width:92px">p99</th><th style="width:84px">CPU avg</th><th style="width:140px">NFR</th></tr>
+        <tr><td>21–30 users</td><td>1121 ms</td><td>5962 ms</td><td>73 %</td><td><span class="st ok">PASS</span></td></tr>
+        <tr class="hot"><td>31–40 users</td><td class="x">3024 ms</td><td>6343 ms</td><td class="x">95 %</td><td><span class="st bad">FAIL</span> p95 + CPU</td></tr>
+      </table>
+      <div class="card side m-jpj sm"><span class="k">FINDING · EVIDENCE → IMPACT → CAUSE → RECOMMENDATION</span><p>Meets the NFR up to ~30 users. At 31–40 users server CPU averages <b>95 %</b> (PerfMon) and p95 rises to <b>3024 ms</b> (&gt; 2000). Safe capacity ≈ <b>30 users per server</b>. Profile answer generation / add CPU / scale out — then re-test.</p></div>
+    </div>
+    <div class="stack tight">
+      <div class="callout danger sm"><span class="i">🔓</span><div><b>ServerAgent has no authentication</b>, listens on all interfaces, and its <code>exec</code> metric <b>runs commands</b>. Test environments only · firewall 4444 to the JMeter IP · normal user, not root · <b>stop it right after the test</b> · written permission from the server owner.</div></div>
+      <div class="callout info sm"><span class="i">📈</span><div>PerfMon 2.2.3 is old and unmaintained — fine for labs. For real environments: <b>Prometheus + node_exporter + Grafana</b>, with JMeter's Backend Listener streaming results to the same dashboards.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p><b>NFR yang baik sebut p95, p99 dan beban — dan dapatan sebut CPU sebagai punca.</b></p><ul><li>Format: p95 ≤ X s dan p99 ≤ Y s pada <b>N users</b> serentak.</li><li>21–30 users: p95 1121 ms, CPU 73% — <b>pass</b>.</li><li>31–40 users: p95 <b>3024 ms</b>, CPU 95% — fail; kapasiti selamat lebih kurang 30 users.</li><li>ServerAgent <b>tak ada authentication</b> dan metric <code>exec</code> boleh run command — stop lepas test.</li><li>Untuk persekitaran sebenar: <b>Prometheus dan Grafana</b>.</li></ul></aside>
+</section>
+
+<section class="slide">
+  <div class="eyebrow">Day 2 · S3 — Exercise 9 <span class="xy">run-chatbot-perfmon.sh</span></div>
+  <h2 class="wide">Lab 9 — Server CPU (PerfMon) + chatbot p95/p99</h2>
+  <div class="split" style="grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)">
+    <ol class="steps tight">
+      <li><div><b>curl the chatbot 5×</b><span><code>POST /api/chatbot</code> — <code>masa_ms</code> follows <code>token_dijana</code> (≈ 5 ms per token).</span></div></li>
+      <li><div><b>Start ServerAgent</b><span><code>startAgent.sh --udp-port 0 --tcp-port 4444</code> → <code>test</code> → <code>Yep</code>.</span></div></li>
+      <li><div><b>Inspect plan <code>10b</code> in the GUI</b><span>PerfMon Metrics Collector: <code>CPU</code> + <code>Memory usedperc</code> — then close the GUI.</span></div></li>
+      <li><div><b>Run <code>./run-chatbot-perfmon.sh</code></b><span>≈ 3.5 min · small laptop: <code>PENGGUNA=20 RAMPUP=60 TEMPOH=120</code>.</span></div></li>
+      <li><div><b>Three PNGs side by side + dashboard</b><span>Knee point (users + time) · Statistics p95/p99 · Response Time Percentiles.</span></div></li>
+      <li><div><b>NFR + one finding · stop the agent</b><span>Template B9 — CPU as the cause · Ctrl+C → <code>Connection refused</code>.</span></div></li>
+    </ol>
+    <div class="stack tight">
+      <div class="card top m-pass sm"><span class="k">LAB 9 · QUIZ S3 (Q6–7)</span><h3>Worksheet — yours vs reference</h3>
+        <table class="t xs mt8">
+          <tr><th>Item</th><th style="width:160px">Reference</th></tr>
+          <tr><td>Samples / Error %</td><td>1877 / 4.95 %</td></tr>
+          <tr><td>p50 / p95 / p99 (ms)</td><td>902 / 1665 / 6076</td></tr>
+          <tr><td>CPU avg / max</td><td>73 % / 100 %</td></tr>
+          <tr><td>Users when CPU stays ≥ 80 %</td><td>~31</td></tr>
+          <tr><td>Throughput at max load</td><td>~14 /s</td></tr>
+        </table>
+      </div>
+      <div class="callout warn sm"><span class="i">🧯</span><div>CPU empty on Apple Silicon → x86_64 Java for the agent · <code>Connection refused</code> → agent not started / wrong port.</div></div>
+    </div>
+  </div>
+  <aside class="notes"><p><b>Latihan 9: kumpul CPU server dengan PerfMon dan tulis NFR p95 + p99 chatbot.</b></p><ul><li>Uji chatbot dengan <code>curl</code>; start ServerAgent port <b>4444</b>.</li><li>Run <code>run-chatbot-perfmon.sh</code> — lebih kurang <b>3.5 minit</b>.</li><li>Letak tiga PNG sebelah-menyebelah; cari <b>knee point</b>.</li><li>Isi lembaran dan banding dengan rujukan: p95 1665, p99 <b>6076 ms</b>.</li><li>Tulis NFR + satu dapatan, kemudian <b>hentikan ServerAgent</b>.</li></ul><p><b>Contoh:</b> Laptop 4 teras mungkin capai CPU 100% pada 10 users — itu dapatan anda; tulis dengan angka anda sendiri.</p></aside>
 </section>
 
 <!-- ---------- Day 2 · S4 ---------- -->
