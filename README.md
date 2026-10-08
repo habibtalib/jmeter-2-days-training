@@ -1,4 +1,4 @@
-# Apache JMeter 2 Hari — Fail Lab (Portal eJPJ tiruan)
+# Apache JMeter 3 Hari — Fail Lab (Portal eJPJ tiruan)
 
 Fail untuk **buat latihan** kursus *Web Load & Performance Test Automation using JMeter*.
 **Nota, langkah latihan, kuiz dan slaid ada di [pelatih.my](https://pelatih.my)** — repo ni simpan fail yang anda run sahaja.
