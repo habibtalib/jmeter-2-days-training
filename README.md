@@ -34,4 +34,17 @@ Dah ada salinan lama? `git pull` untuk dapat fail terkini.
 | `hari-2/snippets/` | Contoh Groovy (JSR223), templat pelan ujian & laporan ujian |
 | `img/` | Screenshot yang dipaparkan dalam latihan di pelatih.my |
 
+## Fail ikut hari
+
+| Hari | Latihan (di pelatih.my) | Fail |
+|---|---|---|
+| **Hari 1** | Latihan 0–7 | `hari-1/test-plans/01`–`04`, `rakam-template.jmx`, `hari-1/data/kenderaan.csv` |
+| **Hari 2** | Latihan 1–5 | `hari-2/test-plans/04`–`08`, `hari-2/data/pengguna.csv`, `hari-2/run/run-nogui.*`, `templat-laporan-ujian.md` |
+| **Hari 3** | Latihan 1 — laporan berbilang lokasi | `hari-2/test-plans/09-berbilang-lokasi.jmx`, `hari-2/run/run-berbilang-lokasi.sh` / `.bat`, `laporan-lokasi.js` |
+| | Latihan 2 — CPU pelayan (PerfMon) + chatbot p95/p99 | `hari-2/test-plans/10-chatbot-beban.jmx`, `10b-chatbot-perfmon.jmx`, `hari-2/run/run-chatbot-perfmon.sh` / `.bat`, `hari-2/data/soalan-chatbot.csv` |
+| | Latihan 3 — rancang ujian prestasi | `hari-2/snippets/templat-pelan-ujian.md` |
+| | Latihan 4 — pembentangan mini | `hari-2/snippets/templat-laporan-ujian.md` |
+
+> Hari 3 guna semula fail dalam folder `hari-2/` — tak ada folder `hari-3/` di sini. Dah clone sebelum ni? `git pull` sahaja.
+
 Langkah demi langkah setiap latihan: buka kursus anda di **pelatih.my → Latihan**.
