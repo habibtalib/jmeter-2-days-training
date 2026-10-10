@@ -250,8 +250,19 @@ const FAVICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><re
 // ---------------------------------------------------------------------
 //  Penghala (router)
 // ---------------------------------------------------------------------
-const server = http.createServer(async (req, res) => {
-  const url = new URL(req.url, `http://${req.headers.host}`);
+// Satu request rosak (cth. Host pelik dari proxy/browser, atau %XX tak sah dalam URL) tak boleh
+// matikan server: ralat dalam handler async jadi 'unhandled rejection' yang tamatkan proses Node.
+const server = http.createServer((req, res) => {
+  urusPermintaan(req, res).catch((e) => {
+    const salahKlien = e instanceof URIError || e?.code === 'ERR_INVALID_URL';
+    console.error(`[ralat] ${req.method} ${req.url} → ${e?.message || e}`);
+    if (res.headersSent) return res.destroy();
+    kirim(res, salahKlien ? 400 : 500, { ralat: salahKlien ? 'Permintaan tidak sah' : 'Ralat dalaman pelayan' });
+  });
+});
+
+async function urusPermintaan(req, res) {
+  const url = new URL(req.url, 'http://localhost');
   const laluan = url.pathname;
   const method = req.method;
 
@@ -460,7 +471,7 @@ const server = http.createServer(async (req, res) => {
 
   // Tidak dijumpai
   return kirim(res, 404, { ralat: 'Laluan tidak dijumpai', laluan });
-});
+}
 
 server.listen(PORT, () => {
   console.log(`Portal eJPJ (TIRUAN) berjalan di  http://localhost:${PORT}`);
