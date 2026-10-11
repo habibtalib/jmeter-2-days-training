@@ -1,0 +1,5 @@
+# Hujung baris tetap, apa pun tetapan core.autocrlf pada Windows:
+# skrip bash mesti LF (CRLF = "$'\r': command not found" dalam Git Bash),
+# skrip .bat mesti CRLF (cmd.exe tersilap baca label/blok dengan LF).
+*.sh  text eol=lf
+*.bat text eol=crlf

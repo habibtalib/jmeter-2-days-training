@@ -25,6 +25,8 @@ Portal eJPJ (TIRUAN) berjalan di  http://localhost:3000
 
 Biarkan tetingkap ini terbuka sepanjang lab. Buka `http://localhost:3000` dalam pelayar untuk senarai endpoint.
 
+> 🪟 **Windows:** jalankan arahan dalam **Git Bash**. Jika Windows Defender Firewall bertanya tentang `node.exe` semasa pertama kali, pilih **Allow** untuk *Private networks* (atau **Cancel** — `localhost` tetap berfungsi). Contoh `curl` di bawah ialah sintaks bash (Git Bash). Dalam PowerShell, `curl` ialah alias `Invoke-WebRequest` — untuk GET ringkas taip `curl.exe -s http://localhost:3000/api/health`; untuk POST JSON guna Git Bash.
+
 ### Laras kelakuan (untuk demo "sebelum vs selepas")
 
 | Pembolehubah | Lalai | Kesan |

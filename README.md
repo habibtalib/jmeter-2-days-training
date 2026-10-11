@@ -9,9 +9,10 @@ Fail untuk **buat latihan** kursus *Web Load & Performance Test Automation using
 
 ## Persediaan
 
-- Java 17+ (`java --version`)
+- Java 11+, disyorkan 17/21 LTS (`java --version`)
 - Apache JMeter 5.6.3 (`jmeter -v`)
 - Node.js 18+ (`node --version`)
+- **Windows:** [Git for Windows](https://git-scm.com/download/win) — taip semua arahan dalam terminal **Git Bash** (skrip `.sh`, `curl`, `git`). Skrip `.bat` ialah alternatif untuk Command Prompt.
 
 ```bash
 git clone https://github.com/habibtalib/jmeter-2-days-training.git
@@ -19,7 +20,9 @@ cd jmeter-2-days-training
 node sut/server.js          # Portal eJPJ tiruan → http://localhost:3000 (biar terbuka)
 ```
 
-Dah ada salinan lama? `git pull` untuk dapat fail terkini.
+Dah ada salinan lama? `git pull` untuk dapat fail terkini. Guna **Code → Download ZIP**? Muat turun semula dan ganti folder lama — jangan Extract di sebelahnya. Di Windows, `git clone` lebih disyorkan.
+
+> 🪟 `git clone` gagal dengan `SSL certificate problem: unable to get local issuer certificate` (rangkaian pejabat dengan SSL inspection)? Suruh Git guna stor sijil Windows: `git config --global http.sslBackend schannel`, kemudian clone semula.
 
 ## Isi repo
 

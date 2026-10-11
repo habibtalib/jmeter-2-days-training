@@ -3,20 +3,23 @@ REM ====================================================================
 REM  Ujian beban CHATBOT eJPJ (tiruan) + CPU pelayan via ejen PerfMon (Windows).
 REM  Setara dengan run-chatbot-perfmon.sh — localhost / persekitaran ujian SAHAJA.
 REM
-REM  !! BELUM DIUJI pada Windows (ditulis teliti berdasarkan versi .sh yang
-REM  !! telah diuji pada macOS + JMeter 5.6.3). Jika gagal, jalankan langkah
-REM  !! secara manual — arahan sama seperti dalam README Hari 2, seksyen 3.10.
+REM  Disemak baris demi baris dengan versi .sh (diuji pada macOS + JMeter 5.6.3),
+REM  tetapi BELUM diuji pada mesin Windows sebenar.
+REM  Jika satu langkah gagal, jalankan langkah itu secara manual — arahan sama
+REM  seperti dalam README Hari 2, seksyen 3.10. Dalam Git Bash, guna versi .sh.
 REM
 REM  Prasyarat:
 REM    - JMETER_HOME ditetapkan (cth C:\apache-jmeter-5.6.3) + plugin
 REM      jpgc-perfmon, jpgc-cmd, jpgc-graphs-basic (Plugins Manager)
 REM    - ServerAgent BERJALAN pada PELAYAN:  startAgent.bat --udp-port 0 --tcp-port 4444
-REM    - SUT berjalan:  node sut\server.js   (atau set MULA_SUT=1)
+REM    - SUT berjalan:  node sut\server.js   (atau set "MULA_SUT=1" — skrip mula SUT pada %PORT%)
 REM    - Node.js (untuk ringkasan)
 REM  Penggunaan:
 REM    run-chatbot-perfmon.bat                       (40 pengguna, ramp 120s, 180s)
-REM    set PENGGUNA=20 & set RAMPUP=60 & set TEMPOH=120 & run-chatbot-perfmon.bat
-REM    set AGENT_HOST=10.0.0.5 & set HOST=10.0.0.5 & run-chatbot-perfmon.bat
+REM    set "PENGGUNA=20" & set "RAMPUP=60" & set "TEMPOH=120" & run-chatbot-perfmon.bat
+REM    set "AGENT_HOST=10.0.0.5" & set "HOST=10.0.0.5" & run-chatbot-perfmon.bat
+REM    set "MULA_SUT=1" & set "PORT=3001" & run-chatbot-perfmon.bat
+REM  (Tanda petik dalam set "X=20" wajib: tanpanya "set X=20 & ..." menyimpan "20 ".)
 REM ====================================================================
 setlocal
 set HERE=%~dp0
@@ -45,14 +48,25 @@ if "%JBIN:~-1%"=="\" set JBIN=%JBIN:~0,-1%
 set PCMD=%JBIN%\JMeterPluginsCMD.bat
 
 for /f %%a in ('powershell -NoProfile -Command "Get-Date -Format yyyyMMdd-HHmmss"') do set STAMP=%%a
+if "%STAMP%"=="" set STAMP=%RANDOM%%RANDOM%
 set HASIL=%HERE%hasil\%STAMP%
 mkdir "%HASIL%"
 
 echo == 1) Semak SUT dan ejen PerfMon ==
-if "%MULA_SUT%"=="1" (
-  start "JMCHATBOT-SUT" /MIN cmd /c node "%ROOT%\sut\server.js" ^> "%HASIL%\sut.log" 2^>^&1
-  timeout /t 3 /nobreak > nul
+if not "%MULA_SUT%"=="1" goto :sut_sedia
+call :boleh_sambung %HOST% %PORT% && (
+  echo RALAT: port %PORT% sudah digunakan ^(MULA_SUT=1^). Hentikan proses itu dahulu: Ctrl+C dalam
+  echo        terminalnya / Task Manager, atau cari PID ^(lajur terakhir pada baris LISTENING^):
+  echo        netstat -ano ^| findstr ":%PORT% "    lalu: taskkill /PID ^<PID^> /F
+  exit /b 1
 )
+start "JMCHATBOT-SUT" /MIN cmd /c node "%ROOT%\sut\server.js" ^> "%HASIL%\sut.log" 2^>^&1
+REM Tunggu SUT mendengar (sehingga ~10s); ping, bukan timeout (gagal jika stdin bukan konsol)
+for /L %%i in (1,1,10) do (
+  call :boleh_sambung %HOST% %PORT% && goto :sut_sedia
+  ping -n 2 127.0.0.1 > nul
+)
+:sut_sedia
 call :boleh_sambung %HOST% %PORT% || (
   echo RALAT: SUT tidak berjalan pada %HOST%:%PORT%. Mula: node sut\server.js ^(atau set MULA_SUT=1^).
   goto :gagal
@@ -75,18 +89,21 @@ call "%JBIN%\jmeter.bat" -n -t "%PLAN%" ^
   -Jagent_host=%AGENT_HOST% -Jagent_port=%AGENT_PORT% "-Jperfmon_jtl=%HASIL%\perfmon.jtl" ^
   -Jjmeter.reportgenerator.overall_granularity=%GRAN% ^
   -l "%HASIL%\keputusan.jtl" -e -o "%HASIL%\laporan" ^
-  -j "%HASIL%\jmeter.log"
+  -j "%HASIL%\jmeter.log" <nul
 
-if not exist "%HASIL%\perfmon.jtl" echo AMARAN: perfmon.jtl tiada - semak %HASIL%\jmeter.log ^(cari 'PerfMon'^).
+REM perfmon.jtl mesti ada baris data (bukan header sahaja)
+set PM_BARIS=0
+if exist "%HASIL%\perfmon.jtl" for /f %%n in ('type "%HASIL%\perfmon.jtl" ^| find /c /v ""') do set PM_BARIS=%%n
+if %PM_BARIS% LEQ 1 echo AMARAN: perfmon.jtl kosong - semak %HASIL%\jmeter.log ^(cari 'PerfMon'^).
 
 if exist "%PCMD%" (
   echo.
   echo == 3^) Eksport graf dengan JMeterPluginsCMD ==
-  call "%PCMD%" --generate-png "%HASIL%\cpu-perfmon.png" --input-jtl "%HASIL%\perfmon.jtl" --plugin-type PerfMon --width 1200 --height 600 --granulation %GRAN% --relative-times no --auto-scale no > "%HASIL%\pcmd-PerfMon.log" 2>&1
-  call "%PCMD%" --generate-png "%HASIL%\response-times-over-time.png" --input-jtl "%HASIL%\keputusan.jtl" --plugin-type ResponseTimesOverTime --width 1200 --height 600 --granulation %GRAN% --relative-times no > "%HASIL%\pcmd-ResponseTimesOverTime.log" 2>&1
-  call "%PCMD%" --generate-png "%HASIL%\active-threads.png" --input-jtl "%HASIL%\keputusan.jtl" --plugin-type ThreadsStateOverTime --width 1200 --height 600 --granulation %GRAN% --relative-times no > "%HASIL%\pcmd-ThreadsStateOverTime.log" 2>&1
+  call :png cpu-perfmon.png              perfmon.jtl   PerfMon --auto-scale no
+  call :png response-times-over-time.png keputusan.jtl ResponseTimesOverTime
+  call :png active-threads.png           keputusan.jtl ThreadsStateOverTime
   call "%PCMD%" --generate-csv "%HASIL%\perfmon.csv" --input-jtl "%HASIL%\perfmon.jtl" --plugin-type PerfMon --granulation %GRAN% --relative-times no > "%HASIL%\pcmd-csv.log" 2>&1
-  dir /b "%HASIL%\*.png" "%HASIL%\perfmon.csv"
+  if exist "%HASIL%\perfmon.csv" (echo   OK  perfmon.csv) else (echo   GAGAL perfmon.csv)
 )
 
 echo.
@@ -104,6 +121,16 @@ exit /b 0
 call :henti_sut
 endlocal
 exit /b 1
+
+REM ---- :png <fail.png> <input.jtl> <plugin-type> [opsyen tambahan]  -> OK/GAGAL
+:png
+call "%PCMD%" --generate-png "%HASIL%\%~1" --input-jtl "%HASIL%\%~2" --plugin-type %3 --width 1200 --height 600 --granulation %GRAN% --relative-times no %4 %5 > "%HASIL%\pcmd-%3.log" 2>&1
+if not errorlevel 1 if exist "%HASIL%\%~1" (
+  echo   OK  %~1
+  exit /b 0
+)
+echo   GAGAL %~1 ^(lihat %HASIL%\pcmd-%3.log^)
+exit /b 0
 
 REM ---- :boleh_sambung <host> <port>  -> errorlevel 0 jika port menerima sambungan
 :boleh_sambung

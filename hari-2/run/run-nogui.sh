@@ -6,6 +6,7 @@
 #  Prasyarat:
 #    1) Pelayan tiruan berjalan:  (dalam tetingkap lain)  node ../../sut/server.js
 #    2) JMeter ada pada PATH:      jmeter --version
+#    Windows: jalankan dalam Git Bash (atau run-nogui.bat dari Command Prompt).
 #
 #  Penggunaan:
 #    ./run-nogui.sh                       # lalai: 50 pengguna, ramp 30s, 120s

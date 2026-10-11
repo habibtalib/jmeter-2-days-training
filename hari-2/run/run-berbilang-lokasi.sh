@@ -14,7 +14,8 @@
 #           -> jadual perbandingan (daripada statistics.json).
 #
 #  Prasyarat: Java + JMeter 5.6.x (jmeter pada PATH), Node.js, port 3000/3001/
-#             1099/1100/4001/4002 bebas.
+#             1099/1100/4001/4002 bebas. Windows: jalankan dalam Git Bash (atau guna
+#             run-berbilang-lokasi.bat dari Command Prompt).
 #
 #  Penggunaan (dari mana-mana direktori):
 #    ./run-berbilang-lokasi.sh                         # 10 pengguna x 3 gelung PER EJEN
@@ -58,17 +59,34 @@ PIDS=()
 bersih() {
   echo
   echo "Membersihkan ejen & SUT tiruan..."
-  for p in "${PIDS[@]:-}"; do [ -n "$p" ] && kill "$p" 2>/dev/null || true; done
-  # Skrip pelancar jmeter tidak 'exec' java, jadi bunuh proses java ejen ikut penanda -Jejen_id
-  pkill -f -- "-Jejen_id=$HASIL/" 2>/dev/null || true
-  for _ in 1 2 3 4 5 6 7 8 9 10; do pgrep -f -- "-Jejen_id=$HASIL/" > /dev/null || break; sleep 0.5; done
+  case "$(uname -s)" in
+    MINGW*|MSYS*|CYGWIN*)
+      # Git Bash (Windows): tiada pkill/pgrep. Bunuh seluruh pokok proses Windows
+      # (jmeter-server -> java, node) ikut PID Windows setiap proses latar.
+      for p in "${PIDS[@]:-}"; do
+        [ -n "$p" ] || continue
+        w="$(cat "/proc/$p/winpid" 2>/dev/null || true)"
+        [ -n "$w" ] && taskkill //F //T //PID "$w" > /dev/null 2>&1 || true
+        kill "$p" 2>/dev/null || true
+      done
+      ;;
+    *)
+      for p in "${PIDS[@]:-}"; do [ -n "$p" ] && kill "$p" 2>/dev/null || true; done
+      # Skrip pelancar jmeter tidak 'exec' java, jadi bunuh proses java ejen ikut penanda -Jejen_id
+      pkill -f -- "-Jejen_id=$HASIL/" 2>/dev/null || true
+      for _ in 1 2 3 4 5 6 7 8 9 10; do pgrep -f -- "-Jejen_id=$HASIL/" > /dev/null || break; sleep 0.5; done
+      ;;
+  esac
 }
 trap bersih EXIT INT TERM
 
 semak_port_bebas() {
   for p in "$@"; do
     if (exec 3<>"/dev/tcp/127.0.0.1/$p") 2>/dev/null; then
-      echo "RALAT: port $p sudah digunakan. Hentikan proses itu dahulu (lsof -i :$p)." >&2
+      echo "RALAT: port $p sudah digunakan. Hentikan proses itu dahulu (Ctrl+C dalam terminalnya / Task Manager)." >&2
+      echo "       macOS/Linux: lsof -i :$p  lalu  kill <PID>" >&2
+      echo "       Windows    : netstat -ano | findstr \":$p \"  (PID = lajur terakhir, baris LISTENING)  lalu" >&2
+      echo "                    taskkill //PID <PID> //F  (Git Bash)  |  taskkill /PID <PID> /F  (cmd)" >&2
       exit 1
     fi
   done

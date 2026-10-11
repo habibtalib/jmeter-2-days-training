@@ -18,6 +18,7 @@
 #        ./startAgent.sh --udp-port 0 --tcp-port 4444
 #    - SUT berjalan:  node sut/server.js    (atau MULA_SUT=1 — skrip mula SUT pada $PORT)
 #    - Node.js (untuk ringkasan)
+#    - Windows: jalankan dalam Git Bash (atau run-chatbot-perfmon.bat dari Command Prompt)
 #
 #  Penggunaan:
 #    ./run-chatbot-perfmon.sh                            # 40 pengguna, ramp 120s, 180s
@@ -68,7 +69,13 @@ mkdir -p "$HASIL"
 
 echo "== 1) Semak SUT dan ejen PerfMon =="
 if [ "$MULA_SUT" = "1" ]; then
-  if boleh_sambung "$HOST" "$PORT"; then echo "RALAT: port $PORT sudah digunakan (MULA_SUT=1)." >&2; exit 1; fi
+  if boleh_sambung "$HOST" "$PORT"; then
+    echo "RALAT: port $PORT sudah digunakan (MULA_SUT=1). Hentikan proses itu dahulu (Ctrl+C dalam terminalnya / Task Manager)." >&2
+    echo "       macOS/Linux: lsof -i :$PORT  lalu  kill <PID>" >&2
+    echo "       Windows    : netstat -ano | findstr \":$PORT \"  (PID = lajur terakhir, baris LISTENING)  lalu" >&2
+    echo "                    taskkill //PID <PID> //F  (Git Bash)  |  taskkill /PID <PID> /F  (cmd)" >&2
+    exit 1
+  fi
   PORT="$PORT" node "$ROOT/sut/server.js" > "$HASIL/sut.log" 2>&1 & PID_SUT=$!
   for _ in $(seq 1 20); do boleh_sambung "$HOST" "$PORT" && break; sleep 0.5; done
 fi
