@@ -28,6 +28,12 @@ echo   Sasaran  : http://%HOST%:%PORT%
 echo   Hasil    : %HASIL%
 echo.
 
+where jmeter >nul 2>&1 || (
+  echo RALAT: arahan jmeter tidak dijumpai. Tambah folder bin JMeter ke PATH ^(Hari 1 §1.5^), buka terminal baharu.
+  endlocal
+  exit /b 1
+)
+
 REM "call" wajib: tanpanya jmeter.bat tidak kembali ke skrip ini
 call jmeter -n -t "%HERE%..\test-plans\06-ujian-beban-nogui.jmx" ^
   -Jpengguna=%PENGGUNA% -Jrampup=%RAMPUP% -Jtempoh=%TEMPOH% ^
@@ -37,6 +43,11 @@ call jmeter -n -t "%HERE%..\test-plans\06-ujian-beban-nogui.jmx" ^
   -j "%HASIL%\jmeter.log" <nul
 
 echo.
+if not exist "%HASIL%\laporan\index.html" (
+  echo RALAT: laporan HTML tidak dijana. Lihat "%HASIL%\jmeter.log"
+  endlocal
+  exit /b 1
+)
 echo Selesai. Buka laporan HTML:
 echo   %HASIL%\laporan\index.html
 endlocal

@@ -27,6 +27,7 @@ REM  Semua "call jmeter" dibekalkan stdin <nul: jmeter.bat buat "pause" bila ral
 REM  dan tanpa <nul skrip akan tergantung menunggu kekunci.
 REM ====================================================================
 setlocal
+set "RC=0"
 set HERE=%~dp0
 for %%I in ("%HERE%..\..") do set ROOT=%%~fI
 set PLAN=%ROOT%\hari-2\test-plans\09-berbilang-lokasi.jmx
@@ -139,6 +140,7 @@ echo Laporan: %LAPORAN%\gabung\index.html ^| %LAPORAN%\KL\index.html ^| %LAPORAN
 goto :henti
 
 :gagal
+set "RC=1"
 echo RALAT: langkah gagal. Lihat log dalam %HASIL%
 
 :henti
@@ -147,8 +149,7 @@ echo Membersihkan ejen ^& SUT tiruan...
 for %%T in (JMLOKASI-EJEN-KL JMLOKASI-EJEN-PENANG JMLOKASI-SUT-KL JMLOKASI-SUT-PENANG) do (
   taskkill /FI "WINDOWTITLE eq %%T*" /T /F >nul 2>&1
 )
-endlocal
-goto :eof
+endlocal & exit /b %RC%
 
 REM ---- :port_bebas <port>  -> ralat jika port sudah digunakan
 :port_bebas
